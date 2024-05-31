@@ -9,8 +9,10 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
+
+
 # Get houhold data for survey id
-survey_data = client.get_household_survey(survey_id=3329, access_type='full')
+survey_data = client.get_household_survey(survey_id=3094, access_type='full',page_size=500)
 print(survey_data.head())
 
 # TODO: other API calls, including GORP and IPC

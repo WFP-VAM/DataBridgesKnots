@@ -7,7 +7,16 @@ from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
+logging.basicConfig(filename="data_bridges_utils.log",
+                    filemode='w',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.INFO)
+
+logging.info("Started logging...")
+
 logger = logging.getLogger(__name__)
+
 
 class DataBridgesShapes:
     """
@@ -55,7 +64,7 @@ class DataBridgesShapes:
         )
         return configuration
 
-    def get_household_survey(self, survey_id, access_type, page_size=200):
+    def get_household_survey(self, survey_id, access_type, page_size=800):
         """Retrieves survey data using the specified configuration and access type.
 
         Args:
@@ -81,13 +90,14 @@ class DataBridgesShapes:
 
                 try:
                     # Select appropriate API call based on access_type
-                    api_survey = {
-                        '': api_instance.household_public_base_data_get,
-                        'full': api_instance.household_full_data_get,
-                        'draft': api_instance.household_draft_internal_base_data_get,
-                        'official': api_instance.household_official_use_base_data_get,
-                        'public': api_instance.household_public_base_data_get
-                    }.get(access_type)(survey_id=survey_id, page=page, env=env)
+                api_survey = {
+                '': api_instance.household_public_base_data_get,
+                'full': api_instance.household_full_data_get,
+                'draft': api_instance.household_draft_internal_base_data_get,
+                'official': api_instance.household_official_use_base_data_get,
+                'public': api_instance.household_public_base_data_get
+                }.get(access_type)(survey_id=survey_id, page=page, env=env, page_size=page_size)
+
                     logger.info("Fetching page %s", page)
                     logger.info("Items: %s", len(api_survey.items))
                     responses.extend(api_survey.items)

@@ -4,7 +4,7 @@ try:
     stata_setup.config('C:/Program Files/Stata18', 'se')
     from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
 except OSError:
-    print("Stata executable not found. Please install Stata and add it to your PATH.")
+    print("Stata executable not found. Please install Stata 18 and add it to your PATH.")
 
 def load_stata(df):
     """

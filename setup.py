@@ -14,7 +14,7 @@ setup(
     url='https://github.com/your_org/data_bridges_utils',
     author='Your Name',
     author_email='your.email@example.com',
-    license='MIT',
+    license='AGPL 3.0',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
