@@ -90,13 +90,13 @@ class DataBridgesShapes:
 
                 try:
                     # Select appropriate API call based on access_type
-                api_survey = {
-                '': api_instance.household_public_base_data_get,
-                'full': api_instance.household_full_data_get,
-                'draft': api_instance.household_draft_internal_base_data_get,
-                'official': api_instance.household_official_use_base_data_get,
-                'public': api_instance.household_public_base_data_get
-                }.get(access_type)(survey_id=survey_id, page=page, env=env, page_size=page_size)
+                    api_survey = {
+                    '': api_instance.household_public_base_data_get,
+                    'full': api_instance.household_full_data_get,
+                    'draft': api_instance.household_draft_internal_base_data_get,
+                    'official': api_instance.household_official_use_base_data_get,
+                    'public': api_instance.household_public_base_data_get
+                    }.get(access_type)(survey_id=survey_id, page=page, env=env, page_size=page_size)
 
                     logger.info("Fetching page %s", page)
                     logger.info("Items: %s", len(api_survey.items))
