@@ -24,7 +24,6 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
-data-bridges-utils = []
 data-bridges-utils-STATA = ["stata-setup", "pystata"]
 data-bridges-utils-R = []
 
