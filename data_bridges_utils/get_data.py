@@ -220,10 +220,15 @@ class DataBridgesShapes:
                 logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
                 raise
 
-
-            # responses.extend(item.to_dict() for item in gorp_data.items)
-
-            return responses
+            if "GorpGlobalApiDto" in gorp_data.__doc__:
+                responses.extend(item for item in gorp_data)
+            else:
+                try:
+                    responses.extend(item.to_dict() for item in gorp_data.items)
+                except AttributeError:
+                    responses.extend(item.to_dict() for item in gorp_data)
+            
+            return pd.DataFrame(responses)
         
     def get_food_security(self, country_iso3=None, year=None, page=None, env='prod'):
         """
