@@ -9,12 +9,33 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
-
-
+#%% Household data
 # Get houhold data for survey id
-survey_data = client.get_household_survey(survey_id=3094, access_type='full',page_size=500)
-print(survey_data.head())
+# survey_data = client.get_household_survey(survey_id=3329, access_type='full') # 3094 -> Congo
+# print(survey_data.head())
+#%
 
-# TODO: other API calls, including GORP and IPC
-# food_sec = client.get_ipc_equivalent("AFG", 2023)
-# print(food_sec.head())
+#%% GORP data 
+# Get GORP data
+# latest_data = client.get_gorp('latest')
+# list_data = client.get_gorp('list') 
+# print(list_data.head())
+# gorp = client.get_gorp('regional_latest')
+# regional_latest_data = client.get_gorp('regional_latest')
+# global_latest_data = client.get_gorp('global_latest')
+# print(gorp.head())
+#%
+
+#%% Market data
+# exchage_rates = client.get_exchange_rates('AFG')
+# print(exchage_rates.head())
+# prices = client.get_prices('AFG', '2022-01-01')
+# print(prices.head())
+
+
+#%% IPC equivalent 
+# food_security = client.get_food_security() 
+# afg_food_security = client.get_food_security("AFG", 2024)
+# print(afg_food_security.head())
+
+

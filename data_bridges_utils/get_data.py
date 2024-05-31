@@ -7,16 +7,7 @@ from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
-logging.basicConfig(filename="data_bridges_utils.log",
-                    filemode='w',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.INFO)
-
-logging.info("Started logging...")
-
 logger = logging.getLogger(__name__)
-
 
 class DataBridgesShapes:
     """
@@ -33,8 +24,9 @@ class DataBridgesShapes:
     """
 
 
-    def __init__(self, yaml_config_path):
+    def __init__(self, yaml_config_path, env='prod'):
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
+        self.env = env
 
     def __repr__(self):
         return "DataBridgesShapes(yamlpath='%s')" % self.configuration.host
@@ -64,7 +56,7 @@ class DataBridgesShapes:
         )
         return configuration
 
-    def get_household_survey(self, survey_id, access_type, page_size=800):
+    def get_household_survey(self, survey_id, access_type, page_size=200):
         """Retrieves survey data using the specified configuration and access type.
 
         Args:
@@ -86,18 +78,17 @@ class DataBridgesShapes:
             page += 1
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.IncubationApi(api_client)
-                env = 'prod'
+                env = self.env
 
                 try:
                     # Select appropriate API call based on access_type
                     api_survey = {
-                    '': api_instance.household_public_base_data_get,
-                    'full': api_instance.household_full_data_get,
-                    'draft': api_instance.household_draft_internal_base_data_get,
-                    'official': api_instance.household_official_use_base_data_get,
-                    'public': api_instance.household_public_base_data_get
-                    }.get(access_type)(survey_id=survey_id, page=page, env=env, page_size=page_size)
-
+                        '': api_instance.household_public_base_data_get,
+                        'full': api_instance.household_full_data_get,
+                        'draft': api_instance.household_draft_internal_base_data_get,
+                        'official': api_instance.household_official_use_base_data_get,
+                        'public': api_instance.household_public_base_data_get
+                    }.get(access_type)(survey_id=survey_id, page=page, env=env)
                     logger.info("Fetching page %s", page)
                     logger.info("Items: %s", len(api_survey.items))
                     responses.extend(api_survey.items)
@@ -107,7 +98,7 @@ class DataBridgesShapes:
 
                 except ApiException as e:
                     logger.error("Exception when calling Household data-> %s%s\n", access_type, e)
-                    exit()
+                    raise
 
         df = pd.DataFrame(responses)
         return df
@@ -138,7 +129,7 @@ class DataBridgesShapes:
             page += 1
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.MarketPricesApi(api_client)
-                env = 'prod'
+                env = self.env
 
                 try:
                     api_prices = api_instance.market_prices_price_monthly_get(
@@ -151,7 +142,8 @@ class DataBridgesShapes:
                     time.sleep(1)
                 except ApiException as e:
                     logger.error("Exception when calling Market price data->market_prices_price_monthly_get: %s\n", e)
-                    exit()
+                    raise
+                
         df = pd.DataFrame(responses)
         return df
 
@@ -175,7 +167,7 @@ class DataBridgesShapes:
             page += 1
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.CurrencyApi(api_client)
-                env = 'prod'
+                env = self.env
 
                 try:
                     api_exchange_rates = api_instance.currency_usd_indirect_quotation_get(
@@ -188,37 +180,82 @@ class DataBridgesShapes:
                     time.sleep(1)
                 except ApiException as e:
                     logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
-                    exit()
+                    raise
         df = pd.DataFrame(responses)
         return df
-
-    def get_ipc_equivalent(self, country_iso3: str, year: int, page_size=1000):
+    
+    def get_gorp(self, data_type, page=None):
         """
-        Retrieves food security data for a given country ISO3 code from the Data Bridges API.
-        """
-        responses = []
-        total_items = 20
-        max_item = 0
-        page = 0
-        while total_items > max_item:
-            page += 1
-            with data_bridges_client.ApiClient(self.configuration) as api_client:
-                api_instance = data_bridges_client.FoodSecurityApi(api_client)
-                env = 'prod'
+        Retrieves data from the Global Operational Response Plan (GORP) API.
 
-                try:
-                    api_food_security = api_instance.food_security_list_get(
-                        country_iso3=country_iso3, year=year, page=page, env=env,
-                    )
-                    responses.extend(item.to_dict() for item in api_food_security.items)
-                    total_items = api_food_security.total_items
-                    logger.info("Fetching page %s", page)
-                    max_item = page * page_size
-                    time.sleep(1)
-                except ApiException as e:
-                    logger.error("Exception when calling Food security data->food_security_list_get: %s\n", e)
-        df = pd.DataFrame(responses)
-        return df
+        Args:
+            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', 'latest', 'list', or 'regional_latest'.
+            page (int, optional): The page number for paginated results. Defaults to None.
+            env (str, optional): The environment to use. Can be 'prod' or 'dev'. Defaults to 'prod'.
+
+        Returns:
+            The requested GORP data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            gorp_api_instance = data_bridges_client.GorpApi(api_client)
+            env = self.env
+
+            responses = []
+
+            try:
+                if data_type == 'country_latest':
+                    gorp_data =  gorp_api_instance.gorp_country_latest_get(env=env)
+                elif data_type == 'global_latest':
+                    gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
+                elif data_type == 'latest':
+                                         
+                    gorp_data = gorp_api_instance.gorp_latest_get(page=page, env=env)
+                elif data_type == 'list':
+                    gorp_data = gorp_api_instance.gorp_list_get(page=page, env=env)
+                elif data_type == 'regional_latest':
+                    gorp_data =  gorp_api_instance.gorp_regional_latest_get(env=env)
+                else:
+                    raise ValueError(f"Invalid data_type: {data_type}")
+            except ApiException as e:
+                logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
+                raise
+
+
+            # responses.extend(item.to_dict() for item in gorp_data.items)
+
+            return responses
+        
+    def get_food_security(self, country_iso3=None, year=None, page=None, env='prod'):
+        """
+        Retrieves food security data from the Data Bridges API.
+
+        Args:
+            country_iso3 (str, optional): The ISO3 code of the country to retrieve data for. Defaults to None.
+            year (int, optional): The year to retrieve data for. Defaults to None.
+            page (int, optional): The page number for paginated results. Defaults to None.
+            env (str, optional): The environment to use. Can be 'prod' or 'dev'. Defaults to 'prod'.
+
+        Returns:
+            The requested food security data.
+        """
+        responses =[]
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            food_security_api_instance = data_bridges_client.FoodSecurityApi(api_client)
+
+            try:
+                food_security_data = food_security_api_instance.food_security_list_get(
+                    iso3=country_iso3,
+                    year=year,
+                    page=page,
+                    env=env
+                )
+            except data_bridges_client.ApiException as e:
+                logger.error(f"Exception when calling Food Security data: {e}")
+                raise
+            
+            responses.extend(item.to_dict() for item in food_security_data.items)
+            return pd.DataFrame(responses)
+
 
 
 if __name__ == "__main__":
