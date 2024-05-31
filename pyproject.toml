@@ -11,7 +11,6 @@ readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 keywords = ["VAM", "WFP", "data"]
-dynamic = ["version", "description"]
 requires-python = ">=3.9"
 
 dependencies = [
