@@ -164,3 +164,7 @@ cython_debug/
 # Custom
 data_bridges_api_config.yaml
 ROADMAP.md
+.Rproj.user
+.RData
+.Rhistory
+*.Rproj
