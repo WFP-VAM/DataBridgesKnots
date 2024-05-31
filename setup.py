@@ -22,11 +22,11 @@ setup(
     packages=find_packages(exclude=['tests', 'tests.*']),
     python_requires='>=3.9',
     install_requires=[
-        'PyYAML',
-        'pandas>=2',
-        'pystata',
-        'stata-setup',
-        'DataBridgesAPI @ git+https://git@github.com:WFP-VAM/DataBridgesAPI.git@dev',
+    'PyYAML',
+    'pandas>=2',
+    'pystata',
+    'stata-setup',
+    'DataBridgesAPI @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@dev',
     ],
     extras_require={
         'dev': [
