@@ -26,7 +26,7 @@ setup(
     'pandas>=2',
     'pystata',
     'stata-setup',
-    'DataBridgesAPI @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@dev',
+    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@dev',
     ],
     extras_require={
         'dev': [
