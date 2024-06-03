@@ -47,6 +47,8 @@ class DataBridgesShapes:
         version = databridges_config['VERSION']
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
+        
+        print(scopes)
 
         logger.info("DataBridges API: %s", host)
 
@@ -260,6 +262,43 @@ class DataBridgesShapes:
             
             responses.extend(item.to_dict() for item in food_security_data.items)
             return pd.DataFrame(responses)
+
+    def get_household_questionnaire(self, xls_form_id, env='prod', page_size=200):
+        """
+        This function fetches questionnaire data for a given form ID from the Data Bridges API.
+
+        Args:
+            form_id (int): The ID of the questionnaire form to retrieve data for.
+            page_size (int, optional): The maximum number of items to retrieve per API call. Defaults to 200.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the fetched questionnaire data.
+
+        Raises:
+            ApiException: If an error occurs while calling the Data Bridges API.
+        """
+        responses = []
+
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.IncubationApi(api_client)
+            env = self.env
+
+            try:
+                # Select appropriate API call based on access_type
+                api_survey = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
+                logger.info("Fields: %s", len(api_survey.fields))
+                responses.extend(api_survey.fields)
+                print(responses)
+                time.sleep(1)
+
+            except ApiException as e:
+                logger.error("Exception when calling Household questionnaire-> %s%s\n", xls_form_id, e)
+                raise
+
+        df = pd.DataFrame(responses)
+        return df
+
+        
 
 
 
