@@ -23,8 +23,8 @@ client = DataBridgesShapes(CONFIG_PATH)
 
 #%% GORP data 
 # Get GORP data
-latest_data = client.get_gorp('latest')
-print(latest_data)
+# latest_data = client.get_gorp('latest')
+# print(latest_data)
 # list_data = client.get_gorp('list') 
 # print(list_data)
 # regional_latest_data = client.get_gorp('regional_latest')
@@ -48,4 +48,5 @@ print(latest_data)
 
 #%% XSLForm definition
 xslform = client.get_household_questionnaire(3329)
-print(xlsform)
+print(xslform[:10])
+# %%

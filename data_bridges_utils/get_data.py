@@ -48,8 +48,6 @@ class DataBridgesShapes:
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
         
-        print(scopes)
-
         logger.info("DataBridges API: %s", host)
 
         token = WfpApiToken(api_key=key, api_secret=secret)
@@ -282,13 +280,14 @@ class DataBridgesShapes:
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
-
+            responses = []
             try:
                 # Select appropriate API call based on access_type
                 api_survey = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
-                logger.info("Fields: %s", len(api_survey.fields))
-                responses.extend(api_survey.fields)
-                print(responses)
+                try:
+                    responses.extend(item.to_dict() for item in api_survey.items)
+                except AttributeError:
+                    responses.extend(item.to_dict() for item in api_survey)
                 time.sleep(1)
 
             except ApiException as e:
@@ -296,7 +295,7 @@ class DataBridgesShapes:
                 raise
 
         df = pd.DataFrame(responses)
-        return df
+        return list(df.fields)[0]
 
         
 
