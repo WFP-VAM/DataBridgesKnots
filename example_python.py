@@ -15,10 +15,14 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
+#%% XSLForm definition
+questionnaire = client.get_household_questionnaire(3329)
+print(questionnaire[:10])
+# %%
+
 #%% Household data
 # Get houhold data for survey id
-# survey_data = client.get_household_survey(survey_id=3329, access_type='full') # 3094 -> Congo
-# print(survey_data.head())
+# survey_data = client.get_household_survey(survey_id=3094, access_type='full', page_size=800) # 3094 -> Congo
 #%
 
 #%% GORP data 
@@ -44,9 +48,3 @@ client = DataBridgesShapes(CONFIG_PATH)
 # food_security = client.get_food_security() 
 # afg_food_security = client.get_food_security("AFG", 2024)
 # print(afg_food_security.head())
-
-
-#%% XSLForm definition
-xslform = client.get_household_questionnaire(3329)
-print(xslform[:10])
-# %%

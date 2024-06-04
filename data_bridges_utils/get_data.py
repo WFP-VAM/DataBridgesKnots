@@ -1,5 +1,6 @@
 import time
 import logging
+from logging.handlers import RotatingFileHandler
 from datetime import timedelta, date
 import pandas as pd
 import yaml
@@ -7,7 +8,18 @@ from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
+
+log_file = 'data_bridges_api_calls.log'
+logging.basicConfig(filename=log_file,
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.INFO)
+
+# Get the root logger and add the file handler
 logger = logging.getLogger(__name__)
+
+
 
 class DataBridgesShapes:
     """
@@ -56,7 +68,7 @@ class DataBridgesShapes:
         )
         return configuration
 
-    def get_household_survey(self, survey_id, access_type, page_size=200):
+    def get_household_survey(self, survey_id, access_type, page_size=600):
         """Retrieves survey data using the specified configuration and access type.
 
         Args:
@@ -275,8 +287,9 @@ class DataBridgesShapes:
         Raises:
             ApiException: If an error occurs while calling the Data Bridges API.
         """
-        responses = []
 
+        responses = []
+        page = 0
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
@@ -284,7 +297,9 @@ class DataBridgesShapes:
             try:
                 # Select appropriate API call based on access_type
                 api_survey = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
+                page += 1
                 try:
+                    logger.info(f"Fetching page {page}")
                     responses.extend(item.to_dict() for item in api_survey.items)
                 except AttributeError:
                     responses.extend(item.to_dict() for item in api_survey)
