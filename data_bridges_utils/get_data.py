@@ -8,15 +8,13 @@ from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
-
-log_file = 'data_bridges_api_calls.log'
-logging.basicConfig(filename=log_file,
+logname = "data_bridges_api_calls.log"
+logging.basicConfig(filename=logname,
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S',
                     level=logging.INFO)
 
-# Get the root logger and add the file handler
 logger = logging.getLogger(__name__)
 
 
@@ -93,6 +91,7 @@ class DataBridgesShapes:
                 env = self.env
 
                 try:
+                    logger.info(f"Calling get_household_survey for survey {survey_id}") 
                     # Select appropriate API call based on access_type
                     api_survey = {
                         '': api_instance.household_public_base_data_get,
@@ -100,7 +99,8 @@ class DataBridgesShapes:
                         'draft': api_instance.household_draft_internal_base_data_get,
                         'official': api_instance.household_official_use_base_data_get,
                         'public': api_instance.household_public_base_data_get
-                    }.get(access_type)(survey_id=survey_id, page=page, env=env)
+                    }.get(access_type)(survey_id=survey_id, page=page, page_size=page_size, env=env)
+
                     logger.info("Fetching page %s", page)
                     logger.info("Items: %s", len(api_survey.items))
                     responses.extend(api_survey.items)
@@ -299,7 +299,7 @@ class DataBridgesShapes:
                 api_survey = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
                 page += 1
                 try:
-                    logger.info(f"Fetching page {page}")
+                    logger.info(f"Fetching page {page} from XLSForm definition")
                     responses.extend(item.to_dict() for item in api_survey.items)
                 except AttributeError:
                     responses.extend(item.to_dict() for item in api_survey)
