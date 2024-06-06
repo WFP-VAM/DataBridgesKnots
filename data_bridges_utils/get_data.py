@@ -37,6 +37,7 @@ class DataBridgesShapes:
     def __init__(self, yaml_config_path, env='prod'):
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
         self.env = env
+        self.data = {}
 
     def __repr__(self):
         return "DataBridgesShapes(yamlpath='%s')" % self.configuration.host
@@ -309,9 +310,16 @@ class DataBridgesShapes:
                 raise
 
         df = pd.DataFrame(responses)
-        return pd.DataFrame(list(df.fields)[0])
-    
+        
+        questionnaire = pd.DataFrame(list(df.fields)[0])
+        self.data[xls_form_id] = questionnaire
+        return questionnaire
 
+    def get_choice_list(self, xls_form_id):
+        questionnaire = self.data[xls_form_id]
+        choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
+        choices = choiceList.explode('choices')
+        return choices
 
 
 if __name__ == "__main__":
