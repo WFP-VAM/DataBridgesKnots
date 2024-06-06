@@ -1,4 +1,4 @@
-name: base
+name: data_bridges
 channels:
   - conda-forge
   - defaults
@@ -112,7 +112,6 @@ dependencies:
       - asttokens==2.4.1
       - atpublic==4.1.0
       - attrs==23.2.0
-      - data-bridges-client==4.1.0
       - decorator==5.1.1
       - docutils==0.21.2
       - executing==2.0.1

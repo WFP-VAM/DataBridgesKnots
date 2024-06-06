@@ -288,7 +288,6 @@ class DataBridgesShapes:
             ApiException: If an error occurs while calling the Data Bridges API.
         """
 
-        responses = []
         page = 0
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
@@ -310,9 +309,8 @@ class DataBridgesShapes:
                 raise
 
         df = pd.DataFrame(responses)
-        return list(df.fields)[0]
-
-        
+        return pd.DataFrame(list(df.fields)[0])
+    
 
 
 

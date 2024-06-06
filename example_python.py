@@ -16,15 +16,18 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 client = DataBridgesShapes(CONFIG_PATH)
 
 #%% XSLForm definition
-questionnaire = client.get_household_questionnaire(3329)
+questionnaire = client.get_household_questionnaire(1509)
 # %%
 
 #%% Household data
 # Get houhold data for survey id
 survey_data = client.get_household_survey(survey_id=3329, access_type='full', page_size=800)
-#%
 
-%% GORP data 
+# Map the categories to survey_data
+mapped_survey_data = map_value_labels(survey_data, questionnaire)
+
+
+#%% GORP data 
 Get GORP data
 latest_data = client.get_gorp('latest')
 print(latest_data)
