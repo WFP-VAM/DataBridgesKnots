@@ -1,12 +1,9 @@
 import stata_setup
 
-try:
-    stata_setup.config('C:/Program Files/Stata18', 'se')
-    from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
-except OSError:
-    print("Stata executable not found. Please install Stata 18 and add it to your PATH.")
+def load_stata(df, stata_path =  "C:/Program Files/Stata18", stata_version = "se"):
 
-def load_stata(df):
+    stata_setup.config(stata_path, stata_version)
+    from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
     """
     Loads a Pandas DataFrame into a Stata data file format.
     

@@ -7,6 +7,13 @@ Only works if user has STATA 18+ installed and added to PATH.
 
 from data_bridges_utils import DataBridgesShapes, map_value_labels
 from data_bridges_utils.load_stata import load_stata
+import stata_setup
+
+stata_path = "C:/Program Files/Stata18"
+stata_version = "se" /
+
+stata_setup.config(stata_path, stata_version)
+from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
 
 # Path to YAML file containing Data Bridges API credentials
 CONFIG_PATH = r"data_bridges_api_config.yaml"
