@@ -1,12 +1,13 @@
 import time
 import logging
-from logging.handlers import RotatingFileHandler
 from datetime import timedelta, date
 import pandas as pd
+import numpy as np
 import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
+
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(filename=logname,
@@ -114,6 +115,7 @@ class DataBridgesShapes:
                     raise
 
         df = pd.DataFrame(responses)
+        df = df.replace({np.nan: None})
         return df
 
     def get_prices(self, country_iso3, survey_date, page_size=1000):
@@ -158,6 +160,7 @@ class DataBridgesShapes:
                     raise
                 
         df = pd.DataFrame(responses)
+        df = df.replace({np.nan: None})
         return df
 
     def get_exchange_rates(self, country_iso3, page_size=1000):
@@ -195,7 +198,9 @@ class DataBridgesShapes:
                     logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
                     raise
         df = pd.DataFrame(responses)
+        df = df.replace({np.nan: None})
         return df
+        
     
     def get_gorp(self, data_type, page=None):
         """
@@ -241,7 +246,9 @@ class DataBridgesShapes:
                 except AttributeError:
                     responses.extend(item.to_dict() for item in gorp_data)
             
-            return pd.DataFrame(responses)
+            df = pd.DataFrame(responses)
+            df = df.replace({np.nan: None})
+            return df
         
     def get_food_security(self, country_iso3=None, year=None, page=None, env='prod'):
         """
@@ -310,6 +317,7 @@ class DataBridgesShapes:
                 raise
 
         df = pd.DataFrame(responses)
+        df = df.replace({np.nan: None})
         
         questionnaire = pd.DataFrame(list(df.fields)[0])
         self.data[xls_form_id] = questionnaire
