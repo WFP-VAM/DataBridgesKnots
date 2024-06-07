@@ -10,6 +10,7 @@ The script demonstrates how to use the DataBridgesShapes class to fetch these da
 #%%
 
 from data_bridges_utils import DataBridgesShapes
+from data_bridges_client.load_stata import load_stata
 
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 
