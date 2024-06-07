@@ -4,7 +4,7 @@ def get_value_labels(df):
     choiceList = pd.json_normalize(df['choiceList']).dropna()
     choices = choiceList.explode('choices')
 
-    categories_dict = dict()
+    categories_dict = {}
     for _, row in choices.iterrows():
         name = row["name"]
         choice = row["choices"]
@@ -14,12 +14,26 @@ def get_value_labels(df):
             categories_dict[name] = {choice["name"]: choice["label"]}
     return categories_dict
 
+def get_column_labels(df):
+    labels_dict = {}
+
+    for _, row in df.iterrows():
+        name = row["name"]
+        label = row["label"]
+        if name in labels_dict:
+            labels_dict[name].update(label)
+        elif label == "":
+            labels_dict[name] = name
+        else:
+            labels_dict[name] = label
+    return labels_dict
+
 
 def map_value_labels(survey_data, questionnaire):
     choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
     choices = choiceList.explode('choices')
 
-    categories_dict = dict()
+    categories_dict = {}
     for _, row in choices.iterrows():
         name = row["name"]
         choice = row["choices"]
