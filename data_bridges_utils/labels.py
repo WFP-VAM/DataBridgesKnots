@@ -1,7 +1,9 @@
 import pandas as pd
 
 def get_value_labels(df):
-    choiceList = pd.json_normalize(df['choiceList']).dropna()
+    choiceList = pd.json_normalize(df['choiceList'])
+    choiceList = choiceList.rename(columns={"name": "choice_name"})
+    choiceList = choiceList.join(df["name"]).dropna()
     choices = choiceList.explode('choices')
 
     categories_dict = {}
@@ -9,9 +11,9 @@ def get_value_labels(df):
         name = row["name"]
         choice = row["choices"]
         if name in categories_dict:
-            categories_dict[name].update({choice["name"]: choice["label"]})
+            categories_dict[name].update({int(choice["name"]): choice["label"]})
         else:
-            categories_dict[name] = {choice["name"]: choice["label"]}
+            categories_dict[name] = {int(choice["name"]): choice["label"]}
     return categories_dict
 
 def get_column_labels(df):
@@ -30,7 +32,9 @@ def get_column_labels(df):
 
 # Map values if int
 def map_value_labels(survey_data, questionnaire):
-    choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
+    choiceList = pd.json_normalize(questionnaire['choiceList'])
+    choiceList = choiceList.rename(columns={"name": "choice_name"})
+    choiceList = choiceList.join(questionnaire["name"]).dropna()
     choices = choiceList.explode('choices')
 
     categories_dict = dict()

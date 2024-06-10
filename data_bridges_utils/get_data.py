@@ -115,7 +115,9 @@ class DataBridgesShapes:
                     raise
 
         df = pd.DataFrame(responses)
-        df = df.replace({np.nan: None})
+
+        df.apply(lambda x: pd.to_numeric(x, errors='coerce', downcast='integer').fillna(9999).astype(np.int64 if x.dtype == 'int64' else x.dtype))
+        df = df.replace({9999: None})
         return df
 
     def get_prices(self, country_iso3, survey_date, page_size=1000):
