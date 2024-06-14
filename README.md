@@ -7,7 +7,7 @@ This Python module provides utilities for working with the WFP Data Bridges API.
 You can install the `data_bridges_utils` package using `pip` and the Git repository URL:
 
 ```
-pip install git+https://github.com/WFP-VAM/DataBridgesUtils.git@dev
+pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesUtils.git@dev
 ```
 
 ### STATA users
