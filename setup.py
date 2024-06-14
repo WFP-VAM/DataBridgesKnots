@@ -21,13 +21,6 @@ setup(
     keywords=['VAM', 'WFP', 'data'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     python_requires='>=3.9',
-    install_requires=[
-    'PyYAML',
-    'pandas>=2',
-    'pystata',
-    'stata-setup',
-    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@hotfix-4.1.0',
-    ],
     extras_require={
         'dev': [
             'black',
@@ -42,8 +35,5 @@ setup(
             'pystata',
         ],
         'data-bridges-utils-R': [],
-    },
-    project_urls={
-        'Source': 'https://github.com/WFP-VAM/DataBridgesUtils',
     },
 )

@@ -37,6 +37,4 @@ mapped_survey_data = map_value_labels(survey_data, questionnaire)
 # Load into STATA dataframe
 survey_data = load_stata(survey_data)
 
-
-
 end
