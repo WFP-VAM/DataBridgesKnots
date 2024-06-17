@@ -14,6 +14,11 @@ The following endpoints will be added or improved in the upcoming release:
 - [X] Market prices
 - [X] Surveys
 - [X] XSL Forms
+  
+### Wrapper Endpoints
+- [X] Get variable labels
+- [X] Get value labels
+- [ ] Output dta with value and variable labels
 
 ### Examples and Documentation
 
@@ -37,6 +42,7 @@ The following endpoints will be added or improved in the upcoming release:
 - [ ] DPO change for GORP
 - [ ] DPO change for XLSForm
 - [ ] Fix optional dependencies for STATA
+- [ ] Handle SSL certificate error
 
 ## Wrapper points
 - [ ] Economic data
@@ -47,10 +53,10 @@ The following endpoints will be added or improved in the upcoming release:
 
 ## Future Releases (2.0.0)
 
-- Improve error handling and logging
-- Add unit tests and integration tests
-- Enhance documentation and provide more usage examples
-- Optimize performance and improve code efficiency
-- Implement additional features based on user feedback and requirements
+- [ ] Improve error handling and logging
+- [ ] Add unit tests and integration tests
+- [ ] Enhance documentation and provide more usage examples
+- [ ] Optimize performance and improve code efficiency
+- [ ] Implement additional features based on user feedback and requirements
 
 Please note that this roadmap is subject to change, and the priorities may be adjusted based on the project's needs and available resources.
