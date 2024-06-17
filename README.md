@@ -4,6 +4,8 @@ This Python module provides utilities for working with the WFP Data Bridges API.
 
 ## Installation
 
+> NB This is the dev version of the data_bridges_utils and API client package, it is frequently updated yet not stable.
+
 You can install the `data_bridges_utils` package using `pip` and the Git repository URL:
 
 ```
