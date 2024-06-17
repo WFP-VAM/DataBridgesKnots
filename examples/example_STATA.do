@@ -3,21 +3,19 @@ python set exect "path/to/python/env"
 python:
 
 """
-Read a 'base' Household dataset  from Data Bridges and load it into STATA.
+Read a 'full' Household dataset  from Data Bridges and load it into STATA.
 Only works if user has STATA 18+ installed and added to PATH.
 """
 
-from data_bridges_utils import DataBridgesShapes, map_value_labels
+from data_bridges_utils import DataBridgesShapes
+from data_bridges_utils.labels import get_column_labels, get_value_labels, map_value_labels
 from data_bridges_utils.load_stata import load_stata
+import numpy as np
 import stata_setup
-
-# set installation path for STATA
-stata_path = "C:/Program Files/Stata18"
-# set stata version
-stata_version = "se" 
-
-stata_setup.config(stata_path, stata_version)
 from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
+
+stata_path = r"E:\Program Files\Stata18"
+stata_version = "mp"
 
 # Path to YAML file containing Data Bridges API credentials
 CONFIG_PATH = r"data_bridges_api_config.yaml"
@@ -31,29 +29,26 @@ CONGO_CFSVA = {
 # Initialize DataBridges client with credentials from YAML file
 client = DataBridgesShapes(CONFIG_PATH)
 
-# Get houhold data for survey id
-survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='base') # base is the standardized-only dataset
-questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
+survey_data = client.get_household_survey(survey_id=CONGO_CFSVA['dataset'], access_type='full', page_size=800)
+questionnaire = client.get_household_questionnaire(CONGO_CFSVA['questionnaire'])
+choice_list = client.get_choice_list(CONGO_CFSVA['questionnaire'])
 
-# Map the categories to survey_data
-mapped_survey_data = map_value_labels(survey_data, questionnaire)
 
-# Get variable labels
 variable_labels = get_column_labels(questionnaire)
-# Get value labels
+# get value labels
 value_labels = get_value_labels(questionnaire)
 
-# Return flat dataset with value labels
-survey_data_with_value_labels = map_value_labels(survey_data, questionnaire)
+survey_data_value_labels = map_value_labels(survey_data, questionnaire)
+# mapped.replace({np.nan: None})
 
-# Export dataset, questionnaire (with variable labels) and choice list in CSV
+# # Export
 survey_data.to_csv(f"congo_cfsva_survey_data.csv", index=False)
 questionnaire.to_csv(f"congo_cfsva_questionnaire.csv", index=False)	
-choices.to_csv(f"congo_csfsva_choice_list.csv", index=False)
-# mapped.to_csv(f"congo_cfsva_mapped.csv", index=False)
-print("Exported survey data, questionnaire and choice list")
+choice_list.to_csv(f"congo_csfsva_choice_list .csv", index=False)
+survey_data_value_labels.to_csv(f"congo_cfsva_mapped.csv", index=False)
 
 # Load into STATA dataframe
-ds = load_stata(survey_data_with_value_labels, stata_path, stata_version)
+ds = load_stata(survey_data_value_labels, stata_path=stata_path, stata_version=stata_version, variable_labels=variable_labels, value_labels=value_labels)
+
 
 end

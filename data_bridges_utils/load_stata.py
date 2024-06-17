@@ -16,10 +16,8 @@ def load_stata(df, stata_path =  "C:/Program Files/Stata18", stata_version = "se
     Data.setObsTotal(len(df))
     for i in range(len(colnames)):
         dtype = df.dtypes[i].name
-        print(dtype)
         # make a valid Stata variable name
         varname = SFIToolkit.makeVarName(colnames[i], retainCase=True)
-        print(colnames[i])
         # varname = colnames[i]
         varval = df[colnames[i]].values.tolist()
         if dtype == "int64":
