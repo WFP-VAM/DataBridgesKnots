@@ -12,7 +12,7 @@ from data_bridges_utils.load_stata import load_stata
 import stata_setup
 
 # set installation path for STATA
-stata_path = "C:/Program Files/Stata18"
+stata_path = r"C:/Program Files/Stata18"
 # set stata version
 stata_version = "se" 
 

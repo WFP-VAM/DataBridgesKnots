@@ -48,20 +48,23 @@ A sample python file with additional examples for other endpoints is provided in
 2. Run the following code to extract household survey data. Make suere to edit your ```stata_path```and ```stata_version``` to match the one installed in your system.
 
 ```stata
+python set exect "path/to/python/env"
+
 python:
 
 """
-Read a 'full' Household dataset  from Data Bridges and load it into STATA.
+Read a 'base' Household dataset  from Data Bridges and load it into STATA.
 Only works if user has STATA 18+ installed and added to PATH.
 """
 
-from data_bridges_utils import DataBridgesShapes
-from data_bridges_utils.labels import map_value_labels, get_stata_variable_labels
+from data_bridges_utils import DataBridgesShapes, map_value_labels
 from data_bridges_utils.load_stata import load_stata
 import stata_setup
 
-stata_path = r"E:\Program Files\Stata18"
-stata_version = "mp"
+# set installation path for STATA
+stata_path = r"C:/Program Files/Stata18"
+# set stata version
+stata_version = "se" 
 
 stata_setup.config(stata_path, stata_version)
 from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
@@ -79,18 +82,22 @@ CONGO_CFSVA = {
 client = DataBridgesShapes(CONFIG_PATH)
 
 # Get houhold data for survey id
-survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='full')
+survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='base') # base is the standardized-only dataset
 questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
 
 # Map the categories to survey_data
 mapped_survey_data = map_value_labels(survey_data, questionnaire)
 
+# Get variable labels
+variable_labels = get_column_labels(questionnaire)
+# Get value labels
+value_labels = get_value_labels(questionnaire)
+
+# Return flat dataset with value labels
+survey_data_with_value_labels = map_value_labels(survey_data, questionnaire)
+
 # Load into STATA dataframe
-ds1 = load_stata(mapped_survey_data, stata_path, stata_version)
-
-var_label = get_stata_variable_labels(questionnaire)
-ds2 = load_stata(survey_data, stata_path, stata_version, variable_labels=var_label)
-
+ds = load_stata(survey_data_with_value_labels, stata_path, stata_version)
 
 end
 ```
