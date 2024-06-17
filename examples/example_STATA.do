@@ -54,6 +54,6 @@ choices.to_csv(f"congo_csfsva_choice_list.csv", index=False)
 print("Exported survey data, questionnaire and choice list")
 
 # Load into STATA dataframe
-ds = load_stata(survey_data_with_value_labels)
+ds = load_stata(survey_data_with_value_labels, stata_path, stata_version)
 
 end
