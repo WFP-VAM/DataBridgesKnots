@@ -25,10 +25,11 @@ pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesUtils.gi
     - ''
     ```
 1. Replace your_api_key and your_api_secret with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
-2. (For WFP users) Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts) 
-
+2. (For WFP users) Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
+3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
 ### Python
+Run the following code to extract household survey data. 
 
 ```python
 from data_bridges_utils import DataBridgesShapes
@@ -45,7 +46,7 @@ A sample python file with additional examples for other endpoints is provided in
 
 ### STATA
 1. Make sure you declare where your Python instance is by setting ```python set exec "path/to/python/env"```
-2. Run the following code to extract household survey data. Make suere to edit your ```stata_path```and ```stata_version``` to match the one installed in your system.
+2. Run the following code to extract household survey data and loading it into STATA as a flat dataset with value labels. Make sure to edit your ```stata_path```and ```stata_version``` to match the one installed in your system.
 
 ```stata
 python set exect "path/to/python/env"
