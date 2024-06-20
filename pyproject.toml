@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data_bridges_utils"
+version = "1.0.0"
+authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
+description = "Wrapper for Data Bridges API client"
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+keywords = ["VAM", "WFP", "data"]
+requires-python = ">=3.9"
+
+dependencies = [
+    'PyYAML',
+    'pandas>=2',
+    'pystata',
+    'stata-setup',
+    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@hotfix-4.1.0',
+]
+
+[project.optional-dependencies]
+dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+data-bridges-utils = []
+data-bridges-utils-STATA = ["stata-setup", "pystata"]
+data-bridges-utils-R = []
+
+[tool.setuptools]
+packages = ["data_bridges_utils"]
