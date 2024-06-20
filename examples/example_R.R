@@ -4,12 +4,12 @@ library(dplyr)
 
 # Set up Python environment
 # use_python("/path/to/python/env")
-python_path <- "C:/Users/alessandra.gherardel/AppData/Local/miniconda3/envs/data_bridges_utils/python.exe"
+python_path <- "C:/Users/alessandra.gherardel/AppData/Local/miniconda3/envs/data_bridges_knots/python.exe"
 use_python(path.expand(python_path))
 
 # Import DataBridgesShapes class
-databridges_utils <- import("data_bridges_utils")
-DataBridgesShapes <- databridges_utils$DataBridgesShapes
+databridges_knots <- import("data_bridges_knots")
+DataBridgesShapes <- databridges_knots$DataBridgesShapes
 
 # Initialize DataBridges client with credentials from YAML file
 CONFIG_PATH <- "data_bridges_api_config.yaml"

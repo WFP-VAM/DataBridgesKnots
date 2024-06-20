@@ -1,15 +1,15 @@
-# Data Bridges Connect
+# Data Bridges Knots
 
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
 ## Installation
 
-> NB This is the dev version of the data_bridges_utils and API client package, it is frequently updated yet not stable.
+> NB This is the dev version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
 
-You can install the `data_bridges_utils` package using `pip` and the Git repository URL:
+You can install the `data_bridges_knots` package using `pip` and the Git repository URL:
 
 ```
-pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesConnect.git@dev
+pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ```
 
 ## Configuration
@@ -32,75 +32,24 @@ pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesConnect.
 Run the following code to extract household survey data. 
 
 ```python
-from data_bridges_utils import DataBridgesShapes
 
-CONFIG_PATH = "data_bridges_api_config.yaml"
+from data_bridges_knots import DataBridgesShapes
+
+CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
-# Get household data for survey id
-survey_data = client.get_household_survey(survey_id=3329, access_type='full')
-print(survey_data.head())
-```
-A sample python file with additional examples for other endpoints is provided in the repo. 
+#%% XSLForm definition and Household dataset
 
-### STATA
-1. Make sure you declare where your Python instance is by setting ```python set exec "path/to/python/env"```
-2. Run the following code to extract household survey data and loading it into STATA as a flat dataset with value labels. Make sure to edit your ```stata_path```and ```stata_version``` to match the one installed in your system.
-
-```stata
-python set exect "path/to/python/env"
-
-python:
-
-"""
-Read a 'base' Household dataset  from Data Bridges and load it into STATA.
-Only works if user has STATA 18+ installed and added to PATH.
-"""
-
-from data_bridges_utils import DataBridgesShapes, map_value_labels
-from data_bridges_utils.load_stata import load_stata
-import stata_setup
-
-# set installation path for STATA
-stata_path = r"C:/Program Files/Stata18"
-# set stata version
-stata_version = "se" 
-
-stata_setup.config(stata_path, stata_version)
-from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt
-
-# Path to YAML file containing Data Bridges API credentials
-CONFIG_PATH = r"data_bridges_api_config.yaml"
-
-# Example dataset and questionnaire from 2023 Congo CFSVA
 CONGO_CFSVA = {
     'questionnaire': 1509,
     'dataset': 3094
 }
-
-# Initialize DataBridges client with credentials from YAML file
-client = DataBridgesShapes(CONFIG_PATH)
-
-# Get houhold data for survey id
-survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='base') # base is the standardized-only dataset
+# get household survey data  
+survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='full')
+# get XLSForm data
 questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
 
-# Map the categories to survey_data
-mapped_survey_data = map_value_labels(survey_data, questionnaire)
-
-# Get variable labels
-variable_labels = get_column_labels(questionnaire)
-# Get value labels
-value_labels = get_value_labels(questionnaire)
-
-# Return flat dataset with value labels
-survey_data_with_value_labels = map_value_labels(survey_data, questionnaire)
-
-# Load into STATA dataframe
-ds = load_stata(survey_data_with_value_labels, stata_path, stata_version)
-
-end
 ```
 
 ## Contributing

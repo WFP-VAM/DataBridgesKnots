@@ -6,8 +6,8 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'),
     long_description = f.read()
 
 setup(
-    name='data_bridges_utils',
-    version='1.0.0',
+    name='data_bridges_knots',
+    version='0.1.0',
     description='Wrapper for Data Bridges API client',
     long_description=long_description,
     long_description_content_type='text/markdown',

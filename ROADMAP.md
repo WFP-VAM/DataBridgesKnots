@@ -2,7 +2,7 @@
 
 This document outlines the planned features and improvements for the `DataBridgesUtils` package, which provides a wrapper for the WFP Data Bridges API.
 
-## Upcoming Release: 1.0.0 (DEV)
+## Upcoming Release: 0.1.0 (DEV)
 
 ### Wrapper Endpoints
 
