@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_utils"
-version = "1.0.0"
+version = "0.1.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Wrapper for Data Bridges API client"
 readme = "README.md"
@@ -18,7 +18,7 @@ dependencies = [
     'pandas>=2',
     'pystata',
     'stata-setup',
-    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git@hotfix-4.1.0',
+    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git',
 ]
 
 [project.optional-dependencies]

@@ -7,7 +7,7 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'),
 
 setup(
     name='data_bridges_utils',
-    version='1.0.0',
+    version='0.1.0',
     description='Wrapper for Data Bridges API client',
     long_description=long_description,
     long_description_content_type='text/markdown',
