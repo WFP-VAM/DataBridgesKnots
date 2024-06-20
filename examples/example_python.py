@@ -1,5 +1,5 @@
 """
-Reads Household Data from Data Bridges. The script uses the DataBridgesShapes class from the data_bridges_utils module to interact with the Data Bridges API and retrieve various datasets, including:
+Reads Household Data from Data Bridges. The script uses the DataBridgesShapes class from the data_bridges_knots module to interact with the Data Bridges API and retrieve various datasets, including:
 - Household survey data
 - GORP (Global Operational Response Plan) data
 - Exchange rates and prices for Afghanistan

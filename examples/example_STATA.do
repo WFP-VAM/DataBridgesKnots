@@ -7,9 +7,9 @@ Read a 'full' Household dataset  from Data Bridges and load it into STATA.
 Only works if user has STATA 18+ installed and added to PATH.
 """
 
-from data_bridges_utils import DataBridgesShapes
-from data_bridges_utils.labels import get_column_labels, get_value_labels, map_value_labels
-from data_bridges_utils.load_stata import load_stata
+from data_bridges_knots import DataBridgesShapes
+from data_bridges_knots.labels import get_column_labels, get_value_labels, map_value_labels
+from data_bridges_knots.load_stata import load_stata
 import numpy as np
 import stata_setup
 from sfi import Data, Macro,  SFIToolkit, Frame, Datetime as dt

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "data_bridges_utils"
+name = "data_bridges_knots"
 version = "0.1.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Wrapper for Data Bridges API client"
@@ -28,4 +28,4 @@ data-bridges-utils-STATA = ["stata-setup", "pystata"]
 data-bridges-utils-R = []
 
 [tool.setuptools]
-packages = ["data_bridges_utils"]
+packages = ["data_bridges_knots"]
