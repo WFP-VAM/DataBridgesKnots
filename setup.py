@@ -11,7 +11,7 @@ setup(
     description='Wrapper for Data Bridges API client',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/WFP-VAM/DataBridgesUtils',
+    url='https://github.com/WFP-VAM/DataBridgesKnots',
     author='Alessandra Gherardelli, Valerio Giuffrida',
     author_email='alessandra.gherardelli@wfp.org, valerio.giuffrida@wfp.org',
     license='GNU General Public License v3 or later (GPLv3+)',
