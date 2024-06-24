@@ -11,9 +11,9 @@ def get_value_labels(df):
         name = row["name"]
         choice = row["choices"]
         if name in categories_dict:
-            categories_dict[name].update({int(choice["name"]): choice["label"]})
+            categories_dict[name].update({(choice["name"]): choice["label"]})
         else:
-            categories_dict[name] = {int(choice["name"]): choice["label"]}
+            categories_dict[name] = {(choice["name"]): choice["label"]}
     return categories_dict
 
 def get_column_labels(df):
@@ -42,9 +42,9 @@ def map_value_labels(survey_data, questionnaire):
         name = row["name"]
         choice = row["choices"]
         if name in categories_dict:
-            categories_dict[name].update({int(choice["name"]): choice["label"]})
+            categories_dict[name].update({(choice["name"]): choice["label"]})
         else:
-            categories_dict[name] = {int(choice["name"]): choice["label"]}
+            categories_dict[name] = {(choice["name"]): choice["label"]}
 
     # Map the categories to survey_data
     survey_data_value_labels = survey_data.copy()
@@ -54,4 +54,10 @@ def map_value_labels(survey_data, questionnaire):
             survey_data_value_labels[col] = survey_data_value_labels[col].apply(lambda x: category_dict.get(x, x))
 
     return survey_data_value_labels
+
+def as_numeric(df, cols = []):
+    for col in cols:
+        df[col].apply(lambda x: x.astype(int))
+    return df
+
 

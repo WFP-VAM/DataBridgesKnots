@@ -116,7 +116,10 @@ class DataBridgesShapes:
 
         df = pd.DataFrame(responses)
 
-        df.apply(lambda x: pd.to_numeric(x, errors='coerce', downcast='integer').fillna(9999).astype(np.int64 if x.dtype == 'int64' else x.dtype))
+        df = df.apply(lambda x: pd.to_numeric(x, errors='ignore', downcast='integer').fillna(9999).astype(int if x.dtype == 'int' or x.dtype == 'float' else x.dtype))
+
+        # df = df.apply(lambda x: pd.to_numeric(x, errors='ignore', downcast='integer').fillna(9999).astype(int if x.dtype == 'float' else x.dtype))
+
         df = df.replace({9999: None})
         return df
 
