@@ -32,6 +32,8 @@ def get_column_labels(df):
 
 # Map values if int
 def map_value_labels(survey_data, questionnaire):
+
+    survey_data = survey_data.convert_dtypes()
     choiceList = pd.json_normalize(questionnaire['choiceList'])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
     choiceList = choiceList.join(questionnaire["name"]).dropna()
@@ -55,9 +57,10 @@ def map_value_labels(survey_data, questionnaire):
 
     return survey_data_value_labels
 
-def as_numeric(df, cols = []):
-    for col in cols:
-        df[col].apply(lambda x: x.astype(int))
+def as_numeric(df, col_list):
+    for col in col_list:
+        df[col] = pd.to_numeric(df[col], errors='ignore').fillna(9999).astype('int64')
+    
     return df
 
 

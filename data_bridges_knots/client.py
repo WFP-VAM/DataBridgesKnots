@@ -116,11 +116,7 @@ class DataBridgesShapes:
 
         df = pd.DataFrame(responses)
 
-        df = df.apply(lambda x: pd.to_numeric(x, errors='ignore', downcast='integer').fillna(9999).astype(int if x.dtype == 'int' or x.dtype == 'float' else x.dtype))
 
-        # df = df.apply(lambda x: pd.to_numeric(x, errors='ignore', downcast='integer').fillna(9999).astype(int if x.dtype == 'float' else x.dtype))
-
-        df = df.replace({9999: None})
         return df
 
     def get_prices(self, country_iso3, survey_date, page_size=1000):
