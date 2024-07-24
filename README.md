@@ -50,6 +50,10 @@ survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], acce
 # get XLSForm data
 questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
 
+# converts numeric columns into ints
+numeric_columns = [ 'FCSDairy', 'FCSDairy_SRf', 'FCSFat', 'FCSFat_SRf', 'FCSFruit', 'FCSFruit_SRf', 'FCSNFruiOrg', 'FCSNPrEggs', 'FCSNPrFish', 'FCSNPrMeatF', 'FCSNPrMeatO', 'FCSNVegGre', 'FCSNVegOrg', 'FCSPr', 'FCSPr_SRf', 'FCSPulse', 'FCSPulse_SRf', 'FCSStap', 'FCSStap_SRf', 'FCSSugar', 'FCSSugar_SRf', 'FCSVeg', 'FCSVeg_SRf', 'HHSize', 'HHSize01F', 'HHSize01M', 'HHSize', 'HHSize01F', 'HHSize01M', 'HHSize1217F', 'HHSize1217M', 'HHSize1859F', 'HHSize1859M', 'HHSize24F', 'HHSize24M', 'HHSize511F', 'HHSize511M', 'HHSize60AboveF', 'HHSize60AboveM', 'RESPAge' ]
+df = as_numeric(survey_data, numeric_columns)
+
 ```
 
 ## Contributing

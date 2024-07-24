@@ -68,7 +68,7 @@ class DataBridgesShapes:
         )
         return configuration
 
-    def get_household_survey(self, survey_id, access_type, page_size=600):
+    def get_household_survey(self, survey_id, access_type, page_size=600, page = 0):
         """Retrieves survey data using the specified configuration and access type.
 
         Args:
@@ -84,7 +84,6 @@ class DataBridgesShapes:
         responses = []
         total_items = 1
         max_item = 0
-        page = 0
 
         while total_items > max_item:
             page += 1

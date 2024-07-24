@@ -169,5 +169,6 @@ data_bridges_api_config.yaml
 *.Rproj
 *.yaml
 sandbox.py
+sandbox.ipynb
 *.csv
 .vscode 
