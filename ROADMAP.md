@@ -5,8 +5,9 @@ This document outlines the planned features and improvements for the `DataBridge
 ## Upcoming Release: 0.2.0 (DataBridges API v5.0)
 
 ### New Features
+- [ ] Update setup.py and pyproject.toml to include DataBridges API v5.0
 - [X] Endpoints: Commodities
-- [ ] Endpoints: Commodity units
+- [X] Endpoints: Commodity units
 - [ ] Endpoints: Economic data
 - [ ] Endpoints: Markets
 - [ ] Endpoints: Markets Prices

@@ -15,11 +15,12 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ## Configuration
 1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your core from.
 2. The structure of the file is: 
-    ```
+    ```yaml
     NAME: ''
     VERSION : ''
     KEY: ''
     SECRET: ''
+    DATA_BRIDGES_API_KEY = ''
     SCOPES:
     - ''
     - ''
@@ -29,26 +30,17 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
 ### Python
-Run the following code to extract household survey data. 
+Run the following code to extract commoditiy data. 
 
 ```python
 
 from data_bridges_knots import DataBridgesShapes
 
-CONFIG_PATH = r"data_bridges_api_config.yaml"
+CREDENTIALS = r"data_bridges_api_config.yaml"
 
-client = DataBridgesShapes(CONFIG_PATH)
+client = DataBridgesShapes(CREDENTIALS)
 
-#%% XSLForm definition and Household dataset
-
-CONGO_CFSVA = {
-    'questionnaire': 1509,
-    'dataset': 3094
-}
-# get household survey data  
-survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='full')
-# get XLSForm data
-questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
+commodities_list = client.get_commodities_list(country_code='ETH', commodity_name='wheat', page=1, format='json')
 
 ```
 

@@ -29,11 +29,11 @@ setup(
             'pip-tools',
             'pytest',
         ],
-        'data-bridges-utils': [],
-        'data-bridges-utils-STATA': [
-            'stata-setup',
-            'pystata',
-        ],
-        'data-bridges-utils-R': [],
+        # 'data-bridges-utils': [],
+        # 'data-bridges-utils-STATA': [
+        #     'stata-setup',
+        #     'pystata',
+        # ],
+        # 'data-bridges-utils-R': [],
     },
 )
