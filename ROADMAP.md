@@ -14,6 +14,7 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] Endpoints: Rpme
 - [ ] Endpoints: Surveys
 - [ ] Endpoints: XlsForms
+- [ ] Endpoints: Household Survey
 - [ ] STATA support: Output dta with value and variable labels
 - [ ] R support: Example file for household and market data
 

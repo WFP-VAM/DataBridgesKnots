@@ -57,6 +57,7 @@ class DataBridgesShapes:
         secret = databridges_config['SECRET']
         scopes = databridges_config['SCOPES']
         version = databridges_config['VERSION']
+        data_bridges_api_key =  databridges_config['DATA_BRIDGES_API_KEY']
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
         
@@ -344,72 +345,72 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity data.
         """
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.CommoditiesApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.commodities_list_get(
+                        country_code=country_code,
+                        commodity_name=commodity_name,
+                        commodity_id=commodity_id,
+                        page=page,
+                        format=format,
+                        env=env
+                    )
+                    logger.info("Successfully retrieved commodities list")
+                    
+                    # Convert the response to a DataFrame
+                    if hasattr(api_response, 'items'):
+                        df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    else:
+                        df = pd.DataFrame([api_response.to_dict()])
+                    
+                    df = df.replace({np.nan: None})
+                    return df
+
+                except ApiException as e:
+                    logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
+                raise
+
+        def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
+        """
+        Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
+
+        Args:
+            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            commodity_id (int, optional): The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.
+            from_unit_id (int, optional): The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.
+            to_unit_id (int, optional): The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.
+            page (int, optional): Page number for paged results. Defaults to 1.
+            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
+        """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
-            api_instance = data_bridges_client.CommoditiesApi(api_client)
+            api_instance = data_bridges_client.CommodityUnitsApi(api_client)
             env = self.env
 
             try:
-                api_response = api_instance.commodities_list_get(
+                api_response = api_instance.commodity_units_conversion_list_get(
                     country_code=country_code,
-                    commodity_name=commodity_name,
                     commodity_id=commodity_id,
+                    from_unit_id=from_unit_id,
+                    to_unit_id=to_unit_id,
                     page=page,
                     format=format,
                     env=env
                 )
-                logger.info("Successfully retrieved commodities list")
+                logger.info("Successfully retrieved commodity units conversion list")
                 
-                # Convert the response to a DataFrame
-                if hasattr(api_response, 'items'):
-                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                else:
-                    df = pd.DataFrame([api_response.to_dict()])
-                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
-            raise
-
-    def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
-    """
-    Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
-
-    Args:
-        country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
-        commodity_id (int, optional): The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.
-        from_unit_id (int, optional): The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.
-        to_unit_id (int, optional): The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.
-        page (int, optional): Page number for paged results. Defaults to 1.
-        format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-    Returns:
-        pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
-    """
-    with data_bridges_client.ApiClient(self.configuration) as api_client:
-        api_instance = data_bridges_client.CommodityUnitsApi(api_client)
-        env = self.env
-
-        try:
-            api_response = api_instance.commodity_units_conversion_list_get(
-                country_code=country_code,
-                commodity_id=commodity_id,
-                from_unit_id=from_unit_id,
-                to_unit_id=to_unit_id,
-                page=page,
-                format=format,
-                env=env
-            )
-            logger.info("Successfully retrieved commodity units conversion list")
-            
-            df = pd.DataFrame([item.to_dict() for item in api_response.items])
-            df = df.replace({np.nan: None})
-            return df
-
-        except ApiException as e:
-            logger.error(f"Exception when calling CommodityUnitsApi->commodity_units_conversion_list_get: {e}")
-            raise
+                logger.error(f"Exception when calling CommodityUnitsApi->commodity_units_conversion_list_get: {e}")
+                raise
 
     def get_commodity_units_list(self, country_code=None, commodity_unit_name=None, commodity_unit_id=0, page=1, format='json'):
         """
@@ -458,4 +459,8 @@ if __name__ == "__main__":
 
     client = DataBridgesShapes(CONFIG_PATH)
 
-    commodities_list = client.get_commodities_list(country_code='ETH', commodity_name='wheat', page=1, format='json')
+    commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
+    comodity_unit_conversion_list = client.get_commodity_units_conversion_list(country_code="TZA", commodity_id=1, from_unit_id=1, to_unit_id=2, page=1, format='json')
+
+    print(commodity_units_list)
+    print(comodity_unit_conversion_list)
