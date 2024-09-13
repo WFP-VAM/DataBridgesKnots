@@ -57,7 +57,7 @@ class DataBridgesShapes:
         secret = databridges_config['SECRET']
         scopes = databridges_config['SCOPES']
         version = databridges_config['VERSION']
-        data_bridges_api_key =  databridges_config['DATA_BRIDGES_API_KEY']
+        data_bridges_api_key =  databridges_config['DATABRIDGES_API_KEY']
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
         
@@ -345,35 +345,35 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity data.
         """
-            with data_bridges_client.ApiClient(self.configuration) as api_client:
-                api_instance = data_bridges_client.CommoditiesApi(api_client)
-                env = self.env
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.CommoditiesApi(api_client)
+            env = self.env
 
-                try:
-                    api_response = api_instance.commodities_list_get(
-                        country_code=country_code,
-                        commodity_name=commodity_name,
-                        commodity_id=commodity_id,
-                        page=page,
-                        format=format,
-                        env=env
-                    )
-                    logger.info("Successfully retrieved commodities list")
-                    
-                    # Convert the response to a DataFrame
-                    if hasattr(api_response, 'items'):
-                        df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                    else:
-                        df = pd.DataFrame([api_response.to_dict()])
-                    
-                    df = df.replace({np.nan: None})
-                    return df
+            try:
+                api_response = api_instance.commodities_list_get(
+                    country_code=country_code,
+                    commodity_name=commodity_name,
+                    commodity_id=commodity_id,
+                    page=page,
+                    format=format,
+                    env=env
+                )
+                logger.info("Successfully retrieved commodities list")
+                
+                # Convert the response to a DataFrame
+                if hasattr(api_response, 'items'):
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                else:
+                    df = pd.DataFrame([api_response.to_dict()])
+                
+                df = df.replace({np.nan: None})
+                return df
 
-                except ApiException as e:
-                    logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
-                raise
+            except ApiException as e:
+                logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
+            raise
 
-        def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
+    def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
         """
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
 
@@ -449,6 +449,151 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling CommodityUnitsApi->commodity_units_list_get: {e}")
                 raise
 
+    def get_currency_list(self, country_code=None, currency_name=None, currency_id=0, page=1, format='json'):
+        """
+        Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
+
+        Args:
+            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            currency_name (str, optional): Currency 3-letter code, matching with ISO 4217.
+            currency_id (int, optional): Unique code to identify the currency in internal VAM currencies. Defaults to 0.
+            page (int, optional): Page number for paged results. Defaults to 1.
+            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved currency data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.CurrencyApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.currency_list_get(
+                    country_code=country_code,
+                    currency_name=currency_name,
+                    currency_id=currency_id,
+                    page=page,
+                    format=format,
+                    env=env
+                )
+                logger.info("Successfully retrieved currency list")
+                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling CurrencyApi->currency_list_get: {e}")
+                raise
+
+    def get_usd_indirect_quotation(self, country_iso3='', currency_name='', page=1, format='json'):
+        """
+        Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.
+
+        Args:
+            country_iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
+            currency_name (str, optional): The ISO3 code for the currency, based on ISO4217. Defaults to ''.
+            page (int, optional): Page number for paged results. Defaults to 1.
+            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.CurrencyApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.currency_usd_indirect_quotation_get(
+                    country_iso3=country_iso3,
+                    currency_name=currency_name,
+                    page=page,
+                    format=format,
+                    env=env
+                )
+                logger.info("Successfully retrieved USD indirect quotation data")
+                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling CurrencyApi->currency_usd_indirect_quotation_get: {e}")
+                raise
+
+    def get_economic_indicator_list(self, page=1, indicator_name='', iso3='', format='json'):
+        """
+        Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
+
+        Args:
+            page (int, optional): Page number for paged results. Defaults to 1.
+            indicator_name (str, optional): Unique indicator name. Defaults to ''.
+            iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
+            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved economic indicator data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.EconomicDataApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.economic_data_indicator_list_get(
+                    page=page,
+                    indicator_name=indicator_name,
+                    iso3=iso3,
+                    format=format,
+                    env=env
+                )
+                logger.info("Successfully retrieved economic indicator list")
+                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling EconomicDataApi->economic_data_indicator_list_get: {e}")
+                raise
+
+    def get_economic_data(self, indicator_name, page=1, iso3='', start_date=None, end_date=None, format='json'):
+        """
+        Returns the time series of values for different indicators.
+
+        Args:
+            indicator_name (str): Name of the indicator as found in /EconomicData/IndicatorList.
+            page (int, optional): Page number for paged results. Defaults to 1.
+            iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
+            start_date (datetime, optional): Starting date for the range in which data was collected.
+            end_date (datetime, optional): Ending date for the range in which data was collected.
+            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved economic data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.EconomicDataApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.economic_data_indicator_name_get(
+                    indicator_name=indicator_name,
+                    page=page,
+                    iso3=iso3,
+                    start_date=start_date,
+                    end_date=end_date,
+                    format=format,
+                    env=env
+                )
+                logger.info(f"Successfully retrieved economic data for indicator: {indicator_name}")
+                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling EconomicDataApi->economic_data_indicator_name_get: {e}")
+                raise
 
 
 
@@ -462,5 +607,14 @@ if __name__ == "__main__":
     commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
     comodity_unit_conversion_list = client.get_commodity_units_conversion_list(country_code="TZA", commodity_id=1, from_unit_id=1, to_unit_id=2, page=1, format='json')
 
-    print(commodity_units_list)
-    print(comodity_unit_conversion_list)
+    currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS", currency_id=0, page=1, format='json')
+    usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
+    
+    # BUG: 404 error
+    economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
+    # BUG: 404 error
+    economic_data = client.get_economic_data(indicator_name='', page=1, iso3='', start_date=None, end_date=None, format='json')
+    print(economic_indicator_list)
+
+
+

@@ -12,6 +12,18 @@ You can install the `data_bridges_knots` package using `pip` and the Git reposit
 pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ```
 
+STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
+
+***STATA users***
+```
+pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
+```
+
+***R users***
+```
+pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[R]
+```
+
 ## Configuration
 1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your core from.
 2. The structure of the file is: 
