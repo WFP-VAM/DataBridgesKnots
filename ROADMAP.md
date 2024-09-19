@@ -6,15 +6,17 @@ This document outlines the planned features and improvements for the `DataBridge
 
 ### New Features
 - [ ] Update setup.py and pyproject.toml to include DataBridges API v5.0
-- [X] Endpoints: Commodities
-- [X] Endpoints: Commodity units
-- [ ] Endpoints: Economic data
-- [ ] Endpoints: Markets
-- [ ] Endpoints: Markets Prices
-- [ ] Endpoints: Rpme
-- [ ] Endpoints: Surveys
-- [ ] Endpoints: XlsForms
-- [ ] Endpoints: Household Survey
+- [X] Endpoints: CommoditiesApis
+- [X] Endpoints: CurrencyApi
+- [X] Endpoints: EconomicDataApi
+- [X] Endpoints: MarketsApi
+- [ ] Endpoints: FoodSecurityApi
+- [ ] Endpoints: GorpApi
+- [ ] Endpoints: MarketPricesAPi
+- [ ] Endpoints: IncubationApi
+- [ ] Endpoints: RpmeApi
+- [ ] Endpoints: SurveysApi
+- [ ] Endpoints: XlsFormsApi
 - [ ] STATA support: Output dta with value and variable labels
 - [ ] R support: Example file for household and market data
 

@@ -521,6 +521,7 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling CurrencyApi->currency_usd_indirect_quotation_get: {e}")
                 raise
 
+    # FIXME: JSON response 
     def get_economic_indicator_list(self, page=1, indicator_name='', iso3='', format='json'):
         """
         Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
@@ -535,65 +536,95 @@ class DataBridgesShapes:
             pandas.DataFrame: A DataFrame containing the retrieved economic indicator data.
         """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
+            # Create an instance of the API class
             api_instance = data_bridges_client.EconomicDataApi(api_client)
-            env = self.env
 
             try:
-                api_response = api_instance.economic_data_indicator_list_get(
-                    page=page,
-                    indicator_name=indicator_name,
-                    iso3=iso3,
-                    format=format,
-                    env=env
-                )
-                logger.info("Successfully retrieved economic indicator list")
-                
+                # Returns the lists of indicators.
+                api_response = api_instance.economic_data_indicator_list_get(page=page, indicator_name=indicator_name, iso3=iso3, format=format, env=self.env)
+                print("The response of EconomicDataApi->economic_data_indicator_list_get:\n")
+                return api_response
+            except Exception as e:
+                print("Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s\n" % e)
+
+    # BUG: Unsupported content type: 'application/geo+json
+    def get_market_geojson_list(self, adm0code=None):
+                # Enter a context with an instance of the API client
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            # Create an instance of the API class
+            api_instance = data_bridges_client.MarketsApi(api_client)
+
+            try:
+                # Provide a list of geo referenced markets in a specific country
+                api_response = api_instance.markets_geo_json_list_get(adm0code=adm0code, env=self.env)
+                print("The response of MarketsApi->markets_geo_json_list_get:\n")
+                return api_response
+            except Exception as e:
+                print("Exception when calling MarketsApi->markets_geo_json_list_get: %s\n" % e)
+
+    def get_markets_list(self, country_code=None, page=1):
+        # Enter a context with an instance of the API client
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            # Create an instance of the API class
+            api_instance = data_bridges_client.MarketsApi(api_client)
+            format = 'json' # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
+            env = self.env # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
+
+            try:
+                # Get a complete list of markets in a country
+                api_response = api_instance.markets_list_get(country_code=country_code, page=page, format=format, env=env)
+                print("The response of MarketsApi->markets_list_get:\n")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
+            except Exception as e:
+                print("Exception when calling MarketsApi->markets_list_get: %s\n" % e)
+        
 
-            except ApiException as e:
-                logger.error(f"Exception when calling EconomicDataApi->economic_data_indicator_list_get: {e}")
-                raise
+    # FIXME: JSON response
+    def get_markets_as_csv(self, adm0code=None, local_names=False):
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+    # Create an instance of the API class
+            api_instance = data_bridges_client.MarketsApi(api_client)
+            local_names = False # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
 
-    def get_economic_data(self, indicator_name, page=1, iso3='', start_date=None, end_date=None, format='json'):
+            try:
+                # Get a complete list of markets in a country
+                api_response = api_instance.markets_markets_as_csv_get(adm0code=adm0code, local_names=local_names, env=self.env)
+                logger.info("The response of MarketsApi->markets_markets_as_csv_get:\n")
+                return api_response
+            except Exception as e:
+                logger.error("Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n" % e)
+
+    def get_nearby_markets(self):
+        pass
+
+    def get_nearby_markets(self, adm0code=None, lat=None, lng=None):
         """
-        Returns the time series of values for different indicators.
+        Find markets near a given location by longitude and latitude within a 15Km distance.
 
         Args:
-            indicator_name (str): Name of the indicator as found in /EconomicData/IndicatorList.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
-            start_date (datetime, optional): Starting date for the range in which data was collected.
-            end_date (datetime, optional): Ending date for the range in which data was collected.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+            adm0code (int, optional): Code for the country as retrieved from https://api.vam.wfp.org/geodata/CountriesInRegion.
+            lat (float, optional): Latitude of the point that will be used to search for existing nearby markets.
+            lng (float, optional): Longitude of the point that will be used to search for existing nearby markets.
 
         Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved economic data.
+            pandas.DataFrame: A DataFrame containing the nearby markets data.
         """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
-            api_instance = data_bridges_client.EconomicDataApi(api_client)
+            api_instance = data_bridges_client.MarketsApi(api_client)
             env = self.env
 
             try:
-                api_response = api_instance.economic_data_indicator_name_get(
-                    indicator_name=indicator_name,
-                    page=page,
-                    iso3=iso3,
-                    start_date=start_date,
-                    end_date=end_date,
-                    format=format,
-                    env=env
-                )
-                logger.info(f"Successfully retrieved economic data for indicator: {indicator_name}")
-                
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                api_response = api_instance.markets_nearby_markets_get(adm0code=adm0code, lat=lat, lng=lng, env=env)
+                logger.info("Successfully retrieved nearby markets")
+                df = pd.DataFrame([item.to_dict() for item in api_response])
                 df = df.replace({np.nan: None})
                 return df
-
             except ApiException as e:
-                logger.error(f"Exception when calling EconomicDataApi->economic_data_indicator_name_get: {e}")
+                logger.error(f"Exception when calling MarketsApi->markets_nearby_markets_get: {e}")
                 raise
+
 
 
 
@@ -610,11 +641,14 @@ if __name__ == "__main__":
     currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS", currency_id=0, page=1, format='json')
     usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
     
-    # BUG: 404 error
+    # FIXME: JSON Response + printing instead of logging
     economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
-    # BUG: 404 error
-    economic_data = client.get_economic_data(indicator_name='', page=1, iso3='', start_date=None, end_date=None, format='json')
-    print(economic_indicator_list)
 
+    # BUG: Error: Unsoppoerted content type application/geo+json
+    # markets_geo_json = client.get_market_geojson_list(adm0code=56)
+    
+    markets_list = client.get_markets_list(country_code="TZA")
+    
+    markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False) 
 
-
+    nearby_markets = client.get_nearby_markets(adm0code=56)

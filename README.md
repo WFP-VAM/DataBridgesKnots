@@ -21,7 +21,7 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges
 
 ***R users***
 ```
-pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[R]
+pip install git+https://github.com/WFP-VAM/DataBridgesusKnots.git#egg=data_bridges_knots[R]
 ```
 
 ## Configuration
