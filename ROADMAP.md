@@ -23,6 +23,8 @@ This document outlines the planned features and improvements for the `DataBridge
 ### Bug Fixes
 - [ ] DPO change for GORP
 - [ ] DPO change for XLSForm
+- [ ] Markets GeoJSON response
+- [ ] JSON to DataFrame response
 - [ ] Fix optional dependencies for STATA
 - [ ] Handle SSL certificate error
 

@@ -171,4 +171,4 @@ data_bridges_api_config.yaml
 sandbox.*
 *.csv
 .vscode 
-data_bridges_knots/DataBridgesKnots + Client.code-workspace
+*.code-workspace

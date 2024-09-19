@@ -34,7 +34,6 @@ class DataBridgesShapes:
         pandas.DataFrame: A DataFrame containing the retrieved survey data.
     """
 
-
     def __init__(self, yaml_config_path, env='prod'):
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
         self.env = env
@@ -202,7 +201,6 @@ class DataBridgesShapes:
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
-        
     
     def get_gorp(self, data_type, page=None):
         """
@@ -252,36 +250,39 @@ class DataBridgesShapes:
             df = df.replace({np.nan: None})
             return df
         
-    def get_food_security(self, country_iso3=None, year=None, page=None, env='prod'):
+    def get_food_security_list(self, iso3=None, year=None, page=1):
         """
         Retrieves food security data from the Data Bridges API.
 
         Args:
-            country_iso3 (str, optional): The ISO3 code of the country to retrieve data for. Defaults to None.
-            year (int, optional): The year to retrieve data for. Defaults to None.
-            page (int, optional): The page number for paginated results. Defaults to None.
-            env (str, optional): The environment to use. Can be 'prod' or 'dev'. Defaults to 'prod'.
+            iso3 (str, optional): The country ISO3 code.
+            year (int, optional): The year to retrieve data for.
+            page (int, optional): Page number for paged results. Defaults to 1.
 
         Returns:
-            The requested food security data.
+            pandas.DataFrame: A DataFrame containing the retrieved food security data.
         """
-        responses =[]
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             food_security_api_instance = data_bridges_client.FoodSecurityApi(api_client)
+            env = self.env
 
             try:
-                food_security_data = food_security_api_instance.food_security_list_get(
-                    iso3=country_iso3,
+                api_response = food_security_api_instance.food_security_list_get(
+                    iso3=iso3,
                     year=year,
                     page=page,
                     env=env
                 )
-            except data_bridges_client.ApiException as e:
-                logger.error(f"Exception when calling Food Security data: {e}")
+                logger.info("Successfully retrieved food security data")
+                
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling FoodSecurityApi->food_security_list_get: {e}")
                 raise
-            
-            responses.extend(item.to_dict() for item in food_security_data.items)
-            return pd.DataFrame(responses)
+
 
     def get_household_questionnaire(self, xls_form_id, env='prod', page_size=200):
         """
@@ -596,8 +597,6 @@ class DataBridgesShapes:
             except Exception as e:
                 logger.error("Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n" % e)
 
-    def get_nearby_markets(self):
-        pass
 
     def get_nearby_markets(self, adm0code=None, lat=None, lng=None):
         """
@@ -652,3 +651,6 @@ if __name__ == "__main__":
     markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False) 
 
     nearby_markets = client.get_nearby_markets(adm0code=56)
+
+    get_food_security_list = client.get_food_security_list()
+    print(get_food_security_list)
