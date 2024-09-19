@@ -11,7 +11,7 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: EconomicDataApi
 - [X] Endpoints: MarketsApi
 - [X] Endpoints: FoodSecurityApi
-- [ ] Endpoints: GorpApi
+- [X] Endpoints: GorpApi
 - [ ] Endpoints: MarketPricesAPi
 - [ ] Endpoints: IncubationApi
 - [ ] Endpoints: RpmeApi
@@ -19,7 +19,6 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] Endpoints: XlsFormsApi
 
 ### Bug Fixes
-- [ ] DPO change for GORP
 - [ ] DPO change for XLSForm
 - [ ] Markets GeoJSON response
 - [ ] JSON to DataFrame response
