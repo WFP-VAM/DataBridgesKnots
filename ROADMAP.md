@@ -10,21 +10,24 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: CurrencyApi
 - [X] Endpoints: EconomicDataApi
 - [X] Endpoints: MarketsApi
-- [ ] Endpoints: FoodSecurityApi
+- [X] Endpoints: FoodSecurityApi
 - [ ] Endpoints: GorpApi
 - [ ] Endpoints: MarketPricesAPi
 - [ ] Endpoints: IncubationApi
 - [ ] Endpoints: RpmeApi
 - [ ] Endpoints: SurveysApi
 - [ ] Endpoints: XlsFormsApi
-- [ ] STATA support: Output dta with value and variable labels
-- [ ] R support: Example file for household and market data
 
 ### Bug Fixes
 - [ ] DPO change for GORP
 - [ ] DPO change for XLSForm
 - [ ] Markets GeoJSON response
 - [ ] JSON to DataFrame response
+
+## Future Release
+### v0.3.0 (DataBridges API v.0)
+- [ ] STATA support
+- [ ] R example files
 - [ ] Fix optional dependencies for STATA
 - [ ] Handle SSL certificate error
 

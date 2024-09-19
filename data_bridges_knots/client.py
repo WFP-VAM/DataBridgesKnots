@@ -8,7 +8,6 @@ from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
-
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(filename=logname,
                     filemode='a',
@@ -18,21 +17,7 @@ logging.basicConfig(filename=logname,
 
 logger = logging.getLogger(__name__)
 
-
-
 class DataBridgesShapes:
-    """
-    Retrieves survey data using the specified configuration and access type.
-    
-    Args:
-        survey_id (str): The ID of the survey to retrieve.
-        access_type (str): The type of access to use for retrieving the survey data.
-            Can be one of '', 'full', 'draft', 'official', or 'public'.
-        page_size (int, optional): The number of items to retrieve per page. Defaults to 200.
-    
-    Returns:
-        pandas.DataFrame: A DataFrame containing the retrieved survey data.
-    """
 
     def __init__(self, yaml_config_path, env='prod'):
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
@@ -201,54 +186,7 @@ class DataBridgesShapes:
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
-    
-    def get_gorp(self, data_type, page=None):
-        """
-        Retrieves data from the Global Operational Response Plan (GORP) API.
 
-        Args:
-            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', 'latest', 'list', or 'regional_latest'.
-            page (int, optional): The page number for paginated results. Defaults to None.
-            env (str, optional): The environment to use. Can be 'prod' or 'dev'. Defaults to 'prod'.
-
-        Returns:
-            The requested GORP data.
-        """
-        with data_bridges_client.ApiClient(self.configuration) as api_client:
-            gorp_api_instance = data_bridges_client.GorpApi(api_client)
-            env = self.env
-
-            responses = []
-
-            try:
-                if data_type == 'country_latest':
-                    gorp_data =  gorp_api_instance.gorp_country_latest_get(env=env)
-                elif data_type == 'global_latest':
-                    gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
-                elif data_type == 'latest':
-                                         
-                    gorp_data = gorp_api_instance.gorp_latest_get(page=page, env=env)
-                elif data_type == 'list':
-                    gorp_data = gorp_api_instance.gorp_list_get(page=page, env=env)
-                elif data_type == 'regional_latest':
-                    gorp_data =  gorp_api_instance.gorp_regional_latest_get(env=env)
-                else:
-                    raise ValueError(f"Invalid data_type: {data_type}")
-            except ApiException as e:
-                logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
-                raise
-
-            if "GorpGlobalApiDto" in gorp_data.__doc__:
-                responses.extend(item for item in gorp_data)
-            else:
-                try:
-                    responses.extend(item.to_dict() for item in gorp_data.items)
-                except AttributeError:
-                    responses.extend(item.to_dict() for item in gorp_data)
-            
-            df = pd.DataFrame(responses)
-            df = df.replace({np.nan: None})
-            return df
         
     def get_food_security_list(self, iso3=None, year=None, page=1):
         """
@@ -282,7 +220,6 @@ class DataBridgesShapes:
             except ApiException as e:
                 logger.error(f"Exception when calling FoodSecurityApi->food_security_list_get: {e}")
                 raise
-
 
     def get_household_questionnaire(self, xls_form_id, env='prod', page_size=200):
         """
@@ -580,12 +517,10 @@ class DataBridgesShapes:
                 return df
             except Exception as e:
                 print("Exception when calling MarketsApi->markets_list_get: %s\n" % e)
-        
 
     # FIXME: JSON response
     def get_markets_as_csv(self, adm0code=None, local_names=False):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
-    # Create an instance of the API class
             api_instance = data_bridges_client.MarketsApi(api_client)
             local_names = False # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
 
@@ -596,7 +531,6 @@ class DataBridgesShapes:
                 return api_response
             except Exception as e:
                 logger.error("Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n" % e)
-
 
     def get_nearby_markets(self, adm0code=None, lat=None, lng=None):
         """
@@ -623,9 +557,50 @@ class DataBridgesShapes:
             except ApiException as e:
                 logger.error(f"Exception when calling MarketsApi->markets_nearby_markets_get: {e}")
                 raise
+    def get_gorp(self, data_type, page=None):
+        """
+        Retrieves data from the Global Operational Response Plan (GORP) API.
 
+        Args:
+            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', 'latest', 'list', or 'regional_latest'.
+            page (int, optional): The page number for paginated results. Required for 'latest' and 'list' data types.
 
+        Returns:
+            pandas.DataFrame: A DataFrame containing the requested GORP data.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            gorp_api_instance = data_bridges_client.GorpApi(api_client)
+            env = self.env
 
+            try:
+                if data_type == 'country_latest':
+                    gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
+                elif data_type == 'global_latest':
+                    gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
+                elif data_type == 'latest':
+                    gorp_data = gorp_api_instance.gorp_latest_get(page=page, env=env)
+                elif data_type == 'list':
+                    gorp_data = gorp_api_instance.gorp_list_get(page=page, env=env)
+                elif data_type == 'regional_latest':
+                    gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
+                else:
+                    raise ValueError(f"Invalid data_type: {data_type}")
+
+                logger.info(f"Successfully retrieved GORP data for type: {data_type}")
+                
+                if isinstance(gorp_data, list):
+                    df = pd.DataFrame([item.to_dict() for item in gorp_data])
+                elif hasattr(gorp_data, 'items'):
+                    df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
+                else:
+                    df = pd.DataFrame([gorp_data.to_dict()])
+                
+                df = df.replace({np.nan: None})
+                return df
+
+            except ApiException as e:
+                logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
+            raise
 
 if __name__ == "__main__":
     import yaml
@@ -653,4 +628,18 @@ if __name__ == "__main__":
     nearby_markets = client.get_nearby_markets(adm0code=56)
 
     get_food_security_list = client.get_food_security_list()
-    print(get_food_security_list)
+
+    # Get country latest data
+    country_latest_df = client.get_gorp('country_latest')
+
+    # Get global latest data
+    global_latest_df = client.get_gorp('global_latest')
+
+    # Get latest data (paginated)
+    latest_df = client.get_gorp('latest', page=1)
+
+    # Get full list data (paginated)
+    list_df = client.get_gorp('list', page=1)
+
+    # Get regional latest data
+    regional_latest_df = client.get_gorp('regional_latest')
