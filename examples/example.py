@@ -49,3 +49,6 @@ list_df = client.get_gorp('list', page=1)
 
 # Get regional latest data
 regional_latest_df = client.get_gorp('regional_latest')
+
+### HOUSEHOLD DATA
+survey_data = client.get_household_survey(survey_id=3094, access_type="full")
