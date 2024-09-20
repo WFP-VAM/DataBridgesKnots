@@ -4,12 +4,12 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 
 ## Installation
 
-> NB This is the dev version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
+> NB This is the development version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
 
 You can install the `data_bridges_knots` package using `pip` and the Git repository URL:
 
 ```
-pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
+pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git@dev”
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
