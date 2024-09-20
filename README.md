@@ -48,17 +48,15 @@ Run the following code to extract commoditiy data.
 
 from data_bridges_knots import DataBridgesShapes
 
-CREDENTIALS = r"data_bridges_api_config.yaml"
+CONFIG_PATH = r"data_bridges_api_config.yaml"
 
-client = DataBridgesShapes(CREDENTIALS)
+client = DataBridgesShapes(CONFIG_PATH)
 
-commodities_list = client.get_commodities_list(country_code='ETH', commodity_name='wheat', page=1, format='json')
-
-# converts numeric columns into ints
-numeric_columns = [ 'FCSDairy', 'FCSDairy_SRf', 'FCSFat', 'FCSFat_SRf', 'FCSFruit', 'FCSFruit_SRf', 'FCSNFruiOrg', 'FCSNPrEggs', 'FCSNPrFish', 'FCSNPrMeatF', 'FCSNPrMeatO', 'FCSNVegGre', 'FCSNVegOrg', 'FCSPr', 'FCSPr_SRf', 'FCSPulse', 'FCSPulse_SRf', 'FCSStap', 'FCSStap_SRf', 'FCSSugar', 'FCSSugar_SRf', 'FCSVeg', 'FCSVeg_SRf', 'HHSize', 'HHSize01F', 'HHSize01M', 'HHSize', 'HHSize01F', 'HHSize01M', 'HHSize1217F', 'HHSize1217M', 'HHSize1859F', 'HHSize1859M', 'HHSize24F', 'HHSize24M', 'HHSize511F', 'HHSize511M', 'HHSize60AboveF', 'HHSize60AboveM', 'RESPAge' ]
-df = as_numeric(survey_data, numeric_columns)
+# COMMODITY DATA
+commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
+Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.

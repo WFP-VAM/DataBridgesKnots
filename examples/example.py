@@ -20,6 +20,7 @@ comodity_unit_conversion_list = client.get_commodity_units_conversion_list(count
 
 currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS", currency_id=0, page=1, format='json')
 usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
+print(commodity_units_list)
 
 ## MARKETS DATA
 # Get a complete list of markets in a country
