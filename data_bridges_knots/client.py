@@ -21,6 +21,7 @@ class DataBridgesShapes:
 
     def __init__(self, yaml_config_path, env='prod'):
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
+        self.data_bridges_api_key = self.setup_databridges_configuration(yaml_config_path)
         self.env = env
         self.data = {}
 
@@ -41,7 +42,6 @@ class DataBridgesShapes:
         secret = databridges_config['SECRET']
         scopes = databridges_config['SCOPES']
         version = databridges_config['VERSION']
-        data_bridges_api_key =  databridges_config['DATABRIDGES_API_KEY']
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
         
@@ -52,57 +52,13 @@ class DataBridgesShapes:
             host=host, access_token=token.refresh(scopes=scopes)
         )
         return configuration
-
-    # def get_household_survey(self, survey_id, access_type, page_size=600):
-    #     """Retrieves survey data using the specified configuration and access type.
-
-    #     Args:
-    #         survey_id (str): The ID of the survey to retrieve.
-    #         access_type (str): The type of access to use for retrieving the survey data.
-    #             Can be one of '', 'full', 'draft', 'official', or 'public'.
-    #         page_size (int, optional): The number of items to retrieve per page. Defaults to 200.
-
-    #     Returns:
-    #         pandas.DataFrame: A DataFrame containing the retrieved survey data.
-    #     """
-
-    #     responses = []
-    #     total_items = 1
-    #     max_item = 0
-    #     page = 0
-
-    #     while total_items > max_item:
-    #         page += 1
-    #         with data_bridges_client.ApiClient(self.configuration) as api_client:
-    #             api_instance = data_bridges_client.IncubationApi(api_client)
-    #             env = self.env
-
-    #             try:
-    #                 logger.info(f"Calling get_household_survey for survey {survey_id}") 
-    #                 # Select appropriate API call based on access_type
-    #                 api_survey = {
-    #                     '': api_instance.household_public_base_data_get,
-    #                     'full': api_instance.household_full_data_get,
-    #                     'draft': api_instance.household_draft_internal_base_data_get,
-    #                     'official': api_instance.household_official_use_base_data_get,
-    #                     'public': api_instance.household_public_base_data_get
-    #                 }.get(access_type)(survey_id=survey_id, page=page, page_size=page_size, env=env)
-
-    #                 logger.info("Fetching page %s", page)
-    #                 logger.info("Items: %s", len(api_survey.items))
-    #                 responses.extend(api_survey.items)
-    #                 total_items = api_survey.total_items
-    #                 max_item = len(api_survey.items) + max_item
-    #                 time.sleep(1)
-
-    #             except ApiException as e:
-    #                 logger.error("Exception when calling Household data-> %s%s\n", access_type, e)
-    #                 raise
-
-    #     df = pd.DataFrame(responses)
-
-
-    #     return df
+    
+    def setup_databridges_configuration(self, yaml_config_path):
+        """Loads configuration from a YAML file and sets up authentication."""
+        with open(yaml_config_path, "r") as yamlfile:
+            data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
+        
+        return data_bridges_api_key['DATABRIDGES_API_KEY']
 
     def get_prices(self, country_iso3, survey_date, page_size=1000):
         """
@@ -581,14 +537,19 @@ class DataBridgesShapes:
                 env = self.env
 
                 try:
-                    logger.info(f"Calling get_household_survey for survey {survey_id}") 
+                    logger.info(f"Calling get_household_survey for survey {survey_id}")
                     # Select appropriate API call based on access_type
-                    api_survey = {
+                    api_call = {
                         'full': api_instance.household_full_data_get,
                         'draft': api_instance.household_draft_internal_base_data_get,
                         'official': api_instance.household_official_use_base_data_get,
                         'public': api_instance.household_public_base_data_get
-                    }.get(access_type)(survey_id=survey_id, page=page, page_size=page_size, env=env)
+                    }.get(access_type)
+
+                    if access_type in ['full', 'draft']:
+                        api_survey = api_call(self.data_bridges_api_key, survey_id=survey_id, page=page, page_size=page_size, env=env)
+                    else:
+                        api_survey = api_call(survey_id=survey_id, page=page, page_size=page_size, env=env)
 
                     logger.info(f"Fetching page {page}")
                     logger.info(f"Items: {len(api_survey.items)}")
@@ -603,6 +564,7 @@ class DataBridgesShapes:
 
         df = pd.DataFrame(responses)
         return df
+
 
     def get_household_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None, survey_id=None):
         """
@@ -708,48 +670,6 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}")
                 raise
 
-        # def get_household_questionnaire(self, xls_form_id, env='prod', page_size=200):
-    #     """
-    #     This function fetches questionnaire data for a given form ID from the Data Bridges API.
-
-    #     Args:
-    #         form_id (int): The ID of the questionnaire form to retrieve data for.
-    #         page_size (int, optional): The maximum number of items to retrieve per API call. Defaults to 200.
-
-    #     Returns:
-    #         pandas.DataFrame: A DataFrame containing the fetched questionnaire data.
-
-    #     Raises:
-    #         ApiException: If an error occurs while calling the Data Bridges API.
-    #     """
-
-    #     page = 0
-    #     with data_bridges_client.ApiClient(self.configuration) as api_client:
-    #         api_instance = data_bridges_client.IncubationApi(api_client)
-    #         env = self.env
-    #         responses = []
-    #         try:
-    #             # Select appropriate API call based on access_type
-    #             api_survey = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
-    #             page += 1
-    #             try:
-    #                 logger.info(f"Fetching page {page} from XLSForm definition")
-    #                 responses.extend(item.to_dict() for item in api_survey.items)
-    #             except AttributeError:
-    #                 responses.extend(item.to_dict() for item in api_survey)
-    #             time.sleep(1)
-
-    #         except ApiException as e:
-    #             logger.error("Exception when calling Household questionnaire-> %s%s\n", xls_form_id, e)
-    #             raise
-
-    #     df = pd.DataFrame(responses)
-    #     df = df.replace({np.nan: None})
-        
-    #     questionnaire = pd.DataFrame(list(df.fields)[0])
-    #     self.data[xls_form_id] = questionnaire
-    #     return questionnaire
-
     # def get_choice_list(self, xls_form_id):
     #     questionnaire = self.data[xls_form_id]
     #     choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
@@ -763,34 +683,23 @@ if __name__ == "__main__":
 
     client = DataBridgesShapes(CONFIG_PATH)
 
-
     # FIXME: JSON Response + printing instead of logging
-    economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
+    # economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
 
     # BUG: Error: Unsoppoerted content type application/geo+json
     # markets_geo_json = client.get_market_geojson_list(adm0code=56)
-    
 
-
-    CONGO_CFSVA = {
-        'questionnaire': 1509,
-        'dataset': 3094
-    }
-    # TODO: Test the following functions
     # Get household survey data
     survey_data = client.get_household_survey(survey_id=3094, access_type="full")
-    print("Household Survey Data:")
-    print(survey_data.head())
-
-    # Get list of household surveys
-    surveys_list = client.get_household_surveys(adm0_code=123, page=1, start_date="2023-01-01", end_date="2023-12-31")
-    print("\nHousehold Surveys List:")
-    print(surveys_list.head())
 
     # Get household questionnaire
-    questionnaire = client.get_household_questionnaire(xls_form_id=789)
-    print("\nHousehold Questionnaire:")
-    print(questionnaire.head())
+    questionnaire = client.get_household_questionnaire(xls_form_id=1509)
+
+    # TODO: Test the following functions
+    # # # Get list of household surveys
+    # # surveys_list = client.get_household_surveys(adm0_code=123, page=1, start_date="2023-01-01", end_date="2023-12-31")
+    # # print("\nHousehold Surveys List:")
+    # # print(surveys_list.head())
 
     # # Get AIMS analysis rounds
     # aims_data = client.get_aims_analysis_rounds(adm0_code=456)
