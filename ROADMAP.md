@@ -22,6 +22,7 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] DPO change for XLSForm
 - [ ] Markets GeoJSON response
 - [ ] JSON to DataFrame response
+- [ ] Market list JSON and CSV
 
 ## Future Release
 ### v0.3.0 (DataBridges API v.0)

@@ -689,21 +689,17 @@ if __name__ == "__main__":
     # BUG: Error: Unsoppoerted content type application/geo+json
     # markets_geo_json = client.get_market_geojson_list(adm0code=56)
 
-    # TODO: Test the following functions
     # Get household survey data
-    survey_data = client.get_household_survey(survey_id=3094, access_type="official")
-    print("Household Survey Data:")
-    print(survey_data.head())
+    survey_data = client.get_household_survey(survey_id=3094, access_type="full")
 
+    # Get household questionnaire
+    questionnaire = client.get_household_questionnaire(xls_form_id=1509)
+
+    # TODO: Test the following functions
     # # # Get list of household surveys
     # # surveys_list = client.get_household_surveys(adm0_code=123, page=1, start_date="2023-01-01", end_date="2023-12-31")
     # # print("\nHousehold Surveys List:")
     # # print(surveys_list.head())
-
-    # Get household questionnaire
-    questionnaire = client.get_household_questionnaire(xls_form_id=1509)
-    print("\nHousehold Questionnaire:")
-    print(questionnaire.head())
 
     # # Get AIMS analysis rounds
     # aims_data = client.get_aims_analysis_rounds(adm0_code=456)

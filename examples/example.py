@@ -32,9 +32,10 @@ markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False)
 nearby_markets = client.get_nearby_markets(adm0code=56)
 
 ### FOOD SECURITY DATA 
-# Get food security data (IPC and equivalent food insecurity numbers)
+# Get IPC and equivalent food insecurity numbers for all countries
 get_food_security_list = client.get_food_security_list()
 
+### Global Operation Response Plan (GOPR)
 # Get country-level latest data from the Global Operation Response Plan (GOPR) 
 country_latest_df = client.get_gorp('country_latest') # no data currently uploaded
 
@@ -51,4 +52,8 @@ list_df = client.get_gorp('list', page=1)
 regional_latest_df = client.get_gorp('regional_latest')
 
 ### HOUSEHOLD DATA
-survey_data = client.get_household_survey(survey_id=3094, access_type="full")
+# Get survey data for a specific survey
+survey_data = client.get_household_survey(survey_id=3094, access_type="official")
+
+# Get survey questionnaire for a specific survey
+questionnaire = client.get_household_questionnaire(xls_form_id=1509)
