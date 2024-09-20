@@ -763,43 +763,22 @@ if __name__ == "__main__":
 
     client = DataBridgesShapes(CONFIG_PATH)
 
-    commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
-    comodity_unit_conversion_list = client.get_commodity_units_conversion_list(country_code="TZA", commodity_id=1, from_unit_id=1, to_unit_id=2, page=1, format='json')
 
-    currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS", currency_id=0, page=1, format='json')
-    usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
-    
     # FIXME: JSON Response + printing instead of logging
     economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
 
     # BUG: Error: Unsoppoerted content type application/geo+json
     # markets_geo_json = client.get_market_geojson_list(adm0code=56)
     
-    markets_list = client.get_markets_list(country_code="TZA")
-    
-    markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False) 
 
-    nearby_markets = client.get_nearby_markets(adm0code=56)
 
-    get_food_security_list = client.get_food_security_list()
-
-    # Get country latest data
-    country_latest_df = client.get_gorp('country_latest')
-
-    # Get global latest data
-    global_latest_df = client.get_gorp('global_latest')
-
-    # Get latest data (paginated)
-    latest_df = client.get_gorp('latest', page=1)
-
-    # Get full list data (paginated)
-    list_df = client.get_gorp('list', page=1)
-
-    # Get regional latest data
-    regional_latest_df = client.get_gorp('regional_latest')
-
+    CONGO_CFSVA = {
+        'questionnaire': 1509,
+        'dataset': 3094
+    }
+    # TODO: Test the following functions
     # Get household survey data
-    survey_data = client.get_household_survey(survey_id="123456", access_type="public", page_size=1000)
+    survey_data = client.get_household_survey(survey_id=3094, access_type="full")
     print("Household Survey Data:")
     print(survey_data.head())
 
