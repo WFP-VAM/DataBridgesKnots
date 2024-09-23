@@ -1,13 +1,3 @@
-"""
-Reads Household Data from Data Bridges. The script uses the DataBridgesShapes class from the data_bridges_knots module to interact with the Data Bridges API and retrieve various datasets, including:
-- Household survey data
-- GORP (Global Operational Response Plan) data
-- Exchange rates and prices for Afghanistan
-- IPC and equivalent food security Data
-
-The script demonstrates how to use the DataBridgesShapes class to fetch these datasets and print the first few rows of the resulting pandas DataFrames.
-"""
-
 from data_bridges_knots import DataBridgesShapes
 
 CONFIG_PATH = r"data_bridges_api_config.yaml"
@@ -51,11 +41,14 @@ get_mfi_surveys_full_data = client.get_mfi_surveys_full_data(survey_id=3673)
 # Get the MFI functionality index for a given country (processed data)
 get_mfi_surveys_processed_data = client.get_mfi_surveys_processed_data(survey_id=3673) 
 
+# Get MFI XLSForm information
+mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
+
 #%% FOOD SECURITY DATA 
 # Get IPC and equivalent food insecurity numbers for all countries
 get_food_security_list = client.get_food_security_list()
 
-### GLOBAL OPERATION RESPONSE PLAN (GOPR)
+#%% GLOBAL OPERATION RESPONSE PLAN (GOPR)
 # Get country-level latest data from the Global Operation Response Plan (GOPR) 
 country_latest_df = client.get_gorp('country_latest') # no data currently uploaded
 
@@ -71,7 +64,7 @@ list_df = client.get_gorp('list', page=1)
 # Get regional latest data
 regional_latest_df = client.get_gorp('regional_latest')
 
-### HOUSEHOLD DATA
+#%% HOUSEHOLD ASSESSMENT & MONITORING DATA
 # Get list of household surveys available
 surveys_list = client.get_household_surveys()
 
@@ -86,6 +79,3 @@ questionnaire = client.get_household_questionnaire(xls_form_id=1509)
 
 # Get choice list for a specific survey
 choices = client.get_choice_list(xls_form_id=1509)
-
-
-

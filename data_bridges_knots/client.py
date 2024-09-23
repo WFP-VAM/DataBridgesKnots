@@ -765,8 +765,118 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}")
                 raise
 
+        # TODO: Get the scope and test these functions
+        def get_rpme_base_data(self, survey_id=None, page=1, page_size=20):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
 
+                try:
+                    api_response = api_instance.rpme_base_data_get(survey_id=survey_id, page=page, page_size=page_size, env=env)
+                    logger.info("Successfully retrieved RPME base data")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_base_data_get: {e}")
+                    raise
 
+        # TODO: Get the scope and test these functions
+        def get_rpme_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.rpme_full_data_get(survey_id=survey_id, format=format, page=page, page_size=page_size, env=env)
+                    logger.info("Successfully retrieved RPME full data")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_full_data_get: {e}")
+                    raise
+        # TODO: Get the scope and test these functions
+        def get_rpme_output_values(self, page=1, adm0_code=None, survey_id=None, shop_id=None, market_id=None, adm0_code_dots=''):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.rpme_output_values_get(page=page, adm0_code=adm0_code, survey_id=survey_id, 
+                                                                    shop_id=shop_id, market_id=market_id, adm0_code_dots=adm0_code_dots, env=env)
+                    logger.info("Successfully retrieved RPME output values")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_output_values_get: {e}")
+                    raise
+        # TODO: Get the scope and test these functions
+        def get_rpme_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.rpme_surveys_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                    logger.info("Successfully retrieved RPME surveys")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_surveys_get: {e}")
+                    raise
+        # TODO: Get the scope and test these functions
+        def get_rpme_variables(self, page=1):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.rpme_variables_get(page=page, env=env)
+                    logger.info("Successfully retrieved RPME variables")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_variables_get: {e}")
+                    raise
+
+        # TODO: Get the scope and test these functions
+        def get_rpme_xls_forms(self, adm0_code=0, page=1, start_date=None, end_date=None):
+            with data_bridges_client.ApiClient(self.configuration) as api_client:
+                api_instance = data_bridges_client.RpmeApi(api_client)
+                env = self.env
+
+                try:
+                    api_response = api_instance.rpme_xls_forms_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                    logger.info("Successfully retrieved RPME XLS forms")
+                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                    df = df.replace({np.nan: None})
+                    return df
+                except ApiException as e:
+                    logger.error(f"Exception when calling RpmeApi->rpme_xls_forms_get: {e}")
+                    raise
+
+        # Add this function to the DataBridgesShapes class
+
+    def get_mfi_xls_forms(self, adm0_code=0, page=1, start_date=None, end_date=None):
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.XlsFormsApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_xls_forms_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                logger.info("Successfully retrieved MFI XLS forms")
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+            except ApiException as e:
+                logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
+            raise
+
+    
 
 if __name__ == "__main__":
     import yaml
@@ -793,4 +903,29 @@ if __name__ == "__main__":
     # print("\nAIMS Polygon Files:")
     # print(f"Downloaded {len(polygon_files)} bytes")
 
+    # FIXME: Get scopes for RPME then  test the following function
+    # Get RPME base data
+    # rpme_base_data = client.get_rpme_base_data(survey_id=123, page=1, page_size=50)
+
+    # FIXME: Get scopes for RPME then  test the following function
+    # # Get RPME full data
+    # rpme_full_data = client.get_rpme_full_data(survey_id=123, format='json', page=1, page_size=50)
+
+    # FIXME: Get scopes for RPME then  test the following function
+    # # Get RPME output values
+    # rpme_output_values = client.get_rpme_output_values(page=1, adm0_code=456, survey_id=123)
+
+    # FIXME: Get scopes for RPME then  test the following function
+    # # Get RPME surveys
+    # rpme_surveys = client.get_rpme_surveys(adm0_code=456, page=1, start_date='2023-01-01', end_date='2023-12-31')
+
+    # FIXME: Get scopes for RPME then  test the following function
+    # # Get RPME variables
+    # rpme_variables = client.get_rpme_variables(page=1)
+
+    # FIXME: Get scopes for RPME then  test the following function
+    # # Get RPME XLS forms
+    # rpme_xls_forms = client.get_rpme_xls_forms(adm0_code=456, page=1, start_date='2023-01-01', end_date='2023-12-31')
+
+    mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
 

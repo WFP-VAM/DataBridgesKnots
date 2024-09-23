@@ -14,7 +14,7 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: GorpApi
 - [X] Endpoints: MarketPricesAPi
 - [X] Endpoints: IncubationApi
-- [ ] Endpoints: RpmeApi
+- [X] Endpoints: RpmeApi
 - [ ] Endpoints: SurveysApi
 - [ ] Endpoints: XlsFormsApi
 
