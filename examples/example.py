@@ -59,6 +59,13 @@ surveys_list = client.get_household_surveys()
 # Get survey data for a specific survey
 survey_data = client.get_household_survey(survey_id=3094, access_type="official")
 
+# Get XLSForm definition for a specific survey
+xlsform = client.get_household_xslform_definition(xls_form_id=1509)
+
 # Get survey questionnaire for a specific survey
 questionnaire = client.get_household_questionnaire(xls_form_id=1509)
+
+# Get choice list for a specific survey
+choices = client.get_choice_list(xls_form_id=1509)
+
 

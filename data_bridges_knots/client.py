@@ -23,7 +23,7 @@ class DataBridgesShapes:
         self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
         self.data_bridges_api_key = self.setup_databridges_configuration(yaml_config_path)
         self.env = env
-        self.data = {}
+        self.xlsform = None
 
     def __repr__(self):
         return "DataBridgesShapes(yamlpath='%s')" % self.configuration.host
@@ -601,7 +601,7 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling IncubationApi->household_surveys_get: {e}")
                 raise
 
-    def get_household_questionnaire(self, xls_form_id):
+    def get_household_xslform_definition(self, xls_form_id):
         """
         Get a complete set of XLS Form definitions of a given XLS Form ID.
 
@@ -618,13 +618,27 @@ class DataBridgesShapes:
             try:
                 api_response = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
                 logger.info(f"Successfully retrieved XLS Form definition for ID: {xls_form_id}")
-                df = pd.DataFrame([item.to_dict() for item in api_response])
-                df = df.replace({np.nan: None})
-                self.data[xls_form_id] = df
-                return df
+                self.xlsform = pd.DataFrame([item.to_dict() for item in api_response])
+                return self.xlsform
+
             except ApiException as e:
                 logger.error(f"Exception when calling IncubationApi->xls_forms_definition_get: {e}")
                 raise
+
+    def get_household_questionnaire(self, xls_form_id):
+        if self.xlsform is None:
+            self.xlsform = self.get_household_xslform_definition(xls_form_id)
+        return pd.DataFrame(list(self.xlsform.fields)[0])
+            
+    def get_choice_list(self, xls_form_id):
+        questionnaire = self.get_household_questionnaire(xls_form_id)
+    
+        choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
+        choices = choiceList.explode('choices')
+        choices['value'] = choices['choices'].apply(lambda x: x['name'])
+        choices['label'] = choices['choices'].apply(lambda x: x['label'])
+        return choices[['name', 'value', 'label']]
+
 
     def get_aims_analysis_rounds(self, adm0_code):
         """
@@ -670,11 +684,90 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}")
                 raise
 
-    # def get_choice_list(self, xls_form_id):
-    #     questionnaire = self.data[xls_form_id]
-    #     choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
-    #     choices = choiceList.explode('choices')
-    #     return choices
+
+
+    def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
+        """
+        Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_base_data_get(
+                    survey_id=survey_id, page=page, page_size=page_size, env=env
+                )
+                logger.info("Successfully retrieved MFI surveys base data")
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}")
+            raise
+
+    def get_mfi_surveys_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+        """
+        Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_full_data_get(
+                    survey_id=survey_id, format=format, page=page, page_size=page_size, env=env
+                )
+                logger.info("Successfully retrieved MFI surveys full data")
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}")
+                raise
+
+    def get_mfi_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
+        """
+        Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_get(
+                    adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env
+                )
+                logger.info("Successfully retrieved MFI surveys list")
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_get: {e}")
+                raise
+
+    def get_mfi_surveys_processed_data(self, survey_id=None, page=1, page_size=20, format='json', start_date=None, end_date=None, adm0_codes=None, market_id=None, survey_type=None):
+        """
+        Get MFI processed data in long format.
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_processed_data_get(
+                    survey_id=survey_id, page=page, page_size=page_size, format=format,
+                    start_date=start_date, end_date=end_date, adm0_codes=adm0_codes,
+                    market_id=market_id, survey_type=survey_type, env=env
+                )
+                logger.info("Successfully retrieved MFI surveys processed data")
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}")
+                raise
+
 
 if __name__ == "__main__":
     import yaml
@@ -700,3 +793,7 @@ if __name__ == "__main__":
     # polygon_files = client.get_aims_polygon_files(adm0_code=1)
     # print("\nAIMS Polygon Files:")
     # print(f"Downloaded {len(polygon_files)} bytes")
+
+
+    print(choices)
+
