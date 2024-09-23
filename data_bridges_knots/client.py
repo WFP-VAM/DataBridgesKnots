@@ -566,7 +566,7 @@ class DataBridgesShapes:
         return df
 
 
-    def get_household_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None, survey_id=None):
+    def get_household_surveys(self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None):
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all household surveys conducted in a country.
 
@@ -686,27 +686,17 @@ if __name__ == "__main__":
     # FIXME: JSON Response + printing instead of logging
     # economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
 
-    # BUG: Error: Unsoppoerted content type application/geo+json
+    # BUG: Error: Unsupported content type application/geo+json
     # markets_geo_json = client.get_market_geojson_list(adm0code=56)
 
-    # Get household survey data
-    survey_data = client.get_household_survey(survey_id=3094, access_type="full")
-
-    # Get household questionnaire
-    questionnaire = client.get_household_questionnaire(xls_form_id=1509)
-
-    # TODO: Test the following functions
-    # # # Get list of household surveys
-    # # surveys_list = client.get_household_surveys(adm0_code=123, page=1, start_date="2023-01-01", end_date="2023-12-31")
-    # # print("\nHousehold Surveys List:")
-    # # print(surveys_list.head())
-
+    # FIXME: Get scopes for AIMS then  test the following function
     # # Get AIMS analysis rounds
-    # aims_data = client.get_aims_analysis_rounds(adm0_code=456)
+    # aims_data = client.get_aims_analysis_rounds(adm0_code=1)
     # print("\nAIMS Analysis Rounds Data:")
     # print(f"Downloaded {len(aims_data)} bytes")
 
+    # FIXME: Get scopes for AIMS then  test the following function
     # # Get AIMS polygon files
-    # polygon_files = client.get_aims_polygon_files(adm0_code=789)
+    # polygon_files = client.get_aims_polygon_files(adm0_code=1)
     # print("\nAIMS Polygon Files:")
     # print(f"Downloaded {len(polygon_files)} bytes")

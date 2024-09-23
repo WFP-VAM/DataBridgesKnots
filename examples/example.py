@@ -53,8 +53,12 @@ list_df = client.get_gorp('list', page=1)
 regional_latest_df = client.get_gorp('regional_latest')
 
 ### HOUSEHOLD DATA
+# Get list of household surveys available
+surveys_list = client.get_household_surveys()
+
 # Get survey data for a specific survey
 survey_data = client.get_household_survey(survey_id=3094, access_type="official")
 
 # Get survey questionnaire for a specific survey
 questionnaire = client.get_household_questionnaire(xls_form_id=1509)
+
