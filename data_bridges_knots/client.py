@@ -639,7 +639,7 @@ class DataBridgesShapes:
         choices['label'] = choices['choices'].apply(lambda x: x['label'])
         return choices[['name', 'value', 'label']]
 
-
+    # FIXME: Get scopes for AIMS then  test the following function
     def get_aims_analysis_rounds(self, adm0_code):
         """
         Download all analysis rounds for AIMS (Asset Impact Monitoring System) data.
@@ -662,6 +662,7 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling IncubationApi->aims_download_all_analysis_rounds_get: {e}")
                 raise
 
+    # FIXME: Get scopes for AIMS then  test the following function
     def get_aims_polygon_files(self, adm0_code):
         """
         Download polygon files for Landscape Impact Assessment (LIA) assets.
@@ -684,8 +685,6 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}")
                 raise
 
-
-
     def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
         """
         Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
@@ -699,28 +698,26 @@ class DataBridgesShapes:
                     survey_id=survey_id, page=page, page_size=page_size, env=env
                 )
                 logger.info("Successfully retrieved MFI surveys base data")
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
+
+                df = pd.DataFrame(api_response.items)
                 return df
             except ApiException as e:
                 logger.error(f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}")
             raise
 
-    def get_mfi_surveys_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+    def get_mfi_surveys_full_data(self, survey_id=None, page=1, page_size=20):
         """
         Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
         """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
-
             try:
                 api_response = api_instance.m_fi_surveys_full_data_get(
-                    survey_id=survey_id, format=format, page=page, page_size=page_size, env=env
+                    survey_id=survey_id, format='json', page=page, page_size=page_size, env=env
                 )
                 logger.info("Successfully retrieved MFI surveys full data")
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
+                df = pd.DataFrame(api_response.items)
                 return df
             except ApiException as e:
                 logger.error(f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}")
@@ -769,6 +766,8 @@ class DataBridgesShapes:
                 raise
 
 
+
+
 if __name__ == "__main__":
     import yaml
     # FOR TESTING
@@ -794,6 +793,4 @@ if __name__ == "__main__":
     # print("\nAIMS Polygon Files:")
     # print(f"Downloaded {len(polygon_files)} bytes")
 
-
-    print(choices)
 
