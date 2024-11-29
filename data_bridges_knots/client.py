@@ -876,6 +876,47 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
             raise
 
+    def get_mfi_xls_forms_detailed(self, adm0_code=0, page=1, start_date=None, end_date=None):
+        """
+        Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.
+        
+        Args:
+            adm0_code (int): Code for the country. Defaults to 0.
+            page (int): Page number for paged results. Defaults to 1.
+            start_date (str): Starting date for data collection range (YYYY-MM-DD format)
+            end_date (str): Ending date for data collection range (YYYY-MM-DD format)
+            
+        Returns:
+            pandas.DataFrame: DataFrame containing XLS Forms data
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.XlsFormsApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_xls_forms_get(
+                    adm0_code=adm0_code, 
+                    page=page,
+                    start_date=start_date,
+                    end_date=end_date,
+                    env=env
+                )
+                logger.info("Successfully retrieved detailed MFI XLS forms")
+                
+                # Convert response items to DataFrame
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                
+                # Add total items count as DataFrame attribute
+                df.total_items = api_response.total_items
+                
+                return df
+                
+            except ApiException as e:
+                logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
+                raise
+
+
     
 
 if __name__ == "__main__":
@@ -885,47 +926,12 @@ if __name__ == "__main__":
 
     client = DataBridgesShapes(CONFIG_PATH)
 
-    # FIXME: JSON Response + printing instead of logging
-    # economic_indicator_list = client.get_economic_indicator_list(page=1, indicator_name='', iso3='', format='json')
-
-    # BUG: Error: Unsupported content type application/geo+json
-    # markets_geo_json = client.get_market_geojson_list(adm0code=56)
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    # # Get AIMS analysis rounds
-    # aims_data = client.get_aims_analysis_rounds(adm0_code=1)
-    # print("\nAIMS Analysis Rounds Data:")
-    # print(f"Downloaded {len(aims_data)} bytes")
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    # # Get AIMS polygon files
-    # polygon_files = client.get_aims_polygon_files(adm0_code=1)
-    # print("\nAIMS Polygon Files:")
-    # print(f"Downloaded {len(polygon_files)} bytes")
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # Get RPME base data
-    # rpme_base_data = client.get_rpme_base_data(survey_id=123, page=1, page_size=50)
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # # Get RPME full data
-    # rpme_full_data = client.get_rpme_full_data(survey_id=123, format='json', page=1, page_size=50)
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # # Get RPME output values
-    # rpme_output_values = client.get_rpme_output_values(page=1, adm0_code=456, survey_id=123)
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # # Get RPME surveys
-    # rpme_surveys = client.get_rpme_surveys(adm0_code=456, page=1, start_date='2023-01-01', end_date='2023-12-31')
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # # Get RPME variables
-    # rpme_variables = client.get_rpme_variables(page=1)
-
-    # FIXME: Get scopes for RPME then  test the following function
-    # # Get RPME XLS forms
-    # rpme_xls_forms = client.get_rpme_xls_forms(adm0_code=456, page=1, start_date='2023-01-01', end_date='2023-12-31')
-
     mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
 
+    xls_forms = client.get_mfi_xls_forms_detailed(
+    adm0_code=0,
+    page=1, 
+    start_date='2023-01-01',
+    end_date='2023-12-31'
+)
+    print(xls_forms)
