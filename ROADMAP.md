@@ -15,24 +15,24 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: MarketPricesAPi
 - [X] Endpoints: IncubationApi
 - [X] Endpoints: RpmeApi
-- [ ] Endpoints: SurveysApi
-- [ ] Endpoints: XlsFormsApi
+- [X] Endpoints: XlsFormsApi
+- [X] Endpoints: SurveysApi
 
-### Bug Fixes
-- [ ] DPO change for XLSForm
-- [ ] Markets GeoJSON response
-- [ ] JSON to DataFrame response
-- [ ] Market list JSON and CSV
 
 ## Future Release
-### v1.x.1
-- [ ] Documentation: Enhance documentation and provide more usage examples
-- [ ] GitHub Actions linting and testing
-- [ ] Test AIMS and RPME endpoints
 
 ### v1.1.0 
 - [ ] R example files
 - [ ] Handle SSL certificate error
+
+### v1.1.1
+- [ ] Documentation: Enhance documentation and provide more usage examples
+- [ ] Automation: GitHub Actions linting and testing
+- [ ] Bug fixing: Test AIMS and RPME endpoints
+- [ ] Bug fixing: DPO change for XLSForm
+- [ ] Bug fixing: Markets GeoJSON response
+- [ ] Bug fixing: JSON to DataFrame response
+- [ ] Bug fixing: Market list JSON and CSV
 
 ### v1.2.0 
 - [ ] STATA support

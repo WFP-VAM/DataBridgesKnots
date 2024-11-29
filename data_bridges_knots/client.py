@@ -916,6 +916,109 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
                 raise
 
+    def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
+        """
+        Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
+        
+        Args:
+            survey_id (int): Unique identifier for the collected data
+            page (int): Page number for paged results
+            page_size (int): Number of items per page
+            
+        Returns:
+            pandas.DataFrame: DataFrame containing MFI base survey data
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_base_data_get(
+                    survey_id=survey_id,
+                    page=page,
+                    page_size=page_size,
+                    env=env
+                )
+                logger.info("Successfully retrieved MFI surveys base data")
+                return pd.DataFrame(api_response.items)
+            
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}")
+                raise
+
+    def get_mfi_surveys_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+        """
+        Get full dataset including all survey fields plus core MFI fields by Survey ID.
+        
+        Args:
+            survey_id (int): Unique identifier for the collected data
+            format (str): Output format ('json' or 'csv')
+            page (int): Page number for paged results
+            page_size (int): Number of items per page
+            
+        Returns:
+            pandas.DataFrame: DataFrame containing complete MFI survey data
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_full_data_get(
+                    survey_id=survey_id,
+                    format=format,
+                    page=page,
+                    page_size=page_size,
+                    env=env
+                )
+                logger.info("Successfully retrieved MFI surveys full data")
+                return pd.DataFrame(api_response.items)
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}")
+                raise
+
+    def get_mfi_surveys_processed_data(self, survey_id=None, page=1, page_size=20, format='json', 
+                                    start_date=None, end_date=None, adm0_codes=None, 
+                                    market_id=None, survey_type=None):
+        """
+        Get MFI processed data in long format with various aggregation levels and dimensions.
+        
+        Args:
+            survey_id (int): Survey ID
+            page (int): Page number
+            page_size (int): Items per page
+            format (str): Output format
+            start_date (str): Start date for data collection range
+            end_date (str): End date for data collection range
+            adm0_codes (str): Country code
+            market_id (int): Market identifier
+            survey_type (str): Type of survey
+            
+        Returns:
+            pandas.DataFrame: DataFrame containing processed MFI survey data
+        """
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
+            api_instance = data_bridges_client.SurveysApi(api_client)
+            env = self.env
+
+            try:
+                api_response = api_instance.m_fi_surveys_processed_data_get(
+                    survey_id=survey_id,
+                    page=page,
+                    page_size=page_size,
+                    format=format,
+                    start_date=start_date,
+                    end_date=end_date,
+                    adm0_codes=adm0_codes,
+                    market_id=market_id,
+                    survey_type=survey_type,
+                    env=env
+                )
+                logger.info("Successfully retrieved MFI surveys processed data")
+                return pd.DataFrame(api_response.items)
+            except ApiException as e:
+                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}")
+                raise
 
     
 
@@ -926,12 +1029,4 @@ if __name__ == "__main__":
 
     client = DataBridgesShapes(CONFIG_PATH)
 
-    mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
 
-    xls_forms = client.get_mfi_xls_forms_detailed(
-    adm0_code=0,
-    page=1, 
-    start_date='2023-01-01',
-    end_date='2023-12-31'
-)
-    print(xls_forms)
