@@ -44,6 +44,15 @@ get_mfi_surveys_processed_data = client.get_mfi_surveys_processed_data(survey_id
 # Get MFI XLSForm information
 mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
 
+xls_forms = client.get_mfi_xls_forms_detailed(
+    adm0_code=0,
+    page=1, 
+    start_date='2023-01-01',
+    end_date='2023-12-31'
+)
+
+
+
 #%% FOOD SECURITY DATA 
 # Get IPC and equivalent food insecurity numbers for all countries
 get_food_security_list = client.get_food_security_list()
