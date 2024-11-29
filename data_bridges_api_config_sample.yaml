@@ -1,7 +1,8 @@
-NAME: ''
-VERSION : ''
-KEY: ''
-SECRET: ''
-SCOPES:
+NAME: 'name-of-the-application'
+VERSION : '5.0.0'
+KEY: '' # WFP API Gateway API Key
+SECRET: '' # WFP API Gateway API Secret
+DATABRIDGES_API_KEY = '' # WFP DataBridges API Key (required for household data)
+SCOPES: # WFP DataBridges API Scopes (required for restricted endpoints)
  - ''
  - ''

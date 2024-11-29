@@ -4,22 +4,35 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 
 ## Installation
 
-> NB This is the dev version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
+> NB This is the development version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
 
 You can install the `data_bridges_knots` package using `pip` and the Git repository URL:
 
 ```
-pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
+pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git@dev
+```
+
+STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
+
+***STATA users***
+```
+pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
+```
+
+***R users***
+```
+pip install git+https://github.com/WFP-VAM/DataBridgesusKnots.git#egg=data_bridges_knots[R]
 ```
 
 ## Configuration
 1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your core from.
 2. The structure of the file is: 
-    ```
+    ```yaml
     NAME: ''
     VERSION : ''
     KEY: ''
     SECRET: ''
+    DATA_BRIDGES_API_KEY = ''
     SCOPES:
     - ''
     - ''
@@ -29,7 +42,7 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
 ### Python
-Run the following code to extract household survey data. 
+Run the following code to extract commoditiy data. 
 
 ```python
 
@@ -39,18 +52,11 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
-#%% XSLForm definition and Household dataset
-
-CONGO_CFSVA = {
-    'questionnaire': 1509,
-    'dataset': 3094
-}
-# get household survey data  
-survey_data = client.get_household_survey(survey_id=CONGO_CFSVA["dataset"], access_type='full')
-# get XLSForm data
-questionnaire = client.get_household_questionnaire(CONGO_CFSVA["questionnaire"])
+# COMMODITY DATA
+commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
+Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.

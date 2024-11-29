@@ -168,6 +168,7 @@ data_bridges_api_config.yaml
 .Rhistory
 *.Rproj
 *.yaml
-sandbox.py
+sandbox.*
 *.csv
 .vscode 
+*.code-workspace
