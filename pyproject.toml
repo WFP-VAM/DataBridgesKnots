@@ -16,8 +16,6 @@ requires-python = ">=3.9"
 dependencies = [
     'PyYAML',
     'pandas>=2',
-    'pystata',
-    'stata-setup',
     'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git',
 ]
 
