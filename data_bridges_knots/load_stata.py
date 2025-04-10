@@ -1,8 +1,9 @@
 import stata_setup
 
+
 def load_stata(df, stata_path="C:/Program Files/Stata18", stata_version="se"):
     stata_setup.config(stata_path, stata_version)
-    from sfi import Data, Macro, SFIToolkit, Frame, Datetime as dt
+    from sfi import Data, SFIToolkit, Datetime as dt
 
     """
     Loads a Pandas DataFrame into a Stata data file format.
@@ -32,9 +33,11 @@ def load_stata(df, stata_path="C:/Program Files/Stata18", stata_version="se"):
             Data.store(varname, None, varval)
         elif dtype == "datetime64[ns]":
             Data.addVarFloat(varname)
-            price_dt_py = [dt.getSIF(j, '%tdCCYY-NN-DD') for j in df.iloc[:, i]]  # Use .iloc
+            price_dt_py = [
+                dt.getSIF(j, "%tdCCYY-NN-DD") for j in df.iloc[:, i]
+            ]  # Use .iloc
             Data.store(varname, None, price_dt_py)
-            Data.setVarFormat(varname, '%tdCCYY-NN-DD')
+            Data.setVarFormat(varname, "%tdCCYY-NN-DD")
         else:
             # all other types store as a string
             Data.addVarStr(varname, 1)

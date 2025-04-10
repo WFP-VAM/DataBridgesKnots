@@ -4,32 +4,45 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 
 client = DataBridgesShapes(CONFIG_PATH)
 
-#%% COMMODITY DATA
+# %% COMMODITY DATA
 # Get commodity unit list for a country
-commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
+commodity_units_list = client.get_commodity_units_list(
+    country_code="TZA", commodity_unit_name="Kg", page=1, format="json"
+)
 
 # Get commodity unit conversion list for a country
-comodity_unit_conversion_list = client.get_commodity_units_conversion_list(country_code="TZA", commodity_id=1, from_unit_id=1, to_unit_id=2, page=1, format='json')
+comodity_unit_conversion_list = client.get_commodity_units_conversion_list(
+    country_code="TZA",
+    commodity_id=1,
+    from_unit_id=1,
+    to_unit_id=2,
+    page=1,
+    format="json",
+)
 
-#%% CURRENCTY DATA
+# %% CURRENCTY DATA
 # Get currency list
-currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS", currency_id=0, page=1, format='json')
+currency_list = client.get_currency_list(
+    country_code="TZA", currency_name="TZS", currency_id=0, page=1, format="json"
+)
 
 # Get USD indirect quotation for a country
-usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
+usd_indirect_quotation = client.get_usd_indirect_quotation(
+    country_iso3="TZA", currency_name="TZS", page=1, format="json"
+)
 
-#%% MARKETS DATA
+# %% MARKETS DATA
 
 # Get a complete list of markets in a country
 markets_list = client.get_markets_list(country_code="TZA")
 
 # Get a complete list of markets in a country
-markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False) 
+markets_csv = client.get_markets_as_csv(adm0code=4, local_names=False)
 
-# Get markets near a given location by longitude and latitude within a 15Km distance 
+# Get markets near a given location by longitude and latitude within a 15Km distance
 nearby_markets = client.get_nearby_markets(adm0code=56)
 
-#%% MARKET FUNCTIONALITY INDEX
+# %% MARKET FUNCTIONALITY INDEX
 # Get the MFI surveys for a given country
 get_mfi_surveys = client.get_mfi_surveys(adm0_code=1)
 
@@ -41,35 +54,33 @@ get_mfi_surveys_full_data = client.get_mfi_surveys_full_data(survey_id=3673)
 
 # Get the MFI functionality index for a given country (processed data)
 
-get_mfi_surveys_processed_data = client.get_mfi_surveys_processed_data(survey_id=3673) 
+get_mfi_surveys_processed_data = client.get_mfi_surveys_processed_data(survey_id=3673)
 
 # Get MFI XLSForm information
-mfi_xls_forms = client.get_mfi_xls_forms(page=1, start_date='2023-01-01', end_date='2023-12-31')
+mfi_xls_forms = client.get_mfi_xls_forms(
+    page=1, start_date="2023-01-01", end_date="2023-12-31"
+)
 
 xls_forms = client.get_mfi_xls_forms_detailed(
-    adm0_code=0,
-    page=1, 
-    start_date='2023-01-01',
-    end_date='2023-12-31'
+    adm0_code=0, page=1, start_date="2023-01-01", end_date="2023-12-31"
 )
 
 
-
-#%% FOOD SECURITY DATA 
+# %% FOOD SECURITY DATA
 # Get IPC and equivalent food insecurity numbers for all countries
 get_food_security_list = client.get_food_security_list()
 
-#%% GLOBAL OPERATION RESPONSE PLAN (GOPR)
-# Get country-level latest data from the Global Operation Response Plan (GOPR) 
-country_latest_df = client.get_gorp('country_latest') # no data currently uploaded
+# %% GLOBAL OPERATION RESPONSE PLAN (GOPR)
+# Get country-level latest data from the Global Operation Response Plan (GOPR)
+country_latest_df = client.get_gorp("country_latest")  # no data currently uploaded
 
 # Get global latest data from the Global Operation Response Plan (GOPR)
-global_latest_df = client.get_gorp('global_latest')
+global_latest_df = client.get_gorp("global_latest")
 
 # Get regional latest data
-regional_latest_df = client.get_gorp('regional_latest')
+regional_latest_df = client.get_gorp("regional_latest")
 
-#%% HOUSEHOLD ASSESSMENT & MONITORING DATA
+# %% HOUSEHOLD ASSESSMENT & MONITORING DATA
 # Get list of household surveys available
 surveys_list = client.get_household_surveys()
 
