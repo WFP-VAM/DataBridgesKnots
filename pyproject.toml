@@ -28,3 +28,4 @@ R = []
 
 [tool.setuptools]
 packages = ["data_bridges_knots"]
+
