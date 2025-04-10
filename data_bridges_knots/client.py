@@ -563,7 +563,7 @@ class DataBridgesShapes:
         return df
 
 
-    def get_household_surveys(self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None):
+    def get_household_surveys_list(self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None):
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all household surveys conducted in a country.
 
