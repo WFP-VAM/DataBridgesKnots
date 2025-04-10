@@ -19,6 +19,7 @@ currency_list = client.get_currency_list(country_code="TZA", currency_name="TZS"
 usd_indirect_quotation = client.get_usd_indirect_quotation(country_iso3="TZA", currency_name="TZS", page=1, format='json')
 
 #%% MARKETS DATA
+
 # Get a complete list of markets in a country
 markets_list = client.get_markets_list(country_code="TZA")
 
@@ -39,6 +40,7 @@ get_mfi_surveys_base_data = client.get_mfi_surveys_base_data(survey_id=3673)
 get_mfi_surveys_full_data = client.get_mfi_surveys_full_data(survey_id=3673)
 
 # Get the MFI functionality index for a given country (processed data)
+
 get_mfi_surveys_processed_data = client.get_mfi_surveys_processed_data(survey_id=3673) 
 
 # Get MFI XLSForm information
@@ -63,12 +65,6 @@ country_latest_df = client.get_gorp('country_latest') # no data currently upload
 
 # Get global latest data from the Global Operation Response Plan (GOPR)
 global_latest_df = client.get_gorp('global_latest')
-
-# Get latest data (paginated) from the Global Operation Response Plan (GOPR)
-latest_df = client.get_gorp('latest', page=1)
-
-# Get full list data (paginated from the Global Operation Response Plan (GOPR)
-list_df = client.get_gorp('list', page=1)
 
 # Get regional latest data
 regional_latest_df = client.get_gorp('regional_latest')

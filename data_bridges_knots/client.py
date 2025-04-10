@@ -221,6 +221,7 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
             raise
 
+
     def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
         """
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
@@ -473,7 +474,7 @@ class DataBridgesShapes:
         Retrieves data from the Global Operational Response Plan (GORP) API.
 
         Args:
-            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', 'latest', 'list', or 'regional_latest'.
+            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', or 'regional_latest'.
             page (int, optional): The page number for paginated results. Required for 'latest' and 'list' data types.
 
         Returns:
@@ -488,10 +489,6 @@ class DataBridgesShapes:
                     gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
                 elif data_type == 'global_latest':
                     gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
-                elif data_type == 'latest':
-                    gorp_data = gorp_api_instance.gorp_latest_get(page=page, env=env)
-                elif data_type == 'list':
-                    gorp_data = gorp_api_instance.gorp_list_get(page=page, env=env)
                 elif data_type == 'regional_latest':
                     gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
                 else:
