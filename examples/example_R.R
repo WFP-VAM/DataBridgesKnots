@@ -1,22 +1,29 @@
-# Load required packages
+# First, install reticulate if not already installed
+install.packages("reticulate")
 library(reticulate)
-library(dplyr)
 
-# Set up Python environment
-# use_python("/path/to/python/env")
-python_path <- "C:/Users/alessandra.gherardel/AppData/Local/miniconda3/envs/data_bridges_knots/python.exe"
-use_python(path.expand(python_path))
+# Import the Python module through reticulate
+data_bridges_knots <- import("data_bridges_knots")
 
-# Import DataBridgesShapes class
-databridges_knots <- import("data_bridges_knots")
-DataBridgesShapes <- databridges_knots$DataBridgesShapes
+# Create client instance
+config_path <- "data_bridges_api_config.yaml"
+client <- data_bridges_knots$DataBridgesShapes(config_path)
 
-# Initialize DataBridges client with credentials from YAML file
-CONFIG_PATH <- "data_bridges_api_config.yaml"
-client <- DataBridgesShapes(CONFIG_PATH)
+# COMMODITY DATA
+# Get commodity unit list for Tanzania
+commodity_units <- client$get_commodity_units_list(
+  country_code = "TZA",
+  commodity_unit_name = "Kg",
+  page = 1L,
+  format = "json"
+)
 
-# Get household data for survey id
-survey_data <- client$get_household_survey(survey_id=3329, access_type='full')
-survey_data_r <- py_to_r(survey_data)
-print(head(survey_data_r))
+# CURRENCY DATA 
+# Get Tanzania Shilling exchange rates
+exchange_rates <- client$get_usd_indirect_quotation(
+  country_iso3 = "TZA",
+  currency_name = "TZS",
+  page = 1L,
+  format = "json"
+)
 

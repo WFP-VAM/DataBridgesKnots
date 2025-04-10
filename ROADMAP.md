@@ -2,10 +2,9 @@
 
 This document outlines the planned features and improvements for the `DataBridgesKnots` package, which provides a wrapper for the WFP Data Bridges API.
 
-## Upcoming Release: 1.0.0 (DataBridges API v5.0)
+## Upcoming Release: 1.0.0 "Brilliant Bigfoot" (DataBridges API v5.0)
 
 ### New Features
-- [ ] Update setup.py and pyproject.toml to include DataBridges API v5.0
 - [X] Endpoints: CommoditiesApis
 - [X] Endpoints: CurrencyApi
 - [X] Endpoints: EconomicDataApi
@@ -18,14 +17,18 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: XlsFormsApi
 - [X] Endpoints: SurveysApi
 
-
 ## Future Release
 
 ### v1.1.0 
-- [ ] R example files
-- [ ] Handle SSL certificate error
+- [ ] STATA support
+- [ ] Fix optional dependencies for STATA
+- [ ] Update setup.py and pyproject.toml to include DataBridges API v5.0
+- [ ] Handle SSL certificate error (TBC)
 
-### v1.1.1
+### v1.2.0 
+- [ ] R example files
+
+### v1.2.1
 - [ ] Documentation: Enhance documentation and provide more usage examples
 - [ ] Automation: GitHub Actions linting and testing
 - [ ] Bug fixing: Test AIMS and RPME endpoints
@@ -34,11 +37,7 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] Bug fixing: JSON to DataFrame response
 - [ ] Bug fixing: Market list JSON and CSV
 
-### v1.2.0 
-- [ ] STATA support
-- [ ] Fix optional dependencies for STATA
-
-## Future Releases (2.0.0 and beyond)
+## Future Release (2.0.0 "Charismatic Chimera")
 - Testing: Unit testing
 - Testing: Improve error handling and logging
 - Refactoring: Optimize performance and improve code efficiency
