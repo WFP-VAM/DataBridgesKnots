@@ -9,19 +9,25 @@ from data_bridges_client.token import WfpApiToken
 import data_bridges_client
 
 logname = "data_bridges_api_calls.log"
-logging.basicConfig(filename=logname,
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.INFO)
+logging.basicConfig(
+    filename=logname,
+    filemode="a",
+    format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
+    datefmt="%H:%M:%S",
+    level=logging.INFO,
+)
 
 logger = logging.getLogger(__name__)
 
-class DataBridgesShapes:
 
-    def __init__(self, yaml_config_path, env='prod'):
-        self.configuration = self.setup_configuration_and_authentication(yaml_config_path)
-        self.data_bridges_api_key = self.setup_databridges_configuration(yaml_config_path)
+class DataBridgesShapes:
+    def __init__(self, yaml_config_path, env="prod"):
+        self.configuration = self.setup_configuration_and_authentication(
+            yaml_config_path
+        )
+        self.data_bridges_api_key = self.setup_databridges_configuration(
+            yaml_config_path
+        )
         self.env = env
         self.xlsform = None
 
@@ -29,8 +35,10 @@ class DataBridgesShapes:
         return "DataBridgesShapes(yamlpath='%s')" % self.configuration.host
 
     def __str__(self):
-        return ("DataBridgesShapes(yamlpath='%s') \n\n Brought to you with <3 by SHAPES \n\n"
-                % self.configuration.host)
+        return (
+            "DataBridgesShapes(yamlpath='%s') \n\n Brought to you with <3 by SHAPES \n\n"
+            % self.configuration.host
+        )
 
     def setup_configuration_and_authentication(self, yaml_config_path):
         """Loads configuration from a YAML file and sets up authentication."""
@@ -38,13 +46,13 @@ class DataBridgesShapes:
         with open(yaml_config_path, "r") as yamlfile:
             databridges_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
-        key = databridges_config['KEY']
-        secret = databridges_config['SECRET']
-        scopes = databridges_config['SCOPES']
-        version = databridges_config['VERSION']
+        key = databridges_config["KEY"]
+        secret = databridges_config["SECRET"]
+        scopes = databridges_config["SCOPES"]
+        version = databridges_config["VERSION"]
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
-        
+
         logger.info("DataBridges API: %s", host)
 
         token = WfpApiToken(api_key=key, api_secret=secret)
@@ -52,13 +60,13 @@ class DataBridgesShapes:
             host=host, access_token=token.refresh(scopes=scopes)
         )
         return configuration
-    
+
     def setup_databridges_configuration(self, yaml_config_path):
         """Loads configuration from a YAML file and sets up authentication."""
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
-        
-        return data_bridges_api_key['DATABRIDGES_API_KEY']
+
+        return data_bridges_api_key["DATABRIDGES_API_KEY"]
 
     def get_prices(self, country_iso3, survey_date, page_size=1000):
         """
@@ -74,7 +82,7 @@ class DataBridgesShapes:
             pandas.DataFrame: A DataFrame containing the fetched market price data.
         """
 
-        if survey_date != '':
+        if survey_date != "":
             start_date = date.fromisoformat(survey_date) - timedelta(days=365)
         else:
             start_date = date.fromisocalendar(1990, 1, 1)
@@ -90,7 +98,11 @@ class DataBridgesShapes:
 
                 try:
                     api_prices = api_instance.market_prices_price_monthly_get(
-                        country_code=country_iso3, format='JSON', page=page, env=env, start_date=start_date
+                        country_code=country_iso3,
+                        format="JSON",
+                        page=page,
+                        env=env,
+                        start_date=start_date,
                     )
                     responses.extend(item.to_dict() for item in api_prices.items)
                     total_items = api_prices.total_items
@@ -98,9 +110,12 @@ class DataBridgesShapes:
                     max_item = page * page_size
                     time.sleep(1)
                 except ApiException as e:
-                    logger.error("Exception when calling Market price data->market_prices_price_monthly_get: %s\n", e)
+                    logger.error(
+                        "Exception when calling Market price data->market_prices_price_monthly_get: %s\n",
+                        e,
+                    )
                     raise
-                
+
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
@@ -128,22 +143,28 @@ class DataBridgesShapes:
                 env = self.env
 
                 try:
-                    api_exchange_rates = api_instance.currency_usd_indirect_quotation_get(
-                        country_iso3=country_iso3, format='JSON', page=page, env=env
+                    api_exchange_rates = (
+                        api_instance.currency_usd_indirect_quotation_get(
+                            country_iso3=country_iso3, format="JSON", page=page, env=env
+                        )
                     )
-                    responses.extend(item.to_dict() for item in api_exchange_rates.items)
+                    responses.extend(
+                        item.to_dict() for item in api_exchange_rates.items
+                    )
                     total_items = api_exchange_rates.total_items
                     logger.info("Fetching page %s", page)
                     max_item = page * page_size
                     time.sleep(1)
                 except ApiException as e:
-                    logger.error("Exception when calling Exchange rates data->household_full_data_get: %s\n", e)
+                    logger.error(
+                        "Exception when calling Exchange rates data->household_full_data_get: %s\n",
+                        e,
+                    )
                     raise
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
 
-        
     def get_food_security_list(self, iso3=None, year=None, page=1):
         """
         Retrieves food security data from the Data Bridges API.
@@ -162,24 +183,28 @@ class DataBridgesShapes:
 
             try:
                 api_response = food_security_api_instance.food_security_list_get(
-                    iso3=iso3,
-                    year=year,
-                    page=page,
-                    env=env
+                    iso3=iso3, year=year, page=page, env=env
                 )
                 logger.info("Successfully retrieved food security data")
-                
+
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling FoodSecurityApi->food_security_list_get: {e}")
+                logger.error(
+                    f"Exception when calling FoodSecurityApi->food_security_list_get: {e}"
+                )
                 raise
 
-
-    
-    def get_commodities_list(self, country_code=None, commodity_name=None, commodity_id=0, page=1, format='json'):
+    def get_commodities_list(
+        self,
+        country_code=None,
+        commodity_name=None,
+        commodity_id=0,
+        page=1,
+        format="json",
+    ):
         """
         Retrieves the detailed list of commodities available in the DataBridges platform.
 
@@ -204,25 +229,34 @@ class DataBridgesShapes:
                     commodity_id=commodity_id,
                     page=page,
                     format=format,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved commodities list")
-                
+
                 # Convert the response to a DataFrame
-                if hasattr(api_response, 'items'):
+                if hasattr(api_response, "items"):
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 else:
                     df = pd.DataFrame([api_response.to_dict()])
-                
+
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CommoditiesApi->commodities_list_get: {e}")
+                logger.error(
+                    f"Exception when calling CommoditiesApi->commodities_list_get: {e}"
+                )
             raise
 
-
-    def get_commodity_units_conversion_list(self, country_code=None, commodity_id=0, from_unit_id=0, to_unit_id=0, page=1, format='json'):
+    def get_commodity_units_conversion_list(
+        self,
+        country_code=None,
+        commodity_id=0,
+        from_unit_id=0,
+        to_unit_id=0,
+        page=1,
+        format="json",
+    ):
         """
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
 
@@ -249,19 +283,28 @@ class DataBridgesShapes:
                     to_unit_id=to_unit_id,
                     page=page,
                     format=format,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved commodity units conversion list")
-                
+
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CommodityUnitsApi->commodity_units_conversion_list_get: {e}")
+                logger.error(
+                    f"Exception when calling CommodityUnitsApi->commodity_units_conversion_list_get: {e}"
+                )
                 raise
 
-    def get_commodity_units_list(self, country_code=None, commodity_unit_name=None, commodity_unit_id=0, page=1, format='json'):
+    def get_commodity_units_list(
+        self,
+        country_code=None,
+        commodity_unit_name=None,
+        commodity_unit_id=0,
+        page=1,
+        format="json",
+    ):
         """
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
 
@@ -286,19 +329,28 @@ class DataBridgesShapes:
                     commodity_unit_id=commodity_unit_id,
                     page=page,
                     format=format,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved commodity units list")
-                
+
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CommodityUnitsApi->commodity_units_list_get: {e}")
+                logger.error(
+                    f"Exception when calling CommodityUnitsApi->commodity_units_list_get: {e}"
+                )
                 raise
 
-    def get_currency_list(self, country_code=None, currency_name=None, currency_id=0, page=1, format='json'):
+    def get_currency_list(
+        self,
+        country_code=None,
+        currency_name=None,
+        currency_id=0,
+        page=1,
+        format="json",
+    ):
         """
         Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
 
@@ -323,19 +375,23 @@ class DataBridgesShapes:
                     currency_id=currency_id,
                     page=page,
                     format=format,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved currency list")
-                
+
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CurrencyApi->currency_list_get: {e}")
+                logger.error(
+                    f"Exception when calling CurrencyApi->currency_list_get: {e}"
+                )
                 raise
 
-    def get_usd_indirect_quotation(self, country_iso3='', currency_name='', page=1, format='json'):
+    def get_usd_indirect_quotation(
+        self, country_iso3="", currency_name="", page=1, format="json"
+    ):
         """
         Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.
 
@@ -358,20 +414,24 @@ class DataBridgesShapes:
                     currency_name=currency_name,
                     page=page,
                     format=format,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved USD indirect quotation data")
-                
+
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CurrencyApi->currency_usd_indirect_quotation_get: {e}")
+                logger.error(
+                    f"Exception when calling CurrencyApi->currency_usd_indirect_quotation_get: {e}"
+                )
                 raise
 
-    # FIXME: JSON response 
-    def get_economic_indicator_list(self, page=1, indicator_name='', iso3='', format='json'):
+    # FIXME: JSON response
+    def get_economic_indicator_list(
+        self, page=1, indicator_name="", iso3="", format="json"
+    ):
         """
         Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
 
@@ -390,38 +450,56 @@ class DataBridgesShapes:
 
             try:
                 # Returns the lists of indicators.
-                api_response = api_instance.economic_data_indicator_list_get(page=page, indicator_name=indicator_name, iso3=iso3, format=format, env=self.env)
-                print("The response of EconomicDataApi->economic_data_indicator_list_get:\n")
+                api_response = api_instance.economic_data_indicator_list_get(
+                    page=page,
+                    indicator_name=indicator_name,
+                    iso3=iso3,
+                    format=format,
+                    env=self.env,
+                )
+                print(
+                    "The response of EconomicDataApi->economic_data_indicator_list_get:\n"
+                )
                 return api_response
             except Exception as e:
-                print("Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s\n" % e)
+                print(
+                    "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s\n"
+                    % e
+                )
 
     # BUG: Unsupported content type: 'application/geo+json
     def get_market_geojson_list(self, adm0code=None):
-                # Enter a context with an instance of the API client
+        # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.MarketsApi(api_client)
 
             try:
                 # Provide a list of geo referenced markets in a specific country
-                api_response = api_instance.markets_geo_json_list_get(adm0code=adm0code, env=self.env)
+                api_response = api_instance.markets_geo_json_list_get(
+                    adm0code=adm0code, env=self.env
+                )
                 print("The response of MarketsApi->markets_geo_json_list_get:\n")
                 return api_response
             except Exception as e:
-                print("Exception when calling MarketsApi->markets_geo_json_list_get: %s\n" % e)
+                print(
+                    "Exception when calling MarketsApi->markets_geo_json_list_get: %s\n"
+                    % e
+                )
 
     def get_markets_list(self, country_code=None, page=1):
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.MarketsApi(api_client)
-            format = 'json' # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
-            env = self.env # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
+            format = "json"  # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
+            env = self.env  # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
 
             try:
                 # Get a complete list of markets in a country
-                api_response = api_instance.markets_list_get(country_code=country_code, page=page, format=format, env=env)
+                api_response = api_instance.markets_list_get(
+                    country_code=country_code, page=page, format=format, env=env
+                )
                 print("The response of MarketsApi->markets_list_get:\n")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
@@ -433,15 +511,20 @@ class DataBridgesShapes:
     def get_markets_as_csv(self, adm0code=None, local_names=False):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
-            local_names = False # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
+            local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
 
             try:
                 # Get a complete list of markets in a country
-                api_response = api_instance.markets_markets_as_csv_get(adm0code=adm0code, local_names=local_names, env=self.env)
+                api_response = api_instance.markets_markets_as_csv_get(
+                    adm0code=adm0code, local_names=local_names, env=self.env
+                )
                 logger.info("The response of MarketsApi->markets_markets_as_csv_get:\n")
                 return api_response
             except Exception as e:
-                logger.error("Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n" % e)
+                logger.error(
+                    "Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n"
+                    % e
+                )
 
     def get_nearby_markets(self, adm0code=None, lat=None, lng=None):
         """
@@ -460,13 +543,17 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                api_response = api_instance.markets_nearby_markets_get(adm0code=adm0code, lat=lat, lng=lng, env=env)
+                api_response = api_instance.markets_nearby_markets_get(
+                    adm0code=adm0code, lat=lat, lng=lng, env=env
+                )
                 logger.info("Successfully retrieved nearby markets")
                 df = pd.DataFrame([item.to_dict() for item in api_response])
                 df = df.replace({np.nan: None})
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling MarketsApi->markets_nearby_markets_get: {e}")
+                logger.error(
+                    f"Exception when calling MarketsApi->markets_nearby_markets_get: {e}"
+                )
                 raise
 
     def get_gorp(self, data_type, page=None):
@@ -485,24 +572,24 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                if data_type == 'country_latest':
+                if data_type == "country_latest":
                     gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
-                elif data_type == 'global_latest':
+                elif data_type == "global_latest":
                     gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
-                elif data_type == 'regional_latest':
+                elif data_type == "regional_latest":
                     gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
                 else:
                     raise ValueError(f"Invalid data_type: {data_type}")
 
                 logger.info(f"Successfully retrieved GORP data for type: {data_type}")
-                
+
                 if isinstance(gorp_data, list):
                     df = pd.DataFrame([item.to_dict() for item in gorp_data])
-                elif hasattr(gorp_data, 'items'):
+                elif hasattr(gorp_data, "items"):
                     df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
                 else:
                     df = pd.DataFrame([gorp_data.to_dict()])
-                
+
                 df = df.replace({np.nan: None})
                 return df
 
@@ -537,16 +624,24 @@ class DataBridgesShapes:
                     logger.info(f"Calling get_household_survey for survey {survey_id}")
                     # Select appropriate API call based on access_type
                     api_call = {
-                        'full': api_instance.household_full_data_get,
-                        'draft': api_instance.household_draft_internal_base_data_get,
-                        'official': api_instance.household_official_use_base_data_get,
-                        'public': api_instance.household_public_base_data_get
+                        "full": api_instance.household_full_data_get,
+                        "draft": api_instance.household_draft_internal_base_data_get,
+                        "official": api_instance.household_official_use_base_data_get,
+                        "public": api_instance.household_public_base_data_get,
                     }.get(access_type)
 
-                    if access_type in ['full', 'draft']:
-                        api_survey = api_call(self.data_bridges_api_key, survey_id=survey_id, page=page, page_size=page_size, env=env)
+                    if access_type in ["full", "draft"]:
+                        api_survey = api_call(
+                            self.data_bridges_api_key,
+                            survey_id=survey_id,
+                            page=page,
+                            page_size=page_size,
+                            env=env,
+                        )
                     else:
-                        api_survey = api_call(survey_id=survey_id, page=page, page_size=page_size, env=env)
+                        api_survey = api_call(
+                            survey_id=survey_id, page=page, page_size=page_size, env=env
+                        )
 
                     logger.info(f"Fetching page {page}")
                     logger.info(f"Items: {len(api_survey.items)}")
@@ -556,14 +651,17 @@ class DataBridgesShapes:
                     time.sleep(1)
 
                 except ApiException as e:
-                    logger.error(f"Exception when calling Household data-> {access_type}{e}")
+                    logger.error(
+                        f"Exception when calling Household data-> {access_type}{e}"
+                    )
                     raise
 
         df = pd.DataFrame(responses)
         return df
 
-
-    def get_household_surveys_list(self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None):
+    def get_household_surveys_list(
+        self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None
+    ):
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all household surveys conducted in a country.
 
@@ -583,19 +681,21 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.household_surveys_get(
-                    adm0_code=adm0_code, 
-                    page=page, 
-                    start_date=start_date, 
-                    end_date=end_date, 
-                    survey_id=survey_id, 
-                    env=env
+                    adm0_code=adm0_code,
+                    page=page,
+                    start_date=start_date,
+                    end_date=end_date,
+                    survey_id=survey_id,
+                    env=env,
                 )
                 logger.info("Successfully retrieved household surveys")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling IncubationApi->household_surveys_get: {e}")
+                logger.error(
+                    f"Exception when calling IncubationApi->household_surveys_get: {e}"
+                )
                 raise
 
     def get_household_xslform_definition(self, xls_form_id):
@@ -613,28 +713,34 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                api_response = api_instance.xls_forms_definition_get(xls_form_id=xls_form_id, env=env)
-                logger.info(f"Successfully retrieved XLS Form definition for ID: {xls_form_id}")
+                api_response = api_instance.xls_forms_definition_get(
+                    xls_form_id=xls_form_id, env=env
+                )
+                logger.info(
+                    f"Successfully retrieved XLS Form definition for ID: {xls_form_id}"
+                )
                 self.xlsform = pd.DataFrame([item.to_dict() for item in api_response])
                 return self.xlsform
 
             except ApiException as e:
-                logger.error(f"Exception when calling IncubationApi->xls_forms_definition_get: {e}")
+                logger.error(
+                    f"Exception when calling IncubationApi->xls_forms_definition_get: {e}"
+                )
                 raise
 
     def get_household_questionnaire(self, xls_form_id):
         if self.xlsform is None:
             self.xlsform = self.get_household_xslform_definition(xls_form_id)
         return pd.DataFrame(list(self.xlsform.fields)[0])
-            
+
     def get_choice_list(self, xls_form_id):
         questionnaire = self.get_household_questionnaire(xls_form_id)
-    
-        choiceList = pd.json_normalize(questionnaire['choiceList']).dropna()
-        choices = choiceList.explode('choices')
-        choices['value'] = choices['choices'].apply(lambda x: x['name'])
-        choices['label'] = choices['choices'].apply(lambda x: x['label'])
-        return choices[['name', 'value', 'label']]
+
+        choiceList = pd.json_normalize(questionnaire["choiceList"]).dropna()
+        choices = choiceList.explode("choices")
+        choices["value"] = choices["choices"].apply(lambda x: x["name"])
+        choices["label"] = choices["choices"].apply(lambda x: x["label"])
+        return choices[["name", "value", "label"]]
 
     # FIXME: Get scopes for AIMS then  test the following function
     def get_aims_analysis_rounds(self, adm0_code):
@@ -652,11 +758,17 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                api_response = api_instance.aims_download_all_analysis_rounds_get(adm0_code=adm0_code, env=env)
-                logger.info(f"Successfully downloaded AIMS analysis rounds for adm0Code: {adm0_code}")
+                api_response = api_instance.aims_download_all_analysis_rounds_get(
+                    adm0_code=adm0_code, env=env
+                )
+                logger.info(
+                    f"Successfully downloaded AIMS analysis rounds for adm0Code: {adm0_code}"
+                )
                 return api_response
             except ApiException as e:
-                logger.error(f"Exception when calling IncubationApi->aims_download_all_analysis_rounds_get: {e}")
+                logger.error(
+                    f"Exception when calling IncubationApi->aims_download_all_analysis_rounds_get: {e}"
+                )
                 raise
 
     # FIXME: Get scopes for AIMS then  test the following function
@@ -675,11 +787,17 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                api_response = api_instance.aims_download_polygon_files_get(adm0_code=adm0_code, env=env)
-                logger.info(f"Successfully downloaded AIMS polygon files for adm0Code: {adm0_code}")
+                api_response = api_instance.aims_download_polygon_files_get(
+                    adm0_code=adm0_code, env=env
+                )
+                logger.info(
+                    f"Successfully downloaded AIMS polygon files for adm0Code: {adm0_code}"
+                )
                 return api_response
             except ApiException as e:
-                logger.error(f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}")
+                logger.error(
+                    f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}"
+                )
                 raise
 
     def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
@@ -699,7 +817,9 @@ class DataBridgesShapes:
                 df = pd.DataFrame(api_response.items)
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}"
+                )
             raise
 
     def get_mfi_surveys_full_data(self, survey_id=None, page=1, page_size=20):
@@ -711,13 +831,19 @@ class DataBridgesShapes:
             env = self.env
             try:
                 api_response = api_instance.m_fi_surveys_full_data_get(
-                    survey_id=survey_id, format='json', page=page, page_size=page_size, env=env
+                    survey_id=survey_id,
+                    format="json",
+                    page=page,
+                    page_size=page_size,
+                    env=env,
                 )
                 logger.info("Successfully retrieved MFI surveys full data")
                 df = pd.DataFrame(api_response.items)
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}"
+                )
                 raise
 
     def get_mfi_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
@@ -730,17 +856,34 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.m_fi_surveys_get(
-                    adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env
+                    adm0_code=adm0_code,
+                    page=page,
+                    start_date=start_date,
+                    end_date=end_date,
+                    env=env,
                 )
                 logger.info("Successfully retrieved MFI surveys list")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_get: {e}"
+                )
                 raise
 
-    def get_mfi_surveys_processed_data(self, survey_id=None, page=1, page_size=20, format='json', start_date=None, end_date=None, adm0_codes=None, market_id=None, survey_type=None):
+    def get_mfi_surveys_processed_data(
+        self,
+        survey_id=None,
+        page=1,
+        page_size=20,
+        format="json",
+        start_date=None,
+        end_date=None,
+        adm0_codes=None,
+        market_id=None,
+        survey_type=None,
+    ):
         """
         Get MFI processed data in long format.
         """
@@ -750,16 +893,25 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.m_fi_surveys_processed_data_get(
-                    survey_id=survey_id, page=page, page_size=page_size, format=format,
-                    start_date=start_date, end_date=end_date, adm0_codes=adm0_codes,
-                    market_id=market_id, survey_type=survey_type, env=env
+                    survey_id=survey_id,
+                    page=page,
+                    page_size=page_size,
+                    format=format,
+                    start_date=start_date,
+                    end_date=end_date,
+                    adm0_codes=adm0_codes,
+                    market_id=market_id,
+                    survey_type=survey_type,
+                    env=env,
                 )
                 logger.info("Successfully retrieved MFI surveys processed data")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}"
+                )
                 raise
 
         # TODO: Get the scope and test these functions
@@ -769,46 +921,79 @@ class DataBridgesShapes:
                 env = self.env
 
                 try:
-                    api_response = api_instance.rpme_base_data_get(survey_id=survey_id, page=page, page_size=page_size, env=env)
+                    api_response = api_instance.rpme_base_data_get(
+                        survey_id=survey_id, page=page, page_size=page_size, env=env
+                    )
                     logger.info("Successfully retrieved RPME base data")
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_base_data_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_base_data_get: {e}"
+                    )
                     raise
 
         # TODO: Get the scope and test these functions
-        def get_rpme_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+        def get_rpme_full_data(
+            self, survey_id=None, format="json", page=1, page_size=20
+        ):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
                 try:
-                    api_response = api_instance.rpme_full_data_get(survey_id=survey_id, format=format, page=page, page_size=page_size, env=env)
+                    api_response = api_instance.rpme_full_data_get(
+                        survey_id=survey_id,
+                        format=format,
+                        page=page,
+                        page_size=page_size,
+                        env=env,
+                    )
                     logger.info("Successfully retrieved RPME full data")
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_full_data_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_full_data_get: {e}"
+                    )
                     raise
+
         # TODO: Get the scope and test these functions
-        def get_rpme_output_values(self, page=1, adm0_code=None, survey_id=None, shop_id=None, market_id=None, adm0_code_dots=''):
+        def get_rpme_output_values(
+            self,
+            page=1,
+            adm0_code=None,
+            survey_id=None,
+            shop_id=None,
+            market_id=None,
+            adm0_code_dots="",
+        ):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
                 try:
-                    api_response = api_instance.rpme_output_values_get(page=page, adm0_code=adm0_code, survey_id=survey_id, 
-                                                                    shop_id=shop_id, market_id=market_id, adm0_code_dots=adm0_code_dots, env=env)
+                    api_response = api_instance.rpme_output_values_get(
+                        page=page,
+                        adm0_code=adm0_code,
+                        survey_id=survey_id,
+                        shop_id=shop_id,
+                        market_id=market_id,
+                        adm0_code_dots=adm0_code_dots,
+                        env=env,
+                    )
                     logger.info("Successfully retrieved RPME output values")
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_output_values_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_output_values_get: {e}"
+                    )
                     raise
+
         # TODO: Get the scope and test these functions
         def get_rpme_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
@@ -816,14 +1001,23 @@ class DataBridgesShapes:
                 env = self.env
 
                 try:
-                    api_response = api_instance.rpme_surveys_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                    api_response = api_instance.rpme_surveys_get(
+                        adm0_code=adm0_code,
+                        page=page,
+                        start_date=start_date,
+                        end_date=end_date,
+                        env=env,
+                    )
                     logger.info("Successfully retrieved RPME surveys")
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_surveys_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_surveys_get: {e}"
+                    )
                     raise
+
         # TODO: Get the scope and test these functions
         def get_rpme_variables(self, page=1):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
@@ -837,23 +1031,35 @@ class DataBridgesShapes:
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_variables_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_variables_get: {e}"
+                    )
                     raise
 
         # TODO: Get the scope and test these functions
-        def get_rpme_xls_forms(self, adm0_code=0, page=1, start_date=None, end_date=None):
+        def get_rpme_xls_forms(
+            self, adm0_code=0, page=1, start_date=None, end_date=None
+        ):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
                 try:
-                    api_response = api_instance.rpme_xls_forms_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                    api_response = api_instance.rpme_xls_forms_get(
+                        adm0_code=adm0_code,
+                        page=page,
+                        start_date=start_date,
+                        end_date=end_date,
+                        env=env,
+                    )
                     logger.info("Successfully retrieved RPME XLS forms")
                     df = pd.DataFrame([item.to_dict() for item in api_response.items])
                     df = df.replace({np.nan: None})
                     return df
                 except ApiException as e:
-                    logger.error(f"Exception when calling RpmeApi->rpme_xls_forms_get: {e}")
+                    logger.error(
+                        f"Exception when calling RpmeApi->rpme_xls_forms_get: {e}"
+                    )
                     raise
 
         # Add this function to the DataBridgesShapes class
@@ -864,25 +1070,35 @@ class DataBridgesShapes:
             env = self.env
 
             try:
-                api_response = api_instance.m_fi_xls_forms_get(adm0_code=adm0_code, page=page, start_date=start_date, end_date=end_date, env=env)
+                api_response = api_instance.m_fi_xls_forms_get(
+                    adm0_code=adm0_code,
+                    page=page,
+                    start_date=start_date,
+                    end_date=end_date,
+                    env=env,
+                )
                 logger.info("Successfully retrieved MFI XLS forms")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
             except ApiException as e:
-                logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
+                logger.error(
+                    f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}"
+                )
             raise
 
-    def get_mfi_xls_forms_detailed(self, adm0_code=0, page=1, start_date=None, end_date=None):
+    def get_mfi_xls_forms_detailed(
+        self, adm0_code=0, page=1, start_date=None, end_date=None
+    ):
         """
         Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.
-        
+
         Args:
             adm0_code (int): Code for the country. Defaults to 0.
             page (int): Page number for paged results. Defaults to 1.
             start_date (str): Starting date for data collection range (YYYY-MM-DD format)
             end_date (str): Ending date for data collection range (YYYY-MM-DD format)
-            
+
         Returns:
             pandas.DataFrame: DataFrame containing XLS Forms data
         """
@@ -892,36 +1108,38 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.m_fi_xls_forms_get(
-                    adm0_code=adm0_code, 
+                    adm0_code=adm0_code,
                     page=page,
                     start_date=start_date,
                     end_date=end_date,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved detailed MFI XLS forms")
-                
+
                 # Convert response items to DataFrame
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
-                
+
                 # Add total items count as DataFrame attribute
                 df.total_items = api_response.total_items
-                
+
                 return df
-                
+
             except ApiException as e:
-                logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
+                logger.error(
+                    f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}"
+                )
                 raise
 
     def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
         """
         Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
-        
+
         Args:
             survey_id (int): Unique identifier for the collected data
             page (int): Page number for paged results
             page_size (int): Number of items per page
-            
+
         Returns:
             pandas.DataFrame: DataFrame containing MFI base survey data
         """
@@ -931,28 +1149,29 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.m_fi_surveys_base_data_get(
-                    survey_id=survey_id,
-                    page=page,
-                    page_size=page_size,
-                    env=env
+                    survey_id=survey_id, page=page, page_size=page_size, env=env
                 )
                 logger.info("Successfully retrieved MFI surveys base data")
                 return pd.DataFrame(api_response.items)
-            
+
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}"
+                )
                 raise
 
-    def get_mfi_surveys_full_data(self, survey_id=None, format='json', page=1, page_size=20):
+    def get_mfi_surveys_full_data(
+        self, survey_id=None, format="json", page=1, page_size=20
+    ):
         """
         Get full dataset including all survey fields plus core MFI fields by Survey ID.
-        
+
         Args:
             survey_id (int): Unique identifier for the collected data
             format (str): Output format ('json' or 'csv')
             page (int): Page number for paged results
             page_size (int): Number of items per page
-            
+
         Returns:
             pandas.DataFrame: DataFrame containing complete MFI survey data
         """
@@ -966,20 +1185,31 @@ class DataBridgesShapes:
                     format=format,
                     page=page,
                     page_size=page_size,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved MFI surveys full data")
                 return pd.DataFrame(api_response.items)
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_full_data_get: {e}"
+                )
                 raise
 
-    def get_mfi_surveys_processed_data(self, survey_id=None, page=1, page_size=20, format='json', 
-                                    start_date=None, end_date=None, adm0_codes=None, 
-                                    market_id=None, survey_type=None):
+    def get_mfi_surveys_processed_data(
+        self,
+        survey_id=None,
+        page=1,
+        page_size=20,
+        format="json",
+        start_date=None,
+        end_date=None,
+        adm0_codes=None,
+        market_id=None,
+        survey_type=None,
+    ):
         """
         Get MFI processed data in long format with various aggregation levels and dimensions.
-        
+
         Args:
             survey_id (int): Survey ID
             page (int): Page number
@@ -990,7 +1220,7 @@ class DataBridgesShapes:
             adm0_codes (str): Country code
             market_id (int): Market identifier
             survey_type (str): Type of survey
-            
+
         Returns:
             pandas.DataFrame: DataFrame containing processed MFI survey data
         """
@@ -1009,21 +1239,21 @@ class DataBridgesShapes:
                     adm0_codes=adm0_codes,
                     market_id=market_id,
                     survey_type=survey_type,
-                    env=env
+                    env=env,
                 )
                 logger.info("Successfully retrieved MFI surveys processed data")
                 return pd.DataFrame(api_response.items)
             except ApiException as e:
-                logger.error(f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}")
+                logger.error(
+                    f"Exception when calling SurveysApi->m_fi_surveys_processed_data_get: {e}"
+                )
                 raise
 
-    
 
 if __name__ == "__main__":
     import yaml
+
     # FOR TESTING
     CONFIG_PATH = r"data_bridges_api_config.yaml"
 
     client = DataBridgesShapes(CONFIG_PATH)
-
-
