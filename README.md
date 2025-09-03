@@ -20,6 +20,7 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges
 ```
 
 ***R users***
+
 R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
 
 ```R
@@ -80,7 +81,7 @@ commodity_units <- client$get_commodity_units_list(
   page = 1L,
   format = "json"
 )
-
+```
 
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
