@@ -22,7 +22,7 @@ This document outlines the planned features and improvements for the `DataBridge
 ### v1.1.0 
 - [ ] STATA support
 - [X] Fix optional dependencies for STATA
-- [ ] Update setup.py and pyproject.toml to include DataBridges API v6.0
+- [X] Update setup.py and pyproject.toml to include DataBridges API v6.0
 
 ### v1.2.0 
 - [X] R example files

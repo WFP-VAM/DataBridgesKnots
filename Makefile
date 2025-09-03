@@ -40,7 +40,7 @@ codestyle:
 #* Tests
 .PHONY: test
 test:
-	uv run pytest -c pyproject.toml --cov-report=html --cov=src/wfp_survey_toolbox tests/
+	uv run pytest -c pyproject.toml --cov-report=html --cov=data_bridges_knots tests/
 	uv run coverage-badge -o assets/images/coverage.svg -f
 
 #* Typing
