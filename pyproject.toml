@@ -6,12 +6,12 @@ build-backend = "setuptools.build_meta"
 name = "data_bridges_knots"
 version = "1.1.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
-description = "Wrapper for Data Bridges API client"
+description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 keywords = ["VAM", "WFP", "data"]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 
 dependencies = [
     'PyYAML',
@@ -26,6 +26,92 @@ dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
 STATA = ["stata-setup", "pystata"]
 R = []
 
+
+[project.urls]
+repository = "https://github.com/WFP-VAM/DataBridgesKnots/"
+homepage = "https://github.com/WFP-VAM/DataBridgesKnots/"
+
 [tool.setuptools]
 packages = ["data_bridges_knots"]
 
+[tool.isort]
+# https://github.com/timothycrosley/isort/
+py_version = 310
+line_length = 88
+known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
+sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+include_trailing_comma = true
+profile = "black"
+multi_line_output = 3
+indent = 4
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
+python_version = 3.9
+pretty = true
+show_traceback = true
+color_output = true
+allow_redefinition = false
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+implicit_reexport = false
+no_implicit_optional = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+strict_equality = true
+strict_optional = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+
+[tool.pytest.ini_options]
+# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
+# Directories that are not visited by pytest collector:
+norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
+doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
+pythonpath = ["src"]
+
+# Extra options:
+addopts = [
+  "--strict-markers",
+  "--tb=short",
+  "--doctest-modules",
+  "--doctest-continue-on-failure"
+]
+
+[tool.coverage.run]
+source = ["tests"]
+
+[coverage.paths]
+source = "wfp-survey-toolbox"
+
+[coverage.run]
+branch = true
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.0.0",
+    "pytest>=8.3.4",
+    "coverage-badge>=1.1.2",
+    "commitizen>=4.6.0",
+]
+
+[tool.coverage.report]
+fail_under = 50
+show_missing = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.3.0"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version",
+]
+update_changelog_on_bump = true
