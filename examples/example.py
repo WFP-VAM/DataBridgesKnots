@@ -46,9 +46,6 @@ nearby_markets = client.get_nearby_markets(adm0code=56)
 # Get the MFI surveys for a given country
 get_mfi_surveys = client.get_mfi_surveys(adm0_code=1)
 
-# Get the MFI functionality index for a given country (standardized data)
-get_mfi_surveys_base_data = client.get_mfi_surveys_base_data(survey_id=3673)
-
 # Get the MFI functionality index for a given country (full data)
 get_mfi_surveys_full_data = client.get_mfi_surveys_full_data(survey_id=3673)
 

@@ -21,12 +21,11 @@ This document outlines the planned features and improvements for the `DataBridge
 
 ### v1.1.0 
 - [ ] STATA support
-- [ ] Fix optional dependencies for STATA
-- [ ] Update setup.py and pyproject.toml to include DataBridges API v5.0
-- [ ] Handle SSL certificate error (TBC)
+- [X] Fix optional dependencies for STATA
+- [X] Update setup.py and pyproject.toml to include DataBridges API v6.0
 
 ### v1.2.0 
-- [ ] R example files
+- [X] R example files
 
 ### v1.2.1
 - [ ] Documentation: Enhance documentation and provide more usage examples
