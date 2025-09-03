@@ -20,8 +20,11 @@ pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges
 ```
 
 ***R users***
-```
-pip install git+https://github.com/WFP-VAM/DataBridgesusKnots.git#egg=data_bridges_knots[R]
+R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
+
+```R
+install.packages("reticulate")
+library(reticulate)
 ```
 
 ## Configuration
@@ -56,6 +59,29 @@ client = DataBridgesShapes(CONFIG_PATH)
 commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
+
+### R 
+
+```R
+library(reticulate)
+
+# Import the Python module through reticulate
+data_bridges_knots <- import("data_bridges_knots")
+
+# Create client instance
+config_path <- "data_bridges_api_config.yaml"
+client <- data_bridges_knots$DataBridgesShapes(config_path)
+
+# COMMODITY DATA
+# Get commodity unit list for Tanzania
+commodity_units <- client$get_commodity_units_list(
+  country_code = "TZA",
+  commodity_unit_name = "Kg",
+  page = 1L,
+  format = "json"
+)
+
+
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
 ## Contributing
