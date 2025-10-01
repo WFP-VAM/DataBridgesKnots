@@ -4,9 +4,13 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 
 ## Installation
 
-> NB This is the development version of the data_bridges_knots and API client package, it is frequently updated yet not stable.
+>  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/)
 
-You can install the `data_bridges_knots` package using `pip` and the Git repository URL:
+```
+uv pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
+```
+
+You can also install the `data_bridges_knots` package using regular `pip` and the Git repository URL:
 
 ```
 pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
