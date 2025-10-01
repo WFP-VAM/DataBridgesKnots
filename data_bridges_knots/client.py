@@ -22,6 +22,12 @@ logger = logging.getLogger(__name__)
 
 
 class DataBridgesShapes:
+    """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API. 
+    It includes methods for fetching various types of data such as market prices, exchange rates, 
+    food security data, commodities, and more. The class is initialized with a YAML configuration 
+    file and supports multiple environments (e.g., production, development).
+
+    """
     def __init__(self, yaml_config_path, env="prod"):
         self.configuration = self.setup_configuration_and_authentication(
             yaml_config_path
