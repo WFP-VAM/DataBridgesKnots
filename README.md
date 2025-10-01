@@ -9,7 +9,7 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 You can install the `data_bridges_knots` package using `pip` and the Git repository URL:
 
 ```
-pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git@dev
+pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
@@ -90,3 +90,4 @@ Contributions are welcome! Please open an issue or submit a pull request if you 
 
 ## License
 This project is licensed under the AGPL 3.0 License.
+
