@@ -145,3 +145,4 @@ Contributions are welcome! Please open an issue or submit a pull request if you 
 
 ## License
 This project is licensed under the AGPL 3.0 License.
+
