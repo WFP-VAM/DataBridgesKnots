@@ -4,26 +4,33 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 
 ## Installation
 
->  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/)
+### Using uv
+>  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/). 
+
+Install the `data_bridges_knots` package in your environment using uv:
 
 ```
-uv pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
+uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ```
 
+### Using pip
 You can also install the `data_bridges_knots` package using regular `pip` and the Git repository URL:
 
 ```
-pip install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
+pip3 install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
 
-***STATA users***
+### STATA users
+
+STATA users need to install the `data_bridges_knots` with additional STATA dependencies (`pystata`, and `stata-setup`):
+
 ```
-pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
+uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
 ```
 
-***R users***
+### R users
 
 R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
 
@@ -73,6 +80,9 @@ library(reticulate)
 
 # Import the Python module through reticulate
 data_bridges_knots <- import("data_bridges_knots")
+
+# Point to our virtual environment's Python
+use_python(".venv/bin/python")
 
 # Create client instance
 config_path <- "data_bridges_api_config.yaml"
