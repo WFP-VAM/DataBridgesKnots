@@ -1,0 +1,14 @@
+site_name: DataBridgesKnots
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
