@@ -100,7 +100,6 @@ commodity_units <- client$get_commodity_units_list(
 
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
-
 ## Developer set-up
 
 
@@ -112,7 +111,6 @@ This project uses `uv` to manage dependencies and environments. See [here](https
 This project uses `make` to automate common project management tasks. For installation see: [Windows](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69), [Ubuntu Linux](https://linuxhint.com/install-make-ubuntu/), [OSX](https://formulae.brew.sh/formula/make)
 
 Once you have these two core tools installed, simply run `$ make install-tools` to install additional tools necessary for linting, formatting and testing.
-
 
 ### Virtual environment
 To set up the environment for the first time, run
@@ -141,8 +139,6 @@ Apply fixes
 ```commandline
 $ make codestyle
 ```
-
-
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
