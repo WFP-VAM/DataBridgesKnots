@@ -95,6 +95,11 @@ class DataBridgesShapes:
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
+        if data_bridges_api_key is None or "DATABRIDGES_API_KEY" not in data_bridges_api_key:
+            raise ValueError(
+                "DATABRIDGES_API_KEY not found in the YAML configuration file."
+            )
+
         return data_bridges_api_key["DATABRIDGES_API_KEY"]  # FIXME: Gracefull handling
 
     def get_prices(
