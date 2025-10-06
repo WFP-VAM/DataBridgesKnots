@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal
 
 import logging
 import time
@@ -95,12 +95,10 @@ class DataBridgesShapes:
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
-        if data_bridges_api_key is None or "DATABRIDGES_API_KEY" not in data_bridges_api_key:
-            raise ValueError(
-                "DATABRIDGES_API_KEY not found in the YAML configuration file."
-            )
+        if "DATABRIDGES_API_KEY" not in data_bridges_api_key:
+            data_bridges_api_key["DATABRIDGES_API_KEY"] = ""
 
-        return data_bridges_api_key["DATABRIDGES_API_KEY"]  # FIXME: Gracefull handling
+        return data_bridges_api_key["DATABRIDGES_API_KEY"] 
 
     def get_prices(
         self, country_iso3: str, survey_date: str, page_size: int = 1000
@@ -291,7 +289,16 @@ class DataBridgesShapes:
             commodity_id (int, optional): The exact ID of a commodity. Defaults to 0.
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
+        
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get commodities for Tanzania
+            >>> commodities_df = client.get_commodities_list(country_code="TZA")
+            >>> # Get commodity with name containing "Maize"
+            >>> maize_df = client.get_commodities_list(commodity_name="Maize")
+            >>> # Get commodity with specific ID
+            >>> specific_commodity_df = client.get_commodities_list(commodity_id=123) 
+            
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity data.
         """
@@ -345,6 +352,13 @@ class DataBridgesShapes:
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
+        Examples:
+        >>> data_bridges_knots = DataBridgesShapes("config.yaml")
+        >>> # Get conversion factors for Tanzania
+        >>> conversion_factors_df = data_bridges_knots.get_commodity_units_conversion_list(country_code="TZA")
+        >>> # Get conversion factors for a specific commodity
+        >>> specific_conversion_df = data_bridges_knots.get_commodity_units_conversion_list(commodity_id=123)
+
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
         """
@@ -392,6 +406,15 @@ class DataBridgesShapes:
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get commodity units for Tanzania
+            >>> units_df = client.get_commodity_units_list(country_code="TZA")
+            >>> # Get commodity unit with name containing "Kg"
+            >>> kg_unit_df = client.get_commodity_units_list(commodity_unit_name="Kg")
+            >>> # Get commodity unit with specific ID
+            >>> specific_unit_df = client.get_commodity_units_list(commodity_unit_id=5)
+        
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
         """
@@ -438,6 +461,15 @@ class DataBridgesShapes:
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get currencies for Tanzania
+            >>> currencies_df = client.get_currency_list(country_code="TZA")
+            >>> # Get currency with name "ETB"
+            >>> etb_df = client.get_currency_list(currency_name="ETB")
+            >>> # Get currency with specific ID
+            >>> specific_currency_df = client.get_currency_list(currency_id=1)
+
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved currency data.
         """
@@ -481,6 +513,13 @@ class DataBridgesShapes:
             currency_name (str, optional): The ISO3 code for the currency, based on ISO4217. Defaults to ''.
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get USD indirect quotation for Ethiopia
+            >>> usd_df = client.get_usd_indirect_quotation(country_iso3="ETH")
+            >>> # Get USD indirect quotation for currency "ETB"
+            >>> etb_usd_df = client.get_usd_indirect_quotation(currency_name="ETB")
 
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.
@@ -573,8 +612,36 @@ class DataBridgesShapes:
                 )
 
     def get_markets_list(
-        self, country_code: Optional[str] = None, page: Optional[int] = 1
-    ):
+    self, 
+    country_code: Optional[str] = None, 
+    page: Optional[int] = 1
+) -> pd.DataFrame:
+        """Retrieves a complete list of markets in a country.
+
+        Args:
+            country_code (str, optional): The code to identify the country. Can be ISO-3166 Alpha 3 
+                code or VAM internal admin0code. Defaults to None.
+            page (int, optional): Page number for paginated results. Defaults to 1.
+
+        Returns:
+            pd.DataFrame: DataFrame containing market information with columns:
+                - market_id: Unique identifier for the market
+                - market_name: Name of the market
+                - adm0_code: Country administrative code
+                - latitude: Market location latitude
+                - longitude: Market location longitude
+                And other market-related fields
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get markets for Ethiopia
+            >>> eth_markets = client.get_markets_list("ETH")
+            >>> # Get specific page of results
+            >>> page_2 = client.get_markets_list("ETH", page=2)
+
+        Raises:
+            ApiException: If there's an error accessing the Markets API
+        """      
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -597,7 +664,31 @@ class DataBridgesShapes:
                 print("Exception when calling MarketsApi->markets_list_get: %s\n" % e)
 
     # FIXME: JSON response
-    def get_markets_as_csv(self, adm0code=None, local_names=False):
+    def get_markets_as_csv(
+    self, 
+    adm0code: Optional[int] = None, 
+    local_names: bool = False
+) -> str:
+        """Retrieves a complete list of markets in a country in CSV format.
+
+    Args:
+        adm0code (int, optional): Country administrative code. Defaults to None.
+        local_names (bool, optional): If True, market and region names will be 
+            localized if available. Defaults to False.
+
+    Returns:
+        str: CSV formatted string containing market data
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> # Get markets CSV for country code 231
+        >>> markets_csv = client.get_markets_as_csv(231)
+        >>> # Get localized market names
+        >>> local_markets = client.get_markets_as_csv(231, local_names=True)
+
+    Raises:
+        ApiException: If there's an error accessing the Markets API
+    """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
@@ -615,18 +706,38 @@ class DataBridgesShapes:
                     % e
                 )
 
-    def get_nearby_markets(self, adm0code=None, lat=None, lng=None):
-        """
-        Find markets near a given location by longitude and latitude within a 15Km distance.
+    def get_nearby_markets(
+    self, 
+    adm0code: Optional[int] = None, 
+    lat: Optional[float] = None, 
+    lng: Optional[float] = None
+) -> pd.DataFrame:
+        """Finds markets near a given location within a 15km distance.
 
-        Args:
-            adm0code (int, optional): Code for the country as retrieved from https://api.vam.wfp.org/geodata/CountriesInRegion.
-            lat (float, optional): Latitude of the point that will be used to search for existing nearby markets.
-            lng (float, optional): Longitude of the point that will be used to search for existing nearby markets.
+    Args:
+        adm0code (int, optional): Country administrative code. Defaults to None.
+        lat (float, optional): Latitude of the search point. Defaults to None.
+        lng (float, optional): Longitude of the search point. Defaults to None.
 
-        Returns:
-            pandas.DataFrame: A DataFrame containing the nearby markets data.
-        """
+    Returns:
+        pd.DataFrame: DataFrame containing nearby markets with columns:
+            - market_id: Unique identifier for the market
+            - market_name: Name of the market
+            - distance: Distance from search point in kilometers
+            - latitude: Market location latitude
+            - longitude: Market location longitude
+            And other market-related fields
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> # Find markets near coordinates in Ethiopia
+        >>> nearby = client.get_nearby_markets(231, 9.0222, 38.7468)
+        >>> # Sort markets by distance
+        >>> closest = nearby.sort_values('distance').iloc[0]
+
+    Raises:
+        ApiException: If there's an error accessing the Markets API
+    """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             env = self.env
@@ -645,17 +756,59 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_gorp(self, data_type, page=None):
-        """
-        Retrieves data from the Global Operational Response Plan (GORP) API.
+    def get_gorp(
+    self,
+    data_type: Literal["country_latest", "global_latest", "regional_latest"],
+    page: Optional[int] = None
+) -> pd.DataFrame:
+        """Retrieves data from the Global Operational Response Plan (GORP) API.
 
-        Args:
-            data_type (str): The type of GORP data to retrieve. Can be one of 'country_latest', 'global_latest', or 'regional_latest'.
-            page (int, optional): The page number for paginated results. Required for 'latest' and 'list' data types.
+    The GORP API provides access to WFP's operational response planning data at
+    different geographical levels.
 
-        Returns:
-            pandas.DataFrame: A DataFrame containing the requested GORP data.
-        """
+    Args:
+        data_type (str): The type of GORP data to retrieve. Must be one of:
+            - 'country_latest': Latest data at country level
+            - 'global_latest': Latest global aggregated data
+            - 'regional_latest': Latest data aggregated by region
+        page (int, optional): Page number for paginated results. Required for
+            'latest' and 'list' data types. Defaults to None.
+
+    Returns:
+        pd.DataFrame: DataFrame containing GORP data with columns specific to the
+            requested data type:
+            For country_latest:
+                - country: Country name
+                - region: Regional bureau
+                - period: Reporting period
+                - beneficiaries: Number of beneficiaries
+                - requirements: Funding requirements
+            For global_latest:
+                - total_beneficiaries: Global beneficiary count
+                - total_requirements: Global funding requirements
+            For regional_latest:
+                - region: Regional bureau name
+                - total_beneficiaries: Regional beneficiary count
+                - countries: List of countries in region
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> # Get latest country-level data
+        >>> country_data = client.get_gorp("country_latest")
+        >>> 
+        >>> # Get global summary
+        >>> global_data = client.get_gorp("global_latest")
+        >>> 
+        >>> # Get regional breakdown
+        >>> regional_data = client.get_gorp("regional_latest")
+        >>> 
+        >>> # Filter country data for specific region
+        >>> africa_data = country_data[country_data['region'] == 'RBJ']
+
+    Raises:
+        ValueError: If data_type is not one of the allowed values
+        ApiException: If there's an error accessing the GORP API
+    """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             gorp_api_instance = data_bridges_client.GorpApi(api_client)
             env = self.env
