@@ -1,7 +1,7 @@
 import logging
 import time
 from datetime import date, timedelta
-
+from typing import Optional, Dict, Any, List, Union
 import data_bridges_client
 import numpy as np
 import pandas as pd
@@ -22,11 +22,20 @@ logger = logging.getLogger(__name__)
 
 
 class DataBridgesShapes:
-    """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API. 
-    It includes methods for fetching various types of data such as market prices, exchange rates, 
-    food security data, commodities, and more. The class is initialized with a YAML configuration 
-    file and supports multiple environments (e.g., production, development).
+    """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
+    
+    This class includes methods for fetching various types of data such as market prices, 
+    exchange rates, food security data, commodities, and more. The class is initialized 
+    with a YAML configuration file and supports multiple environments.
 
+    Args:
+        yaml_config_path (str): Path to the YAML configuration file
+        env (str, optional): Environment to use. Defaults to "prod"
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> prices_df = client.get_prices("ETH", "2023-01-01")
+        >>> exchange_rates = client.get_exchange_rates("ETH")
     """
     def __init__(self, yaml_config_path, env="prod"):
         self.configuration = self.setup_configuration_and_authentication(
@@ -43,13 +52,23 @@ class DataBridgesShapes:
 
     def __str__(self):
         return (
-            "DataBridgesShapes(yamlpath='%s') \n\n Brought to you with <3 by SHAPES \n\n"
+            "DataBridgesShapes(yamlpath='%s') \n\n Brought to you with <3 by WFP VAM \n\n"
             % self.configuration.host
         )
 
     def setup_configuration_and_authentication(self, yaml_config_path):
-        """Loads configuration from a YAML file and sets up authentication."""
+        """Loads configuration from a YAML file and sets up authentication.
+        
+        Args:
+            yaml_config_path (str): Path to the YAML configuration file
 
+        Returns:
+            Configuration: DataBridges configuration object
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> config = client.setup_configuration_and_authentication("config.yaml")
+        """
         with open(yaml_config_path, "r") as yamlfile:
             databridges_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
@@ -72,21 +91,40 @@ class DataBridgesShapes:
         """Loads configuration from a YAML file and sets up authentication."""
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
+       
+        return data_bridges_api_key["DATABRIDGES_API_KEY"] #FIXME: Gracefull handling
 
-        return data_bridges_api_key["DATABRIDGES_API_KEY"]
-
-    def get_prices(self, country_iso3, survey_date, page_size=1000):
-        """
-        Fetches market price data for a given country and survey date.
+    def get_prices(
+        self, 
+        country_iso3: str, 
+        survey_date: str, 
+        page_size: int = 1000
+    ) -> pd.DataFrame:
+        """Fetches market price data for a given country and survey date.
 
         Args:
-            country_iso3 (str): The ISO 3-letter country code.
+            country_iso3 (str): The ISO 3-letter country code
             survey_date (str): The survey date in ISO format (e.g. '2022-01-01').
-                If an empty string is provided, the function will fetch data starting from Jan 1, 1990.
-            page_size (int, optional): The number of items to fetch per page. Defaults to 1000.
+                If empty string is provided, fetches data from Jan 1, 1990
+            page_size (int, optional): Number of items per page. Defaults to 1000
 
         Returns:
-            pandas.DataFrame: A DataFrame containing the fetched market price data.
+            pd.DataFrame: DataFrame containing market price data with columns:
+                - date: Date of price recording
+                - price: Price value
+                - commodity_id: ID of the commodity
+                - market_id: ID of the market
+                And other relevant price information
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get prices for Ethiopia from 2023
+            >>> prices_df = client.get_prices("ETH", "2023-01-01")
+            >>> # Get all historical prices for Kenya
+            >>> prices_df = client.get_prices("KEN", "")
+        
+        Raises:
+            ApiException: If there's an error calling the Market price API
         """
 
         if survey_date != "":
@@ -106,7 +144,7 @@ class DataBridgesShapes:
                 try:
                     api_prices = api_instance.market_prices_price_monthly_get(
                         country_code=country_iso3,
-                        format="JSON",
+                        format: Optional[str]="json",
                         page=page,
                         env=env,
                         start_date=start_date,
@@ -127,16 +165,33 @@ class DataBridgesShapes:
         df = df.replace({np.nan: None})
         return df
 
-    def get_exchange_rates(self, country_iso3, page_size=1000):
-        """
-        Retrieves exchange rates for a given country ISO3 code from the Data Bridges API.
+    def get_exchange_rates(
+        self, 
+        country_iso3: str, 
+        page_size: int = 1000
+    ) -> pd.DataFrame:
+        """Retrieves exchange rates for a given country from the Data Bridges API.
 
         Args:
-            country_iso3 (str): The ISO3 country code for which to retrieve exchange rates.
-            page_size (int, optional): The number of items to retrieve per page. Defaults to 1000.
+            country_iso3 (str): The ISO3 country code
+            page_size (int, optional): Number of items per page. Defaults to 1000
 
         Returns:
-            pandas.DataFrame: A DataFrame containing the exchange rate data.
+            pd.DataFrame: DataFrame containing exchange rate data with columns:
+                - date: Date of exchange rate
+                - rate: Exchange rate value
+                - currency: Currency code
+                And other relevant exchange rate information
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get exchange rates for Ethiopia
+            >>> rates_df = client.get_exchange_rates("ETH")
+            >>> # Check latest exchange rate
+            >>> latest_rate = rates_df.sort_values('date').iloc[-1]
+
+        Raises:
+            ApiException: If there's an error calling the Exchange rates API
         """
 
         responses = []
@@ -152,7 +207,7 @@ class DataBridgesShapes:
                 try:
                     api_exchange_rates = (
                         api_instance.currency_usd_indirect_quotation_get(
-                            country_iso3=country_iso3, format="JSON", page=page, env=env
+                            country_iso3=country_iso3, format: Optional[str]="json", page=page, env=env
                         )
                     )
                     responses.extend(
@@ -172,17 +227,32 @@ class DataBridgesShapes:
         df = df.replace({np.nan: None})
         return df
 
-    def get_food_security_list(self, iso3=None, year=None, page=1):
-        """
-        Retrieves food security data from the Data Bridges API.
+    def get_food_security_list(
+        self, 
+        iso3: Optional[str] = None, 
+        year: Optional[int] = None, 
+        page: int = 1
+    ) -> pd.DataFrame:
+        """Retrieves food security data from the Data Bridges API.
 
         Args:
-            iso3 (str, optional): The country ISO3 code.
-            year (int, optional): The year to retrieve data for.
-            page (int, optional): Page number for paged results. Defaults to 1.
+            iso3 (str, optional): The country ISO3 code
+            year (int, optional): The year to retrieve data for
+            page (int, optional): Page number for paged results. Defaults to 1
 
         Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved food security data.
+            pd.DataFrame: DataFrame containing food security data with relevant indicators
+                and metrics for the specified country and year
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get food security data for Ethiopia in 2023
+            >>> security_df = client.get_food_security_list("ETH", 2023)
+            >>> # Get all food security data
+            >>> all_security_df = client.get_food_security_list()
+
+        Raises:
+            ApiException: If there's an error calling the Food Security API
         """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             food_security_api_instance = data_bridges_client.FoodSecurityApi(api_client)
@@ -206,12 +276,12 @@ class DataBridgesShapes:
 
     def get_commodities_list(
         self,
-        country_code=None,
-        commodity_name=None,
-        commodity_id=0,
-        page=1,
-        format="json",
-    ):
+        country_code: Optional[str] =None,
+        commodity_name: Optional[str] =None,
+        commodity_id: int =0,
+        page: int =1,
+        format: str ="json",
+    ) -> pd.DataFrame:
         """
         Retrieves the detailed list of commodities available in the DataBridges platform.
 
@@ -257,13 +327,13 @@ class DataBridgesShapes:
 
     def get_commodity_units_conversion_list(
         self,
-        country_code=None,
-        commodity_id=0,
-        from_unit_id=0,
-        to_unit_id=0,
-        page=1,
-        format="json",
-    ):
+        country_code: Optional[str]=None,
+        commodity_id:  Optional[int]=0,
+        from_unit_id: Optional[int]=0,
+        to_unit_id: Optional[int]=0,
+        page: Optional[int]=1,
+        format: Optional[str]="json",
+    ) -> pd.DataFrame:
         """
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
 
@@ -306,11 +376,11 @@ class DataBridgesShapes:
 
     def get_commodity_units_list(
         self,
-        country_code=None,
-        commodity_unit_name=None,
-        commodity_unit_id=0,
-        page=1,
-        format="json",
+        country_code: Optional[str]=None,
+        commodity_unit_name: Optional[str]=None,
+        commodity_unit_id: Optional[int]=0,
+        page: Optional[int]=1,
+        format: Optional[str]="json",
     ):
         """
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
@@ -352,11 +422,11 @@ class DataBridgesShapes:
 
     def get_currency_list(
         self,
-        country_code=None,
-        currency_name=None,
-        currency_id=0,
-        page=1,
-        format="json",
+        country_code: Optional[str]=None,
+        currency_name: Optional[str]=None,
+        currency_id: Optional[str]=0,
+        page: Optional[int] = 1,
+        format: Optional[str]="json",
     ):
         """
         Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
@@ -397,7 +467,7 @@ class DataBridgesShapes:
                 raise
 
     def get_usd_indirect_quotation(
-        self, country_iso3="", currency_name="", page=1, format="json"
+        self, country_iso3: Optional[str]="", currency_name: Optional[str]="", page: Optional[int] = 1, format: Optional[str]="json"
     ):
         """
         Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.
@@ -437,7 +507,7 @@ class DataBridgesShapes:
 
     # FIXME: JSON response
     def get_economic_indicator_list(
-        self, page=1, indicator_name="", iso3="", format="json"
+        self, page: Optional[int] = 1, indicator_name: Optional[str]="", country_iso3: Optional[str]="", format: Optional[str]="json"
     ):
         """
         Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
@@ -460,7 +530,7 @@ class DataBridgesShapes:
                 api_response = api_instance.economic_data_indicator_list_get(
                     page=page,
                     indicator_name=indicator_name,
-                    iso3=iso3,
+                    iso3=country_iso3,
                     format=format,
                     env=self.env,
                 )
@@ -494,7 +564,7 @@ class DataBridgesShapes:
                     % e
                 )
 
-    def get_markets_list(self, country_code=None, page=1):
+    def get_markets_list(self, country_code: Optional[str]=None, page: Optional[int] = 1):
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -606,17 +676,37 @@ class DataBridgesShapes:
                 logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
             raise
 
-    def get_household_survey(self, survey_id, access_type, page_size=600):
-        """Retrieves survey data using the specified configuration and access type.
+    def get_household_survey(
+    self, 
+    survey_id: int, 
+    access_type: str, 
+    page_size: Optional[int] = 600
+) -> pd.DataFrame:
+        """Retrieves household survey data using the specified access type.
 
         Args:
-            survey_id (str): The ID of the survey to retrieve.
-            access_type (str): The type of access to use for retrieving the survey data.
-                Can be one of 'full', 'draft', 'official', or 'public'.
-            page_size (int, optional): The number of items to retrieve per page. Defaults to 600.
+            survey_id (int]): The ID of the survey to retrieve
+            access_type (str): The type of access to use. Must be one of:
+                - 'full': Complete survey data (requires API key)
+                - 'draft': Draft internal base data (requires API key)
+                - 'official': Official use base data
+                - 'public': Public base data
+            page_size (int, optional): Number of items per page. Defaults to 600
 
         Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved survey data.
+            pd.DataFrame: DataFrame containing survey data with columns specific to the
+                access type and survey structure
+
+        Examples:
+            >>> client = DataBridgesShapes("config.yaml")
+            >>> # Get full survey data
+            >>> full_data = client.get_household_survey("123", "full")
+            >>> # Get public data
+            >>> public_data = client.get_household_survey("123", "public")
+
+        Raises:
+            KeyError: If access_type is not one of the allowed values
+            ApiException: If there's an error accessing the API
         """
         responses = []
         total_items = 1
@@ -669,21 +759,46 @@ class DataBridgesShapes:
         return df
 
     def get_household_surveys_list(
-        self, adm0_code=None, page=1, start_date=None, end_date=None, survey_id=None
-    ):
-        """
-        Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all household surveys conducted in a country.
+    self,
+    adm0_code: Optional[int] = None,
+    page: Optional[int] = 1,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+    survey_id: Optional[int] = None
+) -> pd.DataFrame:
+    """Retrieves a list of household surveys for a country with their metadata.
 
-        Args:
-            adm0_code (int, optional): Code for the country. Defaults to 0.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            start_date (datetime, optional): Starting date for the range in which data was collected.
-            end_date (datetime, optional): Ending date for the range in which data was collected.
-            survey_id (int, optional): Specific survey ID to retrieve.
+    Args:
+        adm0_code (int, optional): Country code from WFP's internal coding system
+        page (int, optional): Page number for paginated results. Defaults to 1
+        start_date (str, optional): Start date filter in ISO format (YYYY-MM-DD)
+        end_date (str, optional): End date filter in ISO format (YYYY-MM-DD)
+        survey_id (int, optional): Specific survey ID to retrieve
 
-        Returns:
-            pandas.DataFrame: A DataFrame containing the survey information.
-        """
+    Returns:
+        pd.DataFrame: DataFrame containing survey metadata with columns:
+            - survey_id: Unique identifier for the survey
+            - xls_form_id: ID of the questionnaire form used
+            - title: Survey title
+            - country: Country name
+            - start_date: Survey start date
+            - end_date: Survey end date
+            And other metadata fields
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> # Get all surveys for a country
+        >>> surveys = client.get_household_surveys_list(adm0_code=231)
+        >>> # Get surveys within date range
+        >>> surveys = client.get_household_surveys_list(
+        ...     adm0_code=231,
+        ...     start_date="2023-01-01",
+        ...     end_date="2023-12-31"
+        ... )
+
+    Raises:
+        ApiException: If there's an error accessing the API
+    """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
@@ -707,16 +822,29 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_household_xslform_definition(self, xls_form_id):
-        """
-        Get a complete set of XLS Form definitions of a given XLS Form ID.
+    def get_household_xslform_definition(self, xls_form_id: int) -> pd.DataFrame:
+    """Retrieves the complete XLS Form definition for a questionnaire.
 
-        Args:
-            xls_form_id (int): The ID of the questionnaire form to retrieve data for.
+    Args:
+        xls_form_id (int): The ID of the questionnaire form to retrieve
 
-        Returns:
-            pandas.DataFrame: A DataFrame containing the fetched questionnaire data.
-        """
+    Returns:
+        pd.DataFrame: DataFrame containing the form definition with columns:
+            - fields: List of field definitions
+            - choices: Available choices for select questions
+            - settings: Form settings
+            And other form structure information
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> # Get form definition
+        >>> form_def = client.get_household_xslform_definition(123)
+        >>> # Access form fields
+        >>> fields = form_def['fields'].iloc[0]
+
+    Raises:
+        ApiException: If there's an error accessing the API
+    """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
@@ -737,12 +865,44 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_household_questionnaire(self, xls_form_id):
+    def get_household_questionnaire(self, xls_form_id: int) -> pd.DataFrame:
+    """Extracts the questionnaire structure from an XLS Form definition.
+
+    Args:
+        xls_form_id (int): The ID of the questionnaire form to process
+
+    Returns:
+        pd.DataFrame: DataFrame containing the questionnaire structure with
+            one row per field in the form
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> questionnaire = client.get_household_questionnaire(123)
+        >>> # View question types
+        >>> print(questionnaire['type'].unique())
+    """
         if self.xlsform is None:
             self.xlsform = self.get_household_xslform_definition(xls_form_id)
         return pd.DataFrame(list(self.xlsform.fields)[0])
 
-    def get_choice_list(self, xls_form_id):
+    def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
+    """Extracts choice lists from a questionnaire form definition.
+
+    Args:
+        xls_form_id (int): The ID of the questionnaire form to process
+
+    Returns:
+        pd.DataFrame: DataFrame containing choice lists with columns:
+            - name: Name of the choice list
+            - value: Choice value/code
+            - label: Human-readable choice label
+
+    Examples:
+        >>> client = DataBridgesShapes("config.yaml")
+        >>> choices = client.get_choice_list(123)
+        >>> # View choices for a specific list
+        >>> food_choices = choices[choices['name'] == 'food_items']
+    """
         questionnaire = self.get_household_questionnaire(xls_form_id)
 
         choiceList = pd.json_normalize(questionnaire["choiceList"]).dropna()
@@ -809,7 +969,7 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_mfi_surveys_full_data(self, survey_id=None, page=1, page_size=20):
+    def get_mfi_surveys_full_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
         """
         Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
         """
@@ -819,7 +979,7 @@ class DataBridgesShapes:
             try:
                 api_response = api_instance.m_fi_surveys_full_data_get(
                     survey_id=survey_id,
-                    format="json",
+                    format: Optional[str]="json",
                     page=page,
                     page_size=page_size,
                     env=env,
@@ -833,7 +993,7 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_mfi_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
+    def get_mfi_surveys(self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None):
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
         """
@@ -862,9 +1022,9 @@ class DataBridgesShapes:
     def get_mfi_surveys_processed_data(
         self,
         survey_id=None,
-        page=1,
+        page: Optional[int] = 1,
         page_size=20,
-        format="json",
+        format: Optional[str]="json",
         start_date=None,
         end_date=None,
         adm0_codes=None,
@@ -902,7 +1062,7 @@ class DataBridgesShapes:
                 raise
 
         # TODO: Get the scope and test these functions
-        def get_rpme_base_data(self, survey_id=None, page=1, page_size=20):
+        def get_rpme_base_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
@@ -923,7 +1083,7 @@ class DataBridgesShapes:
 
         # TODO: Get the scope and test these functions
         def get_rpme_full_data(
-            self, survey_id=None, format="json", page=1, page_size=20
+            self, survey_id=None, format: Optional[str]="json", page: Optional[int] = 1, page_size=20
         ):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
@@ -950,7 +1110,7 @@ class DataBridgesShapes:
         # TODO: Get the scope and test these functions
         def get_rpme_output_values(
             self,
-            page=1,
+            page: Optional[int] = 1,
             adm0_code=None,
             survey_id=None,
             shop_id=None,
@@ -982,7 +1142,7 @@ class DataBridgesShapes:
                     raise
 
         # TODO: Get the scope and test these functions
-        def get_rpme_surveys(self, adm0_code=0, page=1, start_date=None, end_date=None):
+        def get_rpme_surveys(self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
@@ -1006,7 +1166,7 @@ class DataBridgesShapes:
                     raise
 
         # TODO: Get the scope and test these functions
-        def get_rpme_variables(self, page=1):
+        def get_rpme_variables(self, page: Optional[int] = 1):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
@@ -1025,7 +1185,7 @@ class DataBridgesShapes:
 
         # TODO: Get the scope and test these functions
         def get_rpme_xls_forms(
-            self, adm0_code=0, page=1, start_date=None, end_date=None
+            self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
         ):
             with data_bridges_client.ApiClient(self.configuration) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
@@ -1051,7 +1211,7 @@ class DataBridgesShapes:
 
         # Add this function to the DataBridgesShapes class
 
-    def get_mfi_xls_forms(self, adm0_code=0, page=1, start_date=None, end_date=None):
+    def get_mfi_xls_forms(self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.XlsFormsApi(api_client)
             env = self.env
@@ -1075,7 +1235,7 @@ class DataBridgesShapes:
             raise
 
     def get_mfi_xls_forms_detailed(
-        self, adm0_code=0, page=1, start_date=None, end_date=None
+        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
     ):
         """
         Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.
@@ -1118,7 +1278,7 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_mfi_surveys_base_data(self, survey_id=None, page=1, page_size=20):
+    def get_mfi_surveys_base_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
         """
         Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
 

@@ -1,8 +1,5 @@
 site_name: DataBridgesKnots
 
-theme:
-  name: material
-
 plugins:
   - search
   - mkdocstrings:
@@ -10,5 +7,4 @@ plugins:
 
 markdown_extensions:
   - admonition
-  - codehilite
   - pymdownx.superfences
