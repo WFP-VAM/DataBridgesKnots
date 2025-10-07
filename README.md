@@ -57,10 +57,14 @@ library(reticulate)
 2. (For WFP users) Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
 3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
-### API Documentation
-Documentation on the API methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-### Python
+## Usage
+### Documentation
+Comprensive on all methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+
+### Sample query
+
+## Python
 
 Run the following example to extract commodity data: 
 ```python
@@ -76,7 +80,6 @@ commodity_units_list = client.get_commodity_units_list(country_code="TZA", commo
 
 ```
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
-
 
 ### R 
 
