@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class DataBridgesShapes:
+    # FIXME: class docstring
     """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
 
     This class includes methods for fetching various types of data such as market prices,
@@ -35,16 +36,16 @@ class DataBridgesShapes:
         env (str, optional): Environment to use. Defaults to "prod"
 
     Examples:
-        >>> client = DataBridgesShapes("config.yaml")
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> prices_df = client.get_prices("ETH", "2023-01-01")
         >>> exchange_rates = client.get_exchange_rates("ETH")
     """
 
     def __init__(self, yaml_config_path, env="prod"):
-        self.configuration = self.setup_configuration_and_authentication(
+        self.configuration = self._setup_configuration_and_authentication(
             yaml_config_path
         )
-        self.data_bridges_api_key = self.setup_databridges_configuration(
+        self.data_bridges_api_key = self._setup_databridges_configuration(
             yaml_config_path
         )
         self.env = env
@@ -59,7 +60,7 @@ class DataBridgesShapes:
             % self.configuration.host
         )
 
-    def setup_configuration_and_authentication(self, yaml_config_path):
+    def _setup_configuration_and_authentication(self, yaml_config_path):
         """Loads configuration from a YAML file and sets up authentication.
 
         Args:
@@ -68,9 +69,6 @@ class DataBridgesShapes:
         Returns:
             Configuration: DataBridges configuration object
 
-        Examples:
-            >>> client = DataBridgesShapes("config.yaml")
-            >>> config = client.setup_configuration_and_authentication("config.yaml")
         """
         with open(yaml_config_path, "r") as yamlfile:
             databridges_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
@@ -90,7 +88,7 @@ class DataBridgesShapes:
         )
         return configuration
 
-    def setup_databridges_configuration(self, yaml_config_path):
+    def _setup_databridges_configuration(self, yaml_config_path):
         """Loads configuration from a YAML file and sets up authentication."""
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
@@ -120,7 +118,7 @@ class DataBridgesShapes:
                 And other relevant price information
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get prices for Ethiopia from 2023
             >>> prices_df = client.get_prices("ETH", "2023-01-01")
             >>> # Get all historical prices for Kenya
@@ -185,7 +183,7 @@ class DataBridgesShapes:
                 And other relevant exchange rate information
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get exchange rates for Ethiopia
             >>> rates_df = client.get_exchange_rates("ETH")
             >>> # Check latest exchange rate
@@ -243,7 +241,7 @@ class DataBridgesShapes:
                 and metrics for the specified country and year
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get food security data for Ethiopia in 2023
             >>> security_df = client.get_food_security_list("ETH", 2023)
             >>> # Get all food security data
@@ -291,7 +289,7 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
         
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get commodities for Tanzania
             >>> commodities_df = client.get_commodities_list(country_code="TZA")
             >>> # Get commodity with name containing "Maize"
@@ -353,7 +351,7 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Examples:
-        >>> data_bridges_knots = DataBridgesShapes("config.yaml")
+        >>> data_bridges_knots = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> # Get conversion factors for Tanzania
         >>> conversion_factors_df = data_bridges_knots.get_commodity_units_conversion_list(country_code="TZA")
         >>> # Get conversion factors for a specific commodity
@@ -407,7 +405,7 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get commodity units for Tanzania
             >>> units_df = client.get_commodity_units_list(country_code="TZA")
             >>> # Get commodity unit with name containing "Kg"
@@ -462,7 +460,7 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get currencies for Tanzania
             >>> currencies_df = client.get_currency_list(country_code="TZA")
             >>> # Get currency with name "ETB"
@@ -515,7 +513,7 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get USD indirect quotation for Ethiopia
             >>> usd_df = client.get_usd_indirect_quotation(country_iso3="ETH")
             >>> # Get USD indirect quotation for currency "ETB"
@@ -633,7 +631,7 @@ class DataBridgesShapes:
                 And other market-related fields
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get markets for Ethiopia
             >>> eth_markets = client.get_markets_list("ETH")
             >>> # Get specific page of results
@@ -680,7 +678,7 @@ class DataBridgesShapes:
         str: CSV formatted string containing market data
 
     Examples:
-        >>> client = DataBridgesShapes("config.yaml")
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> # Get markets CSV for country code 231
         >>> markets_csv = client.get_markets_as_csv(231)
         >>> # Get localized market names
@@ -729,7 +727,7 @@ class DataBridgesShapes:
             And other market-related fields
 
     Examples:
-        >>> client = DataBridgesShapes("config.yaml")
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> # Find markets near coordinates in Ethiopia
         >>> nearby = client.get_nearby_markets(231, 9.0222, 38.7468)
         >>> # Sort markets by distance
@@ -792,7 +790,7 @@ class DataBridgesShapes:
                 - countries: List of countries in region
 
     Examples:
-        >>> client = DataBridgesShapes("config.yaml")
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> # Get latest country-level data
         >>> country_data = client.get_gorp("country_latest")
         >>> 
@@ -858,7 +856,7 @@ class DataBridgesShapes:
                 access type and survey structure
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get full survey data
             >>> full_data = client.get_household_survey("123", "full")
             >>> # Get public data
@@ -946,7 +944,7 @@ class DataBridgesShapes:
                 And other metadata fields
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get all surveys for a country
             >>> surveys = client.get_household_surveys_list(adm0_code=231)
             >>> # Get surveys within date range
@@ -996,7 +994,7 @@ class DataBridgesShapes:
                 And other form structure information
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get form definition
             >>> form_def = client.get_household_xslform_definition(123)
             >>> # Access form fields
@@ -1036,7 +1034,7 @@ class DataBridgesShapes:
                 one row per field in the form
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> questionnaire = client.get_household_questionnaire(123)
             >>> # View question types
             >>> print(questionnaire['type'].unique())
@@ -1058,7 +1056,7 @@ class DataBridgesShapes:
                 - label: Human-readable choice label
 
         Examples:
-            >>> client = DataBridgesShapes("config.yaml")
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> choices = client.get_choice_list(123)
             >>> # View choices for a specific list
             >>> food_choices = choices[choices['name'] == 'food_items']
@@ -1420,6 +1418,17 @@ class DataBridgesShapes:
             start_date (str): Starting date for data collection range (YYYY-MM-DD format)
             end_date (str): Ending date for data collection range (YYYY-MM-DD format)
 
+        Examples:
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Get detailed XLS forms for country code 231
+            >>> detailed_forms = client.get_mfi_xls_forms_detailed(adm0_code=231)
+            >>> # Get forms within a date range
+            >>> forms_in_range = client.get_mfi_xls_forms_detailed(
+            ...     adm0_code=231,
+            ...     start_date="2023-01-01",
+            ...     end_date="2023-12-31"
+            ... )
+
         Returns:
             pandas.DataFrame: DataFrame containing XLS Forms data
         """
@@ -1462,6 +1471,15 @@ class DataBridgesShapes:
             survey_id (int): Unique identifier for the collected data
             page (int): Page number for paged results
             page_size (int): Number of items per page
+
+        Examples:
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Get MFI base data for a specific survey
+            >>> base_data = client.get_mfi_surveys_base_data(survey_id=123)
+            >>> # Paginate through results
+            >>> for page in range(1, 5):
+            ...     data_page = client.get_mfi_surveys_base_data(survey_id=123, page=page)
+            ...     print(data_page)
 
         Returns:
             pandas.DataFrame: DataFrame containing MFI base survey data
