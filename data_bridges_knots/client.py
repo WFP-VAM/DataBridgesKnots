@@ -89,7 +89,7 @@ class DataBridgesShapes:
         return configuration
 
     def _setup_databridges_configuration(self, yaml_config_path):
-        """Loads configuration from a YAML file and sets up authentication."""
+        """Loads Data Bridges API key from a YAML file."""
         with open(yaml_config_path, "r") as yamlfile:
             data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
@@ -888,13 +888,19 @@ class DataBridgesShapes:
                     }.get(access_type)
 
                     if access_type in ["full", "draft"]:
-                        api_survey = api_call(
-                            self.data_bridges_api_key,
-                            survey_id=survey_id,
-                            page=page,
-                            page_size=page_size,
-                            env=env,
-                        )
+                        try:
+                            api_survey = api_call(
+                                self.data_bridges_api_key,
+                                survey_id=survey_id,
+                                page=page,
+                                page_size=page_size,
+                                env=env,
+                            )
+                        except ApiException as e:
+                            logger.error(
+                                f"API key required when calling Household data-> '{access_type}': {e}"
+                            )
+                            raise
                     else:
                         api_survey = api_call(
                             survey_id=survey_id, page=page, page_size=page_size, env=env
