@@ -277,7 +277,7 @@ class DataBridgesShapes:
 
     def get_commodities_list(
         self,
-        country_code: Optional[str] = None,
+        country_iso3: Optional[str] = None,
         commodity_name: Optional[str] = None,
         commodity_id: int = 0,
         page: int = 1,
@@ -287,7 +287,7 @@ class DataBridgesShapes:
         Retrieves the detailed list of commodities available in the DataBridges platform.
 
         Args:
-            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
             commodity_name (str, optional): The name, even partial and case insensitive, of a commodity.
             commodity_id (int, optional): The exact ID of a commodity. Defaults to 0.
             page (int, optional): Page number for paged results. Defaults to 1.
@@ -295,8 +295,10 @@ class DataBridgesShapes:
         
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Get full list of commmodities
+            >>> commodities_list = client.get_commodities_list()
             >>> # Get commodities for Tanzania
-            >>> commodities_df = client.get_commodities_list(country_code="TZA")
+            >>> commodities_df = client.get_commodities_list(country_iso3="TZA")
             >>> # Get commodity with name containing "Maize"
             >>> maize_df = client.get_commodities_list(commodity_name="Maize")
             >>> # Get commodity with specific ID
@@ -311,7 +313,7 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.commodities_list_get(
-                    country_code=country_code,
+                    country_code=country_iso3,
                     commodity_name=commodity_name,
                     commodity_id=commodity_id,
                     page=page,
@@ -656,7 +658,7 @@ class DataBridgesShapes:
             try:
                 # Get a complete list of markets in a country
                 api_response = api_instance.markets_list_get(
-                    country_code=country_code, page=page, format=format, env=env
+                    country_code=country_iso3, page=page, format=format, env=env
                 )
                 print("The response of MarketsApi->markets_list_get:\n")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
@@ -710,16 +712,16 @@ class DataBridgesShapes:
 
     def get_nearby_markets(
     self, 
-    adm0code: Optional[int] = None, 
-    lat: Optional[float] = None, 
-    lng: Optional[float] = None
+    country_iso3: str = None, 
+    lat: float = None, 
+    lng: float = None
 ) -> pd.DataFrame:
         """Finds markets near a given location within a 15km distance.
 
     Args:
-        adm0code (int, optional): Country administrative code. Defaults to None.
-        lat (float, optional): Latitude of the search point. Defaults to None.
-        lng (float, optional): Longitude of the search point. Defaults to None.
+        country_iso3 (str): Country administrative code. Defaults to None.
+        lat (float): Latitude of the search point. Defaults to None.
+        lng (float): Longitude of the search point. Defaults to None.
 
     Returns:
         pd.DataFrame: DataFrame containing nearby markets with columns:
@@ -732,14 +734,16 @@ class DataBridgesShapes:
 
     Examples:
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Find markets near coordinates in Ethiopia
-        >>> nearby = client.get_nearby_markets(231, 9.0222, 38.7468)
+        >>> # Find markets near coordinates in Afghanistan
+        >>> nearby = client.get_nearby_markets("AFG", 34.515, 69.208)
         >>> # Sort markets by distance
         >>> closest = nearby.sort_values('distance').iloc[0]
 
     Raises:
         ApiException: If there's an error accessing the Markets API
     """
+
+        adm0code = get_adm0_code(country_iso3)
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             env = self.env
