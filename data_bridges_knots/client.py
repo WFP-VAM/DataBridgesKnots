@@ -279,9 +279,9 @@ class DataBridgesShapes:
         self,
         country_iso3: Optional[str] = None,
         commodity_name: Optional[str] = None,
-        commodity_id: int = 0,
-        page: int = 1,
-        format: str = "json",
+        commodity_id: Optional[int] = 0,
+        page: Optional[int] = 1,
+        format: Optional[str] = "json",
     ) -> pd.DataFrame:
         """
         Retrieves the detailed list of commodities available in the DataBridges platform.
@@ -339,7 +339,7 @@ class DataBridgesShapes:
 
     def get_commodity_units_conversion_list(
         self,
-        country_code: Optional[str] = None,
+        country_iso3: Optional[str] = None,
         commodity_id: Optional[int] = 0,
         from_unit_id: Optional[int] = 0,
         to_unit_id: Optional[int] = 0,
@@ -358,11 +358,11 @@ class DataBridgesShapes:
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Examples:
-        >>> data_bridges_knots = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> # Get full list of commodity units conversions
+        >>> full_list = client.get_commodity_units_conversion_list()
         >>> # Get conversion factors for Tanzania
-        >>> conversion_factors_df = data_bridges_knots.get_commodity_units_conversion_list(country_code="TZA")
-        >>> # Get conversion factors for a specific commodity
-        >>> specific_conversion_df = data_bridges_knots.get_commodity_units_conversion_list(commodity_id=123)
+        >>> conversion_factors_df = client.get_commodity_units_conversion_list(country_iso3="TZA")
 
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
@@ -373,7 +373,7 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.commodity_units_conversion_list_get(
-                    country_code=country_code,
+                    country_code=country_iso3,
                     commodity_id=commodity_id,
                     from_unit_id=from_unit_id,
                     to_unit_id=to_unit_id,
@@ -395,7 +395,7 @@ class DataBridgesShapes:
 
     def get_commodity_units_list(
         self,
-        country_code: Optional[str] = None,
+        country_iso3: Optional[str] = None,
         commodity_unit_name: Optional[str] = None,
         commodity_unit_id: Optional[int] = 0,
         page: Optional[int] = 1,
@@ -405,7 +405,7 @@ class DataBridgesShapes:
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
 
         Args:
-            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
             commodity_unit_name (str, optional): The name, even partial and case insensitive, of a commodity unit.
             commodity_unit_id (int, optional): The exact ID of a commodity unit. Defaults to 0.
             page (int, optional): Page number for paged results. Defaults to 1.
@@ -414,7 +414,7 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get commodity units for Tanzania
-            >>> units_df = client.get_commodity_units_list(country_code="TZA")
+            >>> units_df = client.get_commodity_units_list(country_iso3="TZA")
             >>> # Get commodity unit with name containing "Kg"
             >>> kg_unit_df = client.get_commodity_units_list(commodity_unit_name="Kg")
             >>> # Get commodity unit with specific ID
@@ -429,7 +429,7 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.commodity_units_list_get(
-                    country_code=country_code,
+                    country_code=country_iso3,
                     commodity_unit_name=commodity_unit_name,
                     commodity_unit_id=commodity_unit_id,
                     page=page,
@@ -450,7 +450,7 @@ class DataBridgesShapes:
 
     def get_currency_list(
         self,
-        country_code: Optional[str] = None,
+        country_iso3: Optional[str] = None,
         currency_name: Optional[str] = None,
         currency_id: Optional[str] = 0,
         page: Optional[int] = 1,
@@ -460,7 +460,7 @@ class DataBridgesShapes:
         Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
 
         Args:
-            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
             currency_name (str, optional): Currency 3-letter code, matching with ISO 4217.
             currency_id (int, optional): Unique code to identify the currency in internal VAM currencies. Defaults to 0.
             page (int, optional): Page number for paged results. Defaults to 1.
@@ -469,7 +469,7 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get currencies for Tanzania
-            >>> currencies_df = client.get_currency_list(country_code="TZA")
+            >>> currencies_df = client.get_currency_list(country_iso3="TZA")
             >>> # Get currency with name "ETB"
             >>> etb_df = client.get_currency_list(currency_name="ETB")
             >>> # Get currency with specific ID
@@ -484,7 +484,7 @@ class DataBridgesShapes:
 
             try:
                 api_response = api_instance.currency_list_get(
-                    country_code=country_code,
+                    country_code=country_iso3,
                     currency_name=currency_name,
                     currency_id=currency_id,
                     page=page,
@@ -597,7 +597,10 @@ class DataBridgesShapes:
                 )
 
     # BUG: Unsupported content type: 'application/geo+json
-    def get_market_geojson_list(self, adm0code=None):
+    def get_market_geojson_list(self, country_iso3: Optional[str] = None):
+
+        adm0code = get_adm0_code(country_iso3)
+        
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -670,7 +673,7 @@ class DataBridgesShapes:
     # FIXME: JSON response
     def get_markets_as_csv(
     self, 
-    adm0code: Optional[int] = None, 
+    country_iso3: Optional[str] = None, 
     local_names: bool = False
 ) -> str:
         """Retrieves a complete list of markets in a country in CSV format.
@@ -693,6 +696,9 @@ class DataBridgesShapes:
     Raises:
         ApiException: If there's an error accessing the Markets API
     """
+
+        adm0code = get_adm0_code(country_iso3) 
+        
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
@@ -914,7 +920,7 @@ class DataBridgesShapes:
 
     def get_household_surveys_list(
         self,
-        adm0_code: Optional[int] = None,
+        country_iso3: Optional[int] = None,
         page: Optional[int] = 1,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
@@ -923,7 +929,7 @@ class DataBridgesShapes:
         """Retrieves a list of household surveys for a country with their metadata.
 
         Args:
-            adm0_code (int, optional): Country code from WFP's internal coding system
+            country_iso3 (str, optional): ISO3 Country code
             page (int, optional): Page number for paginated results. Defaults to 1
             start_date (str, optional): Start date filter in ISO format (YYYY-MM-DD)
             end_date (str, optional): End date filter in ISO format (YYYY-MM-DD)
@@ -942,24 +948,27 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get all surveys for a country
-            >>> surveys = client.get_household_surveys_list(adm0_code=231)
+            >>> surveys = client.get_household_surveys_list(country_iso3="COG")
             >>> # Get surveys within date range
             >>> surveys = client.get_household_surveys_list(
-            ...     adm0_code=231,
-            ...     start_date="2023-01-01",
-            ...     end_date="2023-12-31"
+            ...     country_iso3="COG",
+            ...     start_date="2024-01-01",
+            ...     end_date="2024-12-31"
             ... )
 
         Raises:
             ApiException: If there's an error accessing the API
         """
+
+        adm0code = get_adm0_code(country_iso3)
+
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
             try:
                 api_response = api_instance.household_surveys_get(
-                    adm0_code=adm0_code,
+                    adm0_code=adm0code,
                     page=page,
                     start_date=start_date,
                     end_date=end_date,
@@ -992,7 +1001,7 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get form definition
-            >>> form_def = client.get_household_xslform_definition(123)
+            >>> form_def = client.get_household_xslform_definition(2067)
             >>> # Access form fields
             >>> fields = form_def['fields'].iloc[0]
 
