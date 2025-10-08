@@ -5,17 +5,6 @@ PYTHONPATH := `pwd`/src
 
 #* INSTALL
 
-#* Install tools into isolated environment
-#* Not needed if you have these already installed globally
-.PHONY: install-tools
-install-tools:
-	uv tool install black
-	uv tool install isort
-	uv tool install ruff
-	uv tool install mypy
-	uv tool install bandit
-
-
 #* Install dependencies and package
 .PHONY: install
 install:
@@ -48,9 +37,9 @@ test:
 mypy:
 	uv run mypy --config-file pyproject.toml ./
 
-.PHONY: check-safety
-check-safety:
-	uv run bandit -r src
+# .PHONY: check-safety
+# check-safety:
+# 	uv run bandit -r src
 
 #* All in one
 .PHONY: lint
@@ -62,12 +51,12 @@ lint: test check-codestyle mypy
 # Build documentation files into site folder
 .PHONY: docs
 docs:
-	poetry run mkdocs build
+	uv run mkdocs build
 
 # Render documentation on localhost
 .PHONY: docs-serve
 docs-serve:
-	poetry run mkdocs serve
+	uv run mkdocs serve
 
 #* DOCKER
 
