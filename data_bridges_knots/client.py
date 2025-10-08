@@ -10,6 +10,7 @@ import pandas as pd
 import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
+from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
@@ -615,14 +616,13 @@ class DataBridgesShapes:
 
     def get_markets_list(
     self, 
-    country_code: Optional[str] = None, 
+    country_iso3: Optional[str] = None, 
     page: Optional[int] = 1
 ) -> pd.DataFrame:
         """Retrieves a complete list of markets in a country.
 
         Args:
-            country_code (str, optional): The code to identify the country. Can be ISO-3166 Alpha 3 
-                code or VAM internal admin0code. Defaults to None.
+            country_code (str, optional): The ISO3 code to identify the country. Defaults to None.
             page (int, optional): Page number for paginated results. Defaults to 1.
 
         Returns:
