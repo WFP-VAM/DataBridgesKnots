@@ -1,4 +1,4 @@
-from typing import Optional, Literal
+from typing import Literal, Optional
 
 import logging
 import time
@@ -10,6 +10,7 @@ import pandas as pd
 import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
+
 from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
@@ -17,7 +18,7 @@ logging.basicConfig(
     filename=logname,
     filemode="a",
     format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
-    datefmt='%Y-%m-%d %H:%M:%S',
+    datefmt="%Y-%m-%d %H:%M:%S",
     level=logging.INFO,
 )
 
@@ -97,13 +98,13 @@ class DataBridgesShapes:
         if "DATABRIDGES_API_KEY" not in data_bridges_api_key:
             data_bridges_api_key["DATABRIDGES_API_KEY"] = ""
 
-        return data_bridges_api_key["DATABRIDGES_API_KEY"] 
+        return data_bridges_api_key["DATABRIDGES_API_KEY"]
 
     def get_prices(
-        self, 
-        country_iso3: str, 
-        survey_date: Optional[str] = None, 
-        page_size: int = 1000
+        self,
+        country_iso3: str,
+        survey_date: Optional[str] = None,
+        page_size: int = 1000,
     ) -> pd.DataFrame:
         """Fetches market price data for a given country and survey date.
 
@@ -292,7 +293,7 @@ class DataBridgesShapes:
             commodity_id (int, optional): The exact ID of a commodity. Defaults to 0.
             page (int, optional): Page number for paged results. Defaults to 1.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-        
+
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get full list of commmodities
@@ -302,8 +303,8 @@ class DataBridgesShapes:
             >>> # Get commodity with name containing "Maize"
             >>> maize_df = client.get_commodities_list(commodity_name="Maize")
             >>> # Get commodity with specific ID
-            >>> specific_commodity_df = client.get_commodities_list(commodity_id=123) 
-            
+            >>> specific_commodity_df = client.get_commodities_list(commodity_id=123)
+
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity data.
         """
@@ -419,7 +420,7 @@ class DataBridgesShapes:
             >>> kg_unit_df = client.get_commodity_units_list(commodity_unit_name="Kg")
             >>> # Get commodity unit with specific ID
             >>> specific_unit_df = client.get_commodity_units_list(commodity_unit_id=5)
-        
+
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
         """
@@ -600,7 +601,7 @@ class DataBridgesShapes:
     def get_market_geojson_list(self, country_iso3: Optional[str] = None):
 
         adm0code = get_adm0_code(country_iso3)
-        
+
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -620,10 +621,8 @@ class DataBridgesShapes:
                 )
 
     def get_markets_list(
-    self, 
-    country_iso3: Optional[str] = None, 
-    page: Optional[int] = 1
-) -> pd.DataFrame:
+        self, country_iso3: Optional[str] = None, page: Optional[int] = 1
+    ) -> pd.DataFrame:
         """Retrieves a complete list of markets in a country.
 
         Args:
@@ -646,7 +645,7 @@ class DataBridgesShapes:
 
         Raises:
             ApiException: If there's an error accessing the Markets API
-        """      
+        """
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -670,33 +669,31 @@ class DataBridgesShapes:
 
     # BUG: JSON resonse + fix no response
     def get_markets_as_csv(
-    self, 
-    country_iso3: Optional[str] = None, 
-    local_names: bool = False
-) -> str:
+        self, country_iso3: Optional[str] = None, local_names: bool = False
+    ) -> str:
         """Retrieves a complete list of markets in a country in CSV format.
 
-    Args:
-        country_iso3 (str, optional): Country administrative code. Defaults to None.
-        local_names (bool, optional): If True, market and region names will be 
-            localized if available. Defaults to False.
+        Args:
+            country_iso3 (str, optional): Country administrative code. Defaults to None.
+            local_names (bool, optional): If True, market and region names will be
+                localized if available. Defaults to False.
 
-    Returns:
-        str: CSV formatted string containing market data
+        Returns:
+            str: CSV formatted string containing market data
 
-    Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Get markets CSV for Afghanistan
-        >>> markets_csv = client.get_markets_as_csv("AFG")
-        >>> # Get localized market names
-        >>> local_markets = client.get_markets_as_csv("AFG", local_names=True)
+        Examples:
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Get markets CSV for Afghanistan
+            >>> markets_csv = client.get_markets_as_csv("AFG")
+            >>> # Get localized market names
+            >>> local_markets = client.get_markets_as_csv("AFG", local_names=True)
 
-    Raises:
-        ApiException: If there's an error accessing the Markets API
-    """
+        Raises:
+            ApiException: If there's an error accessing the Markets API
+        """
 
-        adm0code = get_adm0_code(country_iso3) 
-        
+        adm0code = get_adm0_code(country_iso3)
+
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
@@ -715,37 +712,34 @@ class DataBridgesShapes:
                 )
 
     def get_nearby_markets(
-    self, 
-    country_iso3: str = None, 
-    lat: float = None, 
-    lng: float = None
-) -> pd.DataFrame:
+        self, country_iso3: str = None, lat: float = None, lng: float = None
+    ) -> pd.DataFrame:
         """Finds markets near a given location within a 15km distance.
 
-    Args:
-        country_iso3 (str): Country administrative code. Defaults to None.
-        lat (float): Latitude of the search point. Defaults to None.
-        lng (float): Longitude of the search point. Defaults to None.
+        Args:
+            country_iso3 (str): Country administrative code. Defaults to None.
+            lat (float): Latitude of the search point. Defaults to None.
+            lng (float): Longitude of the search point. Defaults to None.
 
-    Returns:
-        pd.DataFrame: DataFrame containing nearby markets with columns:
-            - market_id: Unique identifier for the market
-            - market_name: Name of the market
-            - distance: Distance from search point in kilometers
-            - latitude: Market location latitude
-            - longitude: Market location longitude
-            And other market-related fields
+        Returns:
+            pd.DataFrame: DataFrame containing nearby markets with columns:
+                - market_id: Unique identifier for the market
+                - market_name: Name of the market
+                - distance: Distance from search point in kilometers
+                - latitude: Market location latitude
+                - longitude: Market location longitude
+                And other market-related fields
 
-    Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Find markets near coordinates in Afghanistan
-        >>> nearby = client.get_nearby_markets("AFG", 34.515, 69.208)
-        >>> # Sort markets by distance
-        >>> closest = nearby.sort_values('distance').iloc[0]
+        Examples:
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Find markets near coordinates in Afghanistan
+            >>> nearby = client.get_nearby_markets("AFG", 34.515, 69.208)
+            >>> # Sort markets by distance
+            >>> closest = nearby.sort_values('distance').iloc[0]
 
-    Raises:
-        ApiException: If there's an error accessing the Markets API
-    """
+        Raises:
+            ApiException: If there's an error accessing the Markets API
+        """
 
         adm0code = get_adm0_code(country_iso3)
         with data_bridges_client.ApiClient(self.configuration) as api_client:
@@ -767,39 +761,39 @@ class DataBridgesShapes:
                 raise
 
     def get_gorp(
-    self,
-    data_type: Literal["country_latest", "global_latest", "regional_latest"],
-    page: Optional[int] = None
-) -> pd.DataFrame:
+        self,
+        data_type: Literal["country_latest", "global_latest", "regional_latest"],
+        page: Optional[int] = None,
+    ) -> pd.DataFrame:
         """Retrieves data from the Global Operational Response Plan (GORP) API.
 
-    The GORP API provides access to WFP's operational response planning data at
-    different geographical levels.
+        The GORP API provides access to WFP's operational response planning data at
+        different geographical levels.
 
-    Args:
-        data_type (str): The type of GORP data to retrieve. Must be one of:
-            - 'country_latest': Latest data at country level
-            - 'global_latest': Latest global aggregated data
-            - 'regional_latest': Latest data aggregated by region
-        page (int, optional): Page number for paginated results. Required for
-            'latest' and 'list' data types. Defaults to None.
+        Args:
+            data_type (str): The type of GORP data to retrieve. Must be one of:
+                - 'country_latest': Latest data at country level
+                - 'global_latest': Latest global aggregated data
+                - 'regional_latest': Latest data aggregated by region
+            page (int, optional): Page number for paginated results. Required for
+                'latest' and 'list' data types. Defaults to None.
 
-    Returns:
-        pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)
+        Returns:
+            pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)
 
-    Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Get latest country-level data
-        >>> country_data = client.get_gorp("country_latest")
-        >>> # Get global summary
-        >>> global_data = client.get_gorp("global_latest")
-        >>> # Get regional breakdown
-        >>> regional_data = client.get_gorp("regional_latest")
+        Examples:
+            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+            >>> # Get latest country-level data
+            >>> country_data = client.get_gorp("country_latest")
+            >>> # Get global summary
+            >>> global_data = client.get_gorp("global_latest")
+            >>> # Get regional breakdown
+            >>> regional_data = client.get_gorp("regional_latest")
 
-    Raises:
-        ValueError: If data_type is not one of the allowed values
-        ApiException: If there's an error accessing the GORP API
-    """
+        Raises:
+            ValueError: If data_type is not one of the allowed values
+            ApiException: If there's an error accessing the GORP API
+        """
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             gorp_api_instance = data_bridges_client.GorpApi(api_client)
             env = self.env
@@ -1039,8 +1033,6 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> questionnaire = client.get_household_questionnaire(2075)
-            >>> # View variables of the questionnaire
-            >>> print(questionnaire['name'].unique())
         """
         if self.xlsform is None:
             self.xlsform = self.get_household_xslform_definition(xls_form_id)
