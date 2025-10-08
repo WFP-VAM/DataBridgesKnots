@@ -31,6 +31,9 @@ jobs:
       - name: Lint with Ruff
         run: |
           uv run ruff check . --fix
+      - name: Run tests
+        run: |
+          uv run pytest
 
   deploy-docs:
     runs-on: ubuntu-latest
