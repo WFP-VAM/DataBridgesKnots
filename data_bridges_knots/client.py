@@ -16,7 +16,7 @@ logging.basicConfig(
     filename=logname,
     filemode="a",
     format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
-    datefmt="%H:%M:%S",
+    datefmt='%Y-%m-%d %H:%M:%S',
     level=logging.INFO,
 )
 
@@ -37,7 +37,7 @@ class DataBridgesShapes:
 
     Examples:
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> prices_df = client.get_prices("ETH", "2023-01-01")
+        >>> df_prices = client.get_prices("KEN", "2025-09-01")
         >>> exchange_rates = client.get_exchange_rates("ETH")
     """
 
@@ -99,15 +99,18 @@ class DataBridgesShapes:
         return data_bridges_api_key["DATABRIDGES_API_KEY"] 
 
     def get_prices(
-        self, country_iso3: str, survey_date: str, page_size: int = 1000
+        self, 
+        country_iso3: str, 
+        survey_date: Optional[str] = None, 
+        page_size: int = 1000
     ) -> pd.DataFrame:
         """Fetches market price data for a given country and survey date.
 
         Args:
-            country_iso3 (str): The ISO 3-letter country code
-            survey_date (str): The survey date in ISO format (e.g. '2022-01-01').
-                If empty string is provided, fetches data from Jan 1, 1990
-            page_size (int, optional): Number of items per page. Defaults to 1000
+        country_iso3 (str): The ISO 3-letter country code
+        survey_date (str, optional): The survey date in ISO format (e.g. '2022-01-01').
+            If None, fetches data from the last 12 months. Defaults to None.
+        page_size (int, optional): Number of items per page. Defaults to 1000
 
         Returns:
             pd.DataFrame: DataFrame containing market price data with columns:
@@ -119,19 +122,20 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get prices for Ethiopia from 2023
-            >>> prices_df = client.get_prices("ETH", "2023-01-01")
-            >>> # Get all historical prices for Kenya
-            >>> prices_df = client.get_prices("KEN", "")
+            >>> # Get prices for last 12 months
+            >>> df_prices = client.get_prices("KEN")
+            >>> # Get prices from specific date
+            >>> df_date_prices = client.get_prices("KEN", "2025-09-01")
 
         Raises:
             ApiException: If there's an error calling the Market price API
         """
 
-        if survey_date != "":
+        if survey_date:
             start_date = date.fromisoformat(survey_date) - timedelta(days=365)
         else:
-            start_date = date.fromisocalendar(1990, 1, 1)
+            start_date = date.today() - timedelta(days=365)
+
         responses = []
         total_items = 20
         max_item = 0
@@ -152,7 +156,7 @@ class DataBridgesShapes:
                     )
                     responses.extend(item.to_dict() for item in api_prices.items)
                     total_items = api_prices.total_items
-                    logger.info("Fetching page %s", page)
+                    logger.info("Fetching page %s/n", page)
                     max_item = page * page_size
                     time.sleep(1)
                 except ApiException as e:
@@ -218,7 +222,7 @@ class DataBridgesShapes:
                     time.sleep(1)
                 except ApiException as e:
                     logger.error(
-                        "Exception when calling Exchange rates data->household_full_data_get: %s\n",
+                        "Exception when calling Exchange rates data-> : %s\n",
                         e,
                     )
                     raise
@@ -229,7 +233,7 @@ class DataBridgesShapes:
     def get_food_security_list(
         self, iso3: Optional[str] = None, year: Optional[int] = None, page: int = 1
     ) -> pd.DataFrame:
-        """Retrieves food security data from the Data Bridges API.
+        """Retrieves food security data from IPC and equivalent data sources
 
         Args:
             iso3 (str, optional): The country ISO3 code
@@ -243,9 +247,9 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get food security data for Ethiopia in 2023
-            >>> security_df = client.get_food_security_list("ETH", 2023)
+            >>> eth_food_security = client.get_food_security_list("ETH", 2025)
             >>> # Get all food security data
-            >>> all_security_df = client.get_food_security_list()
+            >>> all_food_security = client.get_food_security_list()
 
         Raises:
             ApiException: If there's an error calling the Food Security API
@@ -773,35 +777,16 @@ class DataBridgesShapes:
             'latest' and 'list' data types. Defaults to None.
 
     Returns:
-        pd.DataFrame: DataFrame containing GORP data with columns specific to the
-            requested data type:
-            For country_latest:
-                - country: Country name
-                - region: Regional bureau
-                - period: Reporting period
-                - beneficiaries: Number of beneficiaries
-                - requirements: Funding requirements
-            For global_latest:
-                - total_beneficiaries: Global beneficiary count
-                - total_requirements: Global funding requirements
-            For regional_latest:
-                - region: Regional bureau name
-                - total_beneficiaries: Regional beneficiary count
-                - countries: List of countries in region
+        pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)
 
     Examples:
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> # Get latest country-level data
         >>> country_data = client.get_gorp("country_latest")
-        >>> 
         >>> # Get global summary
         >>> global_data = client.get_gorp("global_latest")
-        >>> 
         >>> # Get regional breakdown
         >>> regional_data = client.get_gorp("regional_latest")
-        >>> 
-        >>> # Filter country data for specific region
-        >>> africa_data = country_data[country_data['region'] == 'RBJ']
 
     Raises:
         ValueError: If data_type is not one of the allowed values
@@ -845,9 +830,10 @@ class DataBridgesShapes:
         Args:
             survey_id (int]): The ID of the survey to retrieve
             access_type (str): The type of access to use. Must be one of:
-                - 'full': Complete survey data (requires API key)
                 - 'draft': Draft internal base data (requires API key)
-                - 'official': Official use base data
+                - 'full': Complete survey data (requires API key). Data is returned as inserted by the country office and it might contain PII and unstandardized fields.
+
+                - 'official': Official use base data. Only data mapped against the standards is returned.
                 - 'public': Public base data
             page_size (int, optional): Number of items per page. Defaults to 600
 
@@ -857,10 +843,10 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get full survey data
-            >>> full_data = client.get_household_survey("123", "full")
-            >>> # Get public data
-            >>> public_data = client.get_household_survey("123", "public")
+            >>> # Get full, unmapped survey data
+            >>> full_data = client.get_household_survey(3094, "full")
+            >>> # Get standard data for official use (no PII)
+            >>> official_data = client.get_household_survey(3094, "official")
 
         Raises:
             KeyError: If access_type is not one of the allowed values

@@ -60,6 +60,11 @@ lint: test check-codestyle mypy
 #* DOCS
 
 #* Documentation
+# Test 
+.PHONY: docs-test
+docs-test:
+	uv run python -m doctest data_bridges_knots/client.py
+
 # Build documentation files into site folder
 .PHONY: docs
 docs:
@@ -69,6 +74,9 @@ docs:
 .PHONY: docs-serve
 docs-serve:
 	uv run mkdocs serve
+
+
+
 
 #* DOCKER
 
