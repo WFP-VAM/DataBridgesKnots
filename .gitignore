@@ -223,5 +223,5 @@ __marimo__/
 sandbox.py
 ROADMAP.md
 mapped.csv
-
+*.ipynb
 *.yaml
