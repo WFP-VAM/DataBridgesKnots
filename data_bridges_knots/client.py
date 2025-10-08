@@ -660,7 +660,6 @@ class DataBridgesShapes:
                 api_response = api_instance.markets_list_get(
                     country_code=country_iso3, page=page, format=format, env=env
                 )
-                print("The response of MarketsApi->markets_list_get:\n")
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
@@ -1469,10 +1468,6 @@ class DataBridgesShapes:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get MFI base data for a specific survey
             >>> base_data = client.get_mfi_surveys_base_data(survey_id=123)
-            >>> # Paginate through results
-            >>> for page in range(1, 5):
-            ...     data_page = client.get_mfi_surveys_base_data(survey_id=123, page=page)
-            ...     print(data_page)
 
         Returns:
             pandas.DataFrame: DataFrame containing MFI base survey data
