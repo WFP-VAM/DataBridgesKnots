@@ -104,6 +104,8 @@ dev = [
     "ruff",
     "mypy",
     "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
     "bandit",
 ]
 
