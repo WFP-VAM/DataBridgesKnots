@@ -5,19 +5,6 @@ PYTHONPATH := `pwd`/src
 
 #* INSTALL
 
-#* Install tools into isolated environment
-#* Not needed if you have these already installed globally
-.PHONY: install-tools
-install-tools:
-	uv tool install black
-	uv tool install isort
-	uv tool install ruff
-	uv tool install mypy
-	uv tool install mkdocs
-	uv tool install bandit
-	uv tool install commitizen
-
-
 #* Install dependencies and package
 .PHONY: install
 install:
