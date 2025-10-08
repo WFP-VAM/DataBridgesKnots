@@ -32,7 +32,7 @@ uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.
 
 ### R users
 
-R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
+R users need to have `reticulate` installed in their machine to run this package as explained in the [example folder](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples).
 
 ```R
 install.packages("reticulate")
