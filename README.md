@@ -145,6 +145,16 @@ Apply fixes
 $ make codestyle
 ```
 
+### Commits
+
+This project uses [Commitizen](https://commitizen-tools.github.io/commitizen/) for conventional commits. To create a properly formatted commit:
+
+```commandline
+$ uv run cz commit
+```
+
+This interactive tool guides you through creating commits that follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
 
