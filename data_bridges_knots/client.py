@@ -641,10 +641,8 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get markets for Ethiopia
-            >>> eth_markets = client.get_markets_list("ETH")
-            >>> # Get specific page of results
-            >>> page_2 = client.get_markets_list("ETH", page=2)
+            >>> # Get markets for Afghanistan
+            >>> afg_markets = client.get_markets_list("AFG")
 
         Raises:
             ApiException: If there's an error accessing the Markets API
@@ -670,7 +668,7 @@ class DataBridgesShapes:
             except Exception as e:
                 print("Exception when calling MarketsApi->markets_list_get: %s\n" % e)
 
-    # FIXME: JSON response
+    # BUG: JSON resonse + fix no response
     def get_markets_as_csv(
     self, 
     country_iso3: Optional[str] = None, 
@@ -679,7 +677,7 @@ class DataBridgesShapes:
         """Retrieves a complete list of markets in a country in CSV format.
 
     Args:
-        adm0code (int, optional): Country administrative code. Defaults to None.
+        country_iso3 (str, optional): Country administrative code. Defaults to None.
         local_names (bool, optional): If True, market and region names will be 
             localized if available. Defaults to False.
 
@@ -688,10 +686,10 @@ class DataBridgesShapes:
 
     Examples:
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Get markets CSV for country code 231
-        >>> markets_csv = client.get_markets_as_csv(231)
+        >>> # Get markets CSV for Afghanistan
+        >>> markets_csv = client.get_markets_as_csv("AFG")
         >>> # Get localized market names
-        >>> local_markets = client.get_markets_as_csv(231, local_names=True)
+        >>> local_markets = client.get_markets_as_csv("AFG", local_names=True)
 
     Raises:
         ApiException: If there's an error accessing the Markets API
@@ -1040,9 +1038,9 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> questionnaire = client.get_household_questionnaire(123)
-            >>> # View question types
-            >>> print(questionnaire['type'].unique())
+            >>> questionnaire = client.get_household_questionnaire(2075)
+            >>> # View variables of the questionnaire
+            >>> print(questionnaire['name'].unique())
         """
         if self.xlsform is None:
             self.xlsform = self.get_household_xslform_definition(xls_form_id)
@@ -1063,8 +1061,6 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> choices = client.get_choice_list(123)
-            >>> # View choices for a specific list
-            >>> food_choices = choices[choices['name'] == 'food_items']
         """
         questionnaire = self.get_household_questionnaire(xls_form_id)
 
