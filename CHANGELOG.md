@@ -1,3 +1,13 @@
+## v2.0.0 (2025-10-08)
+
+### BREAKING CHANGE
+
+- All class methods require country_iso3 (instead of mix of country_code, country_iso3 and adm0code)
+
+### Feat
+
+- merge conflits, fix documentation example and consolidate country parameters to country_iso3
+
 ## v0.4.0 (2025-10-08)
 
 ### Fix
