@@ -15,6 +15,7 @@ install-tools:
 	uv tool install mypy
 	uv tool install mkdocs
 	uv tool install bandit
+	uv tool install commitizen
 
 
 #* Install dependencies and package
