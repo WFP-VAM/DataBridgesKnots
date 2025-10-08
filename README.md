@@ -114,18 +114,18 @@ Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridges
 ### Installing required tools
 
 This project uses `uv` to manage dependencies and environments. See [here](https://docs.astral.sh/uv/getting-started/installation/) for installation, and [here](https://docs.astral.sh/uv/guides/projects/) for basic use.
-`uv` uses information on dependencies in the `pyproject.toml` file and continuously maintains a detailed description of the required environment in the `uv.lock` file. 
+`uv` uses information on dependencies in the `pyproject.toml` file and continuously maintains a detailed description of the required environment in the `uv.lock` file.
 
 This project uses `make` to automate common project management tasks. For installation see: [Windows](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69), [Ubuntu Linux](https://linuxhint.com/install-make-ubuntu/), [OSX](https://formulae.brew.sh/formula/make)
 
-Once you have these two core tools installed, simply run `$ make install-tools` to install additional tools necessary for linting, formatting and testing.
-
 ### Virtual environment
-To set up the environment for the first time, run
+To set up the environment for the first time (including all dev tools like black, isort, ruff, mypy, pytest, mkdocs, etc.), run:
 
 ```commandline
 $ make install
 ```
+
+This will install the package with all dependencies and dev tools defined in `pyproject.toml`.
 
 To run any script or command inside the environment, run:
 
@@ -147,6 +147,16 @@ Apply fixes
 ```commandline
 $ make codestyle
 ```
+
+### Commits
+
+This project uses [Commitizen](https://commitizen-tools.github.io/commitizen/) for conventional commits. To create a properly formatted commit:
+
+```commandline
+$ uv run cz commit
+```
+
+This interactive tool guides you through creating commits that follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.

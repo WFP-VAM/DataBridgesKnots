@@ -16,8 +16,6 @@ requires-python = ">=3.10"
 dependencies = [
     'PyYAML',
     'pandas>=2',
-    'pystata',
-    'stata-setup',
     'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git',
 ]
 
@@ -75,16 +73,15 @@ warn_unused_ignores = true
 # https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
 # Directories that are not visited by pytest collector:
 norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
-doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
-pythonpath = ["src"]
 
 # Extra options:
 addopts = [
   "--strict-markers",
   "--tb=short",
-  "--doctest-modules",
-  "--doctest-continue-on-failure"
 ]
+
+# Only collect tests from the tests directory
+testpaths = ["tests"]
 
 [tool.coverage.run]
 source = ["tests"]
@@ -101,6 +98,14 @@ dev = [
     "pytest>=8.3.4",
     "coverage-badge>=1.1.2",
     "commitizen>=4.6.0",
+    "black",
+    "isort",
+    "ruff",
+    "mypy",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "bandit",
 ]
 
 [tool.coverage.report]
