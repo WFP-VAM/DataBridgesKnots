@@ -155,6 +155,22 @@ class DataBridgesShapes:
                         page=page,
                         env=env,
                         start_date=start_date,
+
+
+                         # ALL PARAMS
+                        country_code = 'country_code_example' # str | The code to identify the country. It can be a ISO-3166 Alpha 3 code or the VAM internal admin0code. (optional)
+                        market_id = 0 # int | Unique ID of a Market, as found in /Markets/GeoJSONList (optional) (default to 0)
+                        commodity_id = 0 # int | The exact ID of a Commodity, as found in /Commodities/List (optional) (default to 0)
+                        price_type_name = '' # str | Price type: [retail|wholesale|farmgate] (optional) (default to '')
+                        currency_id = 0 # int | The exact ID of a currency, as found in /Currency/List (optional) (default to 0)
+                        price_flag = '' # str | Type of price data: [actual|aggregate|estimated|forecasted] (optional) (default to '')
+                        start_date = '2013-10-20T19:20:30+01:00' # datetime | Starting date for the range in which data was collected. Use the date formats defined by RFC 3339 ; use strings matching year \\\"-\\\" month \\\"-\\\" day (e.g. 2020/06/24) (optional)
+                        end_date = '2013-10-20T19:20:30+01:00' # datetime | Ending date for the range in which data was collected. Use the date formats defined by RFC 3339 ; use strings matching year \\\"-\\\" month \\\"-\\\" day (e.g. 2020/06/24) (optional)
+                        latest_value_only = False # bool | [TRUE|FALSE] (optional) (default to False)
+                        page = 1 # int | Page number for paged results (optional) (default to 1)
+                        format = 'json' # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
+                        env = 'env_example' # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)   
+
                     )
                     responses.extend(item.to_dict() for item in api_prices.items)
                     total_items = api_prices.total_items
@@ -626,7 +642,7 @@ class DataBridgesShapes:
         """Retrieves a complete list of markets in a country.
 
         Args:
-            country_code (str, optional): The ISO3 code to identify the country. Defaults to None.
+            country_iso3 (str, optional): The ISO3 code to identify the country. Defaults to None.
             page (int, optional): Page number for paginated results. Defaults to 1.
 
         Returns:
