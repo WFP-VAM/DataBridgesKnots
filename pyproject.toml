@@ -32,6 +32,9 @@ homepage = "https://github.com/WFP-VAM/DataBridgesKnots/"
 [tool.setuptools]
 packages = ["data_bridges_knots"]
 
+[tool.setuptools.package-data]
+data_bridges_knots = ['country_list.json']
+
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = 310
