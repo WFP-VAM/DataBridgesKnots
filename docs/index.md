@@ -157,58 +157,5 @@ commodity_units <- client$get_commodity_units_list(
 
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
-## Developer set-up
-
-
-### Installing required tools
-
-This project uses `uv` to manage dependencies and environments. See [here](https://docs.astral.sh/uv/getting-started/installation/) for installation, and [here](https://docs.astral.sh/uv/guides/projects/) for basic use.
-`uv` uses information on dependencies in the `pyproject.toml` file and continuously maintains a detailed description of the required environment in the `uv.lock` file.
-
-This project uses `make` to automate common project management tasks. For installation see: [Windows](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69), [Ubuntu Linux](https://linuxhint.com/install-make-ubuntu/), [OSX](https://formulae.brew.sh/formula/make)
-
-### Virtual environment
-To set up the environment for the first time (including all dev tools like black, isort, ruff, mypy, pytest, mkdocs, etc.), run:
-
-```commandline
-$ make install
-```
-
-This will install the package with all dependencies and dev tools defined in `pyproject.toml`.
-
-To run any script or command inside the environment, run:
-
-```commandline
-$ uv run my_script.py
-```
-See [here](https://docs.astral.sh/uv/guides/projects/) for further information on using `uv`.
-
-### Code formatting and linting
-
-Run checks
-
-```commandline
-$ make check-codestyle
-```
-
-Apply fixes
-
-```commandline
-$ make codestyle
-```
-
-### Commits
-
-This project uses [Commitizen](https://commitizen-tools.github.io/commitizen/) for conventional commits. To create a properly formatted commit:
-
-```commandline
-$ uv run cz commit
-```
-
-This interactive tool guides you through creating commits that follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
-
 ## License
 This project is licensed under the AGPL 3.0 License.
