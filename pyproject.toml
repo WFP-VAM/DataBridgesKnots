@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "1.1.0"
+version = "2.0.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -31,6 +31,9 @@ homepage = "https://github.com/WFP-VAM/DataBridgesKnots/"
 
 [tool.setuptools]
 packages = ["data_bridges_knots"]
+
+[tool.setuptools.package-data]
+data_bridges_knots = ['country_list.json']
 
 [tool.isort]
 # https://github.com/timothycrosley/isort/
@@ -114,7 +117,7 @@ show_missing = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.3.0"
+version = "2.0.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",
