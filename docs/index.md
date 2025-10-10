@@ -5,7 +5,7 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 ## Installation
 
 ### Using uv
->  We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/). 
+>  We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
 
 Install the `data_bridges_knots` package in your environment using uv:
 
@@ -32,7 +32,7 @@ uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.
 
 ### R users
 
-R users need to have `reticulate` installed in their machine to run this package as explained in the [example folder](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples).
+R users need to have `reticulate` installed in their machine to run this package as explained in the [examples folder](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples).
 
 ```R
 install.packages("reticulate")
@@ -40,33 +40,81 @@ library(reticulate)
 ```
 
 ## Configuration
-1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your core from.
-2. The structure of the file is: 
+
+There are three ways to configure DataBridgesShapes:
+
+### Option 1: YAML Configuration File (Recommended for Production)
+
+1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your code from.
+2. The structure of the file is:
 
     ```yaml
     NAME: ''
     VERSION : ''
     KEY: ''
     SECRET: ''
-    DATA_BRIDGES_API_KEY = ''
+    DATABRIDGES_API_KEY: ''
     SCOPES:
     - ''
     - ''
     ```
-1. Replace your_api_key and your_api_secret with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
-2. (For WFP users) Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
-3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
+3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
 
+### Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
+
+You can also initialize the client directly with a Python dictionary:
+
+```python
+from data_bridges_knots import DataBridgesShapes
+
+config = {
+    'KEY': 'your-api-key',
+    'SECRET': 'your-api-secret',
+    'VERSION': '5.0.0',
+    'SCOPES': [
+        'vamdatabridges_household-fulldata_get',
+        'vamdatabridges_marketprices-pricemonthly_get'
+    ],
+    'DATABRIDGES_API_KEY': 'optional-databridges-key'
+}
+
+client = DataBridgesShapes(config)
+```
+
+### Option 3: Environment Variables (Recommended for CI/CD and Containers)
+
+Set the following environment variables and use the `config_from_env()` helper:
+
+```bash
+export DATABRIDGES_KEY="your-api-key"
+export DATABRIDGES_SECRET="your-api-secret"
+export DATABRIDGES_VERSION="5.0.0"
+export DATABRIDGES_SCOPES="scope1,scope2,scope3"
+export DATABRIDGES_API_KEY="optional-databridges-key"
+```
+
+Then in your Python code:
+
+```python
+from data_bridges_knots.client import config_from_env, DataBridgesShapes
+
+config = config_from_env()
+client = DataBridgesShapes(config)
+```
+
+### Getting Credentials
+
+- **(For WFP users)** Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
+- **External users** can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
 ## Usage
-### Documentation
-Comprensive on all methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-### Sample query
+### API Documentation
+Documentation on the API methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-## Python
+### Python
 
-Run the following example to extract commodity data: 
+Run the following example to extract commodity data:
 ```python
 
 from data_bridges_knots import DataBridgesShapes
@@ -81,7 +129,8 @@ commodity_units_list = client.get_commodity_units_list(country_code="TZA", commo
 ```
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-### R 
+
+### R
 
 ```R
 library(reticulate)
@@ -108,49 +157,5 @@ commodity_units <- client$get_commodity_units_list(
 
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
-## Developer set-up
-
-
-### Installing required tools
-
-This project uses `uv` to manage dependencies and environments. See [here](https://docs.astral.sh/uv/getting-started/installation/) for installation, and [here](https://docs.astral.sh/uv/guides/projects/) for basic use.
-`uv` uses information on dependencies in the `pyproject.toml` file and continuously maintains a detailed description of the required environment in the `uv.lock` file. 
-
-This project uses `make` to automate common project management tasks. For installation see: [Windows](https://leangaurav.medium.com/how-to-setup-install-gnu-make-on-windows-324480f1da69), [Ubuntu Linux](https://linuxhint.com/install-make-ubuntu/), [OSX](https://formulae.brew.sh/formula/make)
-
-Once you have these two core tools installed, simply run `$ make install-tools` to install additional tools necessary for linting, formatting and testing.
-
-### Virtual environment
-To set up the environment for the first time, run
-
-```commandline
-$ make install
-```
-
-To run any script or command inside the environment, run:
-
-```commandline
-$ uv run my_script.py
-```
-See [here](https://docs.astral.sh/uv/guides/projects/) for further information on using `uv`.
-
-### Code formatting and linting
-
-Run checks
-
-```commandline
-$ make check-codestyle
-```
-
-Apply fixes
-
-```commandline
-$ make codestyle
-```
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
-
 ## License
 This project is licensed under the AGPL 3.0 License.
-
