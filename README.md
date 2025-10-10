@@ -40,22 +40,72 @@ library(reticulate)
 ```
 
 ## Configuration
-1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your core from.
-2. The structure of the file is: 
+
+There are three ways to configure DataBridgesShapes:
+
+### Option 1: YAML Configuration File (Recommended for Production)
+
+1. Create a ```data_bridges_api_config.yaml``` in the main folder you're running your code from.
+2. The structure of the file is:
 
     ```yaml
     NAME: ''
     VERSION : ''
     KEY: ''
     SECRET: ''
-    DATA_BRIDGES_API_KEY = ''
+    DATABRIDGES_API_KEY: ''
     SCOPES:
     - ''
     - ''
     ```
-1. Replace your_api_key and your_api_secret with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
-2. (For WFP users) Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
-3. External users can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
+3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
+
+### Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
+
+You can also initialize the client directly with a Python dictionary:
+
+```python
+from data_bridges_knots import DataBridgesShapes
+
+config = {
+    'KEY': 'your-api-key',
+    'SECRET': 'your-api-secret',
+    'VERSION': '5.0.0',
+    'SCOPES': [
+        'vamdatabridges_household-fulldata_get',
+        'vamdatabridges_marketprices-pricemonthly_get'
+    ],
+    'DATABRIDGES_API_KEY': 'optional-databridges-key'
+}
+
+client = DataBridgesShapes(config)
+```
+
+### Option 3: Environment Variables (Recommended for CI/CD and Containers)
+
+Set the following environment variables and use the `config_from_env()` helper:
+
+```bash
+export DATABRIDGES_KEY="your-api-key"
+export DATABRIDGES_SECRET="your-api-secret"
+export DATABRIDGES_VERSION="5.0.0"
+export DATABRIDGES_SCOPES="scope1,scope2,scope3"
+export DATABRIDGES_API_KEY="optional-databridges-key"
+```
+
+Then in your Python code:
+
+```python
+from data_bridges_knots.client import config_from_env, DataBridgesShapes
+
+config = config_from_env()
+client = DataBridgesShapes(config)
+```
+
+### Getting Credentials
+
+- **(For WFP users)** Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
+- **External users** can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
 ### API Documentation
 Documentation on the API methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)

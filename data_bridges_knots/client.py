@@ -87,21 +87,40 @@ def config_from_env() -> Dict:
 
 
 class DataBridgesShapes:
-    # FIXME: class docstring
     """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
 
     This class includes methods for fetching various types of data such as market prices,
-    exchange rates, food security data, commodities, and more. The class is initialized
-    with a YAML configuration file and supports multiple environments.
+    exchange rates, food security data, commodities, and more. The class can be initialized
+    with either a YAML configuration file or a configuration dictionary, and supports
+    multiple environments.
 
     Args:
-        yaml_config_path (str): Path to the YAML configuration file
-        env (str, optional): Environment to use. Defaults to "prod"
+        config (str | dict): Either:
+            - Path to YAML configuration file (str), or
+            - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
+              SCOPES, and optionally DATABRIDGES_API_KEY
+        env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
 
     Examples:
+        >>> # Initialize with YAML file (traditional method)
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> df_prices = client.get_prices("KEN", "2025-09-01")
+
+        >>> # Initialize with dictionary (new method)
+        >>> config = {
+        ...     'KEY': 'your-api-key',
+        ...     'SECRET': 'your-api-secret',
+        ...     'VERSION': '5.0.0',
+        ...     'SCOPES': ['vamdatabridges_household-fulldata_get'],
+        ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
+        ... }
+        >>> client = DataBridgesShapes(config)
         >>> exchange_rates = client.get_exchange_rates("ETH")
+
+        >>> # Initialize from environment variables
+        >>> from data_bridges_knots.client import config_from_env
+        >>> config = config_from_env()
+        >>> client = DataBridgesShapes(config)
     """
 
     def __init__(self, yaml_config_path, env="prod"):
