@@ -146,7 +146,7 @@ client <- data_bridges_knots$DataBridgesShapes(config_path)
 # COMMODITY DATA
 # Get commodity unit list for Tanzania
 commodity_units <- client$get_commodity_units_list(
-  country_code = "TZA",
+  country_iso3 = "TZA",
   commodity_unit_name = "Kg",
   page = 1L,
   format = "json"

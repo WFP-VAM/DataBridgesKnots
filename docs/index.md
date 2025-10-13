@@ -124,7 +124,7 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 client = DataBridgesShapes(CONFIG_PATH)
 
 # COMMODITY DATA
-commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
+commodity_units_list = client.get_commodity_units_list(country_iso3="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
