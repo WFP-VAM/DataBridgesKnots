@@ -951,7 +951,7 @@ class DataBridgesShapes:
             ApiException: If there's an error accessing the API
         """
 
-        adm0code = get_adm0_code(country_iso3)
+        adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
