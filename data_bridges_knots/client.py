@@ -1,6 +1,7 @@
-from typing import Literal, Optional
+from typing import Dict, Literal, Optional, Union
 
 import logging
+import os
 import time
 from datetime import date, timedelta
 
@@ -25,60 +26,182 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def config_from_env() -> Dict:
+    """Construct DataBridges configuration dictionary from environment variables.
+
+    Reads configuration from the following environment variables:
+        - DATABRIDGES_KEY: API key for authentication
+        - DATABRIDGES_SECRET: API secret for authentication
+        - DATABRIDGES_SCOPES: Comma-separated list of API scopes
+        - DATABRIDGES_VERSION: API version (e.g., 'v1')
+        - DATABRIDGES_API_KEY: (Optional) Additional API key for certain endpoints
+
+    Returns:
+        dict: Configuration dictionary with required keys for DataBridgesShapes
+
+    Raises:
+        ValueError: If any required environment variables are missing
+
+    Examples:
+        >>> import os
+        >>> os.environ['DATABRIDGES_KEY'] = 'your_key'
+        >>> os.environ['DATABRIDGES_SECRET'] = 'your_secret'
+        >>> os.environ['DATABRIDGES_SCOPES'] = 'scope1,scope2'
+        >>> os.environ['DATABRIDGES_VERSION'] = 'v1'
+        >>> config = config_from_env()
+        >>> client = DataBridgesShapes(config)
+    """
+    required_vars = {
+        "KEY": "DATABRIDGES_KEY",
+        "SECRET": "DATABRIDGES_SECRET",
+        "SCOPES": "DATABRIDGES_SCOPES",
+        "VERSION": "DATABRIDGES_VERSION",
+    }
+
+    config = {}
+    missing = []
+
+    # Load required variables
+    for config_key, env_var in required_vars.items():
+        value = os.getenv(env_var)
+        if value is None:
+            missing.append(env_var)
+        else:
+            # Special handling for SCOPES - split comma-separated string into list
+            if config_key == "SCOPES":
+                config[config_key] = [scope.strip() for scope in value.split(",")]
+            else:
+                config[config_key] = value
+
+    if missing:
+        raise ValueError(
+            f"Missing required environment variables: {', '.join(missing)}"
+        )
+
+    # Load optional DATABRIDGES_API_KEY
+    databridges_api_key = os.getenv("DATABRIDGES_API_KEY")
+    if databridges_api_key:
+        config["DATABRIDGES_API_KEY"] = databridges_api_key
+
+    return config
+
+
 class DataBridgesShapes:
-    # FIXME: class docstring
     """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
 
     This class includes methods for fetching various types of data such as market prices,
-    exchange rates, food security data, commodities, and more. The class is initialized
-    with a YAML configuration file and supports multiple environments.
+    exchange rates, food security data, commodities, and more. The class can be initialized
+    with either a YAML configuration file or a configuration dictionary, and supports
+    multiple environments.
 
     Args:
-        yaml_config_path (str): Path to the YAML configuration file
-        env (str, optional): Environment to use. Defaults to "prod"
+        config (str | dict): Either:
+            - Path to YAML configuration file (str), or
+            - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
+              SCOPES, and optionally DATABRIDGES_API_KEY
+        env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
 
     Examples:
+        >>> # Initialize with YAML file (traditional method)
         >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
         >>> df_prices = client.get_prices("KEN", "2025-09-01")
+
+        >>> # Initialize with dictionary (new method)
+        >>> config = {
+        ...     'KEY': 'your-api-key',
+        ...     'SECRET': 'your-api-secret',
+        ...     'VERSION': '5.0.0',
+        ...     'SCOPES': ['vamdatabridges_household-fulldata_get'],
+        ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
+        ... }
+        >>> client = DataBridgesShapes(config)
         >>> exchange_rates = client.get_exchange_rates("ETH")
+
+        >>> # Initialize from environment variables
+        >>> from data_bridges_knots.client import config_from_env
+        >>> config = config_from_env()
+        >>> client = DataBridgesShapes(config)
     """
 
     def __init__(self, yaml_config_path, env="prod"):
-        self.configuration = self._setup_configuration_and_authentication(
-            yaml_config_path
-        )
-        self.data_bridges_api_key = self._setup_databridges_configuration(
-            yaml_config_path
-        )
+        # Load and validate config once
+        config = self._load_config(yaml_config_path)
+        self._validate_config(config)
+
+        # Setup authentication and extract API key
+        self.configuration = self._setup_configuration_and_authentication(config)
+        self.data_bridges_api_key = config.get("DATABRIDGES_API_KEY", "")
         self.env = env
         self.xlsform = None
 
     def __repr__(self):
-        return "DataBridgesShapes(yamlpath='%s')" % self.configuration.host
+        return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}')"
 
     def __str__(self):
         return (
-            "DataBridgesShapes(yamlpath='%s') \n\n Brought to you with <3 by WFP VAM \n\n"
-            % self.configuration.host
+            f"DataBridgesShapes\n"
+            f"  API Host: {self.configuration.host}\n"
+            f"  Environment: {self.env}\n"
+            f"\n"
+            f"Brought to you with <3 by WFP VAM"
         )
 
-    def _setup_configuration_and_authentication(self, yaml_config_path):
-        """Loads configuration from a YAML file and sets up authentication.
+    def _load_config(self, config: Union[str, Dict]) -> Dict:
+        """Load configuration from YAML file or dictionary.
 
         Args:
-            yaml_config_path (str): Path to the YAML configuration file
+            config (str | dict): Either a path to YAML file or a configuration dictionary
+
+        Returns:
+            dict: Configuration dictionary with required keys
+
+        Raises:
+            TypeError: If config is neither str nor dict
+            FileNotFoundError: If YAML file path doesn't exist
+            ValueError: If YAML file is invalid
+        """
+        if isinstance(config, str):
+            # Load from YAML file
+            with open(config, "r") as yamlfile:
+                return yaml.load(yamlfile, Loader=yaml.FullLoader)
+        elif isinstance(config, dict):
+            # Use dict directly
+            return config
+        else:
+            raise TypeError(
+                f"config must be str (path to YAML file) or dict, got {type(config).__name__}"
+            )
+
+    def _validate_config(self, config: Dict) -> None:
+        """Validate that configuration contains all required fields.
+
+        Args:
+            config (dict): Configuration dictionary to validate
+
+        Raises:
+            ValueError: If required fields are missing from configuration
+        """
+        required_fields = ["KEY", "SECRET", "SCOPES", "VERSION"]
+        missing = [field for field in required_fields if field not in config]
+        if missing:
+            raise ValueError(
+                f"Missing required configuration fields: {', '.join(missing)}"
+            )
+
+    def _setup_configuration_and_authentication(self, config: Dict):
+        """Sets up authentication using configuration dictionary.
+
+        Args:
+            config (dict): Configuration dictionary containing authentication credentials
 
         Returns:
             Configuration: DataBridges configuration object
 
         """
-        with open(yaml_config_path, "r") as yamlfile:
-            databridges_config = yaml.load(yamlfile, Loader=yaml.FullLoader)
-
-        key = databridges_config["KEY"]
-        secret = databridges_config["SECRET"]
-        scopes = databridges_config["SCOPES"]
-        version = databridges_config["VERSION"]
+        key = config["KEY"]
+        secret = config["SECRET"]
+        scopes = config["SCOPES"]
+        version = config["VERSION"]
         uri = "https://api.wfp.org/vam-data-bridges/"
         host = str(uri + version)
 
@@ -89,16 +212,6 @@ class DataBridgesShapes:
             host=host, access_token=token.refresh(scopes=scopes)
         )
         return configuration
-
-    def _setup_databridges_configuration(self, yaml_config_path):
-        """Loads Data Bridges API key from a YAML file."""
-        with open(yaml_config_path, "r") as yamlfile:
-            data_bridges_api_key = yaml.load(yamlfile, Loader=yaml.FullLoader)
-
-        if "DATABRIDGES_API_KEY" not in data_bridges_api_key:
-            data_bridges_api_key["DATABRIDGES_API_KEY"] = ""
-
-        return data_bridges_api_key["DATABRIDGES_API_KEY"]
 
     def get_prices(
         self,
@@ -967,7 +1080,7 @@ class DataBridgesShapes:
             ApiException: If there's an error accessing the API
         """
 
-        adm0code = get_adm0_code(country_iso3)
+        adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
