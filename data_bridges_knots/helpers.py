@@ -78,8 +78,10 @@ def as_numeric(df, col_list):
 
     return df
 
+
 # Cache return value from _load_country_codes() into global variable
 codes_mapping = None
+
 
 def _load_country_codes() -> Dict[str, int]:
     """Load country codes mapping from JSON file.
@@ -109,6 +111,7 @@ def _load_country_codes() -> Dict[str, int]:
             raise FileNotFoundError(f"Country list file not found at {json_path}")
 
     return codes_mapping
+
 
 def get_adm0_code(country_iso3: str) -> Optional[int]:
     """Get ADM0 code for a given ISO3 country code.
