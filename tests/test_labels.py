@@ -1,11 +1,9 @@
 import pandas as pd
-
-from data_bridges_knots import get_column_labels
+from data_bridges_knots.labels import get_column_labels 
 
 
 def test_sample_questionnaire(sample_xslform_df):
-    assert isinstance(pd.DataFrame, sample_xslform_df)
-
+    assert isinstance(sample_xslform_df, pd.DataFrame)
 
 def test_basic_labels():
     data = {

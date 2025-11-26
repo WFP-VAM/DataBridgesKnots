@@ -11,7 +11,7 @@ def sample_survey_df():
 @pytest.fixture
 def sample_xslform_df():
     """Fixture providing a sample questionnaire in XSLForm"""
-    return pd.read_csv("static/test_xlsform.csv")
+    return pd.read_csv("tests/static/test_xslform.csv")
 
 
 @pytest.fixture

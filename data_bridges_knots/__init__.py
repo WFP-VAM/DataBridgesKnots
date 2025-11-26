@@ -5,11 +5,11 @@ Wrapper for DataBridges client.
 """
 
 from .client import DataBridgesShapes
-from .helpers import get_column_labels, get_value_labels, map_value_labels
+from .labels import get_column_labels, get_value_labels, map_value_labels
 
 __all__ = [
     "DataBridgesShapes",
-    "helpers",
+    "labels",
     "get_column_labels",
     "get_value_labels",
     "map_value_labels",

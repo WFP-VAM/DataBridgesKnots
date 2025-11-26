@@ -1,6 +1,7 @@
 from typing import Dict
-
 import pandas as pd
+
+
 
 
 def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
@@ -20,7 +21,6 @@ def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
 
     return categories_dict
 
-
 def get_column_labels(xlsform_df: pd.DataFrame) -> Dict:
     labels_dict = {}
 
@@ -28,13 +28,12 @@ def get_column_labels(xlsform_df: pd.DataFrame) -> Dict:
         name = row["name"]
         label = row["label"]
         if name in labels_dict and len(name) > 0:
-            labels_dict.update(name)
+            labels_dict[name] = label
         elif label == "":
             labels_dict[name] = name
         else:
             labels_dict[name] = label
     return labels_dict
-
 
 # Map values if int
 def map_value_labels(survey_df, xlsform_df):
