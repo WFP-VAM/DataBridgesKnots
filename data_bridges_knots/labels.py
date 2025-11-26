@@ -1,8 +1,27 @@
 from typing import Dict
 import pandas as pd
+import json
 
 
+def get_column_labels(xlsform_df: pd.DataFrame, format='dict') -> Dict:
+    """Get column labels as Python dictionary, JSON or Pandas Dataframes."""
+    labels_dict = {}
 
+    for _, row in xlsform_df.iterrows():
+        name = str(row["name"])
+        label = str(row["label"])
+        if name in labels_dict and len(name) > 0:
+            labels_dict[name] = label
+        elif label == "":
+            labels_dict[name] = name
+        else:
+            labels_dict[name] = label
+    if format == 'json':
+        return json.dumps(labels_dict, indent=4)
+    elif format == 'df':
+        return pd.DataFrame.from_dict(labels_dict)
+    
+    return labels_dict
 
 def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
@@ -21,19 +40,7 @@ def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
 
     return categories_dict
 
-def get_column_labels(xlsform_df: pd.DataFrame) -> Dict:
-    labels_dict = {}
 
-    for _, row in xlsform_df.iterrows():
-        name = row["name"]
-        label = row["label"]
-        if name in labels_dict and len(name) > 0:
-            labels_dict[name] = label
-        elif label == "":
-            labels_dict[name] = name
-        else:
-            labels_dict[name] = label
-    return labels_dict
 
 # Map values if int
 def map_value_labels(survey_df, xlsform_df):
