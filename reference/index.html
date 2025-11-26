@@ -1,0 +1,3934 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>API Reference - DataBridges Knots</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2a3383ac.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DataBridges Knots" class="md-header__button md-logo" aria-label="DataBridges Knots" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DataBridges Knots
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DataBridges Knots" class="md-nav__button md-logo" aria-label="DataBridges Knots" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DataBridges Knots
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataBridgesShapes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DataBridgesShapes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_aims_analysis_rounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_aims_analysis_rounds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_aims_polygon_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_aims_polygon_files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_choice_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_choice_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodities_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodities_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodity_units_conversion_list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_commodity_units_conversion_list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-full-list-of-commodity-units-conversions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get full list of commodity units conversions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-conversion-factors-for-tanzania" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get conversion factors for Tanzania
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodity_units_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_currency_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_currency_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_economic_indicator_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_economic_indicator_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_exchange_rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_exchange_rates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_food_security_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_food_security_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_gorp" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_gorp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_questionnaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_questionnaire
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_survey
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_surveys_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_surveys_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_xslform_definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_xslform_definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_markets_as_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_markets_as_csv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_markets_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_markets_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_base_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_base_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_full_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_full_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_processed_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_processed_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_xls_forms_detailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_xls_forms_detailed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_nearby_markets" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_nearby_markets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_prices" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_prices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_usd_indirect_quotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_usd_indirect_quotation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      DataBridgesShapes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DataBridgesShapes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_aims_analysis_rounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_aims_analysis_rounds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_aims_polygon_files" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_aims_polygon_files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_choice_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_choice_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodities_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodities_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodity_units_conversion_list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="get_commodity_units_conversion_list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-full-list-of-commodity-units-conversions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get full list of commodity units conversions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-conversion-factors-for-tanzania" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get conversion factors for Tanzania
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_commodity_units_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_commodity_units_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_currency_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_currency_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_economic_indicator_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_economic_indicator_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_exchange_rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_exchange_rates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_food_security_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_food_security_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_gorp" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_gorp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_questionnaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_questionnaire
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_survey
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_surveys_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_surveys_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_household_xslform_definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_household_xslform_definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_markets_as_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_markets_as_csv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_markets_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_markets_list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_base_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_base_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_full_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_full_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_processed_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_surveys_processed_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_mfi_xls_forms_detailed" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_mfi_xls_forms_detailed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_nearby_markets" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_nearby_markets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_prices" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_prices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data_bridges_knots.client.DataBridgesShapes.get_usd_indirect_quotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_usd_indirect_quotation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="api-reference">API Reference</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="data_bridges_knots.client.DataBridgesShapes" class="doc doc-heading">
+            <code>data_bridges_knots.client.DataBridgesShapes</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+
+
+        <p>DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.</p>
+<p>This class includes methods for fetching various types of data such as market prices,
+exchange rates, food security data, commodities, and more. The class can be initialized
+with either a YAML configuration file or a configuration dictionary, and supports
+multiple environments.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>config</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span> | <span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Either:
+- Path to YAML configuration file (str), or
+- Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
+  SCOPES, and optionally DATABRIDGES_API_KEY</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>env</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Environment to use ('prod' or 'dev'). Defaults to "prod"</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;prod&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Initialize with YAML file (traditional method)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_prices</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_prices</span><span class="p">(</span><span class="s2">&quot;KEN&quot;</span><span class="p">,</span> <span class="s2">&quot;2025-09-01&quot;</span><span class="p">)</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Initialize with dictionary (new method)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;KEY&#39;</span><span class="p">:</span> <span class="s1">&#39;your-api-key&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;SECRET&#39;</span><span class="p">:</span> <span class="s1">&#39;your-api-secret&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;VERSION&#39;</span><span class="p">:</span> <span class="s1">&#39;5.0.0&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;SCOPES&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;vamdatabridges_household-fulldata_get&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;DATABRIDGES_API_KEY&#39;</span><span class="p">:</span> <span class="s1">&#39;optional-databridges-key&#39;</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exchange_rates</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_exchange_rates</span><span class="p">(</span><span class="s2">&quot;ETH&quot;</span><span class="p">)</span>
+</code></pre></div>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Initialize from environment variables</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">data_bridges_knots.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_from_env</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">config_from_env</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_aims_analysis_rounds" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_aims_analysis_rounds</span><span class="p">(</span><span class="n">adm0_code</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Download all analysis rounds for AIMS (Asset Impact Monitoring System) data.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>adm0_code</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The country adm0Code.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bytes</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The downloaded data as bytes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_aims_polygon_files" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_aims_polygon_files</span><span class="p">(</span><span class="n">adm0_code</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Download polygon files for Landscape Impact Assessment (LIA) assets.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>adm0_code</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The country adm0Code.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bytes</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The downloaded polygon files as bytes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_choice_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_choice_list</span><span class="p">(</span><span class="n">xls_form_id</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extracts choice lists from a questionnaire form definition.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>xls_form_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ID of the questionnaire form to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing choice lists with columns:
+- name: Name of the choice list
+- value: Choice value/code
+- label: Human-readable choice label</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">choices</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_choice_list</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_commodities_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_commodities_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">commodity_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">commodity_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves the detailed list of commodities available in the DataBridges platform.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name, even partial and case insensitive, of a commodity.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of a commodity. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get full list of commmodities</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commodities_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodities_list</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodities for Tanzania</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">commodities_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodities_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;TZA&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodity with name containing &quot;Maize&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maize_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodities_list</span><span class="p">(</span><span class="n">commodity_name</span><span class="o">=</span><span class="s2">&quot;Maize&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodity with specific ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">specific_commodity_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodities_list</span><span class="p">(</span><span class="n">commodity_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved commodity data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_commodity_units_conversion_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">commodity_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">from_unit_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to_unit_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_code</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>from_unit_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>to_unit_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Examples:</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>client = DataBridgesShapes("data_bridges_api_config.yaml")</p>
+<h4 id="data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-full-list-of-commodity-units-conversions">Get full list of commodity units conversions</h4>
+<p>full_list = client.get_commodity_units_conversion_list()</p>
+<h4 id="data_bridges_knots.client.DataBridgesShapes.get_commodity_units_conversion_list--get-conversion-factors-for-tanzania">Get conversion factors for Tanzania</h4>
+<p>conversion_factors_df = client.get_commodity_units_conversion_list(country_iso3="TZA")</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved conversion factors.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_commodity_units_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">commodity_unit_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">commodity_unit_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves the detailed list of the unit of measure available in DataBridges platform.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_unit_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name, even partial and case insensitive, of a commodity unit.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_unit_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of a commodity unit. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodity units for Tanzania</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">units_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;TZA&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodity unit with name containing &quot;Kg&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kg_unit_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">commodity_unit_name</span><span class="o">=</span><span class="s2">&quot;Kg&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get commodity unit with specific ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">specific_unit_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">commodity_unit_id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved commodity units data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_currency_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_currency_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">currency_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">currency_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>currency_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Currency 3-letter code, matching with ISO 4217.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>currency_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unique code to identify the currency in internal VAM currencies. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get currencies for Tanzania</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">currencies_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_currency_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;TZA&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get currency with name &quot;ETB&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">etb_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_currency_list</span><span class="p">(</span><span class="n">currency_name</span><span class="o">=</span><span class="s2">&quot;ETB&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get currency with specific ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">specific_currency_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_currency_list</span><span class="p">(</span><span class="n">currency_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved currency data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_economic_indicator_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_economic_indicator_list</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">indicator_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">country_iso3</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>indicator_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unique indicator name. Defaults to ''.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved economic indicator data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_exchange_rates" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_exchange_rates</span><span class="p">(</span><span class="n">country_iso3</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves exchange rates for a given country from the Data Bridges API.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ISO3 country code</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of items per page. Defaults to 1000</p>
+              </div>
+            </td>
+            <td>
+                  <code>1000</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing exchange rate data with columns:
+- date: Date of exchange rate
+- rate: Exchange rate value
+- currency: Currency code
+And other relevant exchange rate information</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get exchange rates for Ethiopia</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rates_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_exchange_rates</span><span class="p">(</span><span class="s2">&quot;ETH&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Check latest exchange rate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latest_rate</span> <span class="o">=</span> <span class="n">rates_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error calling the Exchange rates API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_food_security_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_food_security_list</span><span class="p">(</span><span class="n">iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves food security data from IPC and equivalent data sources</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The country ISO3 code</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>year</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The year to retrieve data for</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing food security data with relevant indicators
+and metrics for the specified country and year</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get food security data for Ethiopia in 2023</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eth_food_security</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_food_security_list</span><span class="p">(</span><span class="s2">&quot;ETH&quot;</span><span class="p">,</span> <span class="mi">2025</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get all food security data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_food_security</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_food_security_list</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error calling the Food Security API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_gorp" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_gorp</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves data from the Global Operational Response Plan (GORP) API.</p>
+<p>The GORP API provides access to WFP's operational response planning data at
+different geographical levels.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>data_type</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of GORP data to retrieve. Must be one of:
+- 'country_latest': Latest data at country level
+- 'global_latest': Latest global aggregated data
+- 'regional_latest': Latest data aggregated by region</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paginated results. Required for
+'latest' and 'list' data types. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get latest country-level data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">country_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_gorp</span><span class="p">(</span><span class="s2">&quot;country_latest&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get global summary</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">global_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_gorp</span><span class="p">(</span><span class="s2">&quot;global_latest&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get regional breakdown</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regional_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_gorp</span><span class="p">(</span><span class="s2">&quot;regional_latest&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If data_type is not one of the allowed values</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the GORP API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_household_questionnaire" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_household_questionnaire</span><span class="p">(</span><span class="n">xls_form_id</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extracts the questionnaire structure from an XLS Form definition.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>xls_form_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ID of the questionnaire form to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing the questionnaire structure with
+one row per field in the form</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">questionnaire</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_questionnaire</span><span class="p">(</span><span class="mi">2075</span><span class="p">)</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_household_survey" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_household_survey</span><span class="p">(</span><span class="n">survey_id</span><span class="p">,</span> <span class="n">access_type</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves household survey data using the specified access type.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>survey_id</code>
+            </td>
+            <td>
+                  <code>int]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ID of the survey to retrieve</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>access_type</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of access to use. Must be one of:
+- 'draft': Draft internal base data (requires API key)
+- 'full': Complete survey data (requires API key). Data is returned as inserted by the country office and it might contain PII and unstandardized fields.</p>
+<ul>
+<li>'official': Official use base data. Only data mapped against the standards is returned.</li>
+<li>'public': Public base data</li>
+</ul>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of items per page. Defaults to 600</p>
+              </div>
+            </td>
+            <td>
+                  <code>600</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing survey data with columns specific to the
+access type and survey structure</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get full, unmapped survey data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">full_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_survey</span><span class="p">(</span><span class="mi">3094</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get standard data for official use (no PII)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">official_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_survey</span><span class="p">(</span><span class="mi">3094</span><span class="p">,</span> <span class="s2">&quot;official&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="KeyError">KeyError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If access_type is not one of the allowed values</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_household_surveys_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_household_surveys_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">survey_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves a list of household surveys for a country with their metadata.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>ISO3 Country code</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paginated results. Defaults to 1</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>start_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Start date filter in ISO format (YYYY-MM-DD)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>end_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>End date filter in ISO format (YYYY-MM-DD)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>survey_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Specific survey ID to retrieve</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing survey metadata with columns:
+- survey_id: Unique identifier for the survey
+- xls_form_id: ID of the questionnaire form used
+- title: Survey title
+- country: Country name
+- start_date: Survey start date
+- end_date: Survey end date
+And other metadata fields</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get all surveys for a country</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">surveys</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_surveys_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;COG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get surveys within date range</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">surveys</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_surveys_list</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;COG&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2024-12-31&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_household_xslform_definition" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_household_xslform_definition</span><span class="p">(</span><span class="n">xls_form_id</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves the complete XLS Form definition for a questionnaire.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>xls_form_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ID of the questionnaire form to retrieve</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing the form definition with columns:
+- fields: List of field definitions
+- choices: Available choices for select questions
+- settings: Form settings
+And other form structure information</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get form definition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">form_def</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_household_xslform_definition</span><span class="p">(</span><span class="mi">2067</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Access form fields</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fields</span> <span class="o">=</span> <span class="n">form_def</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_markets_as_csv" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_markets_as_csv</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">local_names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves a complete list of markets in a country in CSV format.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Country administrative code. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>local_names</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, market and region names will be
+localized if available. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>CSV formatted string containing market data</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get markets CSV for Afghanistan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markets_csv</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_markets_as_csv</span><span class="p">(</span><span class="s2">&quot;AFG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get localized market names</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_markets</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_markets_as_csv</span><span class="p">(</span><span class="s2">&quot;AFG&quot;</span><span class="p">,</span> <span class="n">local_names</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the Markets API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_markets_list" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_markets_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieves a complete list of markets in a country.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ISO3 code to identify the country. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paginated results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing market information with columns:
+- market_id: Unique identifier for the market
+- market_name: Name of the market
+- adm0_code: Country administrative code
+- latitude: Market location latitude
+- longitude: Market location longitude
+And other market-related fields</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get markets for Afghanistan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">afg_markets</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_markets_list</span><span class="p">(</span><span class="s2">&quot;AFG&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the Markets API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_mfi_surveys</span><span class="p">(</span><span class="n">adm0_code</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_base_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_mfi_surveys_base_data</span><span class="p">(</span><span class="n">survey_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>survey_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unique identifier for the collected data</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of items per page</p>
+              </div>
+            </td>
+            <td>
+                  <code>20</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get MFI base data for a specific survey</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mfi_surveys_base_data</span><span class="p">(</span><span class="n">survey_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: DataFrame containing MFI base survey data</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_full_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_mfi_surveys_full_data</span><span class="p">(</span><span class="n">survey_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_mfi_surveys_processed_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_mfi_surveys_processed_data</span><span class="p">(</span><span class="n">survey_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">adm0_codes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">market_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">survey_type</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get MFI processed data in long format.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_mfi_xls_forms_detailed" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_mfi_xls_forms_detailed</span><span class="p">(</span><span class="n">adm0_code</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>adm0_code</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Code for the country. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>start_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Starting date for data collection range (YYYY-MM-DD format)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>end_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Ending date for data collection range (YYYY-MM-DD format)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get detailed XLS forms for country code 231</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">detailed_forms</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mfi_xls_forms_detailed</span><span class="p">(</span><span class="n">adm0_code</span><span class="o">=</span><span class="mi">231</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get forms within a date range</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">forms_in_range</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mfi_xls_forms_detailed</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">adm0_code</span><span class="o">=</span><span class="mi">231</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2023-12-31&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: DataFrame containing XLS Forms data</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_nearby_markets" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_nearby_markets</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lng</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Finds markets near a given location within a 15km distance.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Country administrative code. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lat</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Latitude of the search point. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lng</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Longitude of the search point. Defaults to None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing nearby markets with columns:
+- market_id: Unique identifier for the market
+- market_name: Name of the market
+- distance: Distance from search point in kilometers
+- latitude: Market location latitude
+- longitude: Market location longitude
+And other market-related fields</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Find markets near coordinates in Afghanistan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nearby</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_nearby_markets</span><span class="p">(</span><span class="s2">&quot;AFG&quot;</span><span class="p">,</span> <span class="mf">34.515</span><span class="p">,</span> <span class="mf">69.208</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Sort markets by distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">closest</span> <span class="o">=</span> <span class="n">nearby</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="data_bridges_client.rest.ApiException">ApiException</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there's an error accessing the Markets API</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_prices" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_prices</span><span class="p">(</span><span class="n">country_iso3</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">survey_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">market_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">commodity_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">currency_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">price_flag</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">latest_value_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fetches market price data for a given country within a specified date range.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ISO 3-letter country code</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>start_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Start date in ISO format (e.g., '2022-01-01').
+If None, defaults to today's date.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>end_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>End date in ISO format (e.g., '2022-01-01').
+If None, defaults to today's date.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of items per page. Defaults to 1000.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1000</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>survey_date</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Deprecated. Use start_date instead.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>market_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unique ID of a Market. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>commodity_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of a Commodity. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>currency_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact ID of a currency. Defaults to 0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>price_flag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of price data: [actual|aggregate|estimated|forecasted]. Defaults to ''.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>latest_value_only</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to return only latest values. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pd.DataFrame: DataFrame containing market price data</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic usage with dates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_prices</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_prices</span><span class="p">(</span><span class="s2">&quot;KEN&quot;</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2025-01-01&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2025-12-31&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Using additional filters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_prices</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_prices</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;KEN&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2025-01-01&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">market_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">commodity_id</span><span class="o">=</span><span class="mi">456</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">price_flag</span><span class="o">=</span><span class="s2">&quot;actual&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.client.DataBridgesShapes.get_usd_indirect_quotation" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_usd_indirect_quotation</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">currency_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>country_iso3</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>currency_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ISO3 code for the currency, based on ISO4217. Defaults to ''.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page number for paged results. Defaults to 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format: 'json' or 'csv'. Defaults to 'json'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;json&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get USD indirect quotation for Ethiopia</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">usd_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_usd_indirect_quotation</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;ETH&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get USD indirect quotation for currency &quot;ETB&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">etb_usd_df</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_usd_indirect_quotation</span><span class="p">(</span><span class="n">currency_name</span><span class="o">=</span><span class="s2">&quot;ETB&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,798 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="reference/">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>DataBridges Knots</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-bridges-knots" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="DataBridges Knots" class="md-header__button md-logo" aria-label="DataBridges Knots" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DataBridges Knots
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="DataBridges Knots" class="md-nav__button md-logo" aria-label="DataBridges Knots" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DataBridges Knots
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using uv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using pip
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stata-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      STATA users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      R users
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-yaml-configuration-file-recommended-for-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: YAML Configuration File (Recommended for Production)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-dictionary-configuration-recommended-for-testingprogrammatic-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-environment-variables-recommended-for-cicd-and-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Environment Variables (Recommended for CI/CD and Containers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Credentials
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r" class="md-nav__link">
+    <span class="md-ellipsis">
+      R
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using uv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using pip
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stata-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      STATA users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      R users
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-yaml-configuration-file-recommended-for-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: YAML Configuration File (Recommended for Production)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-dictionary-configuration-recommended-for-testingprogrammatic-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-environment-variables-recommended-for-cicd-and-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Environment Variables (Recommended for CI/CD and Containers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Credentials
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r" class="md-nav__link">
+    <span class="md-ellipsis">
+      R
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="data-bridges-knots">Data Bridges Knots</h1>
+<p>This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the <a href="https://github.com/WFP-VAM/DataBridgesAPI">Data Bridges API Client</a>, providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).</p>
+<h2 id="installation">Installation</h2>
+<h3 id="using-uv">Using uv</h3>
+<blockquote>
+<p>We recommend using <code>uv</code> as package manager. You can install it using the <a href="https://docs.astral.sh/uv/getting-started/installation/">instructions here</a>.</p>
+</blockquote>
+<p>Install the <code>data_bridges_knots</code> package in your environment using uv:</p>
+<div class="highlight"><pre><span></span><code>uv venv .venv &amp;&amp; source .venv/bin/activate &amp;&amp; uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
+</code></pre></div>
+<h3 id="using-pip">Using pip</h3>
+<p>You can also install the <code>data_bridges_knots</code> package using regular <code>pip</code> and the Git repository URL:</p>
+<div class="highlight"><pre><span></span><code>pip3 install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
+</code></pre></div>
+<p>STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:</p>
+<h3 id="stata-users">STATA users</h3>
+<p>STATA users need to install the <code>data_bridges_knots</code> with additional STATA dependencies (<code>pystata</code>, and <code>stata-setup</code>):</p>
+<div class="highlight"><pre><span></span><code>uv venv .venv &amp;&amp; source .venv/bin/activate &amp;&amp; uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
+</code></pre></div>
+<h3 id="r-users">R users</h3>
+<p>R users need to have <code>reticulate</code> installed in their machine to run this package as explained in the <a href="https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples">examples folder</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;reticulate&quot;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="configuration">Configuration</h2>
+<p>There are three ways to configure DataBridgesShapes:</p>
+<h3 id="option-1-yaml-configuration-file-recommended-for-production">Option 1: YAML Configuration File (Recommended for Production)</h3>
+<ol>
+<li>Create a <code>data_bridges_api_config.yaml</code> in the main folder you're running your code from.</li>
+<li>
+<p>The structure of the file is:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">NAME</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="nt">VERSION </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="nt">KEY</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="nt">SECRET</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="nt">DATABRIDGES_API_KEY</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="nt">SCOPES</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+</code></pre></div>
+3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.</p>
+</li>
+</ol>
+<h3 id="option-2-dictionary-configuration-recommended-for-testingprogrammatic-use">Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)</h3>
+<p>You can also initialize the client directly with a Python dictionary:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">data_bridges_knots</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBridgesShapes</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;KEY&#39;</span><span class="p">:</span> <span class="s1">&#39;your-api-key&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SECRET&#39;</span><span class="p">:</span> <span class="s1">&#39;your-api-secret&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VERSION&#39;</span><span class="p">:</span> <span class="s1">&#39;5.0.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SCOPES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;vamdatabridges_household-fulldata_get&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;vamdatabridges_marketprices-pricemonthly_get&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DATABRIDGES_API_KEY&#39;</span><span class="p">:</span> <span class="s1">&#39;optional-databridges-key&#39;</span>
+<span class="p">}</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="option-3-environment-variables-recommended-for-cicd-and-containers">Option 3: Environment Variables (Recommended for CI/CD and Containers)</h3>
+<p>Set the following environment variables and use the <code>config_from_env()</code> helper:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">DATABRIDGES_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABRIDGES_SECRET</span><span class="o">=</span><span class="s2">&quot;your-api-secret&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABRIDGES_VERSION</span><span class="o">=</span><span class="s2">&quot;5.0.0&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABRIDGES_SCOPES</span><span class="o">=</span><span class="s2">&quot;scope1,scope2,scope3&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABRIDGES_API_KEY</span><span class="o">=</span><span class="s2">&quot;optional-databridges-key&quot;</span>
+</code></pre></div>
+<p>Then in your Python code:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">data_bridges_knots.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_from_env</span><span class="p">,</span> <span class="n">DataBridgesShapes</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">config_from_env</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="getting-credentials">Getting Credentials</h3>
+<ul>
+<li><strong>(For WFP users)</strong> Credentials and scopes for DataBridges API can be requested by opening a ticket with the <a href="https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems">TEC Digital Core team</a>. See <a href="https://docs.api.wfp.org/consumers/index.html#application-accounts">documentation</a></li>
+<li><strong>External users</strong> can reach out to <a href="mailto:wfp.vaminfo@wfp.org">wfp.vaminfo@wfp.org</a> for support on getting the API credentials.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="api-documentation">API Documentation</h3>
+<p>Documentation on the API methods can be found <a href="https://wfp-vam.github.io/DataBridgesKnots/reference/">here</a></p>
+<h3 id="python">Python</h3>
+<p>Run the following example to extract commodity data:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">data_bridges_knots</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBridgesShapes</span>
+
+<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesShapes</span><span class="p">(</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
+
+<span class="c1"># COMMODITY DATA</span>
+<span class="n">commodity_units_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;TZA&quot;</span><span class="p">,</span> <span class="n">commodity_unit_name</span><span class="o">=</span><span class="s2">&quot;Kg&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</code></pre></div>
+Additional examples are in the <a href="https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples">examples</a> folder and in the <a href="https://wfp-vam.github.io/DataBridgesKnots/reference/">API Reference document</a></p>
+<h3 id="r">R</h3>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+
+<span class="c1"># Import the Python module through reticulate</span>
+<span class="n">data_bridges_knots</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">import</span><span class="p">(</span><span class="s">&quot;data_bridges_knots&quot;</span><span class="p">)</span>
+
+<span class="c1"># Point to our virtual environment&#39;s Python</span>
+<span class="nf">use_python</span><span class="p">(</span><span class="s">&quot;.venv/bin/python&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create client instance</span>
+<span class="n">config_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;data_bridges_api_config.yaml&quot;</span>
+<span class="n">client</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_bridges_knots</span><span class="o">$</span><span class="nf">DataBridgesShapes</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+
+<span class="c1"># COMMODITY DATA</span>
+<span class="c1"># Get commodity unit list for Tanzania</span>
+<span class="n">commodity_units</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">client</span><span class="o">$</span><span class="nf">get_commodity_units_list</span><span class="p">(</span>
+<span class="w">  </span><span class="n">country_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TZA&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">commodity_unit_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Kg&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1L</span><span class="p">,</span>
+<span class="w">  </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Additional examples are in the <a href="https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples">examples</a> folder.</p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the AGPL 3.0 License.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
