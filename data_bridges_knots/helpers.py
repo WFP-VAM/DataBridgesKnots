@@ -59,4 +59,3 @@ def get_adm0_code(country_iso3: str) -> Optional[int]:
 
     codes = _load_country_codes()
     return codes.get(country_iso3.upper())
-

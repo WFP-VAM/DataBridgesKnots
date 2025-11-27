@@ -1,7 +1,5 @@
-
 def discover_surveys():
     """Port of the discover_survey.r in JOR automation"""
-
 
     print("========================================\n")
     print("DATABRIDGES SURVEY DISCOVERY\n")
