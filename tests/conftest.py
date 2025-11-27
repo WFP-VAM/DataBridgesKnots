@@ -1,5 +1,6 @@
 import json
 
+import pandas as pd
 import pytest
 
 from data_bridges_knots import DataBridgesShapes
@@ -26,6 +27,12 @@ def sample_xslform_df():
 
 
 @pytest.fixture
+def sample_xslform_pkl():
+    """Fixture providing a sample survey dataset"""
+    return pd.read_pickle("tests/static/test_xlsform.pkl")
+
+
+@pytest.fixture
 def sample_list():
     """Fixture providing a sample list for testing."""
     return [1, 2, 3]
@@ -33,5 +40,7 @@ def sample_list():
 
 @pytest.fixture
 def sample_values_labels_expected():
-    with open("tests/static/get_values_labels_expected.json") as f:  # adjust path
+    with open(
+        "tests/static/test_xlsform_value_labels_expected.json"
+    ) as f:  # adjust path
         return json.load(f)

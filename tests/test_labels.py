@@ -68,8 +68,6 @@ def test_return_column_labels_as_json(sample_xslform_df):
 
 
 # % TESTS FOR GET_VALUE_LABELS
-
-
 def test_return_value_labels_as_df(sample_xslform_df):
     result = get_value_labels(sample_xslform_df, "df")
     assert isinstance(result, pd.DataFrame)
