@@ -21,13 +21,14 @@ def get_column_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     if format == "json":
         return json.dumps(labels_dict, indent=4)
     elif format == "df":
-        labels_dict = {k: [v] for k, v in labels_dict.items()}
-        return pd.DataFrame.from_dict(labels_dict)
+        df = pd.DataFrame(list(labels_dict.items()), columns=["colName", "label"])
+        return df
 
     return labels_dict
 
 
 def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
+
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
     choiceList = choiceList.join(xlsform_df["name"]).dropna()

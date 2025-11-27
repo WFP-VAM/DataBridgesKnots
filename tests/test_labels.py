@@ -10,7 +10,7 @@ def test_sample_questionnaire_df(sample_xslform_df):
 
 
 # % TESTS FOR GET_COLUMN_LABELS
-def test_get_column_labelsbasic_labels():
+def test_get_column_labels_basic_labels():
     data = {
         "name": ["q1", "q2", "q3"],
         "label": ["Question 1", "Question 2", "Question 3"],
@@ -21,7 +21,7 @@ def test_get_column_labelsbasic_labels():
     assert result == expected
 
 
-def test_get_column_labelsempty_label():
+def test_get_column_labels_empty_label():
     data = {"name": ["q1", "q2"], "label": ["", "Question 2"]}
     df = pd.DataFrame(data)
     result = get_column_labels(df)
@@ -29,7 +29,7 @@ def test_get_column_labelsempty_label():
     assert result == expected
 
 
-def test_get_column_labelsduplicate_names():
+def test_get_column_labels_duplicate_names():
     data = {"name": ["q1", "q1", "q2"], "label": ["First", "Second", "Second Question"]}
     df = pd.DataFrame(data)
     result = get_column_labels(df)
@@ -38,7 +38,7 @@ def test_get_column_labelsduplicate_names():
     assert result == expected
 
 
-def test_get_column_labelsempty_dataframe():
+def test_get_column_labels_empty_dataframe():
     df = pd.DataFrame(columns=["name", "label"])
     result = get_column_labels(df)
     assert result == {}
