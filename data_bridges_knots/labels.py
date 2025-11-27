@@ -19,6 +19,7 @@ def get_column_labels(xlsform_df: pd.DataFrame, format='dict') -> Dict:
     if format == 'json':
         return json.dumps(labels_dict, indent=4)
     elif format == 'df':
+        labels_dict = {k:[v] for k,v in labels_dict.items()} 
         return pd.DataFrame.from_dict(labels_dict)
     
     return labels_dict
@@ -39,8 +40,6 @@ def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
             categories_dict[name] = {(choice["name"]): choice["label"]}
 
     return categories_dict
-
-
 
 # Map values if int
 def map_value_labels(survey_df, xlsform_df):

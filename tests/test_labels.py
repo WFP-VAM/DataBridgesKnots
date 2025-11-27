@@ -1,4 +1,5 @@
 import pandas as pd
+from typing import Dict
 from data_bridges_knots.labels import get_column_labels 
 
 
@@ -46,11 +47,11 @@ def test_name_empty_string():
     expected = {"": "Label for empty", "q2": "Label for q2"}
     assert result == expected
 
-def test_get_columns_as_df(sample_xslform_df):
+def test_return_column_labels_as_df(sample_xslform_df):
     result = get_column_labels(sample_xslform_df, "df")
     assert isinstance(result, pd.DataFrame)
 
-def test_get_columns_as_dict(sample_xslform_df):
+def test_return_column_labels_as_df(sample_xslform_df):
     result = get_column_labels(sample_xslform_df, "dict")
     assert isinstance(result, Dict)
 
