@@ -4,8 +4,6 @@ import json
 
 import pandas as pd
 
-import pdb
-
 
 def get_column_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     """Get column labels as Python dictionary, JSON or Pandas Dataframes."""
@@ -43,6 +41,12 @@ def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
             categories_dict[name].update({(choice["name"]): choice["label"]})
         else:
             categories_dict[name] = {(choice["name"]): choice["label"]}
+
+    if format == "json":
+        return json.dumps(categories_dict, indent=4)
+    elif format == "df":
+        df = pd.DataFrame(list(categories_dict.items()), columns=["colName", "label"])
+        return df
 
     return categories_dict
 
