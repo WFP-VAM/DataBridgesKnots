@@ -3,17 +3,24 @@ import json
 import pandas as pd
 import pytest
 
+from data_bridges_knots import (
+    DataBridgesShapes
+)
 
 @pytest.fixture
 def sample_survey_df():
     """Fixture providing a sample survey dataset"""
-    return pd.read_csv("tests/static/test_df.csv")
+    client = DataBridgesShapes("data_bridges_api_config.yaml")
+    df = client.get_household_survey(4872, "full") #FIXME: this should read from a static file
+    return df
 
 
 @pytest.fixture
 def sample_xslform_df():
     """Fixture providing a sample questionnaire in XSLForm"""
-    return pd.read_csv("tests/static/test_xslform.csv")
+    client = DataBridgesShapes("data_bridges_api_config.yaml")
+    df = client.get_household_questionnaire(1883) #FIXME: this should read from a static file
+    return df
 
 
 @pytest.fixture
