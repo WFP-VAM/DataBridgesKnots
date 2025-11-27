@@ -27,14 +27,17 @@ def get_column_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     return labels_dict
 
 
-def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
+import pdb
 
+def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+    categories_dict = {}
+
+    breakpoint()
+    choiceList = choiceList.join(xlsform_df["choiceList"]).dropna()
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
-    choiceList = choiceList.join(xlsform_df["name"]).dropna()
-    choices = choiceList.explode("choices")
 
-    categories_dict = {}
+
     for _, row in choices.iterrows():
         name = row["name"]
         choice = row["choices"]
@@ -42,11 +45,19 @@ def get_value_labels(xlsform_df: pd.DataFrame) -> Dict:
             categories_dict[name].update({(choice["name"]): choice["label"]})
         else:
             categories_dict[name] = {(choice["name"]): choice["label"]}
+    if format == "json":
+        return json.dumps(categories_dict, indent=4)
+
+    elif format == "df":
+        df = pd.DataFrame(
+            list(categories_dict.items()), columns=["colName", "choiceList"]
+        )
+        return df
 
     return categories_dict
 
 
-# Map values if int
+# Map values if intx
 def map_value_labels(survey_df, xlsform_df):
     survey_data = survey_df.convert_dtypes()
     choiceList = pd.json_normalize(xlsform_df["choiceList"])

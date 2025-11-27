@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import pytest
 
@@ -18,3 +20,9 @@ def sample_xslform_df():
 def sample_list():
     """Fixture providing a sample list for testing."""
     return [1, 2, 3]
+
+
+@pytest.fixture
+def sample_values_labels_expected():
+    with open("tests/static/get_values_labels_expected.json") as f:  # adjust path
+        return json.load(f)
