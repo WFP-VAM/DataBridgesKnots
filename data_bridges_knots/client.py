@@ -382,49 +382,7 @@ class DataBridgesShapes:
         df = df.replace({np.nan: None})
         return df
 
-    def get_food_security_list(
-        self, iso3: Optional[str] = None, year: Optional[int] = None, page: int = 1
-    ) -> pd.DataFrame:
-        """Retrieves food security data from IPC and equivalent data sources
 
-        Args:
-            iso3 (str, optional): The country ISO3 code
-            year (int, optional): The year to retrieve data for
-            page (int, optional): Page number for paged results. Defaults to 1
-
-        Returns:
-            pd.DataFrame: DataFrame containing food security data with relevant indicators
-                and metrics for the specified country and year
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get food security data for Ethiopia in 2023
-            >>> eth_food_security = client.get_food_security_list("ETH", 2025)
-            >>> # Get all food security data
-            >>> all_food_security = client.get_food_security_list()
-
-        Raises:
-            ApiException: If there's an error calling the Food Security API
-        """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
-            food_security_api_instance = data_bridges_client.FoodSecurityApi(api_client)
-            env = self.env
-
-            try:
-                api_response = food_security_api_instance.food_security_list_get(
-                    iso3=iso3, year=year, page=page, env=env
-                )
-                logger.info("Successfully retrieved food security data")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling FoodSecurityApi->food_security_list_get: {e}"
-                )
-                raise
 
     def get_commodities_list(
         self,
@@ -908,71 +866,6 @@ class DataBridgesShapes:
                     f"Exception when calling MarketsApi->markets_nearby_markets_get: {e}"
                 )
                 raise
-
-    def get_gorp(
-        self,
-        data_type: Literal["country_latest", "global_latest", "regional_latest"],
-        page: Optional[int] = None,
-    ) -> pd.DataFrame:
-        """Retrieves data from the Global Operational Response Plan (GORP) API.
-
-        The GORP API provides access to WFP's operational response planning data at
-        different geographical levels.
-
-        Args:
-            data_type (str): The type of GORP data to retrieve. Must be one of:
-                - 'country_latest': Latest data at country level
-                - 'global_latest': Latest global aggregated data
-                - 'regional_latest': Latest data aggregated by region
-            page (int, optional): Page number for paginated results. Required for
-                'latest' and 'list' data types. Defaults to None.
-
-        Returns:
-            pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get latest country-level data
-            >>> country_data = client.get_gorp("country_latest")
-            >>> # Get global summary
-            >>> global_data = client.get_gorp("global_latest")
-            >>> # Get regional breakdown
-            >>> regional_data = client.get_gorp("regional_latest")
-
-        Raises:
-            ValueError: If data_type is not one of the allowed values
-            ApiException: If there's an error accessing the GORP API
-        """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
-            gorp_api_instance = data_bridges_client.GorpApi(api_client)
-            env = self.env
-
-            try:
-                if data_type == "country_latest":
-                    gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
-                elif data_type == "global_latest":
-                    gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
-                elif data_type == "regional_latest":
-                    gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
-                else:
-                    raise ValueError(f"Invalid data_type: {data_type}")
-
-                logger.info(f"Successfully retrieved GORP data for type: {data_type}")
-
-                if isinstance(gorp_data, list):
-                    df = pd.DataFrame([item.to_dict() for item in gorp_data])
-                elif hasattr(gorp_data, "items"):
-                    df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
-                else:
-                    df = pd.DataFrame([gorp_data.to_dict()])
-
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
-            raise
-
     def get_household_survey(
         self, survey_id: int, access_type: str, page_size: Optional[int] = 600
     ) -> pd.DataFrame:
@@ -1210,64 +1103,6 @@ class DataBridgesShapes:
         choices["value"] = choices["choices"].apply(lambda x: x["name"])
         choices["label"] = choices["choices"].apply(lambda x: x["label"])
         return choices[["name", "value", "label"]]
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    def get_aims_analysis_rounds(self, adm0_code):
-        """
-        Download all analysis rounds for AIMS (Asset Impact Monitoring System) data.
-
-        Args:
-            adm0_code (int): The country adm0Code.
-
-        Returns:
-            bytes: The downloaded data as bytes.
-        """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
-            api_instance = data_bridges_client.IncubationApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.aims_download_all_analysis_rounds_get(
-                    adm0_code=adm0_code, env=env
-                )
-                logger.info(
-                    f"Successfully downloaded AIMS analysis rounds for adm0Code: {adm0_code}"
-                )
-                return api_response
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling IncubationApi->aims_download_all_analysis_rounds_get: {e}"
-                )
-                raise
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    def get_aims_polygon_files(self, adm0_code):
-        """
-        Download polygon files for Landscape Impact Assessment (LIA) assets.
-
-        Args:
-            adm0_code (int): The country adm0Code.
-
-        Returns:
-            bytes: The downloaded polygon files as bytes.
-        """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
-            api_instance = data_bridges_client.IncubationApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.aims_download_polygon_files_get(
-                    adm0_code=adm0_code, env=env
-                )
-                logger.info(
-                    f"Successfully downloaded AIMS polygon files for adm0Code: {adm0_code}"
-                )
-                return api_response
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}"
-                )
-                raise
 
     def get_mfi_surveys_full_data(
         self, survey_id=None, page: Optional[int] = 1, page_size=20

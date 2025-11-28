@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "2.1.0"
+version = "3.0.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -23,7 +23,6 @@ dependencies = [
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
 STATA = ["stata-setup", "pystata"]
 R = []
-
 
 [project.urls]
 repository = "https://github.com/WFP-VAM/DataBridgesKnots/"
