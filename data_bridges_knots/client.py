@@ -1473,7 +1473,40 @@ class DataBridgesShapes:
                     f"Exception when calling SurveysApi->m_fi_surveys_base_data_get: {e}"
                 )
                 raise
+    
+    # FIXME: add docstring
+    def get_cari_adm0(self, country_iso3:Optional[str] = None, survey_id: Optional[int]=None, page_size: Optional[int]=20, page: Optional[int] = 1):
+        adm0code = get_adm0_code(country_iso3)
 
+        # Enter a context with an instance of the API client
+        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            api_instance = data_bridges_client.IncubationApi(api_client)
+            env = self.env
+
+            try:
+                # Retrieves a paginated list of Adm0 CARI results based on the specified indicator, administrative code, and  survey.
+                api_response = api_instance.cari_adm0_values_get(adm0_code=adm0_code, survey_id=survey_id, indicator_id=indicator_id, page=page, env=env)
+                logger.info("The response of IncubationApi->cari_adm0_values_get:\n")
+            except ApiException as e:
+                logger.error("Exception when calling IncubationApi->cari_adm0_values_get: %s\n" % e)
+                raise
+            
+    # FIXME: add docstring
+    def get_cari_adm0(self, country_iso3:Optional[str] = None, survey_id: Optional[int]=None, page_size: Optional[int]=20, page: Optional[int] = 1):
+        adm0code = get_adm0_code(country_iso3)
+
+        # Enter a context with an instance of the API client
+        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            api_instance = data_bridges_client.IncubationApi(api_client)
+            env = self.env
+
+            try:
+                # Retrieves a paginated list of Adm0 CARI results based on the specified indicator, administrative code, and  survey.
+                api_response = api_instance.cari_adm0_values_get(adm0_code=adm0_code, survey_id=survey_id, indicator_id=indicator_id, page=page, env=env)
+                logger.info("The response of IncubationApi->cari_adm0_values_get:\n")
+            except ApiException as e:
+                logger.error("Exception when calling IncubationApi->cari_adm0_values_get: %s\n" % e)
+                raise
 
 if __name__ == "__main__":
     import yaml
