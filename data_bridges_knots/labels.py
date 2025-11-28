@@ -52,7 +52,7 @@ def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
 
 
 # Map values if int
-def map_value_labels(survey_df, xlsform_df):
+def df_with_value_labels(survey_df, xlsform_df):
     survey_data = survey_df.convert_dtypes()
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
