@@ -1487,10 +1487,11 @@ class DataBridgesShapes:
                 # Retrieves a paginated list of Adm0 CARI results based on the specified indicator, administrative code, and  survey.
                 api_response = api_instance.cari_adm0_values_get(adm0_code=adm0_code, survey_id=survey_id, indicator_id=indicator_id, page=page, env=env)
                 logger.info("The response of IncubationApi->cari_adm0_values_get:\n")
+                return api_response #FIXME: return as dataframe
             except ApiException as e:
                 logger.error("Exception when calling IncubationApi->cari_adm0_values_get: %s\n" % e)
                 raise
-            
+
     # FIXME: add docstring
     def get_cari_adm0(self, country_iso3:Optional[str] = None, survey_id: Optional[int]=None, page_size: Optional[int]=20, page: Optional[int] = 1):
         adm0code = get_adm0_code(country_iso3)
@@ -1502,8 +1503,9 @@ class DataBridgesShapes:
 
             try:
                 # Retrieves a paginated list of Adm0 CARI results based on the specified indicator, administrative code, and  survey.
-                api_response = api_instance.cari_adm0_values_get(adm0_code=adm0_code, survey_id=survey_id, indicator_id=indicator_id, page=page, env=env)
+                api_response = api_instance.cari_adm1_values_get(adm0_code=adm0_code, survey_id=survey_id, indicator_id=indicator_id, page=page, env=env)
                 logger.info("The response of IncubationApi->cari_adm0_values_get:\n")
+                return api_response  #FIXME: return as dataframe
             except ApiException as e:
                 logger.error("Exception when calling IncubationApi->cari_adm0_values_get: %s\n" % e)
                 raise
