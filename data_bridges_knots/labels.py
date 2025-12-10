@@ -4,9 +4,40 @@ import json
 
 import pandas as pd
 
+def get_variable_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+    """
+    Build a mapping between variable name and variable labels from a DataBridges XLSForm and return it in
+    the desired format.
 
-def get_column_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
-    """Get column labels as Python dictionary, JSON or Pandas Dataframes."""
+    Empty labels default to the corresponding name. For duplicate names, the
+    latest occurrence overrides earlier values.
+
+    Args:
+        xlsform_df (pandas.DataFrame): DataFrame with at least ``"name"`` and ``"label"`` columns.
+        format (str, optional): One of ``"dict"``, ``"json"``, or ``"df"``.
+        Defaults to ``"dict"``.
+        - ``"dict"``: returns ``dict[str, str]``.
+        - ``"json"``: returns a JSON-formatted ``str``.
+        - ``"df"``: returns a ``pandas.DataFrame`` with columns
+            ``["colName", "label"]``.
+
+    Returns:
+        dict | str | pandas.DataFrame: Labels mapping in the requested format.
+
+    Raises:
+        KeyError: If required columns are missing.
+        ValueError: If ``format`` is not one of ``{"dict", "json", "df"}``.
+
+    Examples:
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({'name': ['n1', 'n2', 'n2'], 'label': ['L1', '', 'L2']})
+        >>> get_variable_labels(df, 'dict')
+        {'n1': 'L1', 'n2': 'L2'}
+        >>> get_variable_labels(df, 'df')
+        colName label
+        0      n1    L1
+        1      n2    L2
+    """
     labels_dict = {}
 
     for _, row in xlsform_df.iterrows():
@@ -26,8 +57,68 @@ def get_column_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
 
     return labels_dict
 
-
 def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+    """
+    Build a mapping from each XLSForm question ``name`` to its choice value labels,
+    and return it as a dictionary, JSON string, or DataFrame.
+
+    The function expects an input DataFrame with:
+      - a column ``"name"`` for the question (field) names, and
+      - a column ``"choiceList"`` whose rows contain a structure with a ``"choices"`` list.
+        Each item in ``choices`` is a dict with ``"name"`` (the choice value/code)
+        and ``"label"`` (the human-readable label).
+
+    Duplicate question names are merged, with later entries updating earlier ones.
+
+    Args:
+      xlsform_df (pandas.DataFrame): Input DataFrame containing at least the columns
+        ``"name"`` and ``"choiceList"``. Each ``choiceList`` entry should include
+        a ``"choices"`` list of dicts with keys ``"name"`` and ``"label"``.
+      format (str, optional): Output format; one of ``"dict"``, ``"json"``, or ``"df"``.
+        Defaults to ``"dict"``.
+        - ``"dict"``: returns ``dict[str, dict[str, str]]`` mapping question name to
+          a dict of ``choice_name`` → ``choice_label``.
+        - ``"json"``: returns a JSON-formatted ``str`` of the above mapping.
+        - ``"df"``: returns a ``pandas.DataFrame`` with columns ``["colName", "label"]``,
+          where ``"label"`` contains the nested dict of choice labels for each question.
+
+    Returns:
+      dict | str | pandas.DataFrame: The value-labels mapping in the requested format.
+
+    Raises:
+      KeyError: If required columns (e.g., ``"name"``, ``"choiceList"``) or keys within
+        ``choiceList`` (e.g., ``"choices"``, ``"name"``, ``"label"``) are missing.
+      ValueError: If ``format`` is not one of ``{"dict", "json", "df"}``.
+
+    Examples:
+      >>> import pandas as pd
+      >>> df = pd.DataFrame({
+      ...     "name": ["q1", "q2"],
+      ...     "choiceList": [
+      ...         {"choices": [{"name": "yes", "label": "Yes"}, {"name": "no", "label": "No"}]},
+      ...         {"choices": [{"name": "a", "label": "Option A"}, {"name": "b", "label": "Option B"}]}
+      ...     ]
+      ... })
+      >>> get_value_labels(df, format="dict")
+      {'q1': {'yes': 'Yes', 'no': 'No'}, 'q2': {'a': 'Option A', 'b': 'Option B'}}
+
+      >>> print(get_value_labels(df, format="json"))
+      {
+          "q1": {
+              "yes": "Yes",
+              "no": "No"
+          },
+          "q2": {
+              "a": "Option A",
+              "b": "Option B"
+          }
+      }
+
+      >>> get_value_labels(df, format="df")
+        colName                                             label
+      0      q1             {'yes': 'Yes', 'no': 'No'}
+      1      q2  {'a': 'Option A', 'b': 'Option B'}
+    """
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
     choiceList = choiceList.join(xlsform_df["name"]).dropna()
@@ -51,8 +142,46 @@ def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     return categories_dict
 
 
+
 # Map values if int
-def df_with_value_labels(survey_df, xlsform_df):
+def map_value_labels(survey_df, xlsform_df):
+    
+    """
+    Map coded survey values to human-readable labels based on XLSForm choices.
+
+    The function builds a mapping from each question ``name`` to its choices
+    (``{choice_name: choice_label}``) using ``xlsform_df["choiceList"]`` and
+    replaces codes in matching columns of ``survey_df`` with their labels.
+
+    Args:
+      survey_df (pandas.DataFrame): The survey data with coded values.
+      xlsform_df (pandas.DataFrame): DataFrame containing ``"name"`` and
+        ``"choiceList"``. Each ``choiceList`` entry includes a ``"choices"`` list
+        of dicts with keys ``"name"`` (code) and ``"label"`` (display text).
+
+    Returns:
+      pandas.DataFrame: A copy of ``survey_df`` where columns present in the
+      XLSForm mapping have codes replaced by labels.
+
+    Raises:
+      KeyError: If required columns (``"name"``, ``"choiceList"``) or keys in
+        the choices (``"name"``, ``"label"``) are missing.
+
+    Example:
+      >>> import pandas as pd
+      >>> survey = pd.DataFrame({"q1": ["yes", "no"], "q2": ["a", "b"]})
+      >>> xls = pd.DataFrame({
+      ...   "name": ["q1", "q2"],
+      ...   "choiceList": [
+      ...     {"choices": [{"name": "yes", "label": "Yes"}, {"name": "no", "label": "No"}]},
+      ...     {"choices": [{"name": "a", "label": "Option A"}, {"name": "b", "label": "Option B"}]}
+      ...   ]
+      ... })
+      >>> map_value_labels(survey, xls)
+           q1        q2
+      0   Yes  Option A
+      1    No  Option B
+    """
     survey_data = survey_df.convert_dtypes()
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
