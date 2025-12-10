@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Union
 
 import json
 
@@ -129,7 +129,9 @@ def get_choice_labels(
     if format == "json":
         return json.dumps(categories_dict, indent=4)
     elif format == "df":
-        df = pd.DataFrame(list(categories_dict.items()), columns=["name", "choiceLabels"])
+        df = pd.DataFrame(
+            list(categories_dict.items()), columns=["name", "choiceLabels"]
+        )
         return df
 
     return categories_dict
