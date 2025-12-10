@@ -109,10 +109,7 @@ client = DataBridgesShapes(config)
 - **(For WFP users)** Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
 - **External users** can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
-
-
-## Examples 
-
+## Examples
 ### Python
 
 Run the following example to extract commodity data: 
