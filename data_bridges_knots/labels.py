@@ -57,7 +57,7 @@ def get_variable_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
 
     return labels_dict
 
-def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+def get_choice_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     """
     Build a mapping from each XLSForm question ``name`` to its choice value labels,
     and return it as a dictionary, JSON string, or DataFrame.
@@ -99,10 +99,10 @@ def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
       ...         {"choices": [{"name": "a", "label": "Option A"}, {"name": "b", "label": "Option B"}]}
       ...     ]
       ... })
-      >>> get_value_labels(df, format="dict")
+      >>> get_choice_labels(df, format="dict")
       {'q1': {'yes': 'Yes', 'no': 'No'}, 'q2': {'a': 'Option A', 'b': 'Option B'}}
 
-      >>> print(get_value_labels(df, format="json"))
+      >>> print(get_choice_labels(df, format="json"))
       {
           "q1": {
               "yes": "Yes",
@@ -114,7 +114,7 @@ def get_value_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
           }
       }
 
-      >>> get_value_labels(df, format="df")
+      >>> get_choice_labels(df, format="df")
         colName                                             label
       0      q1             {'yes': 'Yes', 'no': 'No'}
       1      q2  {'a': 'Option A', 'b': 'Option B'}

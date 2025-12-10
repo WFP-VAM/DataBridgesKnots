@@ -8,7 +8,7 @@ Only works if user has STATA 18+ installed and added to PATH.
 """
 
 from data_bridges_knots import DataBridgesShapes
-from data_bridges_knots.labels import get_variable_labels, get_value_labels, map_value_labels
+from data_bridges_knots.labels import get_variable_labels, get_choice_labels, map_value_labels
 from data_bridges_knots.load_stata import load_stata
 import numpy as np
 import stata_setup
@@ -36,7 +36,7 @@ choice_list = client.get_choice_list(CONGO_CFSVA['questionnaire'])
 
 variable_labels = get_variable_labels(questionnaire)
 # get value labels
-value_labels = get_value_labels(questionnaire)
+value_labels = get_choice_labels(questionnaire)
 
 survey_data_value_labels = map_value_labels(survey_data, questionnaire)
 # mapped.replace({np.nan: None})

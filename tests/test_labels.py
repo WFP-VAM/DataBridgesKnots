@@ -2,7 +2,7 @@ from typing import Dict
 
 import pandas as pd
 
-from data_bridges_knots.labels import get_variable_labels, get_value_labels
+from data_bridges_knots.labels import get_variable_labels, get_choice_labels
 
 
 def test_sample_questionnaire_df(sample_xslform_df):
@@ -67,17 +67,17 @@ def test_return_column_labels_as_json(sample_xslform_df):
     assert isinstance(result, str)
 
 
-# % TESTS FOR GET_VALUE_LABELS
+# % TESTS FOR get_choice_labels
 def test_return_value_labels_as_df(sample_xslform_df):
-    result = get_value_labels(sample_xslform_df, "df")
+    result = get_choice_labels(sample_xslform_df, "df")
     assert isinstance(result, pd.DataFrame)
 
 
 def test_return_value_labels_as_dict(sample_xslform_df):
-    result = get_value_labels(sample_xslform_df)
+    result = get_choice_labels(sample_xslform_df)
     assert isinstance(result, Dict)
 
 
 def test_return_value_labels_as_json(sample_xslform_df):
-    result = get_value_labels(sample_xslform_df, "json")
+    result = get_choice_labels(sample_xslform_df, "json")
     assert isinstance(result, str)

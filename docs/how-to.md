@@ -5,7 +5,7 @@
 
 
 ## Get mapping between value and value label
-::: data_bridges_knots.labels.get_value_labels
+::: data_bridges_knots.labels.get_choice_labels
 
 
 ## Map value labels to dataset
