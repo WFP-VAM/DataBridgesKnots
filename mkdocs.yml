@@ -20,5 +20,5 @@ markdown_extensions:
 
 nav: 
 - Getting started: index.md
-- reference.md
-- how-to.md
+- User guide: how-to.md
+- API Reference: reference.md

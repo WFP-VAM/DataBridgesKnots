@@ -2,6 +2,9 @@
 
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
+## Getting started
+User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+
 ## Installation
 
 ### Using uv
@@ -101,14 +104,14 @@ from data_bridges_knots.client import config_from_env, DataBridgesShapes
 config = config_from_env()
 client = DataBridgesShapes(config)
 ```
-
 ### Getting Credentials
 
 - **(For WFP users)** Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
 - **External users** can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
-### API Documentation
-Documentation on the API methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+
+
+## Examples 
 
 ### Python
 
@@ -156,7 +159,6 @@ commodity_units <- client$get_commodity_units_list(
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
 ## Developer set-up
-
 
 ### Installing required tools
 
