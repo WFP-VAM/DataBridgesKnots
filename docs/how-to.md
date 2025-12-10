@@ -48,12 +48,10 @@ Examples on how to use the package  are  in the [examples](https://github.com/WF
 ## Getting variable and choice labels
 
 DataBridgesKnots come with some helper functions to make the datasets more human-readable. 
+ 
 
-### Mapping variable names with their labels
 ::: data_bridges_knots.labels.get_variable_labels
 
-## Mapping choice list with their value
 ::: data_bridges_knots.labels.get_choice_labels
 
-## Map choice list to your dataframe 
 ::: data_bridges_knots.labels.map_value_labels
