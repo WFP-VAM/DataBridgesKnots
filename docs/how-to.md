@@ -2,9 +2,6 @@
 
 ## Quick start
 
-Examples on how to use the package  are  in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
-
-
 ### Python
 
 Run the following example to extract commodity data:
@@ -45,6 +42,7 @@ commodity_units <- client$get_commodity_units_list(
   format = "json"
 )
 ```
+Examples on how to use the package  are  in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
 
 ## Getting variable and choice labels
