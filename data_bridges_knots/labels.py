@@ -1,10 +1,13 @@
-from typing import Dict
+from typing import Optional, Union
 
 import json
 
 import pandas as pd
 
-def get_variable_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+
+def get_variable_labels(
+    xlsform_df: pd.DataFrame, format: str = "dict"
+) -> Union[dict[str, str], str, pd.DataFrame]:
     """
     Build a mapping between variable name and variable labels from a DataBridges XLSForm and return it in
     the desired format.
@@ -57,7 +60,10 @@ def get_variable_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
 
     return labels_dict
 
-def get_choice_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
+
+def get_choice_labels(
+    xlsform_df: pd.DataFrame, format: str = "dict"
+) -> Union[dict[str, str], str, pd.DataFrame]:
     """
     Build a mapping from each XLSForm question ``name`` to its choice value labels,
     and return it as a dictionary, JSON string, or DataFrame.
@@ -136,22 +142,17 @@ def get_choice_labels(xlsform_df: pd.DataFrame, format="dict") -> Dict:
     if format == "json":
         return json.dumps(categories_dict, indent=4)
     elif format == "df":
-        df = pd.DataFrame(list(categories_dict.items()), columns=["colName", "label"])
+        df = pd.DataFrame(list(categories_dict.items()), columns=["name", "choiceLabels"])
         return df
 
     return categories_dict
 
 
-
 # Map values if int
-def map_value_labels(survey_df, xlsform_df):
-    
+def map_value_labels(survey_df: pd.DataFrame, xlsform_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Map coded survey values to human-readable labels based on XLSForm choices.
+    Map numerical choice values to human-readable labels based on XLSForm choices to a DataFrame.
 
-    The function builds a mapping from each question ``name`` to its choices
-    (``{choice_name: choice_label}``) using ``xlsform_df["choiceList"]`` and
-    replaces codes in matching columns of ``survey_df`` with their labels.
 
     Args:
       survey_df (pandas.DataFrame): The survey data with coded values.

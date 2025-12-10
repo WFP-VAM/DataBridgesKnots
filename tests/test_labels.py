@@ -2,7 +2,7 @@ from typing import Dict
 
 import pandas as pd
 
-from data_bridges_knots.labels import get_variable_labels, get_choice_labels
+from data_bridges_knots.labels import get_choice_labels, get_variable_labels
 
 
 def test_sample_questionnaire_df(sample_xslform_df):
