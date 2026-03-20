@@ -27,11 +27,11 @@ def config_from_env() -> Dict:
     """Construct DataBridges configuration dictionary from environment variables.
 
     Reads configuration from the following environment variables:
-        - DATABRIDGES_KEY: API key for authentication
-        - DATABRIDGES_SECRET: API secret for authentication
+        - WFP_API_KEY: WFP API Gateway key for authentication
+        - WFP_API_SECRET: WFP API Gateway secret for authentication
         - DATABRIDGES_SCOPES: Comma-separated list of API scopes
         - DATABRIDGES_VERSION: API version (e.g., 'v1')
-        - DATABRIDGES_API_KEY: (Optional) Additional API key for certain endpoints
+        - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
     Returns:
         dict: Configuration dictionary with required keys for DataBridgesShapes
@@ -41,16 +41,16 @@ def config_from_env() -> Dict:
 
     Examples:
         >>> import os
-        >>> os.environ['DATABRIDGES_KEY'] = 'your_key'
-        >>> os.environ['DATABRIDGES_SECRET'] = 'your_secret'
+        >>> os.environ['WFP_API_KEY'] = 'your_key'
+        >>> os.environ['WFP_API_SECRET'] = 'your_secret'
         >>> os.environ['DATABRIDGES_SCOPES'] = 'scope1,scope2'
         >>> os.environ['DATABRIDGES_VERSION'] = 'v1'
         >>> config = config_from_env()
         >>> client = DataBridgesShapes(config)
     """
     required_vars = {
-        "KEY": "DATABRIDGES_KEY",
-        "SECRET": "DATABRIDGES_SECRET",
+        "KEY": "WFP_API_KEY",
+        "SECRET": "WFP_API_SECRET",
         "SCOPES": "DATABRIDGES_SCOPES",
         "VERSION": "DATABRIDGES_VERSION",
     }
