@@ -94,7 +94,7 @@ typing-inspection==0.4.0
     # via pydantic
 tzdata==2025.2
     # via pandas
-urllib3==2.0.7
+urllib3==2.6.3
     # via data-bridges-client
 wcwidth==0.2.13
     # via prompt-toolkit
