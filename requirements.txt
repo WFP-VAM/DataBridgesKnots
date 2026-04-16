@@ -57,7 +57,7 @@ pydantic==2.11.3
     # via data-bridges-client
 pydantic-core==2.33.1
     # via pydantic
-pygments==2.19.1
+pygments==2.20.0
     # via
     #   ipython
     #   ipython-pygments-lexers
