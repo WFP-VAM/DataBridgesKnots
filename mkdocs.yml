@@ -12,12 +12,14 @@ plugins:
           options:
             show_source: false
             show_root_heading: true
-            heading_level: 2
+            heading_level: 3
+            docstring_style: google
 
 markdown_extensions:
   - admonition
   - pymdownx.superfences
 
 nav: 
-- Home: index.md
-- reference.md
+- Getting started: index.md
+- User guide: how-to.md
+- API Reference: reference.md
