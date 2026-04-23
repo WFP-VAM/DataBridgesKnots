@@ -118,7 +118,7 @@ show_missing = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.1.1"
+version = "2.2.0"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
