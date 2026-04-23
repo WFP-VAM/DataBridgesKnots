@@ -15,8 +15,9 @@ requires-python = ">=3.10"
 
 dependencies = [
     'PyYAML',
-    'pandas==2.3.3',
+    'pandas',
     'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git',
+    "httpx>=0.28.1",
 ]
 
 [project.optional-dependencies]
