@@ -313,7 +313,7 @@ class DataBridgesShapes:
                     )
                     responses.extend(item.to_dict() for item in api_prices.items)
                     total_items = api_prices.total_items
-                    logger.info("Fetching page %s/n", page)
+                    logger.info("Fetching page %s", page)
                     max_item = page * page_size
                     time.sleep(1)
                 except ApiException as e:
