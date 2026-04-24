@@ -123,9 +123,9 @@ class DataBridgesShapes:
         >>> client = DataBridgesShapes(config)
     """
 
-    def __init__(self, yaml_config_path, env="prod"):
+    def __init__(self, config, env="prod"):
         # Load and validate config once
-        self.config = self._load_config(yaml_config_path)
+        self.config = self._load_config(config)
         self._validate_config(self.config)
 
         # Setup authentication and extract API key
@@ -313,7 +313,7 @@ class DataBridgesShapes:
                     )
                     responses.extend(item.to_dict() for item in api_prices.items)
                     total_items = api_prices.total_items
-                    logger.info("Fetching page %s/n", page)
+                    logger.info("Fetching page %s", page)
                     max_item = page * page_size
                     time.sleep(1)
                 except ApiException as e:
@@ -455,7 +455,7 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get full list of commmodities
+            >>> # Get full list of commodities
             >>> commodities_list = client.get_commodities_list()
             >>> # Get commodities for Tanzania
             >>> commodities_df = client.get_commodities_list(country_iso3="TZA")
