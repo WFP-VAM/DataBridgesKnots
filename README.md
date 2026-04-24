@@ -73,7 +73,7 @@ from data_bridges_knots import DataBridgesShapes
 config = {
     'KEY': 'your-api-key',
     'SECRET': 'your-api-secret',
-    'VERSION': '5.0.0',
+    'VERSION': '7.0.0',
     'SCOPES': [
         'vamdatabridges_household-fulldata_get',
         'vamdatabridges_marketprices-pricemonthly_get'
@@ -91,7 +91,7 @@ Set the following environment variables and use the `config_from_env()` helper:
 ```bash
 export DATABRIDGES_KEY="your-api-key"
 export DATABRIDGES_SECRET="your-api-secret"
-export DATABRIDGES_VERSION="5.0.0"
+export DATABRIDGES_VERSION="7.0.0"
 export DATABRIDGES_SCOPES="scope1,scope2,scope3"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
