@@ -123,9 +123,9 @@ class DataBridgesShapes:
         >>> client = DataBridgesShapes(config)
     """
 
-    def __init__(self, yaml_config_path, env="prod"):
+    def __init__(self, config, env="prod"):
         # Load and validate config once
-        self.config = self._load_config(yaml_config_path)
+        self.config = self._load_config(config)
         self._validate_config(self.config)
 
         # Setup authentication and extract API key
