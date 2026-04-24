@@ -455,7 +455,7 @@ class DataBridgesShapes:
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get full list of commmodities
+            >>> # Get full list of commodities
             >>> commodities_list = client.get_commodities_list()
             >>> # Get commodities for Tanzania
             >>> commodities_df = client.get_commodities_list(country_iso3="TZA")
