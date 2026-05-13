@@ -95,7 +95,7 @@ class DataBridgesShapes:
     multiple environments.
 
     Args:
-        config (str | dict): Either:
+        yaml_config_path (str | dict): Either:
             - Path to YAML configuration file (str), or
             - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
               SCOPES, and optionally DATABRIDGES_API_KEY
@@ -512,7 +512,7 @@ class DataBridgesShapes:
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
 
         Args:
-            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
             commodity_id (int, optional): The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.
             from_unit_id (int, optional): The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.
             to_unit_id (int, optional): The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.
@@ -564,7 +564,7 @@ class DataBridgesShapes:
         commodity_unit_id: Optional[int] = 0,
         page: Optional[int] = 1,
         format: Optional[str] = "json",
-    ):
+    ) -> pd.DataFrame:
         """
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
 
