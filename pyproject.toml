@@ -15,9 +15,8 @@ requires-python = ">=3.10"
 
 dependencies = [
     'PyYAML',
-    'pandas',
-    'data-bridges-client @ git+https://github.com/WFP-VAM/DataBridgesAPI.git',
-    "httpx>=0.28.1",
+    'pandas>=2',
+    'data-bridges-client',
 ]
 
 [project.optional-dependencies]
@@ -115,6 +114,14 @@ dev = [
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
+
+[tool.uv.sources]
+data-bridges-client = { index = "wfp-hip-pypi" }
+
+[[tool.uv.index]]
+name = "wfp-hip-pypi"
+url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
+explicit = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
