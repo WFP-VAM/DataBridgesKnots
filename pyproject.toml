@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "2.1.2"
+version = "2.1.3"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -126,7 +126,7 @@ explicit = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.1.2"
+version = "2.1.3"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",

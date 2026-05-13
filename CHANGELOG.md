@@ -1,3 +1,21 @@
+## 2.1.3 (2026-05-13)
+
+## 2.1.2 (2026-04-24)
+
+### Fix
+
+- rename label functions to more descriptive names
+- import pandas in conftest
+- tests work with API call
+- pd.Dataframe output as long dataset, instead of wide
+- get_column_labels now can return the output as pd.Dataframe
+- get_column_label bug and tests
+- **helpers**: add typing and better naming parameters to get_column_label and get_value_label functions
+
+### Refactor
+
+- move label functions under label.py and create basic tests
+
 ## 2.2.0 (2026-04-23)
 
 ### Fix
