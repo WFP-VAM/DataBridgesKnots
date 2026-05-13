@@ -17,6 +17,7 @@ dependencies = [
     'PyYAML',
     'pandas>=2',
     'data-bridges-client',
+    "httpx>=0.27",
 ]
 
 [project.optional-dependencies]
