@@ -16,7 +16,7 @@ requires-python = ">=3.10"
 dependencies = [
     'PyYAML',
     'pandas>=2',
-    'data-bridges-client',
+    'data-bridges-client<=7.0.0',
 ]
 
 [project.optional-dependencies]

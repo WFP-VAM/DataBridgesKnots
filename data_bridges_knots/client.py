@@ -12,6 +12,9 @@ import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 
+import warnings
+
+
 from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
@@ -20,7 +23,7 @@ logging.basicConfig(
     filemode="a",
     format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.DEBUG,
+    level=logging.INFO,
 )
 
 logger = logging.getLogger(__name__)
@@ -51,6 +54,7 @@ def config_from_env() -> Dict:
         >>> config = config_from_env()
         >>> client = DataBridgesShapes(config)
     """
+
     required_vars = {
         "KEY": "WFP_API_KEY",
         "SECRET": "WFP_API_SECRET",
@@ -110,7 +114,7 @@ class DataBridgesShapes:
         >>> config = {
         ...     'KEY': 'your-api-key',
         ...     'SECRET': 'your-api-secret',
-        ...     'VERSION': '5.0.0',
+        ...     'VERSION': '7.0.0',
         ...     'SCOPES': ['vamdatabridges_household-fulldata_get'],
         ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
         ... }
@@ -124,6 +128,16 @@ class DataBridgesShapes:
     """
 
     def __init__(self, yaml_config_path, env="prod"):
+
+        warnings.warn(
+        (
+            "Authentication handling will change in the next version, which is a breaking change. "
+            "Please upgrade to DataBridgesKnots v3.0.0 by 31 May 2026"
+        ),
+        category=DeprecationWarning,
+        stacklevel=2,
+    )
+
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
         self._validate_config(self.config)
@@ -160,6 +174,7 @@ class DataBridgesShapes:
             FileNotFoundError: If YAML file path doesn't exist
             ValueError: If YAML file is invalid
         """
+
         if isinstance(config, str):
             # Load from YAML file
             with open(config, "r") as yamlfile:
