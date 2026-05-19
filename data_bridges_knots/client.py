@@ -3,13 +3,16 @@ from typing import Dict, Literal, Optional, Union
 import logging
 import os
 import time
+import warnings
 from datetime import date
+
 import data_bridges_client
 import numpy as np
 import pandas as pd
 import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
+
 from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
@@ -18,20 +21,21 @@ logging.basicConfig(
     filemode="a",
     format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.DEBUG,
+    level=logging.INFO,
 )
 
 logger = logging.getLogger(__name__)
+
 
 def config_from_env() -> Dict:
     """Construct DataBridges configuration dictionary from environment variables.
 
     Reads configuration from the following environment variables:
-        - DATABRIDGES_KEY: API key for authentication
-        - DATABRIDGES_SECRET: API secret for authentication
+        - WFP_API_KEY: WFP API Gateway key for authentication
+        - WFP_API_SECRET: WFP API Gateway secret for authentication
         - DATABRIDGES_SCOPES: Comma-separated list of API scopes
         - DATABRIDGES_VERSION: API version (e.g., 'v1')
-        - DATABRIDGES_API_KEY: (Optional) Additional API key for certain endpoints
+        - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
     Returns:
         dict: Configuration dictionary with required keys for DataBridgesShapes
@@ -41,16 +45,17 @@ def config_from_env() -> Dict:
 
     Examples:
         >>> import os
-        >>> os.environ['DATABRIDGES_KEY'] = 'your_key'
-        >>> os.environ['DATABRIDGES_SECRET'] = 'your_secret'
+        >>> os.environ['WFP_API_KEY'] = 'your_key'
+        >>> os.environ['WFP_API_SECRET'] = 'your_secret'
         >>> os.environ['DATABRIDGES_SCOPES'] = 'scope1,scope2'
         >>> os.environ['DATABRIDGES_VERSION'] = 'v1'
         >>> config = config_from_env()
         >>> client = DataBridgesShapes(config)
     """
+
     required_vars = {
-        "KEY": "DATABRIDGES_KEY",
-        "SECRET": "DATABRIDGES_SECRET",
+        "KEY": "WFP_API_KEY",
+        "SECRET": "WFP_API_SECRET",
         "SCOPES": "DATABRIDGES_SCOPES",
         "VERSION": "DATABRIDGES_VERSION",
     }
@@ -92,7 +97,7 @@ class DataBridgesShapes:
     multiple environments.
 
     Args:
-        config (str | dict): Either:
+        yaml_config_path (str | dict): Either:
             - Path to YAML configuration file (str), or
             - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
               SCOPES, and optionally DATABRIDGES_API_KEY
@@ -107,7 +112,7 @@ class DataBridgesShapes:
         >>> config = {
         ...     'KEY': 'your-api-key',
         ...     'SECRET': 'your-api-secret',
-        ...     'VERSION': '5.0.0',
+        ...     'VERSION': '7.0.0',
         ...     'SCOPES': ['vamdatabridges_household-fulldata_get'],
         ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
         ... }
@@ -121,6 +126,16 @@ class DataBridgesShapes:
     """
 
     def __init__(self, yaml_config_path, env="prod"):
+
+        warnings.warn(
+            (
+                "Authentication handling will change in the next version, which is a breaking change. "
+                "Please upgrade to DataBridgesKnots v3.0.0 by 31 May 2026"
+            ),
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
+
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
         self._validate_config(self.config)
@@ -157,6 +172,7 @@ class DataBridgesShapes:
             FileNotFoundError: If YAML file path doesn't exist
             ValueError: If YAML file is invalid
         """
+
         if isinstance(config, str):
             # Load from YAML file
             with open(config, "r") as yamlfile:
@@ -288,7 +304,9 @@ class DataBridgesShapes:
         page = 0
         while total_items > max_item:
             page += 1
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.MarketPricesApi(api_client)
                 env = self.env
 
@@ -355,7 +373,9 @@ class DataBridgesShapes:
         page = 0
         while total_items > max_item:
             page += 1
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.CurrencyApi(api_client)
                 env = self.env
 
@@ -416,7 +436,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity data.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.CommoditiesApi(api_client)
             env = self.env
 
@@ -459,7 +481,7 @@ class DataBridgesShapes:
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
 
         Args:
-            country_code (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
+            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
             commodity_id (int, optional): The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.
             from_unit_id (int, optional): The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.
             to_unit_id (int, optional): The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.
@@ -476,7 +498,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.CommodityUnitsApi(api_client)
             env = self.env
 
@@ -509,7 +533,7 @@ class DataBridgesShapes:
         commodity_unit_id: Optional[int] = 0,
         page: Optional[int] = 1,
         format: Optional[str] = "json",
-    ):
+    ) -> pd.DataFrame:
         """
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
 
@@ -532,7 +556,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.CommodityUnitsApi(api_client)
             env = self.env
 
@@ -587,7 +613,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved currency data.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.CurrencyApi(api_client)
             env = self.env
 
@@ -638,7 +666,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.CurrencyApi(api_client)
             env = self.env
 
@@ -682,7 +712,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: A DataFrame containing the retrieved economic indicator data.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.EconomicDataApi(api_client)
 
@@ -711,7 +743,9 @@ class DataBridgesShapes:
         adm0code = get_adm0_code(country_iso3)
 
         # Enter a context with an instance of the API client
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.MarketsApi(api_client)
 
@@ -755,7 +789,9 @@ class DataBridgesShapes:
             ApiException: If there's an error accessing the Markets API
         """
         # Enter a context with an instance of the API client
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.MarketsApi(api_client)
             format = "json"  # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
@@ -801,7 +837,9 @@ class DataBridgesShapes:
 
         adm0code = get_adm0_code(country_iso3)
 
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
 
@@ -849,7 +887,9 @@ class DataBridgesShapes:
         """
 
         adm0code = get_adm0_code(country_iso3)
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.MarketsApi(api_client)
             env = self.env
 
@@ -903,7 +943,9 @@ class DataBridgesShapes:
 
         while total_items > max_item:
             page += 1
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.IncubationApi(api_client)
                 env = self.env
 
@@ -996,7 +1038,9 @@ class DataBridgesShapes:
 
         adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
@@ -1042,7 +1086,9 @@ class DataBridgesShapes:
         Raises:
             ApiException: If there's an error accessing the API
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
@@ -1110,7 +1156,9 @@ class DataBridgesShapes:
         """
         Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
             try:
@@ -1136,7 +1184,9 @@ class DataBridgesShapes:
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
 
@@ -1173,7 +1223,9 @@ class DataBridgesShapes:
         """
         Get MFI processed data in long format.
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
 
@@ -1204,7 +1256,9 @@ class DataBridgesShapes:
         def get_rpme_base_data(
             self, survey_id=None, page: Optional[int] = 1, page_size=20
         ):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1230,7 +1284,9 @@ class DataBridgesShapes:
             page: Optional[int] = 1,
             page_size=20,
         ):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1262,7 +1318,9 @@ class DataBridgesShapes:
             market_id=None,
             adm0_code_dots="",
         ):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1290,7 +1348,9 @@ class DataBridgesShapes:
         def get_rpme_surveys(
             self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
         ):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1314,7 +1374,9 @@ class DataBridgesShapes:
 
         # TODO: Get the scope and test these functions
         def get_rpme_variables(self, page: Optional[int] = 1):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1334,7 +1396,9 @@ class DataBridgesShapes:
         def get_rpme_xls_forms(
             self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
         ):
-            with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+            with data_bridges_client.ApiClient(
+                self._setup_configuration_and_authentication(self.config)
+            ) as api_client:
                 api_instance = data_bridges_client.RpmeApi(api_client)
                 env = self.env
 
@@ -1361,7 +1425,9 @@ class DataBridgesShapes:
     def get_mfi_xls_forms(
         self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
     ):
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.XlsFormsApi(api_client)
             env = self.env
 
@@ -1409,7 +1475,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: DataFrame containing XLS Forms data
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.XlsFormsApi(api_client)
             env = self.env
 
@@ -1457,7 +1525,9 @@ class DataBridgesShapes:
         Returns:
             pandas.DataFrame: DataFrame containing MFI base survey data
         """
-        with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
 

@@ -2,22 +2,27 @@
 
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
+## Getting started
+User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+
 ## Installation
 
 ### Using uv
->  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/). 
+>  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
 
 Install the `data_bridges_knots` package in your environment using uv:
 
 ```
-uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git
+uv venv .venv && source .venv/bin/activate && uv pip install data-bridges-knots \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
 ```
 
 ### Using pip
-You can also install the `data_bridges_knots` package using regular `pip` and the Git repository URL:
+You can also install the `data_bridges_knots` package using regular `pip`:
 
 ```
-pip3 install --force-reinstall git+https://github.com/WFP-VAM/DataBridgesKnots.git
+pip install data-bridges-knots \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
@@ -27,7 +32,8 @@ STATA and R users will also need the appropriate optional dependencies to use th
 STATA users need to install the `data_bridges_knots` with additional STATA dependencies (`pystata`, and `stata-setup`):
 
 ```
-uv venv .venv && source .venv/bin/activate && uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots.git#egg=data_bridges_knots[STATA]
+uv venv .venv && source .venv/bin/activate && uv pip install "data-bridges-knots[STATA]" \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
 ```
 
 ### R users
@@ -70,7 +76,7 @@ from data_bridges_knots import DataBridgesShapes
 config = {
     'KEY': 'your-api-key',
     'SECRET': 'your-api-secret',
-    'VERSION': '5.0.0',
+    'VERSION': '7.0.0',
     'SCOPES': [
         'vamdatabridges_household-fulldata_get',
         'vamdatabridges_marketprices-pricemonthly_get'
@@ -88,7 +94,7 @@ Set the following environment variables and use the `config_from_env()` helper:
 ```bash
 export DATABRIDGES_KEY="your-api-key"
 export DATABRIDGES_SECRET="your-api-secret"
-export DATABRIDGES_VERSION="5.0.0"
+export DATABRIDGES_VERSION="7.0.0"
 export DATABRIDGES_SCOPES="scope1,scope2,scope3"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
@@ -101,15 +107,12 @@ from data_bridges_knots.client import config_from_env, DataBridgesShapes
 config = config_from_env()
 client = DataBridgesShapes(config)
 ```
-
 ### Getting Credentials
 
 - **(For WFP users)** Credentials and scopes for DataBridges API can be requested by opening a ticket with the [TEC Digital Core team](https://dev.azure.com/worldfoodprogramme/Digital%20Core/_workitems). See [documentation](https://docs.api.wfp.org/consumers/index.html#application-accounts)
 - **External users** can reach out to [wfp.vaminfo@wfp.org](mailto:wfp.vaminfo@wfp.org) for support on getting the API credentials.
 
-### API Documentation
-Documentation on the API methods can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
-
+## Examples
 ### Python
 
 Run the following example to extract commodity data: 
@@ -156,7 +159,6 @@ commodity_units <- client$get_commodity_units_list(
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder.
 
 ## Developer set-up
-
 
 ### Installing required tools
 
