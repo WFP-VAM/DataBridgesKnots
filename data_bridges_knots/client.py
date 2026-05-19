@@ -127,6 +127,14 @@ class DataBridgesShapes:
 
     def __init__(self, yaml_config_path, env="prod"):
 
+        warnings.warn(
+            (
+                "Authentication handling will change in the next version, which is a breaking change. "
+                "Please upgrade to DataBridgesKnots v3.0.0 by 31 May 2026"
+            ),
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
 
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
