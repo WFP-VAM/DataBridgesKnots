@@ -126,7 +126,7 @@ show_missing = true
 
 # TEMP
 [tool.uv.sources]
-data-bridges-client = { git = "https://github.com/WFP-VAM/DataBridgesAPI.git", rev = "release/v8.0.0" }
+data-bridges-client = { index = "wfp-hip-pypi" }
 
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
