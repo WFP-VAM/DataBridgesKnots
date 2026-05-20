@@ -1,0 +1,412 @@
+b3146c9 HEAD@{0}: checkout: moving from release/3.0.0 to release/2.1.4
+6fcfafe HEAD@{1}: reset: moving to HEAD
+6fcfafe HEAD@{2}: checkout: moving from main to release/3.0.0
+b3146c9 HEAD@{3}: checkout: moving from release/2.1.4 to main
+b3146c9 HEAD@{4}: merge main: Fast-forward
+ed03ebb HEAD@{5}: checkout: moving from main to release/2.1.4
+b3146c9 HEAD@{6}: pull origin main: Fast-forward
+9f1e53f HEAD@{7}: checkout: moving from release/2.1.4 to main
+ed03ebb HEAD@{8}: commit: chore: remove unused requirements.txt
+1e7b668 HEAD@{9}: checkout: moving from release/3.0.0 to release/2.1.4
+6fcfafe HEAD@{10}: commit: chore: add Pickle data to .gitignore
+b159be3 HEAD@{11}: commit (merge): merge with 2.1.4
+73bf935 HEAD@{12}: Branch: renamed refs/heads/release/v3.0 to refs/heads/release/3.0.0
+73bf935 HEAD@{14}: checkout: moving from release/2.1.4 to release/v3.0
+1e7b668 HEAD@{15}: commit (merge): merge conflicts and update dependencies
+0ab4bf9 HEAD@{16}: checkout: moving from main to release/2.1.4
+9f1e53f HEAD@{17}: pull origin main: Fast-forward
+f8c64b8 HEAD@{18}: checkout: moving from release/2.1.4 to main
+0ab4bf9 HEAD@{19}: commit: bump: version 2.1.3 → 2.1.4
+8889d94 HEAD@{20}: commit: fix: deprecation warning
+cc8f076 HEAD@{21}: commit: linting
+f8057ca HEAD@{22}: commit: bump: version 2.1.2 → 2.1.3
+caf72b1 HEAD@{23}: commit: chore: pin data-bridges-client <=7.0.0 and add deprecation warnings
+f8c64b8 HEAD@{24}: checkout: moving from refactor/get_household_survey to release/2.1.4
+f8c64b8 HEAD@{25}: checkout: moving from main to refactor/get_household_survey
+f8c64b8 HEAD@{26}: checkout: moving from chore/github_actions to main
+4a8242e HEAD@{27}: commit: update actions
+6309218 HEAD@{28}: commit: bump: version 2.1.2 → 2.1.3
+fd8db0c HEAD@{29}: checkout: moving from main to chore/github_actions
+f8c64b8 HEAD@{30}: checkout: moving from chore/github_actions to main
+fd8db0c HEAD@{31}: pull origin chore/github_actions: Merge made by the 'ort' strategy.
+2bded6e HEAD@{32}: commit: temporarily remove tests
+8eb1f10 HEAD@{33}: commit: update .gitignore and dependencies
+c7b7a98 HEAD@{34}: commit: update pyproject.toml
+b841916 HEAD@{35}: commit: chore: update github actions
+21a9c0b HEAD@{36}: commit: chore: update astral-sh/setup-uv action in python-package.yml
+9f436ee HEAD@{37}: commit: chore: update astral-sh/setup-uv action in python-package.yml
+f8c64b8 HEAD@{38}: merge main: Fast-forward
+57b2f1b HEAD@{39}: checkout: moving from main to chore/github_actions
+f8c64b8 HEAD@{40}: pull origin main: Fast-forward
+71f5a58 HEAD@{41}: checkout: moving from chore/github_actions to main
+57b2f1b HEAD@{42}: checkout: moving from fix/labels_helpers to chore/github_actions
+272e95b HEAD@{43}: Branch: renamed refs/heads/fix/label_helpers to refs/heads/fix/labels_helpers
+272e95b HEAD@{45}: Branch: renamed refs/heads/feat/label_helpers to refs/heads/fix/label_helpers
+272e95b HEAD@{47}: merge main: Merge made by the 'ort' strategy.
+8f2d525 HEAD@{48}: checkout: moving from main to feat/label_helpers
+71f5a58 HEAD@{49}: checkout: moving from 9326c73c8ab0bf647f286e8697f6cfc538ad8c93 to main
+9326c73 HEAD@{50}: merge main: Merge made by the 'ort' strategy.
+8372ea4 HEAD@{51}: checkout: moving from main to origin/fix/labels_helpers
+71f5a58 HEAD@{52}: pull origin main: Fast-forward
+6d4840a HEAD@{53}: checkout: moving from chore/github_actions to main
+57b2f1b HEAD@{54}: reset: moving to HEAD
+57b2f1b HEAD@{55}: commit: chore: add CODEOWNERS file
+9573c7e HEAD@{56}: commit: chore: revert semver.yml to previous version
+6d4840a HEAD@{57}: checkout: moving from main to chore/github_actions
+6d4840a HEAD@{58}: checkout: moving from feat/update_api_v7 to main
+77ddb26 HEAD@{59}: commit (merge): merge main
+2683284 HEAD@{60}: Branch: renamed refs/heads/release/v3.0 to refs/heads/feat/update_api_v7
+2683284 HEAD@{62}: checkout: moving from feat/label_helpers to release/v3.0
+8f2d525 HEAD@{63}: Branch: renamed refs/heads/fix/labels_helpers to refs/heads/feat/label_helpers
+8f2d525 HEAD@{65}: merge main: Merge made by the 'ort' strategy.
+8372ea4 HEAD@{66}: checkout: moving from chore/tests to fix/labels_helpers
+df6372f HEAD@{67}: merge main: Merge made by the 'ort' strategy.
+8372ea4 HEAD@{68}: checkout: moving from main to chore/tests
+6d4840a HEAD@{69}: pull origin main: Fast-forward
+49ea274 HEAD@{70}: checkout: moving from fix/update_dependencies to main
+16a75c2 HEAD@{71}: commit: chore(.github): fix typo in .github
+9318ccd HEAD@{72}: commit: fix versioning in pyproject.toml
+6ab9485 HEAD@{73}: commit: fix semver.yml
+632464f HEAD@{74}: commit: bump: version 2.1.2 → 2.2.0
+dd536f8 HEAD@{75}: commit: update pyproject.toml
+3a96dbb HEAD@{76}: commit: update README
+7f1cc39 HEAD@{77}: commit: fix semver.yml
+1ed477b HEAD@{78}: commit: fix commitizen config
+6ba68c6 HEAD@{79}: commit: chore: updated python-package.yml for Python 3.13 & 3.14
+269c715 HEAD@{80}: commit: fix style
+bad62db HEAD@{81}: commit: chore(dependencies): update pyproject.toml to include DataBridgesAPI v7.0.0
+49ea274 HEAD@{82}: Branch: renamed refs/heads/fix/api_version to refs/heads/fix/update_dependencies
+49ea274 HEAD@{84}: checkout: moving from main to fix/api_version
+49ea274 HEAD@{85}: pull origin main: Fast-forward
+9e4df55 HEAD@{86}: checkout: moving from chore/tests to main
+8372ea4 HEAD@{87}: reset: moving to HEAD
+8372ea4 HEAD@{88}: checkout: moving from fix/labels_helpers to chore/tests
+8372ea4 HEAD@{89}: merge tmp: Merge made by the 'ort' strategy.
+f096162 HEAD@{90}: checkout: moving from main to fix/labels_helpers
+9e4df55 HEAD@{91}: checkout: moving from tmp to main
+ec90db9 HEAD@{92}: checkout: moving from ec90db91e353ea58da431aca8431c69fd3fe85b9 to tmp
+ec90db9 HEAD@{93}: commit: updated docs
+8c9fbbf HEAD@{94}: checkout: moving from fix/labels_helpers to 8c9fbbf68f3c8c23dfd352ca057fef508b3aeb12
+f096162 HEAD@{95}: commit (merge): docs: update README
+8c9fbbf HEAD@{96}: checkout: moving from main to fix/labels_helpers
+9e4df55 HEAD@{97}: pull origin main: Fast-forward
+0c6a397 HEAD@{98}: checkout: moving from fix/labels_helpers to main
+8c9fbbf HEAD@{99}: commit: docs: add google-docstrings option
+65c29e3 HEAD@{100}: commit: docs: update documentation
+d7d476b HEAD@{101}: commit: docs: update documentation on labelling
+4ffdf6d HEAD@{102}: commit: update .gitignore
+d96f474 HEAD@{103}: commit: fix: rename label functions to more descriptive names
+9df71fb HEAD@{104}: commit: docs: document label utilities
+6dab212 HEAD@{105}: checkout: moving from release/v3.0 to fix/labels_helpers
+2683284 HEAD@{106}: merge fix/cari: Fast-forward
+73bf935 HEAD@{107}: checkout: moving from fix/cari to release/v3.0
+2683284 HEAD@{108}: commit: fix: cari endpoint
+73bf935 HEAD@{109}: Branch: renamed refs/heads/fix/cari to refs/heads/fix/cari
+73bf935 HEAD@{111}: Branch: renamed refs/heads/feat/ipcch_endpoints to refs/heads/fix/cari
+73bf935 HEAD@{113}: checkout: moving from release/v3.0 to feat/ipcch_endpoints
+73bf935 HEAD@{114}: Branch: renamed refs/heads/release/delightful_dragon to refs/heads/release/v3.0
+73bf935 HEAD@{116}: commit: chore: revert uv.lock to 3.0.0
+18b69c2 HEAD@{117}: commit: feat: Add new endpoint GET /Cari/Adm1Values
+4fe3cca HEAD@{118}: commit: feat: Add new endpoint GET /Cari/Adm0Values
+ffdf950 HEAD@{119}: commit: feat!: remove deprecated endpoints in DataBridges API v7.0
+0c6a397 HEAD@{120}: Branch: renamed refs/heads/release/v7.0 to refs/heads/release/delightful_dragon
+0c6a397 HEAD@{122}: checkout: moving from main to release/v7.0
+0c6a397 HEAD@{123}: checkout: moving from fix/labels_helpers to main
+6dab212 HEAD@{124}: commit: fix:rename map_label function
+bedadaa HEAD@{125}: commit: fix: import pandas in conftest
+71d81c5 HEAD@{126}: commit: test: add tests on return type for get_value_label
+86ab458 HEAD@{127}: commit: fix: tests work with API call
+507ffb9 HEAD@{128}: commit: test: add get_value_labels expected result for testing
+69b1f1d HEAD@{129}: commit: fix: pd.Dataframe output as long dataset, instead of wide
+48b624f HEAD@{130}: commit: test: rename tests to clarify what function they refer to
+8706e22 HEAD@{131}: Branch: renamed refs/heads/feat/get_labels to refs/heads/fix/labels_helpers
+8706e22 HEAD@{133}: commit: fix: get_column_labels now can return the output as pd.Dataframe
+83aaae8 HEAD@{134}: commit: test: add test for get_column_labels new return types
+caadfb7 HEAD@{135}: commit: fix: get_column_label bug and tests
+dd7d63b HEAD@{136}: commit: refactor: move label functions under label.py and create basic tests
+e0819b7 HEAD@{137}: commit: fix(helpers): add typing and better naming parameters to get_column_label and get_value_label functions
+0c6a397 HEAD@{138}: checkout: moving from main to feat/get_labels
+0c6a397 HEAD@{139}: merge fix/token_refresh: Fast-forward
+8591539 HEAD@{140}: checkout: moving from fix/token_refresh to main
+0c6a397 HEAD@{141}: commit: fix(DataBridgesShape): make a fresh call to _setup_configuration_and_authentication() instead of using cached result
+e2da0c6 HEAD@{142}: checkout: moving from fix/get_prices to fix/token_refresh
+e2da0c6 HEAD@{143}: commit: fix: add end_date and other optional parameters on get_prices(). Add start_date as replacement to survey_date (backward compatibile)
+aa2444a HEAD@{144}: merge main: Merge made by the 'ort' strategy.
+3123931 HEAD@{145}: checkout: moving from main to fix/get_prices
+8591539 HEAD@{146}: pull origin main: Fast-forward
+fb44f65 HEAD@{147}: checkout: moving from chore/actions to main
+63022e2 HEAD@{148}: commit: chore: update semver.yml
+885a003 HEAD@{149}: commit: chore: update semver.yml to update version, tag and release
+3b6c26b HEAD@{150}: commit: chore: update Python version in GitHub actions and fix main branch
+5fb01da HEAD@{151}: commit: chore(.github): add GitHub actions for semver, release drafting and tag release
+fb44f65 HEAD@{152}: checkout: moving from main to chore/actions
+fb44f65 HEAD@{153}: pull origin main: Fast-forward
+da7b72f HEAD@{154}: checkout: moving from refactor/credentials-from-env to main
+4d7a6fd HEAD@{155}: checkout: moving from main to refactor/credentials-from-env
+da7b72f HEAD@{156}: checkout: moving from fix/get_prices to main
+3123931 HEAD@{157}: commit: Docs: rename country_code in country_iso3 in examples
+da7b72f HEAD@{158}: checkout: moving from main to fix/get_prices
+da7b72f HEAD@{159}: pull origin main: Fast-forward
+3b022d3 HEAD@{160}: checkout: moving from feature/docs_country_codes to main
+a211b75 HEAD@{161}: commit: bump: version 1.1.0 → 2.0.0
+3a93542 HEAD@{162}: commit (merge): feat: merge conflits, fix documentation example and consolidate country parameters to country_iso3
+93acdc3 HEAD@{163}: checkout: moving from main to feature/docs_country_codes
+3b022d3 HEAD@{164}: pull origin main: Fast-forward
+4f2abb5 HEAD@{165}: checkout: moving from feature/docs_country_codes to main
+93acdc3 HEAD@{166}: commit: docs: fix typo
+0acd6e0 HEAD@{167}: checkout: moving from gh-pages to feature/docs_country_codes
+3296385 HEAD@{168}: fast-import
+9cc1e51 HEAD@{169}: 
+0acd6e0 HEAD@{170}: checkout: moving from feature/docs_country_codes to gh-pages
+0acd6e0 HEAD@{171}: commit: bump: version 0.3.0 → 0.4.0
+c59e882 HEAD@{172}: checkout: moving from gh-pages to feature/docs_country_codes
+a74bf32 HEAD@{173}: reset: moving to HEAD
+a74bf32 HEAD@{174}: reset: moving to HEAD
+a74bf32 HEAD@{175}: fast-import
+9cc1e51 HEAD@{176}: 
+9cc1e51 HEAD@{177}: checkout: moving from feature/docs_country_codes to gh-pages
+c59e882 HEAD@{178}: Branch: renamed refs/heads/docs/examples to refs/heads/feature/docs_country_codes
+c59e882 HEAD@{180}: merge feature/adm0_iso3_convert: Fast-forward
+ccb67ff HEAD@{181}: checkout: moving from main to docs/examples
+4f2abb5 HEAD@{182}: checkout: moving from 86c1bfda7295e32dc26a171e01cdc6bd21df24d0 to main
+86c1bfd HEAD@{183}: checkout: moving from docs/example to docs/R_examples
+c59e882 HEAD@{184}: checkout: moving from feature/adm0_iso3_convert to docs/example
+c59e882 HEAD@{185}: commit: fix: failed example on MFI data
+545bf92 HEAD@{186}: commit: chore: linting
+17f4d67 HEAD@{187}: commit: fix: examples in docstrings'
+d9f5162 HEAD@{188}: commit: fix: consolidate iso3code to adm0 code conversion for all methods
+cc287b2 HEAD@{189}: commit: fix: consolidate examples and country_code for get_commodit_list, get_makrets_list() and get_nearby_markets()
+02b2527 HEAD@{190}: commit: feature: helper function to get WFP internal adm0code from ISO3
+ccb67ff HEAD@{191}: checkout: moving from docs/examples to feature/adm0_iso3_convert
+ccb67ff HEAD@{192}: commit: docs: fix docstrings on get_prices(), get_exchange_rates(), get_food_security_list() and get_gorp()
+89568d6 HEAD@{193}: commit: chore: update .gitignore
+7eab740 HEAD@{194}: commit: chore: re-add .gitignore
+513db5b HEAD@{195}: commit: fix: improve handling of Data Bridges API key
+5b595ea HEAD@{196}: commit: chore: make _setup_configuration_and_authentication and _setup_databridges_configuration as internal methods
+5806516 HEAD@{197}: commit: docs: update README
+347e7c4 HEAD@{198}: checkout: moving from chore/tooling to docs/examples
+347e7c4 HEAD@{199}: checkout: moving from gh-pages to chore/tooling
+9cc1e51 HEAD@{200}: reset: moving to HEAD
+9cc1e51 HEAD@{201}: fast-import
+d0b973a HEAD@{202}: 
+d0b973a HEAD@{203}: merge chore/tooling: updating HEAD
+d0b973a HEAD@{204}: fast-import
+c96b983 HEAD@{205}: 
+c9a0b56 HEAD@{206}: checkout: moving from chore/tooling to gh-pages
+347e7c4 HEAD@{207}: commit: docs: update mkdocs
+8b4f26b HEAD@{208}: commit: chore: remove stupid file
+8abfe73 HEAD@{209}: commit: chore: update .gitignore
+c9a0b56 HEAD@{210}: checkout: moving from gh-pages to chore/tooling
+c9a0b56 HEAD@{211}: checkout: moving from chore/tooling to gh-pages
+c9a0b56 HEAD@{212}: checkout: moving from gh-pages to chore/tooling
+c96b983 HEAD@{213}: checkout: moving from chore/tooling to gh-pages
+c9a0b56 HEAD@{214}: checkout: moving from gh-pages to chore/tooling
+c96b983 HEAD@{215}: reset: moving to HEAD
+c96b983 HEAD@{216}: checkout: moving from chore/tooling to gh-pages
+c9a0b56 HEAD@{217}: commit: docs: add additional docstrings
+bcb2897 HEAD@{218}: commit: fix: handle DATA_BRIDGES_API if doesn't exist in config file
+e3d2892 HEAD@{219}: commit: docs: update README with API Reference document
+f5e326a HEAD@{220}: checkout: moving from gh-pages to chore/tooling
+c96b983 HEAD@{221}: fast-import
+f5e326a HEAD@{222}: 
+f5e326a HEAD@{223}: checkout: moving from chore/tooling to gh-pages
+f5e326a HEAD@{224}: commit: docs: configured mkdocs
+957ef31 HEAD@{225}: commit: docs: add docstrings and typing hints for client.py
+0827461 HEAD@{226}: commit (merge): fix merge conflict
+3c0a759 HEAD@{227}: commit: docs: added documentation
+cf0d50b HEAD@{228}: commit: chore: reformatted tests
+8f06d70 HEAD@{229}: commit: fix: indentation in .github/workflow
+4dc8816 HEAD@{230}: commit: docs: updated installation instructions with uv
+ad7a0d6 HEAD@{231}: commit: docs: add instructions on using uv
+3018900 HEAD@{232}: Branch: renamed refs/heads/chore/update to refs/heads/chore/tooling
+3018900 HEAD@{234}: commit: chore: apply codestyle
+4474fd3 HEAD@{235}: commit: docs: fix typo and add developer setup section
+4f2abb5 HEAD@{236}: checkout: moving from main to chore/update
+4f2abb5 HEAD@{237}: merge chore/update: Fast-forward
+7d738dd HEAD@{238}: checkout: moving from chore/update to main
+4f2abb5 HEAD@{239}: commit: docs: fix typo in README
+e7c24d8 HEAD@{240}: commit: chore: update tooling
+db3ef43 HEAD@{241}: commit: chore: add codestyle tooling and reformatted python code
+078cd05 HEAD@{242}: commit: Docs: update README file and pyproject.toml
+86c1bfd HEAD@{243}: checkout: moving from docs/R_examples to chore/update
+86c1bfd HEAD@{244}: Branch: renamed refs/heads/example/r to refs/heads/docs/R_examples
+86c1bfd HEAD@{246}: commit: add more examples in the example/example.R file
+7d738dd HEAD@{247}: checkout: moving from main to example/r
+7d738dd HEAD@{248}: pull origin main: Fast-forward
+6616e14 HEAD@{249}: checkout: moving from linting to main
+b4ba547 HEAD@{250}: commit: updated python-package.yml
+8409880 HEAD@{251}: commit: updated python-package.yml
+5e1688e HEAD@{252}: commit: Fix linting
+76d7071 HEAD@{253}: Branch: renamed refs/heads/feature/bump to refs/heads/linting
+76d7071 HEAD@{255}: commit: chore: bump python version in dependencies
+97f67f3 HEAD@{256}: commit: chore: rename get_household_surveys to get_household_surveys_list
+dc50ba1 HEAD@{257}: commit: chore: update pyproject.toml
+074b45e HEAD@{258}: commit: fix: update python-package.yml
+8d89e3e HEAD@{259}: commit: fix: typo in python-package.yml
+4d3c5bc HEAD@{260}: commit: chore: update requirements.txt
+b6b4377 HEAD@{261}: pull origin feature/bump: Merge made by the 'ort' strategy.
+ffd70fb HEAD@{262}: commit: chore: update requirement.txt
+7637516 HEAD@{263}: Branch: renamed refs/heads/v6.0.0 to refs/heads/feature/bump
+7637516 HEAD@{265}: commit: Update to DataBridges API v6.0.0
+6616e14 HEAD@{266}: checkout: moving from main to v6.0.0
+6616e14 HEAD@{267}: pull origin main: Fast-forward
+79ba1f3 HEAD@{268}: checkout: moving from feature/surveyApi to main
+0d30729 HEAD@{269}: commit: feature: add SurveyApi endpoints
+ac7c868 HEAD@{270}: checkout: moving from dev to feature/surveyApi
+ac7c868 HEAD@{271}: commit: Added get_mfi_xls_forms_detailed
+9ef72fc HEAD@{272}: merge feature/v5.0: Fast-forward
+15a7c1d HEAD@{273}: checkout: moving from feature/v5.0 to dev
+9ef72fc HEAD@{274}: commit: feat: add RPME endpoints
+05d4d06 HEAD@{275}: commit: feature: add MFI endpoints and examples
+9db9424 HEAD@{276}: commit: fix: get_household_questionnaire and get_choice_list functions to retrieve correct information
+15a7c1d HEAD@{277}: checkout: moving from dev to feature/v5.0
+15a7c1d HEAD@{278}: checkout: moving from feature/v5.0 to dev
+15a7c1d HEAD@{279}: merge dev: Fast-forward
+056588c HEAD@{280}: checkout: moving from dev to feature/v5.0
+15a7c1d HEAD@{281}: commit: feat: IncubationApi Household Surveys endpoints
+977e235 HEAD@{282}: pull origin dev: Merge made by the 'ort' strategy.
+9673229 HEAD@{283}: merge feature/v5.0: Merge made by the 'ort' strategy.
+ba9821f HEAD@{284}: checkout: moving from feature/v5.0 to dev
+056588c HEAD@{285}: commit: docs: add examples for household survey and questionnaire
+7d80f00 HEAD@{286}: commit: feature: update get_household_survey function with DataBridges API key for restricted endpoints
+b226664 HEAD@{287}: checkout: moving from dev to feature/v5.0
+ba9821f HEAD@{288}: commit: docs: update README with installation instructions
+b80ec1d HEAD@{289}: commit: docs: update README with examples
+c474c9c HEAD@{290}: commit (merge): Partial update to v5.0
+99ed700 HEAD@{291}: checkout: moving from feature/v5.0 to dev
+b226664 HEAD@{292}: commit: docs: update example.py with markets endpoint
+021ae33 HEAD@{293}: commit: feature: update IncubationApi endpoints
+52f0125 HEAD@{294}: commit: feature: update GorpApi endpoints
+fd8608d HEAD@{295}: commit: feature: udpate FoodSecurityApi endpoints
+dc21311 HEAD@{296}: commit: feature: add MarketsApi endpoints
+ed98601 HEAD@{297}: commit: feature: add currency_list, usd_indirect_quotation, economic_indicator list endpoints
+077cde9 HEAD@{298}: commit: docs: added Data Bridges API key from creedential config file
+90f7758 HEAD@{299}: commit: docs: updated README example
+a87bd82 HEAD@{300}: commit: feature: commodities API endpoints + udpate ROADMAP
+79ba1f3 HEAD@{301}: checkout: moving from main to feature/v5.0
+79ba1f3 HEAD@{302}: checkout: moving from dev to main
+99ed700 HEAD@{303}: checkout: moving from dev to dev
+99ed700 HEAD@{304}: checkout: moving from bugfix/scopes to dev
+99ed700 HEAD@{305}: checkout: moving from dev to bugfix/scopes
+99ed700 HEAD@{306}: merge main-test: Fast-forward
+79ba1f3 HEAD@{307}: checkout: moving from main-test to dev
+99ed700 HEAD@{308}: commit: Added pages
+79ba1f3 HEAD@{309}: checkout: moving from main to main-test
+79ba1f3 HEAD@{310}: merge dev: Fast-forward
+61dabf2 HEAD@{311}: checkout: moving from dev to main
+79ba1f3 HEAD@{312}: commit: Change mapping
+61dabf2 HEAD@{313}: merge main: Fast-forward
+72401c8 HEAD@{314}: checkout: moving from main to dev
+61dabf2 HEAD@{315}: commit: Minor renaming
+329e588 HEAD@{316}: pull origin main: Fast-forward
+67251ec HEAD@{317}: pull origin main: Fast-forward
+3c10ac2 HEAD@{318}: merge main-test: Fast-forward
+98110c7 HEAD@{319}: checkout: moving from main-test to main
+3c10ac2 HEAD@{320}: commit: Renamed utils with knots
+afb10cf HEAD@{321}: commit: Updated name
+7c7208d HEAD@{322}: commit: Update README
+98110c7 HEAD@{323}: checkout: moving from main to main-test
+98110c7 HEAD@{324}: pull origin main: Fast-forward
+401241e HEAD@{325}: checkout: moving from dev to main
+72401c8 HEAD@{326}: checkout: moving from dev to dev
+72401c8 HEAD@{327}: commit (merge): Updated STATA example
+9eefdc5 HEAD@{328}: commit: Updated STATA example
+868b158 HEAD@{329}: commit: Fix FutureWarning in load_stata
+e56ff58 HEAD@{330}: commit: Updated STATA example file
+e80c681 HEAD@{331}: checkout: moving from dev-labels to dev
+7be1caf HEAD@{332}: commit (merge): Merged confcts
+7aab40f HEAD@{333}: checkout: moving from dev to dev-labels
+e80c681 HEAD@{334}: commit: Updated STATA example
+d92ff47 HEAD@{335}: commit: updated README
+b0f0675 HEAD@{336}: commit: Moved examples in example folder
+cd4dfed HEAD@{337}: commit: Updated .gitignore
+a2c5b07 HEAD@{338}: commit: Updated .gitignore
+13dc302 HEAD@{339}: commit: Updated README
+bb9c40f HEAD@{340}: commit: Updated README
+54e5872 HEAD@{341}: commit: Updated README file with examples
+ac295da HEAD@{342}: checkout: moving from dev-labels to dev
+7aab40f HEAD@{343}: reset: moving to HEAD
+7aab40f HEAD@{344}: commit: Fixed future warning issue
+42033a3 HEAD@{345}: commit: Trying a few things
+0881bc2 HEAD@{346}: merge dev: Merge made by the 'recursive' strategy.
+e913c34 HEAD@{347}: checkout: moving from dev to dev-labels
+ac295da HEAD@{348}: commit: Updated setup.py
+a1b9a38 HEAD@{349}: commit: Updated installation instructions
+9360706 HEAD@{350}: checkout: moving from dev to dev
+9360706 HEAD@{351}: reset: moving to HEAD
+9360706 HEAD@{352}: checkout: moving from dev-labels to dev
+e913c34 HEAD@{353}: commit: Handling error
+37f83a0 HEAD@{354}: commit: Handling error
+e1039b4 HEAD@{355}: commit: Trying to add STATA labels to dataset
+9360706 HEAD@{356}: checkout: moving from dev to dev-labels
+9360706 HEAD@{357}: pull origin dev: Fast-forward
+ba15035 HEAD@{358}: checkout: moving from labels to dev
+edf5d0a HEAD@{359}: commit: Created functions to get labels
+e65fa49 HEAD@{360}: commit: Labelling functions - some working better than others!
+ba15035 HEAD@{361}: checkout: moving from dev to labels
+ba15035 HEAD@{362}: commit: DTA export fails for dtypes
+bd03aad HEAD@{363}: commit: Handle Nan; improved stata import
+3d1a153 HEAD@{364}: commit: Tested STATA load
+f4eb89b HEAD@{365}: commit: Changed STATA import
+389a2e2 HEAD@{366}: merge dev-xlsform: Fast-forward
+2ef10c1 HEAD@{367}: checkout: moving from dev-xlsform to dev
+389a2e2 HEAD@{368}: commit: Improved STATA example
+1116ca6 HEAD@{369}: commit: Improved example
+f5f285d HEAD@{370}: commit: Get XLSForm data and map value labels to dataset
+4606e3d HEAD@{371}: commit: Added logging
+f3ed862 HEAD@{372}: checkout: moving from dev to dev-xlsform
+2ef10c1 HEAD@{373}: checkout: moving from renaming to dev
+87ae918 HEAD@{374}: checkout: moving from dev-xlsform to renaming
+f3ed862 HEAD@{375}: commit: XLSForm
+2ef10c1 HEAD@{376}: merge dev: Fast-forward
+15dfa60 HEAD@{377}: Branch: renamed refs/heads/xlsform to refs/heads/dev-xlsform
+15dfa60 HEAD@{379}: Branch: renamed refs/heads/temp-dev to refs/heads/xlsform
+15dfa60 HEAD@{381}: checkout: moving from dev to temp-dev
+2ef10c1 HEAD@{382}: commit: Reverted pyproject.toml and setup.py to follow dev DataBridges client
+15dfa60 HEAD@{383}: merge temp-dev: Fast-forward
+87ae918 HEAD@{384}: checkout: moving from temp-dev to dev
+15dfa60 HEAD@{385}: commit: Updated ROADMAP
+98a201c HEAD@{386}: commit: XLSForm Responses
+b03a96f HEAD@{387}: commit: Temporary branch that uses hotfix
+87ae918 HEAD@{388}: checkout: moving from dev to temp-dev
+87ae918 HEAD@{389}: checkout: moving from renaming to dev
+87ae918 HEAD@{390}: checkout: moving from dev to renaming
+87ae918 HEAD@{391}: reset: moving to 87ae91863994e849957b2c2497dd318decc4269f
+00af7f6 HEAD@{392}: Branch: renamed refs/heads/test to refs/heads/dev
+00af7f6 HEAD@{394}: checkout: moving from test to test
+00af7f6 HEAD@{395}: pull origin dev: Fast-forward
+87ae918 HEAD@{396}: checkout: moving from 87ae91863994e849957b2c2497dd318decc4269f to test
+87ae918 HEAD@{397}: reset: moving to 87ae91863994e849957b2c2497dd318decc4269f
+00af7f6 HEAD@{398}: pull origin dev: Fast-forward
+87ae918 HEAD@{399}: checkout: moving from dev to 87ae91863994e849957b2c2497dd318decc4269f
+00af7f6 HEAD@{400}: checkout: moving from data-bridges-utils to dev
+87ae918 HEAD@{401}: checkout: moving from dev to data-bridges-utils
+00af7f6 HEAD@{402}: checkout: moving from data-bridges-utils to dev
+87ae918 HEAD@{403}: checkout: moving from 87ae91863994e849957b2c2497dd318decc4269f to data-bridges-utils
+87ae918 HEAD@{404}: checkout: moving from dev to 87ae91863994e849957b2c2497dd318decc4269f
+00af7f6 HEAD@{405}: checkout: moving from 87ae91863994e849957b2c2497dd318decc4269f to dev
+00af7f6 HEAD@{406}: checkout: moving from dev to 87ae91863994e849957b2c2497dd318decc4269f
+00af7f6 HEAD@{407}: commit: renamed to data_bridges
+992c54a HEAD@{408}: commit: renamed to data_bridges
+76b73c5 HEAD@{409}: commit: renamed to data_bridges
+87ae918 HEAD@{410}: commit: Typo
+241e16e HEAD@{411}: commit: Updated README file and examples
+540e7a9 HEAD@{412}: commit: Minor fixes
+6f247aa HEAD@{413}: commit: Minor fixes
+c6dab8e HEAD@{414}: commit: Minor fixes
+b6ff7f1 HEAD@{415}: commit: Changed dependency URL in setup.py and pyproject.toml
+668b3bc HEAD@{416}: commit: Minor fixes
+518c652 HEAD@{417}: commit: Minor fixes to setup.py
+3234aed HEAD@{418}: commit: Minor Fixes to pyproject.toml
+e17e25c HEAD@{419}: commit: Added pyproject.toml and setup.py
+58d6fc7 HEAD@{420}: commit: Updated README
+fd55d19 HEAD@{421}: commit: Updated gitignore. Testing R sample load
+da553f0 HEAD@{422}: commit: Added GORP endpoint examples and handling of data
+d466ab1 HEAD@{423}: commit: Added IPC food security endpoint example
+58e0419 HEAD@{424}: commit: Fixed typo
+c654692 HEAD@{425}: commit: Added requirements document and changed number of pages
+17560a8 HEAD@{426}: commit: Initiated pyproject.toml
+401241e HEAD@{427}: checkout: moving from main to dev
+401241e HEAD@{428}: pull origin main: Merge made by the 'recursive' strategy.
+c84c43e HEAD@{429}: commit: Added GPL license
+0a6f645 HEAD@{430}: commit (initial): First commit
