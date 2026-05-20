@@ -125,6 +125,8 @@ dev = [
 fail_under = 50
 show_missing = true
 
+[tool.uv.sources]
+data-bridges-client = { index = "wfp-hip-pypi" }
 
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
