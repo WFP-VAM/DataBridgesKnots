@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "2.2.0"
+version = "2.1.4"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -90,6 +90,13 @@ testpaths = ["tests"]
 [tool.coverage.run]
 source = ["tests"]
 
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "semver"
+version_provider = "uv"
+update_changelog_on_bump = true
 [coverage.paths]
 source = "wfp-survey-toolbox"
 
@@ -126,11 +133,3 @@ name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
 explicit = true
 
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "2.2.0"
-tag_format = "$version"
-version_files = [
-    "pyproject.toml:version",
-]
-update_changelog_on_bump = true
