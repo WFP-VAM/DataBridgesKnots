@@ -31,9 +31,8 @@ def config_from_env() -> Dict:
     """Construct DataBridges configuration dictionary from environment variables.
 
     Reads configuration from the following environment variables:
-        - WFP_API_KEY: WFP API Gateway key for authentication
-        - WFP_API_SECRET: WFP API Gateway secret for authentication
-        - DATABRIDGES_SCOPES: Comma-separated list of API scopes
+        - WFP_API_CLIENT_ID: WFP API Gateway key for authentication
+        - WFP_API_CLIENT_SECRET: WFP API Gateway secret for authentication
         - DATABRIDGES_VERSION: API version (e.g., 'v1')
         - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
@@ -45,18 +44,16 @@ def config_from_env() -> Dict:
 
     Examples:
         >>> import os
-        >>> os.environ['WFP_API_KEY'] = 'your_key'
-        >>> os.environ['WFP_API_SECRET'] = 'your_secret'
-        >>> os.environ['DATABRIDGES_SCOPES'] = 'scope1,scope2'
+        >>> os.environ['WFP_API_CLIENT_ID'] = 'your_key'
+        >>> os.environ['WFP_API_CLIENT_SECRET'] = 'your_secret'
         >>> os.environ['DATABRIDGES_VERSION'] = 'v1'
         >>> config = config_from_env()
         >>> client = DataBridgesShapes(config)
     """
 
     required_vars = {
-        "KEY": "WFP_API_KEY",
-        "SECRET": "WFP_API_SECRET",
-        "SCOPES": "DATABRIDGES_SCOPES",
+        "KEY": "WFP_API_CLIENT_ID",
+        "SECRET": "WFP_API_CLIENT_SECRET",
         "VERSION": "DATABRIDGES_VERSION",
     }
 
@@ -69,11 +66,7 @@ def config_from_env() -> Dict:
         if value is None:
             missing.append(env_var)
         else:
-            # Special handling for SCOPES - split comma-separated string into list
-            if config_key == "SCOPES":
-                config[config_key] = [scope.strip() for scope in value.split(",")]
-            else:
-                config[config_key] = value
+            config[config_key] = value
 
     if missing:
         raise ValueError(
@@ -113,7 +106,6 @@ class DataBridgesShapes:
         ...     'KEY': 'your-api-key',
         ...     'SECRET': 'your-api-secret',
         ...     'VERSION': '7.0.0',
-        ...     'SCOPES': ['vamdatabridges_household-fulldata_get'],
         ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
         ... }
         >>> client = DataBridgesShapes(config)
@@ -126,15 +118,6 @@ class DataBridgesShapes:
     """
 
     def __init__(self, yaml_config_path, env="prod"):
-
-        warnings.warn(
-            (
-                "Authentication handling will change in the next version, which is a breaking change. "
-                "Please upgrade to DataBridgesKnots v3.0.0 by 31 May 2026"
-            ),
-            category=DeprecationWarning,
-            stacklevel=2,
-        )
 
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
@@ -215,7 +198,7 @@ class DataBridgesShapes:
         secret = config["SECRET"]
         scopes = config["SCOPES"]
         version = config["VERSION"]
-        uri = "https://api.wfp.org/vam-data-bridges/"
+        uri = "https://gateway.api.wfp.org/"
         host = str(uri + version)
 
         logger.info("DataBridges API: %s", host)

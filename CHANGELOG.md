@@ -1,3 +1,9 @@
+## 2.2.0 (2026-05-20)
+
+### Feat
+
+- **auth**: change auth params for new WFP API Portal (portal.api.wfp.org)
+
 ## 2.1.4 (2026-05-19)
 
 ### Fix

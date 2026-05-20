@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "2.1.4"
+version = "2.2.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -16,7 +16,7 @@ requires-python = ">=3.10"
 dependencies = [
     'PyYAML',
     'pandas>=2',
-    'data-bridges-client==7.0.0',
+    "data-bridges-client>=8.0.0",
     "httpx>=0.28.1",
 ]
 
@@ -49,7 +49,7 @@ indent = 4
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = 3.9
+python_version = 3.10
 pretty = true
 show_traceback = true
 color_output = true
@@ -110,14 +110,16 @@ dev = [
     "mkdocs-material",
     "mkdocstrings[python]",
     "bandit",
+    "python-dotenv>=1.2.2",
 ]
 
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
 
+# TEMP
 [tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }
+data-bridges-client = { git = "https://github.com/WFP-VAM/DataBridgesAPI.git", rev = "release/v8.0.0" }
 
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
@@ -126,7 +128,7 @@ explicit = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.1.4"
+version = "2.2.0"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
