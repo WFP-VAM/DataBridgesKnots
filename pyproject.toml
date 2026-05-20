@@ -16,8 +16,9 @@ requires-python = ">=3.10"
 dependencies = [
     'PyYAML',
     'pandas>=2',
-    "data-bridges-client>=8.0.0",
+    "data-bridges-client==8.0.0",
     "httpx>=0.28.1",
+    
 ]
 
 [project.optional-dependencies]
@@ -124,9 +125,6 @@ dev = [
 fail_under = 50
 show_missing = true
 
-# TEMP
-[tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }
 
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
