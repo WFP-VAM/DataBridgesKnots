@@ -3,7 +3,6 @@ from typing import Dict, Literal, Optional, Union
 import logging
 import os
 import time
-import warnings
 from datetime import date
 
 import data_bridges_client
