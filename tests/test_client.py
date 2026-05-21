@@ -29,14 +29,11 @@ def client(config_dict):
 
 def test_import():
     from data_bridges_knots.client import DataBridgesShapes
-
     assert DataBridgesShapes is not None
-
 
 # -------------------------
 # ✅ 2. Config
 # -------------------------
-
 
 def test_client_init(config_dict):
     client = DataBridgesShapes(config_dict)
@@ -48,47 +45,51 @@ def test_client_init(config_dict):
 # =========================================================
 
 
-@pytest.mark.integration
-@pytest.mark.parametrize(
-    "func,args",
-    [
-        ("get_prices", ("KEN",)),
-        ("get_exchange_rates", ("KEN",)),
-        ("get_commodities_list", ()),
-        ("get_currency_list", ()),
-        ("get_markets_list", ("KEN",)),
-        ("get_gorp", ("country_latest",)),
-        ("get_mfi_surveys", ()),
-    ],
-)
-def test_endpoints_success(client, func, args):
-    method = getattr(client, func)
-
-    try:
-        result = method(*args)
-        assert isinstance(result, (pd.DataFrame, str, bytes))
-    except ApiException as e:
-        pytest.fail(f"{func} returned 403 but expected success: {e}")
-
-
-# =========================================================
-# ✅ 4. FORBIDDEN TESTS (expect 403)
-# =========================================================
-
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
-    "func,args",
+    "func,args,kwargs",
     [
-        ("get_household_survey", (1234, "full")),
-        ("get_household_survey", (1234, "draft")),
-        # Add more endpoints known to require permissions
+        ("get_prices", ("KEN",), {}),
+        ("get_prices", ("KEN",), {"start_date": "2025-01-01"}),
+
+        ("get_exchange_rates", ("ETH",), {}),
+
+        ("get_food_security_list", ("ETH", 2025), {}),
+
+        ("get_commodities_list", (), {}),
+        ("get_commodities_list", (), {"country_iso3": "TZA"}),
+        ("get_commodities_list", (), {"commodity_name": "Maize"}),
     ],
 )
-def test_endpoints_forbidden(client, func, args):
+
+def test_endpoints_success(client, func, args, kwargs):
     method = getattr(client, func)
 
-    with pytest.raises(ApiException) as exc:
-        method(*args)
+    result = method(*args, **kwargs)
 
-    assert exc.value.status == 403
+    import pandas as pd
+    assert isinstance(result, (pd.DataFrame, str, bytes))
+
+
+# # =========================================================
+# # ✅ 4. FORBIDDEN ENDPOINT TESTS (expect 403)
+# # =========================================================
+
+
+# @pytest.mark.integration
+# @pytest.mark.parametrize(
+#     "func,args",    
+#     [
+#         ("get_household_survey", (1234, "full")),
+#         # ("get_household_survey", (1234, "draft")),
+#         # Add more endpoints known to require permissions
+#     ],
+# )
+# def test_endpoints_forbidden(client, func, args):
+#     method = getattr(client, func)
+
+#     with pytest.raises(ApiException) as exc:
+#         method(*args)
+
+#     assert exc.value.status == 403

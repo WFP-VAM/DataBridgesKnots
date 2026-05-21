@@ -105,7 +105,7 @@ class DataBridgesShapes:
            >>> config = {
            ...     'KEY': 'your-api-key',
            ...     'SECRET': 'your-api-secret',
-           ...     'VERSION': '7.0.0',
+           ...     'VERSION': 'v1',
            ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
            ... }
            >>> client = DataBridgesShapes(config)
@@ -130,7 +130,6 @@ class DataBridgesShapes:
             FutureWarning,
             stacklevel=2,
         )
-
 
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
@@ -213,8 +212,6 @@ class DataBridgesShapes:
         BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
         host = f"{BASE_URI}/{version.strip('/')}"
 
-
-
         logger.info("DataBridges API: %s", host)
 
         token = WfpApiToken(api_key=key, api_secret=secret)
@@ -231,7 +228,6 @@ class DataBridgesShapes:
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         page_size: int = 1000,
-        survey_date: Optional[str] = None,  # Deprecated, use start_date instead
         market_id: int = 0,
         commodity_id: int = 0,
         currency_id: int = 0,
@@ -247,7 +243,6 @@ class DataBridgesShapes:
             end_date (str, optional): End date in ISO format (e.g., '2022-01-01').
                 If None, defaults to today's date.
             page_size (int, optional): Number of items per page. Defaults to 1000.
-            survey_date (str, optional): Deprecated. Use start_date instead.
             market_id (int, optional): Unique ID of a Market. Defaults to 0.
             commodity_id (int, optional): The exact ID of a Commodity. Defaults to 0.
             currency_id (int, optional): The exact ID of a currency. Defaults to 0.
@@ -270,17 +265,6 @@ class DataBridgesShapes:
             ...     price_flag="actual"
             ... )
         """
-        # Handle deprecated survey_date parameter
-        if start_date is None and survey_date is not None:
-            import warnings
-
-            warnings.warn(
-                "The survey_date parameter is deprecated. Use start_date instead.",
-                DeprecationWarning,
-                stacklevel=2,
-            )
-            start_date = survey_date
-
         if start_date:
             # Format the date according to RFC 3339 standard
             start_date = date.fromisoformat(start_date).strftime(
