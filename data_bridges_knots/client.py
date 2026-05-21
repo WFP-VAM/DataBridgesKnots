@@ -4,7 +4,7 @@ import logging
 import os
 import time
 from datetime import date
-
+import warnings
 import data_bridges_client
 import numpy as np
 import pandas as pd
@@ -92,7 +92,7 @@ class DataBridgesShapes:
         yaml_config_path (str | dict): Either:
             - Path to YAML configuration file (str), or
             - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
-              SCOPES, and optionally DATABRIDGES_API_KEY
+ and optionally DATABRIDGES_API_KEY
         env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
 
     Examples:
@@ -117,6 +117,8 @@ class DataBridgesShapes:
     """
 
     def __init__(self, yaml_config_path, env="prod"):
+
+        warnings.warn("DataBridgesShape will be renamed DataBridgesKnots in the next major release of this package (4.0.0).", FutureWarning)
 
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
@@ -176,7 +178,7 @@ class DataBridgesShapes:
         Raises:
             ValueError: If required fields are missing from configuration
         """
-        required_fields = ["KEY", "SECRET", "SCOPES", "VERSION"]
+        required_fields = ["KEY", "SECRET", "VERSION"]
         missing = [field for field in required_fields if field not in config]
         if missing:
             raise ValueError(
@@ -195,7 +197,6 @@ class DataBridgesShapes:
         """
         key = config["KEY"]
         secret = config["SECRET"]
-        scopes = config["SCOPES"]
         version = config["VERSION"]
         uri = "https://gateway.api.wfp.org/"
         host = str(uri + version)
@@ -204,7 +205,7 @@ class DataBridgesShapes:
 
         token = WfpApiToken(api_key=key, api_secret=secret)
         configuration = data_bridges_client.Configuration(
-            host=host, access_token=token.refresh(scopes=scopes)
+            host=host, access_token=token.refresh()
         )
 
         logger.debug("Token used: %s", token.__repr__())
