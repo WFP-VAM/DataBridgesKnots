@@ -14,15 +14,30 @@ keywords = ["VAM", "WFP", "data"]
 requires-python = ">=3.10"
 
 dependencies = [
-    'PyYAML',
+    'PyYAML>=6',
     'pandas>=2',
-    "data-bridges-client==8.0.0",
-    "httpx>=0.28.1",
-    
+    "data-bridges-client>=8.0.0",
 ]
 
-[project.optional-dependencies]
-dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.0.0",
+    "pytest>=8.3.4",
+    "coverage-badge>=1.1.2",
+    "commitizen>=4.6.0",
+    "black",
+    "isort",
+    "ruff",
+    "mypy",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "bandit",
+    "python-dotenv>=1.2.2",
+    "bumpver",
+    "pip-tools"
+]
 STATA = ["stata-setup", "pystata"]
 R = []
 
@@ -31,8 +46,8 @@ R = []
 repository = "https://github.com/WFP-VAM/DataBridgesKnots/"
 homepage = "https://github.com/WFP-VAM/DataBridgesKnots/"
 
-[tool.setuptools]
-packages = ["data_bridges_knots"]
+[tool.setuptools.packages.find]
+include = ["data_bridges_knots*"]
 
 [tool.setuptools.package-data]
 data_bridges_knots = ['country_list.json']
@@ -88,9 +103,14 @@ addopts = [
 # Only collect tests from the tests directory
 testpaths = ["tests"]
 
-[tool.coverage.run]
-source = ["tests"]
 
+[tool.coverage.run]
+source = ["data_bridges_knots"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 50
+show_missing = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -98,36 +118,16 @@ tag_format = "v$version"
 version_scheme = "semver"
 version_provider = "uv"
 update_changelog_on_bump = true
-[coverage.paths]
-source = "wfp-survey-toolbox"
 
-[coverage.run]
-branch = true
-
-[dependency-groups]
-dev = [
-    "pytest-cov>=6.0.0",
-    "pytest>=8.3.4",
-    "coverage-badge>=1.1.2",
-    "commitizen>=4.6.0",
-    "black",
-    "isort",
-    "ruff",
-    "mypy",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "bandit",
-    "python-dotenv>=1.2.2",
-]
-
-[tool.coverage.report]
-fail_under = 50
-show_missing = true
-
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
 
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
-explicit = true
+# explicit = true
 
+
+[tool.uv.sources]
+data-bridges-client = { index = "wfp-hip-pypi" }
