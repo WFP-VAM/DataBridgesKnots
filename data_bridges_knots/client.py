@@ -383,52 +383,6 @@ class DataBridgesShapes:
         df = df.replace({np.nan: None})
         return df
 
-    def get_food_security_list(
-        self, iso3: Optional[str] = None, year: Optional[int] = None, page: int = 1
-    ) -> pd.DataFrame:
-        """Retrieves food security data from IPC and equivalent data sources
-
-        Args:
-            iso3 (str, optional): The country ISO3 code
-            year (int, optional): The year to retrieve data for
-            page (int, optional): Page number for paged results. Defaults to 1
-
-        Returns:
-            pd.DataFrame: DataFrame containing food security data with relevant indicators
-                and metrics for the specified country and year
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get food security data for Ethiopia in 2023
-            >>> eth_food_security = client.get_food_security_list("ETH", 2025)
-            >>> # Get all food security data
-            >>> all_food_security = client.get_food_security_list()
-
-        Raises:
-            ApiException: If there's an error calling the Food Security API
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            food_security_api_instance = data_bridges_client.FoodSecurityApi(api_client)
-            env = self.env
-
-            try:
-                api_response = food_security_api_instance.food_security_list_get(
-                    iso3=iso3, year=year, page=page, env=env
-                )
-                logger.info("Successfully retrieved food security data")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling FoodSecurityApi->food_security_list_get: {e}"
-                )
-                raise
-
     def get_commodities_list(
         self,
         country_iso3: Optional[str] = None,
@@ -932,71 +886,99 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_gorp(
+    def get_global_outlook(
         self,
         data_type: Literal["country_latest", "global_latest", "regional_latest"],
         page: Optional[int] = None,
     ) -> pd.DataFrame:
-        """Retrieves data from the Global Operational Response Plan (GORP) API.
+        
+        """Retrieves data from the Global Outlook API.
 
-        The GORP API provides access to WFP's operational response planning data at
-        different geographical levels.
+        The Global Outlook API provides access to WFP’s forward-looking analysis and
+        aggregated insights at different geographical levels, including country,
+        regional, and global summaries.
 
         Args:
-            data_type (str): The type of GORP data to retrieve. Must be one of:
+            data_type (str): The type of Global Outlook data to retrieve. Must be one of:
                 - 'country_latest': Latest data at country level
                 - 'global_latest': Latest global aggregated data
                 - 'regional_latest': Latest data aggregated by region
-            page (int, optional): Page number for paginated results. Required for
-                'latest' and 'list' data types. Defaults to None.
+            page (int, optional): Page number for paginated results. Currently not used
+                for latest endpoints. Defaults to None.
 
         Returns:
-            pd.DataFrame: DataFrame containing data from the Global Operational Response Plan (GORP)
+            pd.DataFrame: DataFrame containing Global Outlook data for the selected scope.
 
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get latest country-level data
-            >>> country_data = client.get_gorp("country_latest")
-            >>> # Get global summary
-            >>> global_data = client.get_gorp("global_latest")
-            >>> # Get regional breakdown
-            >>> regional_data = client.get_gorp("regional_latest")
+            >>> # Get latest country-level outlook
+            >>> country_data = client.get_global_outlook("country_latest")
+            >>> # Get global outlook summary
+            >>> global_data = client.get_global_outlook("global_latest")
+            >>> # Get regional outlook data
+            >>> regional_data = client.get_global_outlook("regional_latest")
 
         Raises:
             ValueError: If data_type is not one of the allowed values
-            ApiException: If there's an error accessing the GORP API
+            ApiException: If there is an error accessing the Global Outlook API
         """
+
+        
+        # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(
             self._setup_configuration_and_authentication(self.config)
         ) as api_client:
-            gorp_api_instance = data_bridges_client.GorpApi(api_client)
-            env = self.env
+            # Create an instance of the API class
+            api_instance = data_bridges_client.GlobalOutlookApi(api_client)
+            env = self.env # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
 
             try:
                 if data_type == "country_latest":
-                    gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
+                    api_response = api_instance.global_outlook_country_latest_get(env=env)
                 elif data_type == "global_latest":
-                    gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
+                    api_response = api_instance.global_outlook_global_latest_get(env=env)
+
                 elif data_type == "regional_latest":
-                    gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
+                    api_response = api_instance.global_outlook_regional_latest_get(env=env)
                 else:
                     raise ValueError(f"Invalid data_type: {data_type}")
+                logger.info(f"Successfully retrieved Global Outlook data for type: {data_type}")
+                return pd.DataFrame([item.to_dict() for item in api_response.items])
 
-                logger.info(f"Successfully retrieved GORP data for type: {data_type}")
+            except Exception as e:
+                print("Exception when calling GlobalOutlookApi->global_outlook_country_latest_get: %s\n" % e)
 
-                if isinstance(gorp_data, list):
-                    df = pd.DataFrame([item.to_dict() for item in gorp_data])
-                elif hasattr(gorp_data, "items"):
-                    df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
-                else:
-                    df = pd.DataFrame([gorp_data.to_dict()])
+        # with data_bridges_client.ApiClient(
+        #     self._setup_configuration_and_authentication(self.config)
+        # ) as api_client:
+        #     gorp_api_instance = data_bridges_client.GorpApi(api_client)
+        #     env = self.env
 
-                df = df.replace({np.nan: None})
-                return df
+        #     try:
+        #         if data_type == "country_latest":
+        #             gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
+        #         elif data_type == "global_latest":
+        #             gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
+        #         elif data_type == "regional_latest":
+        #             gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
+        #         else:
+        #             raise ValueError(f"Invalid data_type: {data_type}")
 
-            except ApiException as e:
-                logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
-            raise
+        #         logger.info(f"Successfully retrieved GORP data for type: {data_type}")
+
+        #         if isinstance(gorp_data, list):
+        #             df = pd.DataFrame([item.to_dict() for item in gorp_data])
+        #         elif hasattr(gorp_data, "items"):
+        #             df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
+        #         else:
+        #             df = pd.DataFrame([gorp_data.to_dict()])
+
+        #         df = df.replace({np.nan: None})
+        #         return df
+
+        #     except ApiException as e:
+        #         logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
+        #     raise
 
     def get_household_survey(
         self, survey_id: int, access_type: str, page_size: Optional[int] = 600
@@ -1698,11 +1680,24 @@ class DataBridgesShapes:
                 )
                 raise
 
+    def get_ipc_and_equivalent_data():
+        pass
+
+    def get_hotpost_data():
+        pass
+
+    def get_aims_data():
+        pass
+
+    def get_rpme_data():
+        pass
+
+    def get_cari_data():
+        pass
 
 if __name__ == "__main__":
     import yaml
 
     # FOR TESTING
     CONFIG_PATH = r"data_bridges_api_config.yaml"
-
     client = DataBridgesShapes(CONFIG_PATH)

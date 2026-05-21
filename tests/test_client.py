@@ -52,9 +52,6 @@ pytest.mark.integration
         # Exchange rates
         ("get_exchange_rates", ("ETH",), {}),
 
-        # Food security
-        ("get_food_security_list", ("ETH", 2025), {}),
-
         # Commodities
         ("get_commodities_list", (), {}),
         ("get_commodities_list", (), {"country_iso3": "TZA"}),
@@ -91,9 +88,9 @@ pytest.mark.integration
         ("get_market_geojson_list", ("AFG",), {}),
 
         # GORP
-        ("get_gorp", ("country_latest",), {}),
-        ("get_gorp", ("global_latest",), {}),
-        ("get_gorp", ("regional_latest",), {}),
+        ("get_global_outlook", ("country_latest"), {}),
+        ("get_global_outlook", ("global_latest"), {}),
+        ("get_global_outlook", ("regional_latest"), {}),
 
         # Household surveys
         ("get_household_survey", (3094, "official"), {}),
@@ -121,9 +118,7 @@ pytest.mark.integration
 
 def test_endpoints_success(client, func, args, kwargs):
     method = getattr(client, func)
-
     result = method(*args, **kwargs)
-
     assert isinstance(result, (pd.DataFrame, str, bytes))
 
 # # =========================================================
@@ -134,11 +129,12 @@ pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
     [ 
+        ("get_household_survey", (3094, "draft"), {}),
+        # Add more endpoints known to require permissions
+
         # AIMS
         ("get_aims_analysis_rounds", (231,), {}),
         ("get_aims_polygon_files", (231,), {}),
-        ("get_household_survey", (3094, "draft"), {}),
-        # Add more endpoints known to require permissions
     ],
 )
 def test_endpoints_forbidden(client, func, args, kwargs):
