@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 
 from data_bridges_knots.client import DataBridgesShapes, config_from_env
 
+
+pytestmark = pytest.mark.integration
+
+
 # -------------------------
 # ✅ Fixtures
 # -------------------------
