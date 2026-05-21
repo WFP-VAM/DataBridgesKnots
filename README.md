@@ -12,14 +12,16 @@
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
 ## Getting started
-User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+> [!IMPORTANT]
+> User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+
 
 ## Installation
 
 ### Using uv
 >  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
 
-Install the `data_bridges_knots` package in your environment using uv:
+Install the latest stable `data_bridges_knots` package in your environment using uv:
 
 ```
 uv venv .venv && source .venv/bin/activate && uv pip install data-bridges-knots \
@@ -35,6 +37,14 @@ pip install data-bridges-knots \
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
+
+
+#### Development version
+If you're looking for a specific release/development version, you can install it by running this command, and adding the release number:
+
+```
+ uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots/@release/vX.x.x
+```
 
 ### STATA users
 
@@ -64,14 +74,10 @@ There are three ways to configure DataBridgesShapes:
 2. The structure of the file is:
 
     ```yaml
-    NAME: ''
-    VERSION : ''
-    KEY: ''
-    SECRET: ''
+    DATABRIDGES_VERSION : ''
+    WFP_API_CLIENT_ID: ''
+    WFP_API_CLIENT_SECRET: ''
     DATABRIDGES_API_KEY: ''
-    SCOPES:
-    - ''
-    - ''
     ```
 3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
 
@@ -83,13 +89,9 @@ You can also initialize the client directly with a Python dictionary:
 from data_bridges_knots import DataBridgesShapes
 
 config = {
-    'KEY': 'your-api-key',
-    'SECRET': 'your-api-secret',
-    'VERSION': '7.0.0',
-    'SCOPES': [
-        'vamdatabridges_household-fulldata_get',
-        'vamdatabridges_marketprices-pricemonthly_get'
-    ],
+    'WFP_API_CLIENT_ID': 'your-api-key',
+    'WFP_API_CLIENT_SECRET': 'your-api-secret',
+    'DATABRIDGES_VERSION': 'v1',
     'DATABRIDGES_API_KEY': 'optional-databridges-key'
 }
 
@@ -101,10 +103,9 @@ client = DataBridgesShapes(config)
 Set the following environment variables and use the `config_from_env()` helper:
 
 ```bash
-export DATABRIDGES_KEY="your-api-key"
-export DATABRIDGES_SECRET="your-api-secret"
+export WFP_API_CLIENT_ID="your-api-key"
+export WFP_API_CLIENT_SECRET="your-api-secret"
 export DATABRIDGES_VERSION="7.0.0"
-export DATABRIDGES_SCOPES="scope1,scope2,scope3"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
 
