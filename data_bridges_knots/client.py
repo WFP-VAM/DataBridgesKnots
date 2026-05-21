@@ -119,7 +119,6 @@ class DataBridgesShapes:
 
     def __init__(self, yaml_config_path, env="prod"):
 
-                
         warnings.warn(
             (
                 "\n[FUTURE WARNING]\n"
@@ -891,7 +890,6 @@ class DataBridgesShapes:
         data_type: Literal["country_latest", "global_latest", "regional_latest"],
         page: Optional[int] = None,
     ) -> pd.DataFrame:
-        
         """Retrieves data from the Global Outlook API.
 
         The Global Outlook API provides access to WFP’s forward-looking analysis and
@@ -923,30 +921,42 @@ class DataBridgesShapes:
             ApiException: If there is an error accessing the Global Outlook API
         """
 
-        
         # Enter a context with an instance of the API client
         with data_bridges_client.ApiClient(
             self._setup_configuration_and_authentication(self.config)
         ) as api_client:
             # Create an instance of the API class
             api_instance = data_bridges_client.GlobalOutlookApi(api_client)
-            env = self.env # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
+            env = (
+                self.env
+            )  # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
 
             try:
                 if data_type == "country_latest":
-                    api_response = api_instance.global_outlook_country_latest_get(env=env)
+                    api_response = api_instance.global_outlook_country_latest_get(
+                        env=env
+                    )
                 elif data_type == "global_latest":
-                    api_response = api_instance.global_outlook_global_latest_get(env=env)
+                    api_response = api_instance.global_outlook_global_latest_get(
+                        env=env
+                    )
 
                 elif data_type == "regional_latest":
-                    api_response = api_instance.global_outlook_regional_latest_get(env=env)
+                    api_response = api_instance.global_outlook_regional_latest_get(
+                        env=env
+                    )
                 else:
                     raise ValueError(f"Invalid data_type: {data_type}")
-                logger.info(f"Successfully retrieved Global Outlook data for type: {data_type}")
+                logger.info(
+                    f"Successfully retrieved Global Outlook data for type: {data_type}"
+                )
                 return pd.DataFrame([item.to_dict() for item in api_response.items])
 
             except Exception as e:
-                print("Exception when calling GlobalOutlookApi->global_outlook_country_latest_get: %s\n" % e)
+                print(
+                    "Exception when calling GlobalOutlookApi->global_outlook_country_latest_get: %s\n"
+                    % e
+                )
 
     def get_household_survey(
         self, survey_id: int, access_type: str, page_size: Optional[int] = 600
@@ -1600,6 +1610,7 @@ class DataBridgesShapes:
 
     def get_cari_data():
         pass
+
 
 if __name__ == "__main__":
     pass

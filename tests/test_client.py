@@ -1,9 +1,9 @@
 import pandas as pd
 import pytest
-from data_bridges_client.rest import ApiException
+from dotenv import load_dotenv
 
 from data_bridges_knots.client import DataBridgesShapes, config_from_env
-from dotenv import load_dotenv
+
 # -------------------------
 # ✅ Fixtures
 # -------------------------
@@ -13,8 +13,9 @@ from dotenv import load_dotenv
 def config_dict():
     load_dotenv()
     config = config_from_env()
-    
+
     return config
+
 
 @pytest.fixture
 def client(config_dict):
@@ -25,30 +26,31 @@ def client(config_dict):
 # ✅ 1. Import
 # -------------------------
 
+
 def test_import():
     from data_bridges_knots.client import DataBridgesShapes
+
     assert DataBridgesShapes is not None
+
 
 # -------------------------
 # ✅ 2. Config
 # -------------------------
 
+
 def test_client_init(config_dict):
     client = DataBridgesShapes(config_dict)
     assert isinstance(client, DataBridgesShapes)
+
 
 # =========================================================
 # ✅ 3. SUCCESS TESTS (expect 200)
 # =========================================================
 
-import pandas as pd
-import pytest
-from data_bridges_client.rest import ApiException
-
-
 # =========================================================
 # ✅ PRICES & CURRENCY
 # =========================================================
+
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
@@ -56,16 +58,17 @@ from data_bridges_client.rest import ApiException
     [
         # Prices
         ("get_prices", ("KEN",), {}),
-        ("get_prices", ("KEN",), {"start_date": "2025-01-01", "end_date": "2025-12-31"}),
-
+        (
+            "get_prices",
+            ("KEN",),
+            {"start_date": "2025-01-01", "end_date": "2025-12-31"},
+        ),
         # Exchange rates
         ("get_exchange_rates", ("ETH",), {}),
-
         # Currency
         ("get_currency_list", (), {"country_iso3": "TZA"}),
         ("get_currency_list", (), {"currency_name": "ETB"}),
         ("get_currency_list", (), {"currency_id": 1}),
-
         # USD indirect quotation
         ("get_usd_indirect_quotation", (), {"country_iso3": "ETH"}),
         ("get_usd_indirect_quotation", (), {"currency_name": "ETB"}),
@@ -81,6 +84,7 @@ def test_prices_and_currency_endpoints(client, func, args, kwargs):
 # ✅ COMMODITIES
 # =========================================================
 
+
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
@@ -90,12 +94,10 @@ def test_prices_and_currency_endpoints(client, func, args, kwargs):
         ("get_commodities_list", (), {"country_iso3": "TZA"}),
         ("get_commodities_list", (), {"commodity_name": "Maize"}),
         ("get_commodities_list", (), {"commodity_id": 123}),
-
         # Commodity units
         ("get_commodity_units_list", (), {"country_iso3": "TZA"}),
         ("get_commodity_units_list", (), {"commodity_unit_name": "Kg"}),
         ("get_commodity_units_list", (), {"commodity_unit_id": 5}),
-
         # Commodity conversions
         ("get_commodity_units_conversion_list", (), {}),
         ("get_commodity_units_conversion_list", (), {"country_iso3": "TZA"}),
@@ -110,6 +112,7 @@ def test_commodities_endpoints(client, func, args, kwargs):
 # =========================================================
 # ✅ MARKETS
 # =========================================================
+
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
@@ -132,6 +135,7 @@ def test_markets_endpoints(client, func, args, kwargs):
 # ✅ ECONOMIC + OUTLOOK
 # =========================================================
 
+
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
@@ -149,20 +153,23 @@ def test_economic_indicator_endpoints(client, func, args, kwargs):
 # ✅ HOUSEHOLD & SURVEYS
 # =========================================================
 
+
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
     [
         ("get_household_survey", (3094, "official"), {}),
         ("get_household_survey", (3094, "public"), {}),
-
         ("get_household_surveys_list", (), {"country_iso3": "COG"}),
-        ("get_household_surveys_list", (), {
-            "country_iso3": "COG",
-            "start_date": "2024-01-01",
-            "end_date": "2024-12-31",
-        }),
-
+        (
+            "get_household_surveys_list",
+            (),
+            {
+                "country_iso3": "COG",
+                "start_date": "2024-01-01",
+                "end_date": "2024-12-31",
+            },
+        ),
         ("get_household_xslform_definition", (2067,), {}),
         ("get_household_questionnaire", (2075,), {}),
         ("get_choice_list", (123,), {}),
@@ -178,6 +185,7 @@ def test_household_endpoints(client, func, args, kwargs):
 # ✅ MFI
 # =========================================================
 
+
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
@@ -186,14 +194,17 @@ def test_household_endpoints(client, func, args, kwargs):
         ("get_mfi_surveys_full_data", (), {"survey_id": 123}),
         ("get_mfi_surveys_processed_data", (), {"survey_id": 123}),
         ("get_mfi_surveys_base_data", (), {"survey_id": 123}),
-
         ("get_mfi_xls_forms", (), {}),
         ("get_mfi_xls_forms_detailed", (), {"adm0_code": 231}),
-        ("get_mfi_xls_forms_detailed", (), {
-            "adm0_code": 231,
-            "start_date": "2023-01-01",
-            "end_date": "2023-12-31",
-        }),
+        (
+            "get_mfi_xls_forms_detailed",
+            (),
+            {
+                "adm0_code": 231,
+                "start_date": "2023-01-01",
+                "end_date": "2023-12-31",
+            },
+        ),
     ],
 )
 def test_mfi_endpoints(client, func, args, kwargs):
