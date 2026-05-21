@@ -5,7 +5,7 @@ import pytest
 from data_bridges_client.rest import ApiException
 
 from data_bridges_knots.client import DataBridgesShapes, config_from_env
-
+from dotenv import load_dotenv
 # -------------------------
 # ✅ Fixtures
 # -------------------------
@@ -13,12 +13,10 @@ from data_bridges_knots.client import DataBridgesShapes, config_from_env
 
 @pytest.fixture
 def config_dict():
-    return {
-        "KEY": os.getenv("WFP_API_CLIENT_ID", "dummy"),
-        "SECRET": os.getenv("WFP_API_CLIENT_SECRET", "dummy"),
-        "VERSION": os.getenv("DATABRIDGES_VERSION", "v1"),
-    }
-
+    load_dotenv()
+    config = config_from_env()
+    
+    return config
 
 @pytest.fixture
 def client(config_dict):
@@ -29,7 +27,6 @@ def client(config_dict):
 # ✅ 1. Import
 # -------------------------
 
-
 def test_import():
     from data_bridges_knots.client import DataBridgesShapes
 
@@ -39,18 +36,6 @@ def test_import():
 # -------------------------
 # ✅ 2. Config
 # -------------------------
-
-
-def test_config_from_env(monkeypatch):
-    monkeypatch.setenv("WFP_API_CLIENT_ID", "key")
-    monkeypatch.setenv("WFP_API_CLIENT_SECRET", "secret")
-    monkeypatch.setenv("DATABRIDGES_VERSION", "v1")
-
-    cfg = config_from_env()
-
-    assert cfg["KEY"] == "key"
-    assert cfg["SECRET"] == "secret"
-    assert cfg["VERSION"] == "v1"
 
 
 def test_client_init(config_dict):

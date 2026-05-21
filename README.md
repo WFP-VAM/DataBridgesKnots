@@ -1,5 +1,14 @@
 # Data Bridges Knots
 
+[![Python package](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/python-package.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/python-package.yml)
+
+[![CodeQL](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/github-code-scanning/codeql)
+
+[![pages-build-deployment](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment)
+
+[![Publish to S3 PyPI](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/publish-s3.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/publish-s3.yml)
+
+
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
 ## Getting started
