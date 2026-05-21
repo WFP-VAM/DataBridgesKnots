@@ -1586,19 +1586,19 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_ipc_and_equivalent_data():
+    def get_ipc_and_equivalent_data(self):
         pass
 
-    def get_hotpost_data():
+    def get_hotpost_data(self):
         pass
 
-    def get_aims_data():
+    def get_aims_data(self):
         pass
 
-    def get_rpme_data():
+    def get_rpme_data(self):
         pass
 
-    def get_cari_data():
+    def get_cari_data(self):
         pass
 
 if __name__ == "__main__":
