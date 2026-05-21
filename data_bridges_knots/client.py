@@ -3,8 +3,9 @@ from typing import Dict, Literal, Optional, Union
 import logging
 import os
 import time
-from datetime import date
 import warnings
+from datetime import date
+
 import data_bridges_client
 import numpy as np
 import pandas as pd
@@ -83,42 +84,53 @@ def config_from_env() -> Dict:
 class DataBridgesShapes:
     """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
 
-    This class includes methods for fetching various types of data such as market prices,
-    exchange rates, food security data, commodities, and more. The class can be initialized
-    with either a YAML configuration file or a configuration dictionary, and supports
-    multiple environments.
+       This class includes methods for fetching various types of data such as market prices,
+       exchange rates, food security data, commodities, and more. The class can be initialized
+       with either a YAML configuration file or a configuration dictionary, and supports
+       multiple environments.
 
-    Args:
-        yaml_config_path (str | dict): Either:
-            - Path to YAML configuration file (str), or
-            - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
- and optionally DATABRIDGES_API_KEY
-        env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
+       Args:
+           yaml_config_path (str | dict): Either:
+               - Path to YAML configuration file (str), or
+               - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
+    and optionally DATABRIDGES_API_KEY
+           env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
 
-    Examples:
-        >>> # Initialize with YAML file (traditional method)
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> df_prices = client.get_prices("KEN", "2025-09-01")
+       Examples:
+           >>> # Initialize with YAML file (traditional method)
+           >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+           >>> df_prices = client.get_prices("KEN", "2025-09-01")
 
-        >>> # Initialize with dictionary (new method)
-        >>> config = {
-        ...     'KEY': 'your-api-key',
-        ...     'SECRET': 'your-api-secret',
-        ...     'VERSION': '7.0.0',
-        ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
-        ... }
-        >>> client = DataBridgesShapes(config)
-        >>> exchange_rates = client.get_exchange_rates("ETH")
+           >>> # Initialize with dictionary (new method)
+           >>> config = {
+           ...     'KEY': 'your-api-key',
+           ...     'SECRET': 'your-api-secret',
+           ...     'VERSION': '7.0.0',
+           ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
+           ... }
+           >>> client = DataBridgesShapes(config)
+           >>> exchange_rates = client.get_exchange_rates("ETH")
 
-        >>> # Initialize from environment variables
-        >>> from data_bridges_knots.client import config_from_env
-        >>> config = config_from_env()
-        >>> client = DataBridgesShapes(config)
+           >>> # Initialize from environment variables
+           >>> from data_bridges_knots.client import config_from_env
+           >>> config = config_from_env()
+           >>> client = DataBridgesShapes(config)
     """
 
     def __init__(self, yaml_config_path, env="prod"):
 
-        warnings.warn("DataBridgesShape will be renamed DataBridgesKnots in the next major release of this package (4.0.0).", FutureWarning)
+                
+        warnings.warn(
+            (
+                "\n[FUTURE WARNING]\n"
+                "DataBridgesShapes will be renamed to 'DataBridgesKnots' "
+                "in version 4.0.0 (next major release, scheduled for 1 July 2026).\n"
+                "Please update your imports accordingly.\n"
+            ),
+            FutureWarning,
+            stacklevel=2,
+        )
+
 
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
@@ -198,8 +210,10 @@ class DataBridgesShapes:
         key = config["KEY"]
         secret = config["SECRET"]
         version = config["VERSION"]
-        uri = "https://gateway.api.wfp.org/"
-        host = str(uri + version)
+        BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
+        host = f"{BASE_URI}/{version.strip('/')}"
+
+
 
         logger.info("DataBridges API: %s", host)
 

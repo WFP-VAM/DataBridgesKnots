@@ -122,6 +122,7 @@ update_changelog_on_bump = true
 [[tool.uv.index]]
 name = "pypi"
 url = "https://pypi.org/simple"
+
 [tool.uv.sources]
 data-bridges-client = { index = "wfp-hip-pypi" }
 
@@ -130,6 +131,3 @@ name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
 # explicit = true
 
-
-[tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }

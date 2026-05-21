@@ -1,14 +1,15 @@
 import os
-import pytest
-import pandas as pd
 
-from data_bridges_knots.client import DataBridgesShapes, config_from_env
+import pandas as pd
+import pytest
 from data_bridges_client.rest import ApiException
 
+from data_bridges_knots.client import DataBridgesShapes, config_from_env
 
 # -------------------------
 # ✅ Fixtures
 # -------------------------
+
 
 @pytest.fixture
 def config_dict():
@@ -28,14 +29,17 @@ def client(config_dict):
 # ✅ 1. Import
 # -------------------------
 
+
 def test_import():
     from data_bridges_knots.client import DataBridgesShapes
+
     assert DataBridgesShapes is not None
 
 
 # -------------------------
 # ✅ 2. Config
 # -------------------------
+
 
 def test_config_from_env(monkeypatch):
     monkeypatch.setenv("WFP_API_CLIENT_ID", "key")
@@ -57,6 +61,7 @@ def test_client_init(config_dict):
 # =========================================================
 # ✅ 3. SUCCESS TESTS (expect 200)
 # =========================================================
+
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
@@ -84,6 +89,7 @@ def test_endpoints_success(client, func, args):
 # =========================================================
 # ✅ 4. FORBIDDEN TESTS (expect 403)
 # =========================================================
+
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
