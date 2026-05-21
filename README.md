@@ -19,7 +19,7 @@ This Python module allows you to get data from the WFP Data Bridges API, includi
 ## Installation
 
 ### Using uv
->  :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
+>  [!TIP] :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
 
 Install the latest stable `data_bridges_knots` package in your environment using uv:
 
