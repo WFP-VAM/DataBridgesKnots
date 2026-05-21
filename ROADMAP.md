@@ -2,7 +2,7 @@
 
 This document outlines the planned features and improvements for the `DataBridgesKnots` package, which provides a wrapper for the WFP Data Bridges API.
 
-## Upcoming Release: 1.0.0 "Brilliant Bigfoot" (DataBridges API v5.0)
+## 1.0.0 "Brilliant Bigfoot" (DataBridges API v5.0.0)
 
 ### New Features
 - [X] Endpoints: CommoditiesApis
@@ -17,43 +17,33 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Endpoints: XlsFormsApi
 - [X] Endpoints: SurveysApi
 
-## Future Release
-
-### v1.1.0 
+## 2.0.0 "Cheerful Chimera" (DataBridges API v6.0.0)
 
 - [X] Fix optional dependencies for STATA
 - [X] Update setup.py and pyproject.toml to include DataBridges API v6.0
-
-### v1.2.0 
 - [X] R example files
-
-### v1.2.1
 - [X] Documentation: Enhance documentation and provide more usage examples
 - [X] Automation: GitHub Actions linting and testing
 
 
-
-Please note that this roadmap is subject to change, and the priorities may be adjusted based on the project's needs and available resources.
-
-# v3.0.0 "Delicate Dragon" 
+# v3.0.0 "Delicate Dragon" (DataBridgesAPI v1.0.0 - new API)
+- [ ] Testing: Unit testing for implemented endpotns 
 
 ## Future Releases (3.1.0+)
-- [ ] Full endpoint list
+- [ ] Add missing endpoints
+  - [ ] RpmeApi
+  - [ ] IpcchApi
+  - [ ] GlobalOutlookApi
+- [ ] Refactor client.py into modules (e.g. `endpoints/household.py`)
 - [ ] STATA support
-- [ ] Tooling to search 
-
-- [ ] Bug fixing: Test AIMS and RPME endpoints
-- [ ] Bug fixing: DPO change for XLSForm
+- [ ] Add helper functions to search surveys
 - [ ] Bug fixing: Markets GeoJSON response
-- [ ] Bug fixing: JSON to DataFrame response
 - [ ] Bug fixing: Market list JSON and CSV
-
-- Testing: Unit testing
-- Testing: Improve error handling and logging
-- Refactoring: Optimize performance and improve code efficiency
+- [ ] Testing: Add tests for helper functions (labels)
+- [ ] Refactoring: Optimize performance and improve code efficiency (e.g. polars)
 
 
-# Endpoints
+# Endpoints v1
 
 | Function | Method (data-bridges-client)                                                                                                               | Endpoint                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Developed | Tested |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------ |

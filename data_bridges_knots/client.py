@@ -948,38 +948,6 @@ class DataBridgesShapes:
             except Exception as e:
                 print("Exception when calling GlobalOutlookApi->global_outlook_country_latest_get: %s\n" % e)
 
-        # with data_bridges_client.ApiClient(
-        #     self._setup_configuration_and_authentication(self.config)
-        # ) as api_client:
-        #     gorp_api_instance = data_bridges_client.GorpApi(api_client)
-        #     env = self.env
-
-        #     try:
-        #         if data_type == "country_latest":
-        #             gorp_data = gorp_api_instance.gorp_country_latest_get(env=env)
-        #         elif data_type == "global_latest":
-        #             gorp_data = gorp_api_instance.gorp_global_latest_get(env=env)
-        #         elif data_type == "regional_latest":
-        #             gorp_data = gorp_api_instance.gorp_regional_latest_get(env=env)
-        #         else:
-        #             raise ValueError(f"Invalid data_type: {data_type}")
-
-        #         logger.info(f"Successfully retrieved GORP data for type: {data_type}")
-
-        #         if isinstance(gorp_data, list):
-        #             df = pd.DataFrame([item.to_dict() for item in gorp_data])
-        #         elif hasattr(gorp_data, "items"):
-        #             df = pd.DataFrame([item.to_dict() for item in gorp_data.items])
-        #         else:
-        #             df = pd.DataFrame([gorp_data.to_dict()])
-
-        #         df = df.replace({np.nan: None})
-        #         return df
-
-        #     except ApiException as e:
-        #         logger.error(f"Exception when calling GorpApi->{data_type}: {e}")
-        #     raise
-
     def get_household_survey(
         self, survey_id: int, access_type: str, page_size: Optional[int] = 600
     ) -> pd.DataFrame:
@@ -1223,68 +1191,6 @@ class DataBridgesShapes:
         choices["value"] = choices["choices"].apply(lambda x: x["name"])
         choices["label"] = choices["choices"].apply(lambda x: x["label"])
         return choices[["name", "value", "label"]]
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    def get_aims_analysis_rounds(self, adm0_code):
-        """
-        Download all analysis rounds for AIMS (Asset Impact Monitoring System) data.
-
-        Args:
-            adm0_code (int): The country adm0Code.
-
-        Returns:
-            bytes: The downloaded data as bytes.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.IncubationApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.aims_download_all_analysis_rounds_get(
-                    adm0_code=adm0_code, env=env
-                )
-                logger.info(
-                    f"Successfully downloaded AIMS analysis rounds for adm0Code: {adm0_code}"
-                )
-                return api_response
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling IncubationApi->aims_download_all_analysis_rounds_get: {e}"
-                )
-                raise
-
-    # FIXME: Get scopes for AIMS then  test the following function
-    def get_aims_polygon_files(self, adm0_code):
-        """
-        Download polygon files for Landscape Impact Assessment (LIA) assets.
-
-        Args:
-            adm0_code (int): The country adm0Code.
-
-        Returns:
-            bytes: The downloaded polygon files as bytes.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.IncubationApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.aims_download_polygon_files_get(
-                    adm0_code=adm0_code, env=env
-                )
-                logger.info(
-                    f"Successfully downloaded AIMS polygon files for adm0Code: {adm0_code}"
-                )
-                return api_response
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling IncubationApi->aims_download_polygon_files_get: {e}"
-                )
-                raise
 
     def get_mfi_surveys_full_data(
         self, survey_id=None, page: Optional[int] = 1, page_size=20
@@ -1696,8 +1602,9 @@ class DataBridgesShapes:
         pass
 
 if __name__ == "__main__":
-    import yaml
+    pass
+    # import yaml
 
-    # FOR TESTING
-    CONFIG_PATH = r"data_bridges_api_config.yaml"
-    client = DataBridgesShapes(CONFIG_PATH)
+    # # FOR TESTING
+    # CONFIG_PATH = r"data_bridges_api_config.yaml"
+    # client = DataBridgesShapes(CONFIG_PATH)
