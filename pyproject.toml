@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "2.1.4"
+version = "3.0.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -14,14 +14,31 @@ keywords = ["VAM", "WFP", "data"]
 requires-python = ">=3.10"
 
 dependencies = [
-    'PyYAML',
+    'PyYAML>=6',
     'pandas>=2',
-    'data-bridges-client==7.0.0',
-    "httpx>=0.28.1",
+    "data-bridges-client>=8.0.0",
 ]
 
-[project.optional-dependencies]
-dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.0.0",
+    "pytest>=8.3.4",
+    "coverage-badge>=1.1.2",
+    "commitizen>=4.6.0",
+    "black",
+    "isort",
+    "ruff",
+    "mypy",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "bandit",
+    "python-dotenv>=1.2.2",
+    "bumpver",
+    "pip-tools",
+    "setuptools>=82.0.1",
+]
 STATA = ["stata-setup", "pystata"]
 R = []
 
@@ -30,8 +47,8 @@ R = []
 repository = "https://github.com/WFP-VAM/DataBridgesKnots/"
 homepage = "https://github.com/WFP-VAM/DataBridgesKnots/"
 
-[tool.setuptools]
-packages = ["data_bridges_knots"]
+[tool.setuptools.packages.find]
+include = ["data_bridges_knots*"]
 
 [tool.setuptools.package-data]
 data_bridges_knots = ['country_list.json']
@@ -49,7 +66,7 @@ indent = 4
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = 3.9
+python_version = 3.10
 pretty = true
 show_traceback = true
 color_output = true
@@ -78,6 +95,10 @@ warn_unused_ignores = true
 # Directories that are not visited by pytest collector:
 norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
 
+markers = [
+  "integration: tests hitting real API"
+]
+
 # Extra options:
 addopts = [
   "--strict-markers",
@@ -87,34 +108,25 @@ addopts = [
 # Only collect tests from the tests directory
 testpaths = ["tests"]
 
+
 [tool.coverage.run]
-source = ["tests"]
-
-[coverage.paths]
-source = "wfp-survey-toolbox"
-
-[coverage.run]
+source = ["data_bridges_knots"]
 branch = true
-
-[dependency-groups]
-dev = [
-    "pytest-cov>=6.0.0",
-    "pytest>=8.3.4",
-    "coverage-badge>=1.1.2",
-    "commitizen>=4.6.0",
-    "black",
-    "isort",
-    "ruff",
-    "mypy",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "bandit",
-]
 
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "semver"
+version_provider = "uv"
+update_changelog_on_bump = true
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
 
 [tool.uv.sources]
 data-bridges-client = { index = "wfp-hip-pypi" }
@@ -122,13 +134,5 @@ data-bridges-client = { index = "wfp-hip-pypi" }
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
-explicit = true
+# explicit = true
 
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "2.1.4"
-tag_format = "$version"
-version_files = [
-    "pyproject.toml:version",
-]
-update_changelog_on_bump = true
