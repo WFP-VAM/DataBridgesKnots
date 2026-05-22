@@ -3,8 +3,6 @@ from typing import Dict, Literal, Optional, Union
 import logging
 import os
 import time
-from urllib import response
-import json
 import warnings
 from datetime import date
 
@@ -718,9 +716,8 @@ class DataBridgesShapes:
                     % e
                 )
 
-    # BUG: Unsupported content type: 'application/geo+json
     def get_market_geojson_list(self, country_iso3: str = None):
-
+        """Returns a list of geo-referenced markets in a specific country."""
         if country_iso3 is None:
             raise ValueError("country_iso3 parameter is required")
         else:
@@ -739,10 +736,9 @@ class DataBridgesShapes:
                     adm0code=adm0code, env=self.env
                 )
                 logger.info("The response of MarketsApi->markets_geo_json_list_get:\n")
-                
+
                 geojson_dict = api_response.model_dump()
 
-                geojson_json = json.dumps(geojson_dict)
                 return geojson_dict
             except Exception as e:
                 print(

@@ -126,29 +126,30 @@ def test_commodities_endpoints(client, func, args, kwargs):
         ("get_nearby_markets", ("AFG", 34.515, 69.208), {}),
     ],
 )
-
 def test_markets_endpoints(client, func, args, kwargs):
     method = getattr(client, func)
     result = method(*args, **kwargs)
     assert isinstance(result, (pd.DataFrame, str, bytes))
 
+
 # =========================================================
 # ✅ GEOJSON
 # =========================================================
+
 
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "func,args,kwargs",
     [
-        ("get_market_geojson_list", ("AFG"), {}),
+        ("get_market_geojson_list", ("AFG", ), {}),
     ],
 )
-
-
 def test_geojson_endpoints(client, func, args, kwargs):
     method = getattr(client, func)
     result = method(*args, **kwargs)
     assert isinstance(result, dict)
+
+
 
 
 # =========================================================
