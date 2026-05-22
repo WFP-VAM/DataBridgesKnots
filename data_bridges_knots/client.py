@@ -51,29 +51,23 @@ def config_from_env() -> Dict:
         >>> client = DataBridgesShapes(config)
     """
 
-    required_vars = {
-        "KEY": "WFP_API_CLIENT_ID",
-        "SECRET": "WFP_API_CLIENT_SECRET",
-        "VERSION": "DATABRIDGES_VERSION",
-    }
+    required_vars = ["WFP_API_CLIENT_ID", "WFP_API_CLIENT_SECRET", "DATABRIDGES_VERSION"]
 
     config = {}
     missing = []
 
-    # Load required variables
-    for config_key, env_var in required_vars.items():
+    for env_var in required_vars:
         value = os.getenv(env_var)
         if value is None:
             missing.append(env_var)
         else:
-            config[config_key] = value
+            config[env_var] = value
 
     if missing:
         raise ValueError(
             f"Missing required environment variables: {', '.join(missing)}"
         )
 
-    # Load optional DATABRIDGES_API_KEY
     databridges_api_key = os.getenv("DATABRIDGES_API_KEY")
     if databridges_api_key:
         config["DATABRIDGES_API_KEY"] = databridges_api_key
@@ -92,8 +86,8 @@ class DataBridgesShapes:
        Args:
            yaml_config_path (str | dict): Either:
                - Path to YAML configuration file (str), or
-               - Configuration dictionary (dict) with required keys: KEY, SECRET, VERSION,
-    and optionally DATABRIDGES_API_KEY
+               - Configuration dictionary (dict) with required keys: WFP_API_CLIENT_ID,
+                 WFP_API_CLIENT_SECRET, DATABRIDGES_VERSION, and optionally DATABRIDGES_API_KEY
            env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
 
        Examples:
@@ -103,9 +97,9 @@ class DataBridgesShapes:
 
            >>> # Initialize with dictionary (new method)
            >>> config = {
-           ...     'KEY': 'your-api-key',
-           ...     'SECRET': 'your-api-secret',
-           ...     'VERSION': 'v1',
+           ...     'WFP_API_CLIENT_ID': 'your-client-id',
+           ...     'WFP_API_CLIENT_SECRET': 'your-client-secret',
+           ...     'DATABRIDGES_VERSION': 'v1',
            ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
            ... }
            >>> client = DataBridgesShapes(config)
@@ -188,7 +182,7 @@ class DataBridgesShapes:
         Raises:
             ValueError: If required fields are missing from configuration
         """
-        required_fields = ["KEY", "SECRET", "VERSION"]
+        required_fields = ["WFP_API_CLIENT_ID", "WFP_API_CLIENT_SECRET", "DATABRIDGES_VERSION"]
         missing = [field for field in required_fields if field not in config]
         if missing:
             raise ValueError(
@@ -205,9 +199,9 @@ class DataBridgesShapes:
             Configuration: DataBridges configuration object
 
         """
-        key = config["KEY"]
-        secret = config["SECRET"]
-        version = config["VERSION"]
+        key = config["WFP_API_CLIENT_ID"]
+        secret = config["WFP_API_CLIENT_SECRET"]
+        version = config["DATABRIDGES_VERSION"]
         BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
         host = f"{BASE_URI}/{version.strip('/')}"
 

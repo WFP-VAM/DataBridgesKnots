@@ -79,7 +79,7 @@ There are three ways to configure DataBridgesShapes:
     WFP_API_CLIENT_SECRET: ''
     DATABRIDGES_API_KEY: ''
     ```
-3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
+3. Replace the placeholders with your actual credentials from the Data Bridges API portal.
 
 ### Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
 
@@ -105,7 +105,7 @@ Set the following environment variables and use the `config_from_env()` helper:
 ```bash
 export WFP_API_CLIENT_ID="your-api-key"
 export WFP_API_CLIENT_SECRET="your-api-secret"
-export DATABRIDGES_VERSION="7.0.0"
+export DATABRIDGES_VERSION="v1"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
 
