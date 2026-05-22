@@ -37,7 +37,7 @@ jobs:
           WFP_API_CLIENT_ID: ${{ secrets.WFP_API_CLIENT_ID }}
           WFP_API_CLIENT_SECRET: ${{ secrets.WFP_API_CLIENT_SECRET }}
           DATABRIDGES_VERSION: ${{ secrets.DATABRIDGES_VERSION }}
-
+          DATABRIDGES_API_KEY: ${{ secrets.DATABRIDGES_API_KEY }}
 
   deploy-docs:
     runs-on: ubuntu-latest
