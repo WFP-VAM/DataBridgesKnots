@@ -1,9 +1,6 @@
 ---
 name: Python package
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -36,6 +33,11 @@ jobs:
       - name: Run tests
         run: |
           uv run pytest
+        env:
+          WFP_API_CLIENT_ID: ${{ secrets.WFP_API_CLIENT_ID }}
+          WFP_API_CLIENT_SECRET: ${{ secrets.WFP_API_CLIENT_SECRET }}
+          DATABRIDGES_VERSION: ${{ secrets.DATABRIDGES_VERSION }}
+          DATABRIDGES_API_KEY: ${{ secrets.DATABRIDGES_API_KEY }}
 
   deploy-docs:
     runs-on: ubuntu-latest
