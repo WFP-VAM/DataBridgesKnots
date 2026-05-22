@@ -74,7 +74,6 @@ There are three ways to configure DataBridgesShapes:
 2. The structure of the file is:
 
     ```yaml
-    DATABRIDGES_VERSION : ''
     WFP_API_CLIENT_ID: ''
     WFP_API_CLIENT_SECRET: ''
     DATABRIDGES_API_KEY: ''
@@ -91,7 +90,6 @@ from data_bridges_knots import DataBridgesShapes
 config = {
     'WFP_API_CLIENT_ID': 'your-api-key',
     'WFP_API_CLIENT_SECRET': 'your-api-secret',
-    'DATABRIDGES_VERSION': 'v1',
     'DATABRIDGES_API_KEY': 'optional-databridges-key'
 }
 
@@ -105,7 +103,6 @@ Set the following environment variables and use the `config_from_env()` helper:
 ```bash
 export WFP_API_CLIENT_ID="your-api-key"
 export WFP_API_CLIENT_SECRET="your-api-secret"
-export DATABRIDGES_VERSION="v1"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
 
