@@ -36,6 +36,11 @@ jobs:
       - name: Run tests
         run: |
           uv run pytest
+        env:
+          WFP_API_CLIENT_ID: ${{ secrets.WFP_API_CLIENT_ID }}
+          WFP_API_CLIENT_SECRET: ${{ secrets.WFP_API_CLIENT_SECRET }}
+          DATABRIDGES_VERSION: ${{ secrets.DATABRIDGES_VERSION }}
+
 
   deploy-docs:
     runs-on: ubuntu-latest
