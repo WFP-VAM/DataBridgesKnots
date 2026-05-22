@@ -76,39 +76,36 @@ def config_from_env() -> Dict:
 
 
 class DataBridgesShapes:
-    """DataBridgesShapes is a class that provides an interface to interact with the Data Bridges API.
+    """Interface to the Data Bridges API.
 
-       This class includes methods for fetching various types of data such as market prices,
-       exchange rates, food security data, commodities, and more. The class can be initialized
-       with either a YAML configuration file or a configuration dictionary, and supports
-       multiple environments.
+    Provides methods for fetching market prices, exchange rates, food security data,
+    commodities, and more. Can be initialized from a YAML file, a dictionary, or
+    environment variables.
 
-       Args:
-           yaml_config_path (str | dict): Either:
-               - Path to YAML configuration file (str), or
-               - Configuration dictionary (dict) with required keys: WFP_API_CLIENT_ID,
-                 WFP_API_CLIENT_SECRET, DATABRIDGES_VERSION, and optionally DATABRIDGES_API_KEY
-           env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod"
+    Args:
+        yaml_config_path (str | dict): Either:
+            - Path to a YAML configuration file (str), or
+            - Configuration dictionary with required keys: WFP_API_CLIENT_ID,
+              WFP_API_CLIENT_SECRET, DATABRIDGES_VERSION, and optionally DATABRIDGES_API_KEY
+        env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod".
 
-       Examples:
-           >>> # Initialize with YAML file (traditional method)
-           >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-           >>> df_prices = client.get_prices("KEN", "2025-09-01")
+    Examples:
+        >>> # Initialize with YAML file
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> df_prices = client.get_prices("KEN", "2025-09-01")
 
-           >>> # Initialize with dictionary (new method)
-           >>> config = {
-           ...     'WFP_API_CLIENT_ID': 'your-client-id',
-           ...     'WFP_API_CLIENT_SECRET': 'your-client-secret',
-           ...     'DATABRIDGES_VERSION': 'v1',
-           ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
-           ... }
-           >>> client = DataBridgesShapes(config)
-           >>> exchange_rates = client.get_exchange_rates("ETH")
+        >>> # Initialize with dictionary
+        >>> config = {
+        ...     'WFP_API_CLIENT_ID': 'your-client-id',
+        ...     'WFP_API_CLIENT_SECRET': 'your-client-secret',
+        ...     'DATABRIDGES_VERSION': 'v1',
+        ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
+        ... }
+        >>> client = DataBridgesShapes(config)
 
-           >>> # Initialize from environment variables
-           >>> from data_bridges_knots.client import config_from_env
-           >>> config = config_from_env()
-           >>> client = DataBridgesShapes(config)
+        >>> # Initialize from environment variables
+        >>> from data_bridges_knots.client import config_from_env
+        >>> client = DataBridgesShapes(config_from_env())
     """
 
     def __init__(self, yaml_config_path, env="prod"):
