@@ -137,7 +137,6 @@ class DataBridgesShapes:
         self.configuration = self._setup_configuration_and_authentication(self.config)
         self.data_bridges_api_key = self.config.get("DATABRIDGES_API_KEY", "")
 
-
     def __repr__(self):
         return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}'), api_version='{self.api_version}'"
 
