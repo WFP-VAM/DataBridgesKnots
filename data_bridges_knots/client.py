@@ -33,7 +33,6 @@ def config_from_env() -> Dict:
     Reads configuration from the following environment variables:
         - WFP_API_CLIENT_ID: WFP API Gateway key for authentication
         - WFP_API_CLIENT_SECRET: WFP API Gateway secret for authentication
-        - DATABRIDGES_VERSION: API version (e.g., 'v1')
         - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
     Returns:
@@ -46,12 +45,15 @@ def config_from_env() -> Dict:
         >>> import os
         >>> os.environ['WFP_API_CLIENT_ID'] = 'your_key'
         >>> os.environ['WFP_API_CLIENT_SECRET'] = 'your_secret'
-        >>> os.environ['DATABRIDGES_VERSION'] = 'v1'
         >>> config = config_from_env()
         >>> client = DataBridgesShapes(config)
     """
 
-    required_vars = ["WFP_API_CLIENT_ID", "WFP_API_CLIENT_SECRET", "DATABRIDGES_VERSION"]
+    required_vars = [
+        "WFP_API_CLIENT_ID",
+        "WFP_API_CLIENT_SECRET",
+        "DATABRIDGES_VERSION",
+    ]
 
     config = {}
     missing = []
@@ -85,9 +87,11 @@ class DataBridgesShapes:
     Args:
         yaml_config_path (str | dict): Either:
             - Path to a YAML configuration file (str), or
-            - Configuration dictionary with required keys: WFP_API_CLIENT_ID,
-              WFP_API_CLIENT_SECRET, DATABRIDGES_VERSION, and optionally DATABRIDGES_API_KEY
+            - Configuration dictionary (e.g. .env) with required keys: WFP_API_CLIENT_ID,
+              WFP_API_CLIENT_SECRET, and optionally DATABRIDGES_API_KEY
         env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod".
+        api_version (str, optional): Data Bridges API version to use. Defaults to "v1" (current version)
+
 
     Examples:
         >>> # Initialize with YAML file
@@ -98,7 +102,6 @@ class DataBridgesShapes:
         >>> config = {
         ...     'WFP_API_CLIENT_ID': 'your-client-id',
         ...     'WFP_API_CLIENT_SECRET': 'your-client-secret',
-        ...     'DATABRIDGES_VERSION': 'v1',
         ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
         ... }
         >>> client = DataBridgesShapes(config)
@@ -108,7 +111,7 @@ class DataBridgesShapes:
         >>> client = DataBridgesShapes(config_from_env())
     """
 
-    def __init__(self, yaml_config_path, env="prod"):
+    def __init__(self, yaml_config_path, env="prod", api_version="v1"):
 
         warnings.warn(
             (
@@ -121,6 +124,11 @@ class DataBridgesShapes:
             stacklevel=2,
         )
 
+        # Initialize instance variables
+        self.api_version = api_version
+        self.env = env
+        self.xlsform = None
+
         # Load and validate config once
         self.config = self._load_config(yaml_config_path)
         self._validate_config(self.config)
@@ -128,11 +136,10 @@ class DataBridgesShapes:
         # Setup authentication and extract API key
         self.configuration = self._setup_configuration_and_authentication(self.config)
         self.data_bridges_api_key = self.config.get("DATABRIDGES_API_KEY", "")
-        self.env = env
-        self.xlsform = None
+
 
     def __repr__(self):
-        return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}')"
+        return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}'), api_version='{self.api_version}'"
 
     def __str__(self):
         return (
@@ -179,7 +186,7 @@ class DataBridgesShapes:
         Raises:
             ValueError: If required fields are missing from configuration
         """
-        required_fields = ["WFP_API_CLIENT_ID", "WFP_API_CLIENT_SECRET", "DATABRIDGES_VERSION"]
+        required_fields = ["WFP_API_CLIENT_ID", "WFP_API_CLIENT_SECRET"]
         missing = [field for field in required_fields if field not in config]
         if missing:
             raise ValueError(
@@ -198,9 +205,9 @@ class DataBridgesShapes:
         """
         key = config["WFP_API_CLIENT_ID"]
         secret = config["WFP_API_CLIENT_SECRET"]
-        version = config["DATABRIDGES_VERSION"]
         BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
-        host = f"{BASE_URI}/{version.strip('/')}"
+        host = f"{BASE_URI}/{self.api_version.strip('/')}"
+        print("host: ", host)
 
         logger.info("DataBridges API: %s", host)
 
@@ -704,7 +711,8 @@ class DataBridgesShapes:
                 return api_response
             except Exception as e:
                 logger.error(
-                    "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s", e
+                    "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s",
+                    e,
                 )
                 raise
 
@@ -735,7 +743,8 @@ class DataBridgesShapes:
                 return api_response
             except Exception as e:
                 logger.error(
-                    "Exception when calling MarketsApi->markets_geo_json_list_get: %s", e
+                    "Exception when calling MarketsApi->markets_geo_json_list_get: %s",
+                    e,
                 )
                 raise
 
@@ -785,10 +794,11 @@ class DataBridgesShapes:
                 df = df.replace({np.nan: None})
                 return df
             except Exception as e:
-                logger.error("Exception when calling MarketsApi->markets_list_get: %s", e)
+                logger.error(
+                    "Exception when calling MarketsApi->markets_list_get: %s", e
+                )
                 raise
 
-    # BUG: JSON resonse + fix no response
     def get_markets_as_csv(
         self, country_iso3: Optional[str] = None, local_names: bool = False
     ) -> str:
@@ -830,7 +840,8 @@ class DataBridgesShapes:
                 return api_response
             except Exception as e:
                 logger.error(
-                    "Exception when calling MarketsApi->markets_markets_as_csv_get: %s", e
+                    "Exception when calling MarketsApi->markets_markets_as_csv_get: %s",
+                    e,
                 )
                 raise
 
@@ -1115,7 +1126,7 @@ class DataBridgesShapes:
                 )
                 raise
 
-    def get_household_xslform_definition(self, xls_form_id: int) -> pd.DataFrame:
+    def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
         """Retrieves the complete XLS Form definition for a questionnaire.
 
         Args:
@@ -1131,7 +1142,7 @@ class DataBridgesShapes:
         Examples:
             >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
             >>> # Get form definition
-            >>> form_def = client.get_household_xslform_definition(2067)
+            >>> form_def = client.get_household_xlsform_definition(2067)
             >>> # Access form fields
             >>> fields = form_def['fields'].iloc[0]
 
@@ -1175,7 +1186,7 @@ class DataBridgesShapes:
             >>> questionnaire = client.get_household_questionnaire(2075)
         """
         if self.xlsform is None:
-            self.xlsform = self.get_household_xslform_definition(xls_form_id)
+            self.xlsform = self.get_household_xlsform_definition(xls_form_id)
         return pd.DataFrame(list(self.xlsform.fields)[0])
 
     def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:

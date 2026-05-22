@@ -17,8 +17,8 @@ def sample_survey_df():
 
 
 @pytest.fixture
-def sample_xslform_df():
-    """Fixture providing a sample questionnaire in XSLForm"""
+def sample_xlsform_df():
+    """Fixture providing a sample questionnaire in xlsForm"""
     client = DataBridgesShapes("data_bridges_api_config.yaml")
     df = client.get_household_questionnaire(
         1883
@@ -27,7 +27,7 @@ def sample_xslform_df():
 
 
 @pytest.fixture
-def sample_xslform_pkl():
+def sample_xlsform_pkl():
     """Fixture providing a sample survey dataset"""
     return pd.read_pickle("tests/static/test_xlsform.pkl")
 
