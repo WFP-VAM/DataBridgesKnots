@@ -74,12 +74,11 @@ There are three ways to configure DataBridgesShapes:
 2. The structure of the file is:
 
     ```yaml
-    DATABRIDGES_VERSION : ''
     WFP_API_CLIENT_ID: ''
     WFP_API_CLIENT_SECRET: ''
     DATABRIDGES_API_KEY: ''
     ```
-3. Replace the placeholders with your actual API key and secret from the Data Bridges API. Update the SCOPES list with the required scopes for your use case.
+3. Replace the placeholders with your actual credentials from the Data Bridges API portal.
 
 ### Option 2: Dictionary Configuration (Recommended for Testing/Programmatic Use)
 
@@ -91,7 +90,6 @@ from data_bridges_knots import DataBridgesShapes
 config = {
     'WFP_API_CLIENT_ID': 'your-api-key',
     'WFP_API_CLIENT_SECRET': 'your-api-secret',
-    'DATABRIDGES_VERSION': 'v1',
     'DATABRIDGES_API_KEY': 'optional-databridges-key'
 }
 
@@ -105,7 +103,6 @@ Set the following environment variables and use the `config_from_env()` helper:
 ```bash
 export WFP_API_CLIENT_ID="your-api-key"
 export WFP_API_CLIENT_SECRET="your-api-secret"
-export DATABRIDGES_VERSION="7.0.0"
 export DATABRIDGES_API_KEY="optional-databridges-key"
 ```
 
@@ -135,7 +132,7 @@ CONFIG_PATH = r"data_bridges_api_config.yaml"
 client = DataBridgesShapes(CONFIG_PATH)
 
 # COMMODITY DATA
-commodity_units_list = client.get_commodity_units_list(country_code="TZA", commodity_unit_name="Kg", page=1, format='json')
+commodity_units_list = client.get_commodity_units_list(country_iso3="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
 Additional examples are in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)

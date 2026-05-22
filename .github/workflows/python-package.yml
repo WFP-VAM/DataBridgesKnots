@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -36,6 +33,11 @@ jobs:
       - name: Run tests
         run: |
           uv run pytest
+        env:
+          WFP_API_CLIENT_ID: ${{ secrets.WFP_API_CLIENT_ID }}
+          WFP_API_CLIENT_SECRET: ${{ secrets.WFP_API_CLIENT_SECRET }}
+          DATABRIDGES_VERSION: ${{ secrets.DATABRIDGES_VERSION }}
+          DATABRIDGES_API_KEY: ${{ secrets.DATABRIDGES_API_KEY }}
 
   deploy-docs:
     runs-on: ubuntu-latest
@@ -51,7 +53,7 @@ jobs:
       - name: Install uv and set Python version
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
         with:
-          python-version: "3.12"
+          python-version: "3.13"
       - name: Install dependencies
         run: uv sync --dev
       - name: Deploy documentation

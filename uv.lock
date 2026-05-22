@@ -541,6 +541,7 @@ dev = [
     { name = "pytest-cov" },
     { name = "python-dotenv" },
     { name = "ruff" },
+    { name = "setuptools" },
 ]
 stata = [
     { name = "pystata" },
@@ -571,6 +572,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "ruff" },
+    { name = "setuptools", specifier = ">=82.0.1" },
 ]
 r = []
 stata = [

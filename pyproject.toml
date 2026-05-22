@@ -36,7 +36,8 @@ dev = [
     "bandit",
     "python-dotenv>=1.2.2",
     "bumpver",
-    "pip-tools"
+    "pip-tools",
+    "setuptools>=82.0.1",
 ]
 STATA = ["stata-setup", "pystata"]
 R = []

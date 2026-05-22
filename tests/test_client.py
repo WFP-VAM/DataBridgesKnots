@@ -124,13 +124,30 @@ def test_commodities_endpoints(client, func, args, kwargs):
         ("get_markets_as_csv", ("AFG",), {}),
         ("get_markets_as_csv", ("AFG",), {"local_names": True}),
         ("get_nearby_markets", ("AFG", 34.515, 69.208), {}),
-        ("get_market_geojson_list", ("AFG",), {}),
     ],
 )
 def test_markets_endpoints(client, func, args, kwargs):
     method = getattr(client, func)
     result = method(*args, **kwargs)
     assert isinstance(result, (pd.DataFrame, str, bytes))
+
+
+# =========================================================
+# ✅ GEOJSON
+# =========================================================
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    "func,args,kwargs",
+    [
+        ("get_market_geojson_list", ("AFG",), {}),
+    ],
+)
+def test_geojson_endpoints(client, func, args, kwargs):
+    method = getattr(client, func)
+    result = method(*args, **kwargs)
+    assert isinstance(result, dict)
 
 
 # =========================================================
@@ -172,7 +189,7 @@ def test_economic_indicator_endpoints(client, func, args, kwargs):
                 "end_date": "2024-12-31",
             },
         ),
-        ("get_household_xslform_definition", (2067,), {}),
+        ("get_household_xlsform_definition", (2067,), {}),
         ("get_household_questionnaire", (2075,), {}),
         ("get_choice_list", (123,), {}),
     ],
