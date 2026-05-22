@@ -438,7 +438,7 @@ class DataBridgesShapes:
                 logger.error(
                     f"Exception when calling CommoditiesApi->commodities_list_get: {e}"
                 )
-            raise
+                raise
 
     def get_commodity_units_conversion_list(
         self,
@@ -699,15 +699,12 @@ class DataBridgesShapes:
                     format=format,
                     env=self.env,
                 )
-                print(
-                    "The response of EconomicDataApi->economic_data_indicator_list_get:\n"
-                )
                 return api_response
             except Exception as e:
-                print(
-                    "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s\n"
-                    % e
+                logger.error(
+                    "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s", e
                 )
+                raise
 
     # BUG: Unsupported content type: 'application/geo+json
     def get_market_geojson_list(self, country_iso3: Optional[str] = None):
@@ -726,13 +723,12 @@ class DataBridgesShapes:
                 api_response = api_instance.markets_geo_json_list_get(
                     adm0code=adm0code, env=self.env
                 )
-                print("The response of MarketsApi->markets_geo_json_list_get:\n")
                 return api_response
             except Exception as e:
-                print(
-                    "Exception when calling MarketsApi->markets_geo_json_list_get: %s\n"
-                    % e
+                logger.error(
+                    "Exception when calling MarketsApi->markets_geo_json_list_get: %s", e
                 )
+                raise
 
     def get_markets_list(
         self, country_iso3: Optional[str] = None, page: Optional[int] = 1
@@ -780,7 +776,8 @@ class DataBridgesShapes:
                 df = df.replace({np.nan: None})
                 return df
             except Exception as e:
-                print("Exception when calling MarketsApi->markets_list_get: %s\n" % e)
+                logger.error("Exception when calling MarketsApi->markets_list_get: %s", e)
+                raise
 
     # BUG: JSON resonse + fix no response
     def get_markets_as_csv(
@@ -824,9 +821,9 @@ class DataBridgesShapes:
                 return api_response
             except Exception as e:
                 logger.error(
-                    "Exception when calling MarketsApi->markets_markets_as_csv_get: %s\n"
-                    % e
+                    "Exception when calling MarketsApi->markets_markets_as_csv_get: %s", e
                 )
+                raise
 
     def get_nearby_markets(
         self, country_iso3: str = None, lat: float = None, lng: float = None
@@ -947,10 +944,10 @@ class DataBridgesShapes:
                 return pd.DataFrame([item.to_dict() for item in api_response.items])
 
             except Exception as e:
-                print(
-                    "Exception when calling GlobalOutlookApi->global_outlook_country_latest_get: %s\n"
-                    % e
+                logger.error(
+                    "Exception when calling GlobalOutlookApi->%s: %s", data_type, e
                 )
+                raise
 
     def get_household_survey(
         self, survey_id: int, access_type: str, page_size: Optional[int] = 600
@@ -1493,7 +1490,7 @@ class DataBridgesShapes:
                 logger.error(
                     f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}"
                 )
-            raise
+                raise
 
     def get_mfi_xls_forms_detailed(
         self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
