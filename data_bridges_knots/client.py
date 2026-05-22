@@ -670,7 +670,6 @@ class DataBridgesShapes:
                 )
                 raise
 
-    # FIXME: JSON response
     def get_economic_indicator_list(
         self,
         page: Optional[int] = 1,
@@ -705,10 +704,12 @@ class DataBridgesShapes:
                     format=format,
                     env=self.env,
                 )
-                print(
+                logger.info(
                     "The response of EconomicDataApi->economic_data_indicator_list_get:\n"
                 )
-                return api_response
+                df = pd.DataFrame([item.to_dict() for item in api_response.items])
+                df = df.replace({np.nan: None})
+                return df
             except Exception as e:
                 print(
                     "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s\n"
