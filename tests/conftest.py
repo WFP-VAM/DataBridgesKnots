@@ -2,9 +2,8 @@ import json
 
 import pandas as pd
 import pytest
-
-from data_bridges_knots import DataBridgesShapes
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -21,6 +20,7 @@ def sample_xlsform_df():
     """Fixture providing a sample questionnaire in xlsForm"""
     df = pd.read_csv("tests/static/test_xlsform.csv")
     return df
+
 
 @pytest.fixture
 def sample_list():

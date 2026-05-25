@@ -1,15 +1,17 @@
+from typing import Dict
 
 
 import pandas as pd
-import pytest
-import pdb
-from data_bridges_knots.labels import get_choice_labels, get_variable_labels, map_value_labels
 
-from typing import Dict
+from data_bridges_knots.labels import (
+    get_choice_labels,
+    get_variable_labels,
+)
 
 
 def test_sample_questionnaire_df(sample_xlsform_df):
     assert isinstance(sample_xlsform_df, pd.DataFrame)
+
 
 # % TESTS FOR get_variable_labels
 def test_get_variable_labels_basic_labels():
@@ -52,6 +54,7 @@ def test_get_variable_labels_empty_string():
     result = get_variable_labels(df)
     expected = {"": "Label for empty", "q2": "Label for q2"}
     assert result == expected
+
 
 def test_return_column_labels_as_df(sample_xlsform_df):
     result = get_variable_labels(sample_xlsform_df, format="df")

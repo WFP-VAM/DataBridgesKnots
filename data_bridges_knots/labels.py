@@ -1,10 +1,10 @@
 from typing import Union
 
+import ast
 import json
 
 import pandas as pd
 
-import ast
 
 def to_dict(x):
     if isinstance(x, str):
@@ -121,8 +121,7 @@ def get_choice_labels(
         >>> print(get_choice_labels(df, format="json"))
         >>> get_choice_labels(df, format="df")
     """
-    
-    
+
     def cast_to_dict_or_nan(x):
         if isinstance(x, dict):
             return x
@@ -136,7 +135,6 @@ def get_choice_labels(
         return None
 
     xlsform_df["choiceList"] = xlsform_df["choiceList"].apply(cast_to_dict_or_nan)
-
 
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
