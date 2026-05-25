@@ -6,7 +6,7 @@
 
 [![pages-build-deployment](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment)
 
-[![Publish to S3 PyPI](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/publish-s3.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/publish-s3.yml)
+[![Release Please](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml)
 
 
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
@@ -206,13 +206,31 @@ $ make codestyle
 
 ### Commits
 
-This project uses [Commitizen](https://commitizen-tools.github.io/commitizen/) for conventional commits. To create a properly formatted commit:
+This project uses [Conventional Commits](https://www.conventionalcommits.org/). Use [Commitizen](https://commitizen-tools.github.io/commitizen/) for an interactive prompt:
 
 ```commandline
 $ uv run cz commit
 ```
 
-This interactive tool guides you through creating commits that follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+Commit prefixes directly control versioning — choose carefully:
+
+| Prefix | Example | Version bump |
+|---|---|---|
+| `fix:` | `fix: handle missing country code` | patch (`x.y.Z`) |
+| `feat:` | `feat: add get_rpme_data endpoint` | minor (`x.Y.z`) |
+| `feat!:` / `BREAKING CHANGE:` | `feat!: rename auth params` | major (`X.y.z`) |
+| `chore:`, `docs:`, `ci:`, `refactor:`, `test:` | `chore: update dependencies` | no release |
+
+### Release process
+
+Releases are fully automated via [Release Please](https://github.com/googleapis/release-please-action):
+
+1. Conventional commits land on `main` through normal PRs
+2. Release Please automatically opens a **release PR** that bumps the version in `pyproject.toml` and updates `CHANGELOG.md`
+3. A maintainer reviews and merges the release PR
+4. The package is automatically built and published to the S3 PyPI index
+
+To **manually trigger a publish** (e.g. to recover a failed release), go to **Actions → Release Please → Run workflow → main** in the GitHub UI.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or bug fixes.
