@@ -24,3 +24,4 @@
 - [ ] I've updated the code style using `make codestyle`.
 - [ ] I've written tests for all new methods and classes that I created.
 - [ ] I've written the docstring in Google format for all the methods and classes that I used.
+- [ ] My commits follow the [Conventional Commits](https://www.conventionalcommits.org/) format (`fix:`, `feat:`, `chore:`, etc.).
