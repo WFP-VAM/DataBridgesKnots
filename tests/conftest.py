@@ -45,6 +45,7 @@ def sample_values_labels_expected():
     ) as f:  # adjust path
         return json.load(f)
 
+
 def pytest_addoption(parser):
     parser.addoption(
         "--run-integration",
@@ -52,6 +53,7 @@ def pytest_addoption(parser):
         default=False,
         help="Run integration tests (API calls)",
     )
+
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption("--run-integration"):
@@ -62,4 +64,3 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "integration" in item.keywords:
             item.add_marker(skip_integration)
-
