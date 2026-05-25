@@ -20,6 +20,10 @@ dependencies = [
 ]
 
 
+[project.optional-dependencies]
+STATA = ["stata-setup", "pystata"]
+R = []
+
 [dependency-groups]
 dev = [
     "pytest-cov>=6.0.0",
@@ -39,8 +43,6 @@ dev = [
     "pip-tools",
     "setuptools>=82.0.1",
 ]
-STATA = ["stata-setup", "pystata"]
-R = []
 
 
 [project.urls]
