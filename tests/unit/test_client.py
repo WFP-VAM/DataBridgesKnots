@@ -1,8 +1,11 @@
-import pandas as pd
 import pytest
 from dotenv import load_dotenv
 
-from data_bridges_knots.client import DataBridgesKnots, DataBridgesShapes, config_from_env
+from data_bridges_knots.client import (
+    DataBridgesKnots,
+    DataBridgesShapes,
+    config_from_env,
+)
 
 # -------------------------
 # ✅ Fixtures
@@ -19,7 +22,7 @@ def config_dict():
 
 @pytest.fixture
 def client(config_dict):
-    return DataBridgesKnots(config_dict)
+    return DataBridgesShapes(config_dict)
 
 
 # -------------------------
@@ -32,11 +35,11 @@ def test_deprecated_import():
 
     assert DataBridgesShapes is not None
 
+
 def test_import():
     from data_bridges_knots.client import DataBridgesKnots
 
     assert DataBridgesKnots is not None
-
 
 
 # -------------------------
@@ -47,6 +50,7 @@ def test_import():
 def test_deprecated_client_init(config_dict):
     client = DataBridgesShapes(config_dict)
     assert isinstance(client, DataBridgesShapes)
+
 
 def test_client_init(config_dict):
     client = DataBridgesKnots(config_dict)

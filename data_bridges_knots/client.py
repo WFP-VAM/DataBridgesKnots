@@ -78,6 +78,7 @@ def config_from_env() -> Dict:
 
     return config
 
+
 class DataBridgesKnots:
     """Interface to the Data Bridges API.
 
@@ -112,12 +113,12 @@ class DataBridgesKnots:
         >>> client = DataBridgesKnots(config_from_env())
     """
 
-    def __init__(self, yaml_config_path, env="prod", api_version="v1"):
+    def __init__(self, config_path, env="prod", api_version="v1"):
         self.api_version = api_version
         self.env = env
         self.xlsform = None
 
-        self.config = self._load_config(yaml_config_path)
+        self.config = self._load_config(config_path)
         self._validate_config(self.config)
         self.configuration = self._setup_configuration_and_authentication(self.config)
         self.data_bridges_api_key = self.config.get("DATABRIDGES_API_KEY", "")
@@ -202,8 +203,6 @@ class DataBridgesKnots:
 
         logger.debug("Token used: %s", token.__repr__())
         return configuration
-
-    
 
     def get_exchange_rates(
         self, country_iso3: str, page_size: int = 1000
@@ -1554,7 +1553,7 @@ class DataBridgesKnots:
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
-    
+
     def get_mfi_surveys_base_data(
         self, survey_id=None, page: Optional[int] = 1, page_size=20
     ):
@@ -1609,54 +1608,17 @@ class DataBridgesKnots:
         pass
 
 
-
 class DataBridgesShapes(DataBridgesKnots):
-    """Interface to the Data Bridges API.
-
-    Provides methods for fetching market prices, exchange rates, food security data,
-    commodities, and more. Can be initialized from a YAML file, a dictionary, or
-    environment variables.
-
-    Args:
-        yaml_config_path (str | dict): Either:
-            - Path to a YAML configuration file (str), or
-            - Configuration dictionary (e.g. .env) with required keys: WFP_API_CLIENT_ID,
-              WFP_API_CLIENT_SECRET, and optionally DATABRIDGES_API_KEY
-        env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod".
-        api_version (str, optional): Data Bridges API version to use. Defaults to "v1" (current version)
-
-
-    Examples:
-        >>> # Initialize with YAML file
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> df_prices = client.get_prices("KEN", "2025-09-01")
-
-        >>> # Initialize with dictionary
-        >>> config = {
-        ...     'WFP_API_CLIENT_ID': 'your-client-id',
-        ...     'WFP_API_CLIENT_SECRET': 'your-client-secret',
-        ...     'DATABRIDGES_API_KEY': 'optional-databridges-key'
-        ... }
-        >>> client = DataBridgesShapes(config)
-
-        >>> # Initialize from environment variables
-        >>> from data_bridges_knots.client import config_from_env
-        >>> client = DataBridgesShapes(config_from_env())
-    """
-
-    def __init__(self, yaml_config_path, env="prod", api_version="v1"):
-
+    def __init__(self, *args, **kwargs):
         warnings.warn(
             (
                 "\n[FUTURE WARNING]\n"
-                "DataBridgesShapes will be renamed to 'DataBridgesKnots' "
-                "in version 4.0.0 (next major release, scheduled for 1 July 2026).\n"
-                "Please update your imports accordingly.\n"
+                "DataBridgesShapes is deprecated and will be removed in v4.0.0.\n"
+                "Use 'DataBridgesKnots' instead.\n"
             ),
             FutureWarning,
             stacklevel=2,
         )
-
         super().__init__(*args, **kwargs)
 
     def __repr__(self):
@@ -1670,7 +1632,6 @@ class DataBridgesShapes(DataBridgesKnots):
             f"\n"
             f"Brought to you with <3 by WFP VAM"
         )
-
 
 
 # DataBridgesShapes.get_prices = get_prices
