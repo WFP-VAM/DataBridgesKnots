@@ -5,6 +5,15 @@
 - change structure of tests to separate unit from integration testing
 - remove broken redundant tag step from semver workflow
 
+## [3.1.1](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.0...data-bridges-knots-v3.1.1) (2026-05-25)
+
+
+### Documentation
+
+* add conventional commits checklist item to PR template ([52cf28e](https://github.com/WFP-VAM/DataBridgesKnots/commit/52cf28ece3550d07651c11385a7b0a99d45a2858))
+* release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
+* update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
+
 ## [3.1.0](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.0.1...data-bridges-knots-v3.1.0) (2026-05-25)
 
 
