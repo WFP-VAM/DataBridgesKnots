@@ -1,10 +1,3 @@
-## v3.0.1 (2026-05-25)
-
-### Fix
-
-- change structure of tests to separate unit from integration testing
-- remove broken redundant tag step from semver workflow
-
 ## [3.1.1](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.0...data-bridges-knots-v3.1.1) (2026-05-25)
 
 
