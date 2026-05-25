@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "3.0.0"
+version = "3.1.2"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -19,6 +19,10 @@ dependencies = [
     "data-bridges-client>=8.0.0",
 ]
 
+
+[project.optional-dependencies]
+STATA = ["stata-setup", "pystata"]
+R = []
 
 [dependency-groups]
 dev = [
@@ -39,8 +43,6 @@ dev = [
     "pip-tools",
     "setuptools>=82.0.1",
 ]
-STATA = ["stata-setup", "pystata"]
-R = []
 
 
 [project.urls]
@@ -96,7 +98,9 @@ warn_unused_ignores = true
 norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
 
 markers = [
-  "integration: tests hitting real API"
+  "integration: tests hitting real API",
+  "unit: fast tests without external dependencies",
+  
 ]
 
 # Extra options:
@@ -121,18 +125,22 @@ show_missing = true
 name = "cz_conventional_commits"
 tag_format = "v$version"
 version_scheme = "semver"
-version_provider = "uv"
+version = "3.0.0"
+version_provider = "pep621"
 update_changelog_on_bump = true
+changelog_incremental = true
+breaking_change_exclamation_in_title = true
+
 
 [[tool.uv.index]]
 name = "pypi"
 url = "https://pypi.org/simple"
 
-[tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }
-
 [[tool.uv.index]]
 name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
 # explicit = true
+
+[tool.uv.sources]
+data-bridges-client = { index = "wfp-hip-pypi" }
 
