@@ -2,34 +2,24 @@ import json
 
 import pandas as pd
 import pytest
+from dotenv import load_dotenv
 
-from data_bridges_knots import DataBridgesShapes, config_from_env
+
+load_dotenv()
 
 
 @pytest.fixture
 def sample_survey_df():
     """Fixture providing a sample survey dataset"""
-    client = DataBridgesShapes(config_from_env())
-    df = client.get_household_survey(
-        4872, "full"
-    )  # FIXME: this should read from a static file
+    df = pd.read_csv("tests/static/test_survey.csv")
     return df
 
 
 @pytest.fixture
 def sample_xlsform_df():
     """Fixture providing a sample questionnaire in xlsForm"""
-    client = DataBridgesShapes(config_from_env())
-    df = client.get_household_questionnaire(
-        1883
-    )  # FIXME: this should read from a static file
+    df = pd.read_csv("tests/static/test_xlsform.csv")
     return df
-
-
-@pytest.fixture
-def sample_xlsform_pkl():
-    """Fixture providing a sample survey dataset"""
-    return pd.read_pickle("tests/static/test_xlsform.pkl")
 
 
 @pytest.fixture
@@ -45,6 +35,7 @@ def sample_values_labels_expected():
     ) as f:  # adjust path
         return json.load(f)
 
+
 def pytest_addoption(parser):
     parser.addoption(
         "--run-integration",
@@ -52,6 +43,7 @@ def pytest_addoption(parser):
         default=False,
         help="Run integration tests (API calls)",
     )
+
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption("--run-integration"):
@@ -62,4 +54,3 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "integration" in item.keywords:
             item.add_marker(skip_integration)
-

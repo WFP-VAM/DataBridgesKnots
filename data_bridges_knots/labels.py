@@ -1,8 +1,18 @@
 from typing import Union
 
+import ast
 import json
 
 import pandas as pd
+
+
+def to_dict(x):
+    if isinstance(x, str):
+        try:
+            return ast.literal_eval(x)
+        except Exception:
+            return x  # keep original if parsing fails
+    return x
 
 
 def get_variable_labels(
@@ -111,6 +121,20 @@ def get_choice_labels(
         >>> print(get_choice_labels(df, format="json"))
         >>> get_choice_labels(df, format="df")
     """
+
+    def cast_to_dict_or_nan(x):
+        if isinstance(x, dict):
+            return x
+        if pd.isna(x):
+            return None
+        if isinstance(x, str):
+            try:
+                return ast.literal_eval(x)
+            except Exception:
+                return None
+        return None
+
+    xlsform_df["choiceList"] = xlsform_df["choiceList"].apply(cast_to_dict_or_nan)
 
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
