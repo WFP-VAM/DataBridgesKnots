@@ -4,33 +4,23 @@ import pandas as pd
 import pytest
 
 from data_bridges_knots import DataBridgesShapes
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 @pytest.fixture
 def sample_survey_df():
     """Fixture providing a sample survey dataset"""
-    client = DataBridgesShapes("data_bridges_api_config.yaml")
-    df = client.get_household_survey(
-        4872, "full"
-    )  # FIXME: this should read from a static file
+    df = pd.read_pickle("tests/static/test_survey.pkl")
     return df
 
 
 @pytest.fixture
 def sample_xlsform_df():
     """Fixture providing a sample questionnaire in xlsForm"""
-    client = DataBridgesShapes("data_bridges_api_config.yaml")
-    df = client.get_household_questionnaire(
-        1883
-    )  # FIXME: this should read from a static file
+    df = pd.read_pickle("tests/static/test_xlsform.pkl")
     return df
-
-
-@pytest.fixture
-def sample_xlsform_pkl():
-    """Fixture providing a sample survey dataset"""
-    return pd.read_pickle("tests/static/test_xlsform.pkl")
-
 
 @pytest.fixture
 def sample_list():
