@@ -26,10 +26,18 @@ codestyle:
 	uv run black --fast --config pyproject.toml ./
 	uv run ruff check . --fix
 
-#* Tests
 .PHONY: test
 test:
-	uv run pytest -c pyproject.toml --cov-report=html --cov=data_bridges_knots tests/
+	uv run pytest tests/unit --cov=data_bridges_knots --cov-report=html
+	uv run coverage-badge -o assets/images/coverage.svg -f
+
+.PHONY: test-integration
+test-integration:
+	uv run pytest tests/integration -m "integration" --run-integration
+
+.PHONY: test-all
+test-all:
+	uv run pytest --cov=data_bridges_knots --cov-report=html
 	uv run coverage-badge -o assets/images/coverage.svg -f
 
 #* Typing

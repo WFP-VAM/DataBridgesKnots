@@ -524,6 +524,12 @@ dependencies = [
     { name = "pyyaml" },
 ]
 
+[package.optional-dependencies]
+stata = [
+    { name = "pystata" },
+    { name = "stata-setup" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "bandit" },
@@ -543,17 +549,16 @@ dev = [
     { name = "ruff" },
     { name = "setuptools" },
 ]
-stata = [
-    { name = "pystata" },
-    { name = "stata-setup" },
-]
 
 [package.metadata]
 requires-dist = [
     { name = "data-bridges-client", specifier = ">=8.0.0", index = "https://d2i4vvypvg40rv.cloudfront.net/pypi/" },
     { name = "pandas", specifier = ">=2" },
+    { name = "pystata", marker = "extra == 'stata'" },
     { name = "pyyaml", specifier = ">=6" },
+    { name = "stata-setup", marker = "extra == 'stata'" },
 ]
+provides-extras = ["stata", "r"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -573,11 +578,6 @@ dev = [
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "ruff" },
     { name = "setuptools", specifier = ">=82.0.1" },
-]
-r = []
-stata = [
-    { name = "pystata" },
-    { name = "stata-setup" },
 ]
 
 [[package]]

@@ -98,7 +98,9 @@ warn_unused_ignores = true
 norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
 
 markers = [
-  "integration: tests hitting real API"
+  "integration: tests hitting real API",
+  "unit: fast tests without external dependencies",
+  
 ]
 
 # Extra options:
