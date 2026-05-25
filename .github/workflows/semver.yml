@@ -24,11 +24,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           changelog_increment_filename: body.md
-      - name: Bump version and push tag
-        uses: laputansoft/github-tag-action@v4.6
-        with:
-          github_token: ${{ env.github-token }}
-          tag: ${{ steps.package-version.outputs.version }}
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
