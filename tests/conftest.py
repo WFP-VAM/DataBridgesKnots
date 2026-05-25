@@ -12,14 +12,14 @@ load_dotenv()
 @pytest.fixture
 def sample_survey_df():
     """Fixture providing a sample survey dataset"""
-    df = pd.read_pickle("tests/static/test_survey.pkl")
+    df = pd.read_csv("tests/static/test_survey.csv")
     return df
 
 
 @pytest.fixture
 def sample_xlsform_df():
     """Fixture providing a sample questionnaire in xlsForm"""
-    df = pd.read_pickle("tests/static/test_xlsform.pkl")
+    df = pd.read_csv("tests/static/test_xlsform.csv")
     return df
 
 @pytest.fixture
