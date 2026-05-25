@@ -1,4 +1,11 @@
 
+## v3.0.1 (2026-05-25)
+
+### Fix
+
+- trigger version bump to 3.0.1
+- remove broken redundant tag step from semver workflow
+
 ## v3.0.0 (2026-05-22)
 
 ### BREAKING CHANGE
