@@ -1,3 +1,9 @@
+## v3.0.2 (2026-05-25)
+
+### Fix
+
+- change structure of tests to separate unit from integration testing
+
 ## v3.0.1 (2026-05-25)
 
 ### Fix
