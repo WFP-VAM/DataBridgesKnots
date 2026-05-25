@@ -1,4 +1,22 @@
 
+## v3.0.0 (2026-05-22)
+
+### BREAKING CHANGE
+
+- **client**: add default API version to `DataBridgesShape` initialization; rename `get_household_xslform_definition` → `get_household_xlsform_definition` (XLSForm typo fix)
+
+### Feat
+
+- **client**: rename auth params and procedure to align with new WFP API Portal (portal.api.wfp.org)
+
+### Fix
+
+- add mandatory `country_iso3` param to `get_market_geojson_list`, fix response as geoJSON
+- `get_economic_indicator_list` response returned as DataFrame
+- remove obsolete endpoints
+- remove obsolete SCOPES from client
+- remove unused deprecation warning
+
 ## 2.1.4 (2026-05-19)
 
 ### Fix
