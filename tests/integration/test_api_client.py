@@ -6,44 +6,6 @@ from data_bridges_knots.client import DataBridgesShapes, config_from_env
 
 pytestmark = pytest.mark.integration
 
-# -------------------------
-# ✅ Fixtures
-# -------------------------
-
-
-@pytest.fixture
-def config_dict():
-    load_dotenv()
-    config = config_from_env()
-
-    return config
-
-
-@pytest.fixture
-def client(config_dict):
-    return DataBridgesShapes(config_dict)
-
-
-# -------------------------
-# ✅ 1. Import
-# -------------------------
-
-
-def test_import():
-    from data_bridges_knots.client import DataBridgesShapes
-
-    assert DataBridgesShapes is not None
-
-
-# -------------------------
-# ✅ 2. Config
-# -------------------------
-
-
-def test_client_init(config_dict):
-    client = DataBridgesShapes(config_dict)
-    assert isinstance(client, DataBridgesShapes)
-
 
 # =========================================================
 # ✅ 3. SUCCESS TESTS (expect 200)
