@@ -1,11 +1,5 @@
 import pytest
 from dotenv import load_dotenv
-import pandas as pd
-from unittest.mock import patch, MagicMock
-
-from data_bridges_knots.client import config_from_env, DataBridgesShapes
-
-
 
 from data_bridges_knots.client import (
     DataBridgesKnots,
@@ -62,7 +56,8 @@ def test_client_init(valid_config):
     client = DataBridgesKnots(valid_config)
     assert isinstance(client, DataBridgesKnots)
 
-#% HERE NEW TESTS
+
+# % HERE NEW TESTS
 
 
 # # ======================================================

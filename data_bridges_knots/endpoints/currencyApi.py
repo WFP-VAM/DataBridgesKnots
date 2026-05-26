@@ -8,8 +8,6 @@ import numpy as np
 import pandas as pd
 from data_bridges_client.rest import ApiException
 
-from data_bridges_knots.helpers import get_adm0_code
-
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
     filename=logname,

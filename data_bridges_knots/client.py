@@ -2,9 +2,7 @@ from typing import Dict, Literal, Optional, Union
 
 import logging
 import os
-import time
 import warnings
-from datetime import date
 
 import data_bridges_client
 import numpy as np
@@ -13,19 +11,23 @@ import yaml
 from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 
+from data_bridges_knots.endpoints.commodityUnitsApi import (
+    get_commodities_list,
+    get_commodity_unit_conversion_list,
+    get_commodity_units_list,
+)
 from data_bridges_knots.endpoints.currencyApi import (
     get_currency_list,
     get_exchange_rates,
     get_usd_indirect_quotation,
 )
-
-# from data.endpoints.prices import get_prices, get_exchange_rates
 from data_bridges_knots.endpoints.householdApi import (
     get_household_questionnaire,
     get_household_survey,
     get_household_surveys_list,
     get_household_xlsform_definition,
 )
+from data_bridges_knots.endpoints.marketPricesApi import get_prices
 from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
@@ -214,185 +216,6 @@ class DataBridgesKnots:
 
         logger.debug("Token used: %s", token.__repr__())
         return configuration
-
-    def get_commodities_list(
-        self,
-        country_iso3: Optional[str] = None,
-        commodity_name: Optional[str] = None,
-        commodity_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
-    ) -> pd.DataFrame:
-        """
-        Retrieves the detailed list of commodities available in the DataBridges platform.
-
-        Args:
-            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
-            commodity_name (str, optional): The name, even partial and case insensitive, of a commodity.
-            commodity_id (int, optional): The exact ID of a commodity. Defaults to 0.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get full list of commmodities
-            >>> commodities_list = client.get_commodities_list()
-            >>> # Get commodities for Tanzania
-            >>> commodities_df = client.get_commodities_list(country_iso3="TZA")
-            >>> # Get commodity with name containing "Maize"
-            >>> maize_df = client.get_commodities_list(commodity_name="Maize")
-            >>> # Get commodity with specific ID
-            >>> specific_commodity_df = client.get_commodities_list(commodity_id=123)
-
-        Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved commodity data.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.CommoditiesApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.commodities_list_get(
-                    country_code=country_iso3,
-                    commodity_name=commodity_name,
-                    commodity_id=commodity_id,
-                    page=page,
-                    format=format,
-                    env=env,
-                )
-                logger.info("Successfully retrieved commodities list")
-
-                # Convert the response to a DataFrame
-                if hasattr(api_response, "items"):
-                    df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                else:
-                    df = pd.DataFrame([api_response.to_dict()])
-
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling CommoditiesApi->commodities_list_get: {e}"
-                )
-                raise
-
-    def get_commodity_units_conversion_list(
-        self,
-        country_iso3: Optional[str] = None,
-        commodity_id: Optional[int] = 0,
-        from_unit_id: Optional[int] = 0,
-        to_unit_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
-    ) -> pd.DataFrame:
-        """
-        Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
-
-        Args:
-            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
-            commodity_id (int, optional): The exact ID of a Commodity, as found in /Commodities/List. Defaults to 0.
-            from_unit_id (int, optional): The exact ID of the original unit of measure of the price of a commodity. Defaults to 0.
-            to_unit_id (int, optional): The exact ID of the converted unit of measure of the price of a commodity. Defaults to 0.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-        Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Get full list of commodity units conversions
-        >>> full_list = client.get_commodity_units_conversion_list()
-        >>> # Get conversion factors for Tanzania
-        >>> conversion_factors_df = client.get_commodity_units_conversion_list(country_iso3="TZA")
-
-        Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.CommodityUnitsApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.commodity_units_conversion_list_get(
-                    country_code=country_iso3,
-                    commodity_id=commodity_id,
-                    from_unit_id=from_unit_id,
-                    to_unit_id=to_unit_id,
-                    page=page,
-                    format=format,
-                    env=env,
-                )
-                logger.info("Successfully retrieved commodity units conversion list")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling CommodityUnitsApi->commodity_units_conversion_list_get: {e}"
-                )
-                raise
-
-    def get_commodity_units_list(
-        self,
-        country_iso3: Optional[str] = None,
-        commodity_unit_name: Optional[str] = None,
-        commodity_unit_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
-    ) -> pd.DataFrame:
-        """
-        Retrieves the detailed list of the unit of measure available in DataBridges platform.
-
-        Args:
-            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
-            commodity_unit_name (str, optional): The name, even partial and case insensitive, of a commodity unit.
-            commodity_unit_id (int, optional): The exact ID of a commodity unit. Defaults to 0.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get commodity units for Tanzania
-            >>> units_df = client.get_commodity_units_list(country_iso3="TZA")
-            >>> # Get commodity unit with name containing "Kg"
-            >>> kg_unit_df = client.get_commodity_units_list(commodity_unit_name="Kg")
-            >>> # Get commodity unit with specific ID
-            >>> specific_unit_df = client.get_commodity_units_list(commodity_unit_id=5)
-
-        Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.CommodityUnitsApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.commodity_units_list_get(
-                    country_code=country_iso3,
-                    commodity_unit_name=commodity_unit_name,
-                    commodity_unit_id=commodity_unit_id,
-                    page=page,
-                    format=format,
-                    env=env,
-                )
-                logger.info("Successfully retrieved commodity units list")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling CommodityUnitsApi->commodity_units_list_get: {e}"
-                )
-                raise
 
     def get_economic_indicator_list(
         self,
@@ -719,7 +542,6 @@ class DataBridgesKnots:
         choices["label"] = choices["choices"].apply(lambda x: x["label"])
         return choices[["name", "value", "label"]]
 
-
         # TODO: Get the scope and test these functions
         def get_rpme_base_data(
             self, survey_id=None, page: Optional[int] = 1, page_size=20
@@ -890,108 +712,6 @@ class DataBridgesKnots:
 
         # Add this function to the DataBridgesShapes class
 
-
-    def get_prices(
-        self,
-        country_iso3: str,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
-        page_size: int = 1000,
-        market_id: int = 0,
-        commodity_id: int = 0,
-        currency_id: int = 0,
-        price_flag: str = "",
-        latest_value_only: bool = False,
-    ) -> pd.DataFrame:
-        """Fetches market price data for a given country within a specified date range.
-
-        Args:
-            country_iso3 (str): The ISO 3-letter country code
-            start_date (str, optional): Start date in ISO format (e.g., '2022-01-01').
-                If None, defaults to today's date.
-            end_date (str, optional): End date in ISO format (e.g., '2022-01-01').
-                If None, defaults to today's date.
-            page_size (int, optional): Number of items per page. Defaults to 1000.
-            market_id (int, optional): Unique ID of a Market. Defaults to 0.
-            commodity_id (int, optional): The exact ID of a Commodity. Defaults to 0.
-            currency_id (int, optional): The exact ID of a currency. Defaults to 0.
-            price_flag (str, optional): Type of price data: [actual|aggregate|estimated|forecasted]. Defaults to ''.
-            latest_value_only (bool, optional): Whether to return only latest values. Defaults to False.
-
-        Returns:
-            pd.DataFrame: DataFrame containing market price data
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Basic usage with dates
-            >>> df_prices = client.get_prices("KEN", start_date="2025-01-01", end_date="2025-12-31")
-            >>> # Using additional filters
-            >>> df_prices = client.get_prices(
-            ...     "KEN",
-            ...     start_date="2025-01-01",
-            ...     market_id=123,
-            ...     commodity_id=456,
-            ...     price_flag="actual"
-            ... )
-        """
-        if start_date:
-            # Format the date according to RFC 3339 standard
-            start_date = date.fromisoformat(start_date).strftime(
-                "%Y-%m-%dT%H:%M:%S+01:00"
-            )
-        else:
-            start_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
-
-        if end_date:
-            # Format the date according to RFC 3339 standard
-            end_date = date.fromisoformat(end_date).strftime("%Y-%m-%dT%H:%M:%S+01:00")
-        else:
-            end_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
-
-        responses = []
-        total_items = 20
-        max_item = 0
-        page = 0
-        while total_items > max_item:
-            page += 1
-            with data_bridges_client.ApiClient(
-                self._setup_configuration_and_authentication(self.config)
-            ) as api_client:
-                api_instance = data_bridges_client.MarketPricesApi(api_client)
-                env = self.env
-
-                try:
-                    api_prices = api_instance.market_prices_price_monthly_get(
-                        country_code=country_iso3,
-                        market_id=market_id,
-                        commodity_id=commodity_id,
-                        currency_id=currency_id,
-                        price_flag=price_flag,
-                        format="json",
-                        page=page,
-                        env=env,
-                        start_date=start_date,
-                        end_date=end_date,
-                        latest_value_only=latest_value_only,
-                    )
-                    responses.extend(item.to_dict() for item in api_prices.items)
-                    total_items = api_prices.total_items
-                    logger.info("Fetching page %s/n", page)
-                    max_item = page * page_size
-                    time.sleep(1)
-                except ApiException as e:
-                    logger.error(
-                        "Exception when calling Market price data->market_prices_price_monthly_get: %s\n",
-                        e,
-                    )
-                    raise
-
-        df = pd.DataFrame(responses)
-        df = df.replace({np.nan: None})
-        return df
-
-
-
     def get_ipc_and_equivalent_data(self):
         pass
 
@@ -1034,6 +754,7 @@ class DataBridgesShapes(DataBridgesKnots):
         )
 
 
+# Binding endpoints to the DataBridgesKnots class
 # Household Endpoints (IncubationApi)
 DataBridgesKnots.get_household_survey = get_household_survey
 DataBridgesKnots.get_household_surveys_list = get_household_surveys_list
@@ -1045,6 +766,15 @@ DataBridgesKnots.get_exchange_rate = get_exchange_rates
 DataBridgesKnots.get_currency_list = get_currency_list
 DataBridgesKnots.get_usd_indirect_quotation = get_usd_indirect_quotation
 
+# Market Prices Endpoints (MarketPricesApi)
+DataBridgesKnots.marketPricesApi.get_prices = get_prices
+
+# Commodity Units Endpoints (CommodityUnitsApi)
+DataBridgesKnots.commodityUnitsApi.get_commodities_list = get_commodities_list
+DataBridgesKnots.commodityUnitsApi.get_commodity_units_list = get_commodity_units_list
+DataBridgesKnots.commodityUnitsApi.get_commodity_units_conversion_list = (
+    get_commodity_unit_conversion_list
+)
 
 if __name__ == "__main__":
     pass

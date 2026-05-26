@@ -1,14 +1,11 @@
 from typing import Optional
 
 import logging
-import time
 
 import data_bridges_client
 import numpy as np
 import pandas as pd
 from data_bridges_client.rest import ApiException
-
-from data_bridges_knots.helpers import get_adm0_code
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
@@ -60,7 +57,7 @@ def get_mfi_surveys_base_data(
             )
             raise
 
-        
+
 def get_mfi_surveys_full_data(
     self, survey_id=None, page: Optional[int] = 1, page_size=20
 ):
@@ -89,6 +86,7 @@ def get_mfi_surveys_full_data(
             )
             raise
 
+
 def get_mfi_surveys(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
 ):
@@ -114,10 +112,9 @@ def get_mfi_surveys(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling SurveysApi->m_fi_surveys_get: {e}"
-            )
+            logger.error(f"Exception when calling SurveysApi->m_fi_surveys_get: {e}")
             raise
+
 
 def get_mfi_surveys_processed_data(
     self,
@@ -163,7 +160,7 @@ def get_mfi_surveys_processed_data(
             )
             raise
 
-        
+
 def get_mfi_xls_forms(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
 ):
@@ -186,10 +183,9 @@ def get_mfi_xls_forms(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}"
-            )
+            logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
             raise
+
 
 def get_mfi_xls_forms_detailed(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
@@ -243,7 +239,5 @@ def get_mfi_xls_forms_detailed(
             return df
 
         except ApiException as e:
-            logger.error(
-                f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}"
-            )
+            logger.error(f"Exception when calling XlsFormsApi->m_fi_xls_forms_get: {e}")
             raise
