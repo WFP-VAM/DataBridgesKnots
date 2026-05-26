@@ -20,7 +20,11 @@ from data_bridges_knots.endpoints.household import (
     get_household_surveys_list,
     get_household_xlsform_definition,
 )
-from data_bridges_knots.endpoints.currency import get_exchange_rates
+from data_bridges_knots.endpoints.currency import (
+    get_exchange_rates,
+    get_currency_list,
+    get_usd_indirect_quotation
+)
 
 from data_bridges_knots.helpers import get_adm0_code
 
@@ -391,114 +395,6 @@ class DataBridgesKnots:
                 )
                 raise
 
-    def get_currency_list(
-        self,
-        country_iso3: Optional[str] = None,
-        currency_name: Optional[str] = None,
-        currency_id: Optional[str] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
-    ):
-        """
-        Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
-
-        Args:
-            country_iso3 (str, optional): The code to identify the country. It can be an ISO-3166 Alpha 3 code or the VAM internal admin0code.
-            currency_name (str, optional): Currency 3-letter code, matching with ISO 4217.
-            currency_id (int, optional): Unique code to identify the currency in internal VAM currencies. Defaults to 0.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get currencies for Tanzania
-            >>> currencies_df = client.get_currency_list(country_iso3="TZA")
-            >>> # Get currency with name "ETB"
-            >>> etb_df = client.get_currency_list(currency_name="ETB")
-            >>> # Get currency with specific ID
-            >>> specific_currency_df = client.get_currency_list(currency_id=1)
-
-        Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved currency data.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.CurrencyApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.currency_list_get(
-                    country_code=country_iso3,
-                    currency_name=currency_name,
-                    currency_id=currency_id,
-                    page=page,
-                    format=format,
-                    env=env,
-                )
-                logger.info("Successfully retrieved currency list")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling CurrencyApi->currency_list_get: {e}"
-                )
-                raise
-
-    def get_usd_indirect_quotation(
-        self,
-        country_iso3: Optional[str] = "",
-        currency_name: Optional[str] = "",
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
-    ):
-        """
-        Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.
-
-        Args:
-            country_iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
-            currency_name (str, optional): The ISO3 code for the currency, based on ISO4217. Defaults to ''.
-            page (int, optional): Page number for paged results. Defaults to 1.
-            format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
-
-        Examples:
-            >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-            >>> # Get USD indirect quotation for Ethiopia
-            >>> usd_df = client.get_usd_indirect_quotation(country_iso3="ETH")
-            >>> # Get USD indirect quotation for currency "ETB"
-            >>> etb_usd_df = client.get_usd_indirect_quotation(currency_name="ETB")
-
-        Returns:
-            pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.
-        """
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
-            api_instance = data_bridges_client.CurrencyApi(api_client)
-            env = self.env
-
-            try:
-                api_response = api_instance.currency_usd_indirect_quotation_get(
-                    country_iso3=country_iso3,
-                    currency_name=currency_name,
-                    page=page,
-                    format=format,
-                    env=env,
-                )
-                logger.info("Successfully retrieved USD indirect quotation data")
-
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling CurrencyApi->currency_usd_indirect_quotation_get: {e}"
-                )
-                raise
 
     def get_economic_indicator_list(
         self,
@@ -1359,17 +1255,18 @@ class DataBridgesShapes(DataBridgesKnots):
             f"Brought to you with <3 by WFP VAM"
         )
 
+# Household Endpoints (IncubationApi)
 DataBridgesKnots.get_household_survey = get_household_survey
 DataBridgesKnots.get_household_surveys_list = get_household_surveys_list
 DataBridgesKnots.get_household_xlsform_definition = get_household_xlsform_definition
 DataBridgesKnots.get_household_questionnaire = get_household_questionnaire
+
+# Currency Endpoints (CurrencyApi)
 DataBridgesKnots.get_exchange_rate = get_exchange_rates
+DataBridgesKnots.get_currency_list = get_currency_list
+DataBridgesKnots.get_usd_indirect_quotation = get_usd_indirect_quotation
+
 
 
 if __name__ == "__main__":
     pass
-    # import yaml
-
-    # # FOR TESTING
-    # CONFIG_PATH = r"data_bridges_api_config.yaml"
-    # client = DataBridgesShapes(CONFIG_PATH)
