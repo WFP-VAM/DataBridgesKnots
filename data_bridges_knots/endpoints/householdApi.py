@@ -244,3 +244,27 @@ def get_household_questionnaire(self, xls_form_id: int) -> pd.DataFrame:
     if self.xlsform is None:
         self.xlsform = self.get_household_xlsform_definition(xls_form_id)
     return pd.DataFrame(list(self.xlsform.fields)[0])
+
+def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
+    """Extracts choice lists from a questionnaire form definition.
+
+    Args:
+        xls_form_id (int): The ID of the questionnaire form to process
+
+    Returns:
+        pd.DataFrame: DataFrame containing choice lists with columns:
+            - name: Name of the choice list
+            - value: Choice value/code
+            - label: Human-readable choice label
+
+    Examples:
+        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> choices = client.get_choice_list(123)
+    """
+    questionnaire = self.get_household_questionnaire(xls_form_id)
+
+    choiceList = pd.json_normalize(questionnaire["choiceList"]).dropna()
+    choices = choiceList.explode("choices")
+    choices["value"] = choices["choices"].apply(lambda x: x["name"])
+    choices["label"] = choices["choices"].apply(lambda x: x["label"])
+    return choices[["name", "value", "label"]]
