@@ -24,7 +24,7 @@ def get_economic_indicator_list(
     indicator_name: Optional[str] = "",
     country_iso3: Optional[str] = "",
     format: Optional[str] = "json",
-):
+    ):
     """
     Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
 

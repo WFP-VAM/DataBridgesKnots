@@ -10,7 +10,7 @@ from data_bridges_client.token import WfpApiToken
 
 from data_bridges_knots.endpoints.commodityUnitsApi import (
     get_commodities_list,
-    get_commodity_unit_conversion_list,
+    get_commodity_units_conversion_list,
     get_commodity_units_list,
 )
 from data_bridges_knots.endpoints.currencyApi import (
@@ -41,6 +41,15 @@ from data_bridges_knots.endpoints.rpmeApi import (
     get_rpme_variables,
     get_rpme_xls_forms,
 )
+from data_bridges_knots.endpoints.ipcChApi import (
+    get_ipc_and_equivalent_data,
+)
+
+from data_bridges_knots.endpoints.incubationApi import (
+    get_cari_data,
+)
+
+from data_bridges_knots.endpoints.hungerHotpotApi import get_hunger_hotspot_data
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
@@ -229,26 +238,9 @@ class DataBridgesKnots:
         logger.debug("Token used: %s", token.__repr__())
         return configuration
 
-    # TODO: IpcchApi
-    def get_ipc_and_equivalent_data(self):
-        pass
 
-    # TODO: HungerHotspotApi
-    def get_hotpost_data(self):
-        pass
 
-    def get_aims_data(self):
-        pass
 
-    # TODO: IncubationApi
-    # FIXME: Get scopes to test this function
-    def get_cari_data(self, admin_level="admin0"):
-        if admin_level == "admin0":
-            pass
-        elif admin_level == "admin1":
-            pass
-        else:
-            raise ValueError("admin_level must be either 'admin0' or 'admin1'")
 
 
 class DataBridgesShapes(DataBridgesKnots):
@@ -290,35 +282,45 @@ DataBridgesKnots.get_currency_list = get_currency_list
 DataBridgesKnots.get_usd_indirect_quotation = get_usd_indirect_quotation
 
 # Market Prices Endpoints (MarketPricesApi)
-DataBridgesKnots.marketPricesApi.get_prices = get_prices
+DataBridgesKnots.get_prices = get_prices
 
 # Commodity Units Endpoints (CommodityUnitsApi)
-DataBridgesKnots.commodityUnitsApi.get_commodities_list = get_commodities_list
-DataBridgesKnots.commodityUnitsApi.get_commodity_units_list = get_commodity_units_list
-DataBridgesKnots.commodityUnitsApi.get_commodity_units_conversion_list = (
-    get_commodity_unit_conversion_list
+DataBridgesKnots.get_commodities_list = get_commodities_list
+DataBridgesKnots.get_commodity_units_list = get_commodity_units_list
+DataBridgesKnots.get_commodity_units_conversion_list = (
+    get_commodity_units_conversion_list
 )
 # Market Endpoints (MarketsApi)
-DataBridgesKnots.marketsApi.get_market_geojson_list = get_market_geojson_list
-DataBridgesKnots.marketsApi.get_markets_list = get_markets_list
-DataBridgesKnots.marketsApi.get_markets_as_csv = get_markets_as_csv
-DataBridgesKnots.marketsApi.get_nearby_markets = get_nearby_markets
+DataBridgesKnots.get_market_geojson_list = get_market_geojson_list
+DataBridgesKnots.get_markets_list = get_markets_list
+DataBridgesKnots.get_markets_as_csv = get_markets_as_csv
+DataBridgesKnots.get_nearby_markets = get_nearby_markets
+
 
 # RPME Endpoints (RpmeApi)
-DataBridgesKnots.rpmeApi.get_rpme_base_data = get_rpme_base_data
-DataBridgesKnots.rpmeApi.get_rpme_full_data = get_rpme_full_data
-DataBridgesKnots.rpmeApi.get_rpme_output_values = get_rpme_output_values
-DataBridgesKnots.rpmeApi.get_rpme_surveys = get_rpme_surveys
-DataBridgesKnots.rpmeApi.get_rpme_variables = get_rpme_variables
-DataBridgesKnots.rpmeApi.get_rpme_xls_forms = get_rpme_xls_forms
+DataBridgesKnots.get_rpme_base_data = get_rpme_base_data
+DataBridgesKnots.get_rpme_full_data = get_rpme_full_data
+DataBridgesKnots.get_rpme_output_values = get_rpme_output_values
+DataBridgesKnots.get_rpme_surveys = get_rpme_surveys
+DataBridgesKnots.get_rpme_variables = get_rpme_variables
+DataBridgesKnots.get_rpme_xls_forms = get_rpme_xls_forms
 
 # Global Outlook
-DataBridgesKnots.globalOutlookApi.get_global_outlook = get_global_outlook
+DataBridgesKnots.get_global_outlook = get_global_outlook
 
 # Economic Data
-DataBridgesKnots.economicDataApi.get_economic_indicator_list = (
+DataBridgesKnots.get_economic_indicator_list = (
     get_economic_indicator_list
 )
+
+# Ipc and CH data
+DataBridgesKnots.get_ipc_and_equivalent_data = get_ipc_and_equivalent_data
+
+# CARI data
+DataBridgesKnots.get_cari_data = get_cari_data
+
+# Hunger Hotspot data
+DataBridgesKnots.get_hunger_hotspot_data = get_hunger_hotspot_data
 
 if __name__ == "__main__":
     pass
