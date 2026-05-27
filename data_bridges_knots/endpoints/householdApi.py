@@ -245,6 +245,7 @@ def get_household_questionnaire(self, xls_form_id: int) -> pd.DataFrame:
         self.xlsform = self.get_household_xlsform_definition(xls_form_id)
     return pd.DataFrame(list(self.xlsform.fields)[0])
 
+
 def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
     """Extracts choice lists from a questionnaire form definition.
 

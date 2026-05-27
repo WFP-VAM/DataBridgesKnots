@@ -1,7 +1,6 @@
 from typing import Optional
 
 import logging
-import time
 
 import data_bridges_client
 import numpy as np
@@ -54,6 +53,7 @@ def get_market_geojson_list(self, country_iso3: str = None):
             )
             raise
 
+
 def get_markets_list(
     self, country_iso3: Optional[str] = None, page: Optional[int] = 1
 ) -> pd.DataFrame:
@@ -100,10 +100,9 @@ def get_markets_list(
             df = df.replace({np.nan: None})
             return df
         except Exception as e:
-            logger.error(
-                "Exception when calling MarketsApi->markets_list_get: %s", e
-            )
+            logger.error("Exception when calling MarketsApi->markets_list_get: %s", e)
             raise
+
 
 def get_markets_as_csv(
     self, country_iso3: Optional[str] = None, local_names: bool = False
@@ -150,6 +149,7 @@ def get_markets_as_csv(
                 e,
             )
             raise
+
 
 def get_nearby_markets(
     self, country_iso3: str = None, lat: float = None, lng: float = None
