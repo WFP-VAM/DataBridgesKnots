@@ -1,14 +1,11 @@
-from typing import Dict, Literal, Optional, Union
+from typing import Dict, Union
 
 import logging
 import os
 import warnings
 
 import data_bridges_client
-import numpy as np
-import pandas as pd
 import yaml
-from data_bridges_client.rest import ApiException
 from data_bridges_client.token import WfpApiToken
 
 from data_bridges_knots.endpoints.commodityUnitsApi import (
@@ -21,6 +18,8 @@ from data_bridges_knots.endpoints.currencyApi import (
     get_exchange_rates,
     get_usd_indirect_quotation,
 )
+from data_bridges_knots.endpoints.economicDataApi import get_economic_indicator_list
+from data_bridges_knots.endpoints.globalOutlookApi import get_global_outlook
 from data_bridges_knots.endpoints.householdApi import (
     get_household_questionnaire,
     get_household_survey,
@@ -34,11 +33,6 @@ from data_bridges_knots.endpoints.marketsApi import (
     get_markets_list,
     get_nearby_markets,
 )
-
-from data_bridges_knots.endpoints.economicDataApi import get_economic_indicator_list
-
-from data_bridges_knots.endpoints.globalOutlookApi import get_global_outlook
-
 from data_bridges_knots.endpoints.rpmeApi import (
     get_rpme_base_data,
     get_rpme_full_data,
@@ -245,10 +239,10 @@ class DataBridgesKnots:
 
     def get_aims_data(self):
         pass
-    
-    # TODO: IncubationApi 
+
+    # TODO: IncubationApi
     # FIXME: Get scopes to test this function
-    def get_cari_data(self, admin_level = "admin0"):
+    def get_cari_data(self, admin_level="admin0"):
         if admin_level == "admin0":
             pass
         elif admin_level == "admin1":
@@ -322,7 +316,9 @@ DataBridgesKnots.rpmeApi.get_rpme_xls_forms = get_rpme_xls_forms
 DataBridgesKnots.globalOutlookApi.get_global_outlook = get_global_outlook
 
 # Economic Data
-DataBridgesKnots.economicDataApi.get_economic_indicator_list = get_economic_indicator_list  
+DataBridgesKnots.economicDataApi.get_economic_indicator_list = (
+    get_economic_indicator_list
+)
 
 if __name__ == "__main__":
     pass

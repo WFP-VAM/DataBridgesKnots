@@ -19,11 +19,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-
 # TODO: Get the scope and test these functions
-def get_rpme_base_data(
-    self, survey_id=None, page: Optional[int] = 1, page_size=20
-):
+def get_rpme_base_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
     with data_bridges_client.ApiClient(
         self._setup_configuration_and_authentication(self.config)
     ) as api_client:
@@ -39,10 +36,9 @@ def get_rpme_base_data(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_base_data_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_base_data_get: {e}")
             raise
+
 
 # TODO: Get the scope and test these functions
 def get_rpme_full_data(
@@ -71,10 +67,9 @@ def get_rpme_full_data(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_full_data_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_full_data_get: {e}")
             raise
+
 
 # TODO: Get the scope and test these functions
 def get_rpme_output_values(
@@ -107,10 +102,9 @@ def get_rpme_output_values(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_output_values_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_output_values_get: {e}")
             raise
+
 
 # TODO: Get the scope and test these functions
 def get_rpme_surveys(
@@ -135,10 +129,9 @@ def get_rpme_surveys(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_surveys_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_surveys_get: {e}")
             raise
+
 
 # TODO: Get the scope and test these functions
 def get_rpme_variables(self, page: Optional[int] = 1):
@@ -155,10 +148,9 @@ def get_rpme_variables(self, page: Optional[int] = 1):
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_variables_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_variables_get: {e}")
             raise
+
 
 # TODO: Get the scope and test these functions
 def get_rpme_xls_forms(
@@ -183,7 +175,5 @@ def get_rpme_xls_forms(
             df = df.replace({np.nan: None})
             return df
         except ApiException as e:
-            logger.error(
-                f"Exception when calling RpmeApi->rpme_xls_forms_get: {e}"
-            )
+            logger.error(f"Exception when calling RpmeApi->rpme_xls_forms_get: {e}")
             raise

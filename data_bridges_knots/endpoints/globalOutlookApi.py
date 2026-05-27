@@ -1,3 +1,22 @@
+from typing import Literal, Optional
+
+import logging
+
+import data_bridges_client
+import pandas as pd
+
+logname = "data_bridges_api_calls.log"
+logging.basicConfig(
+    filename=logname,
+    filemode="a",
+    format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.INFO,
+)
+
+logger = logging.getLogger(__name__)
+
+
 # GlobalOutlookApi 	global_outlook_country_latest_get 	GET /GlobalOutlook/CountryLatest 	Return the latest country dataset of number of acutely food insecure (in thousands) based on WFP's Global Outlook.
 # GlobalOutlookApi 	global_outlook_global_latest_get 	GET /GlobalOutlook/GlobalLatest 	Return the latest global dataset of number of acutely food insecure (in millions) based on WFP's Global Outlook.
 # GlobalOutlookApi 	global_outlook_regional_latest_get 	GET /GlobalOutlook/RegionalLatest 	Return the latest regional dataset of number of acutely food insecure (in millions) based on WFP's Global Outlook.
@@ -52,18 +71,12 @@ def get_global_outlook(
 
         try:
             if data_type == "country_latest":
-                api_response = api_instance.global_outlook_country_latest_get(
-                    env=env
-                )
+                api_response = api_instance.global_outlook_country_latest_get(env=env)
             elif data_type == "global_latest":
-                api_response = api_instance.global_outlook_global_latest_get(
-                    env=env
-                )
+                api_response = api_instance.global_outlook_global_latest_get(env=env)
 
             elif data_type == "regional_latest":
-                api_response = api_instance.global_outlook_regional_latest_get(
-                    env=env
-                )
+                api_response = api_instance.global_outlook_regional_latest_get(env=env)
             else:
                 raise ValueError(f"Invalid data_type: {data_type}")
             logger.info(
