@@ -33,6 +33,7 @@ pytestmark = pytest.mark.integration
         # USD indirect quotation
         ("get_usd_indirect_quotation", (), {"country_iso3": "ETH"}),
         ("get_usd_indirect_quotation", (), {"currency_name": "ETB"}),
+
     ],
 )
 def test_prices_and_currency_endpoints(client, func, args, kwargs):
@@ -62,6 +63,9 @@ def test_prices_and_currency_endpoints(client, func, args, kwargs):
         # Commodity conversions
         ("get_commodity_units_conversion_list", (), {}),
         ("get_commodity_units_conversion_list", (), {"country_iso3": "TZA"}),
+
+        # Commodity categories
+        ("get_commodity_categories_list", (), {"country_iso3": "AFG"}),
     ],
 )
 def test_commodities_endpoints(client, func, args, kwargs):
