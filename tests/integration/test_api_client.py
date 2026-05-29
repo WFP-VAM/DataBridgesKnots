@@ -1,5 +1,11 @@
 import pandas as pd
 import pytest
+from dotenv import load_dotenv
+
+from data_bridges_knots.client import (
+    DataBridgesKnots,
+    config_from_env,
+)
 
 pytestmark = pytest.mark.integration
 
@@ -7,6 +13,20 @@ pytestmark = pytest.mark.integration
 # =========================================================
 # ✅ 3. SUCCESS TESTS (expect 200)
 # =========================================================
+
+
+@pytest.fixture
+def valid_config():
+    load_dotenv()
+    config = config_from_env()
+
+    return config
+
+
+@pytest.fixture
+def client(valid_config):
+    return DataBridgesKnots(valid_config)
+
 
 # =========================================================
 # ✅ PRICES & CURRENCY
@@ -33,7 +53,6 @@ pytestmark = pytest.mark.integration
         # USD indirect quotation
         ("get_usd_indirect_quotation", (), {"country_iso3": "ETH"}),
         ("get_usd_indirect_quotation", (), {"currency_name": "ETB"}),
-
     ],
 )
 def test_prices_and_currency_endpoints(client, func, args, kwargs):
@@ -63,7 +82,6 @@ def test_prices_and_currency_endpoints(client, func, args, kwargs):
         # Commodity conversions
         ("get_commodity_units_conversion_list", (), {}),
         ("get_commodity_units_conversion_list", (), {"country_iso3": "TZA"}),
-
         # Commodity categories
         ("get_commodity_categories_list", (), {"country_iso3": "AFG"}),
     ],

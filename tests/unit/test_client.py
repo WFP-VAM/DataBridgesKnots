@@ -7,10 +7,6 @@ from data_bridges_knots.client import (
     config_from_env,
 )
 
-# -------------------------
-# ✅ Fixtures
-# -------------------------
-
 
 @pytest.fixture
 def valid_config():
