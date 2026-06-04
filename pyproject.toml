@@ -133,14 +133,10 @@ breaking_change_exclamation_in_title = true
 
 
 [[tool.uv.index]]
-name = "pypi"
-url = "https://pypi.org/simple"
-
-[[tool.uv.index]]
-name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
-# explicit = true
+name = "wfp-private"
+explicit = true
 
 [tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }
-
+data-bridges-knots = { index = "wfp-private" }
+data-bridges-client = { index = "wfp-private" }

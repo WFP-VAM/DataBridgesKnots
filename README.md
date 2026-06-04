@@ -11,21 +11,44 @@
 
 This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
 
-## Getting started
+# Installation 
 > [!IMPORTANT]
 > User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-
-## Installation
-
-### Using uv
->  [!TIP] :point_right: We recommend using `uv` as package manager. You can install it using the [instructions here](https://docs.astral.sh/uv/getting-started/installation/).
+## Using uv
 
 Install the latest stable `data_bridges_knots` package in your environment using uv:
 
 ```
-uv venv .venv && source .venv/bin/activate && uv pip install data-bridges-knots \
-  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
+uv pip install data-bridges-knots \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/ \
+  --index-strategy unsafe-first-match
+```
+
+### Project setup
+For projects, we recommend instead setting up the pyproject.toml by:
+
+```
+uv init
+```
+
+Then configure `pyproject.toml` as follows: 
+
+```
+[[tool.uv.index]]
+url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
+name = "wfp-private"
+explicit = true
+
+[tool.uv.sources]
+data-bridges-knots = { index = "wfp-private" }
+data-bridges-client = { index = "wfp-private" }
+```
+
+and install the dependencieswith 
+
+```
+uv sync
 ```
 
 ### Using pip
@@ -34,19 +57,12 @@ You can also install the `data_bridges_knots` package using regular `pip`:
 ```
 pip install data-bridges-knots \
   --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
+  --index-strategy unsafe-first-match
 ```
 
 STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
 
-
-#### Development version
-If you're looking for a specific release/development version, you can install it by running this command, and adding the release number:
-
-```
- uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots/@release/vX.x.x
-```
-
-### STATA users
+## STATA users
 
 STATA users need to install the `data_bridges_knots` with additional STATA dependencies (`pystata`, and `stata-setup`):
 
@@ -55,14 +71,23 @@ uv venv .venv && source .venv/bin/activate && uv pip install "data-bridges-knots
   --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
 ```
 
-### R users
+## R users
 
 R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
 
 ```R
 install.packages("reticulate")
 library(reticulate)
+
 ```
+
+## Development version
+If you're looking for a specific release/development version, you can install it by running this command, and adding the release number:
+
+```
+ uv pip install git+https://github.com/WFP-VAM/DataBridgesKnots/@release/vX.x.x
+```
+
 
 ## Configuration
 
