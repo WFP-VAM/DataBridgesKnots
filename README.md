@@ -9,25 +9,60 @@
 [![Release Please](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml)
 
 
-This Python module allows you to get data from the WFP Data Bridges API, including household survey data, market prices, exchange rates, GORP (Global Operational Response Plan) data, and food security data (IPC equivalent). It is a wrapper for the [Data Bridges API Client](https://github.com/WFP-VAM/DataBridgesAPI), providing an easier way to data analysts to get VAM and monitoring data using their language of choice (Python, R and STATA).
+This Python module allows you to get data from the WFP Data Bridges API, including **household survey data**, **market prices**, **exchange rates**, and **Market Functionality Index surveys**.
 
-# Installation 
-> [!IMPORTANT]
-> User guide on the package can be found [here](https://wfp-vam.github.io/DataBridgesKnots/reference/)
+It simplifies the official Data Bridges API Client, making it easier for analysts to work in:
+- Python  
+- R  
+- STATA  
 
-## Using uv
+📖 **Full documentation:** https://wfp-vam.github.io/DataBridgesKnots/reference/
 
-Install the latest stable `data_bridges_knots` package in your environment using uv:
 
+## Installation
+We recommend using `uv` as package manager to run this project. See [here](https://docs.astral.sh/uv/getting-started/installation/) for installation, and [here](https://docs.astral.sh/uv/guides/projects/) for basic use.
+
+You can install the `data-bridges-knots` by running this `uv` command:
 ```
 uv pip install data-bridges-knots \
   --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/ \
   --index-strategy unsafe-first-match
 ```
 
-### Project setup
-For projects, we recommend instead setting up the pyproject.toml by:
+You can also install the `data_bridges_knots` package using regular `pip`:
 
+```
+pip install data-bridges-knots \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
+  --index-strategy unsafe-first-match
+```
+
+STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
+
+### STATA users
+
+STATA users need to install the `data_bridges_knots` with additional STATA dependencies (`pystata`, and `stata-setup`):
+
+```
+uv venv .venv && source .venv/bin/activate && uv pip install "data-bridges-knots[STATA]" \
+  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
+```
+
+### R users
+
+R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
+
+```R
+install.packages("reticulate")
+library(reticulate)
+
+```
+
+### Project setup using uv
+`uv` uses information on dependencies in the `pyproject.toml` file and continuously maintains a detailed description of the required environment in the `uv.lock` file.
+
+
+You can set up a `uv` project by running in your project folder.
 ```
 uv init
 ```
@@ -45,40 +80,10 @@ data-bridges-knots = { index = "wfp-private" }
 data-bridges-client = { index = "wfp-private" }
 ```
 
-and install the dependencieswith 
+and install the dependencies with 
 
 ```
 uv sync
-```
-
-### Using pip
-You can also install the `data_bridges_knots` package using regular `pip`:
-
-```
-pip install data-bridges-knots \
-  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
-  --index-strategy unsafe-first-match
-```
-
-STATA and R users will also need the appropriate optional dependencies to use this package in their respective software. To install the package with these dependencies, use the following command:
-
-## STATA users
-
-STATA users need to install the `data_bridges_knots` with additional STATA dependencies (`pystata`, and `stata-setup`):
-
-```
-uv venv .venv && source .venv/bin/activate && uv pip install "data-bridges-knots[STATA]" \
-  --extra-index-url https://d2i4vvypvg40rv.cloudfront.net/pypi/
-```
-
-## R users
-
-R users need to have `reticulate` installed in their machine to run this package as explained in the [R example file](examples/example_R.R)
-
-```R
-install.packages("reticulate")
-library(reticulate)
-
 ```
 
 ## Development version
