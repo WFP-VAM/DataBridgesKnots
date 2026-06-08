@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "3.1.2"
+version = "3.1.4"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -16,7 +16,7 @@ requires-python = ">=3.10"
 dependencies = [
     'PyYAML>=6',
     'pandas>=2',
-    "data-bridges-client>=8.0.0",
+    "data-bridges-client (>=8.0.0,<9.0.0)",
 ]
 
 
@@ -133,14 +133,10 @@ breaking_change_exclamation_in_title = true
 
 
 [[tool.uv.index]]
-name = "pypi"
-url = "https://pypi.org/simple"
-
-[[tool.uv.index]]
-name = "wfp-hip-pypi"
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
-# explicit = true
+name = "wfp-private"
+explicit = true
 
 [tool.uv.sources]
-data-bridges-client = { index = "wfp-hip-pypi" }
-
+data-bridges-knots = { index = "wfp-private" }
+data-bridges-client = { index = "wfp-private" }

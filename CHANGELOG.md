@@ -7,6 +7,24 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [3.1.4](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.3...data-bridges-knots-v3.1.4) (2026-06-05)
+
+
+### Documentation
+
+* update README on PiPy and local installation of package ([2875e12](https://github.com/WFP-VAM/DataBridgesKnots/commit/2875e12deda72e7c26b1e1b4c4b6ccae367e680f))
+* update README on PiPy and local installation of package ([e699fd4](https://github.com/WFP-VAM/DataBridgesKnots/commit/e699fd4d88f92ee1d6f4d556a800b69d95610371))
+* update README to clarify installation stepsd ([de784dc](https://github.com/WFP-VAM/DataBridgesKnots/commit/de784dc9e495f54c9aba933ab5b52e098f90f7fd))
+* update README to clarify installation stepsd ([ce73803](https://github.com/WFP-VAM/DataBridgesKnots/commit/ce73803c7be8f1711986cdb3237d86bf9430234b))
+
+## [3.1.3](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.2...data-bridges-knots-v3.1.3) (2026-06-04)
+
+
+### Bug Fixes
+
+* pin correct data-bridges-client version ([83ce4a6](https://github.com/WFP-VAM/DataBridgesKnots/commit/83ce4a62d6c1c7a58c5cdfc75946025f20f24d5d))
+* pin correct data-bridges-client version ([62b4194](https://github.com/WFP-VAM/DataBridgesKnots/commit/62b41946901856ce5527b319848e7ce521fdcbf4))
+
 ## [3.1.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.1...data-bridges-knots-v3.1.2) (2026-05-25)
 
 

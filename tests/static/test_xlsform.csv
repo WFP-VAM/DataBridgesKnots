@@ -1,0 +1,21 @@
+name,label,type,choiceList
+chocImpactAlim,CHOC.5 - Est-ce que ce choc ont diminues la capacite de votre menage à produire ou acheter de la nourriture?,select_one,"{'name': 'Yesno', 'choices': [{'name': '0', 'label': 'Non'}, {'name': '1', 'label': 'Oui'}]}"
+choc_module1,,end_group,
+tempsRecolte_12,2039.4. Quand pensez vous recolter pour le TAROT ?,select_one,"{'name': 'tempsRecolte', 'choices': [{'name': '1', 'label': 'Déjà récolté'}, {'name': '2', 'label': ""Moins d'un mois""}, {'name': '3', 'label': '1 mois'}, {'name': '4', 'label': '2 mois'}, {'name': '5', 'label': '3 mois'}, {'name': '6', 'label': '4 mois'}, {'name': '7', 'label': '5 mois'}, {'name': '8', 'label': '6 mois'}, {'name': '9', 'label': '7 mois'}, {'name': '10', 'label': '8 mois'}, {'name': '11', 'label': '9 mois'}]}"
+HHIncSec_Est,1408. Quelle est la valeur estimée en monnaie locale de la deuxième source de revenus du ménage?,decimal,
+HHExpFEgg_Purch_7D,"1161. Votre ménage a-t-il acheté des œufs pour sa consommation au cours des 7 derniers jours, en espèces ou à crédit ?",select_one,"{'name': 'Yesno', 'choices': [{'name': '0', 'label': 'Non'}, {'name': '1', 'label': 'Oui'}]}"
+comeneSaison2019_17,2056.1. Pensez vous que la recolte de PALMIER A HUILE pour cette saison (2022-2023) sera meilleure que celle de la saison dernière (2021-2022)?,select_one,"{'name': 'Yesno', 'choices': [{'name': '0', 'label': 'Non'}, {'name': '1', 'label': 'Oui'}]}"
+HHAssetSofa,1908. Combien de fauteils votre ménage possède-t-il?,integer,
+HHIncThird_Dur,1416. Durée de pratique pour la première source de revenus (Nombre de mois de génération de revenus annuels),integer,
+HHExpFPuls_Own_MN_7D,"1124. Quelle serait la valeur (en FCFA) des légumineuses et des noix consommées que vous avez produites, récoltées ou reçues en échange de travail si vous deviez les acheter au marché ?",decimal,
+HHHDisabRemember,123. Le chef de ménage a-t-il des difficultés à se rappeler les choses ou à se concentrer ? Diriez-vous…,select_one,"{'name': 'Disab', 'choices': [{'name': '1', 'label': 'Aucune difficulté'}, {'name': '2', 'label': 'Quelques difficultés'}, {'name': '3', 'label': 'Beaucoup de difficulté'}, {'name': '4', 'label': 'Ne peut pas faire du tout'}, {'name': '888', 'label': 'Ne sais pas'}, {'name': '999', 'label': 'Refuser'}]}"
+raisonCulture7_autre,Preciser autre raison principale de culture  de l'ARACHIDE ?,text,
+HHExpFSgr,"Je vais maintenant vous poser des questions sur vos dépenses et votre consommation en sucre, confiseries et desserts. Cela inclut des articles tels que le sucre brut, le miel, les confitures, le chocolat, la crème glacée et les produits similaires.",note,
+raisonCulture11_autre,Preciser autre raison principale de culture de la POMME DE TERRE ?,text,
+HHExpNFMedServ,"Je vais maintenant vous poser des questions sur vos dépenses et votre consommation de services de santé. Ceux-ci comprennent des éléments tels que les services ambulatoires et hospitaliers, les honoraires des médecins, les soins traditionnels.",note,
+WORRIED,801. Vous même ou d’autres membres de votre menage avez été inquiet de ne pas avoir suffisamment de nourriture en manque d’argent ou d’autres ressources,select_one,"{'name': 'fies', 'choices': [{'name': '1', 'label': 'Non'}, {'name': '2', 'label': 'Oui'}, {'name': '3', 'label': 'Ne sait pas'}, {'name': '4', 'label': 'Refus'}]}"
+perteSaisonier_2,PAM.10 Est-ce que la perte de PORCINS est habituelle à cette periode de l'annee,select_one,"{'name': 'Yesno', 'choices': [{'name': '0', 'label': 'Non'}, {'name': '1', 'label': 'Oui'}]}"
+comeneSaison2019_10,2040.2. Pensez vous que la recolte de PATATE DOUCE pour cette saison (2022-2023) sera meilleure que celle de la saison dernière (2021-2022)?,select_one,"{'name': 'Yesno', 'choices': [{'name': '0', 'label': 'Non'}, {'name': '1', 'label': 'Oui'}]}"
+VOLAILLES1,,end_group,
+HHExpFCer_GiftAid_MN_7D,1104. Quelle serait la valeur (en FCFA) des céréales consommées provenant des dons en nature ou de l'assistance si vous deviez les acheter au marché ?,decimal,
+Demographic_module1,,end_group,
