@@ -7,6 +7,14 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [3.1.5](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.4...data-bridges-knots-v3.1.5) (2026-06-09)
+
+
+### Bug Fixes
+
+* get_commodity_list_get() now working ([0e6c61a](https://github.com/WFP-VAM/DataBridgesKnots/commit/0e6c61a9c82ac092ad13fbf28c8f023ce53b43d5))
+* rename commodity_categories_list_get to get_commodity_categories_list to match test ([eb989ae](https://github.com/WFP-VAM/DataBridgesKnots/commit/eb989ae11755b0c3736ff09f55246723a099856c))
+
 ## [3.1.4](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.3...data-bridges-knots-v3.1.4) (2026-06-05)
 
 
