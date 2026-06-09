@@ -9,7 +9,7 @@ import yaml
 from data_bridges_client.token import WfpApiToken
 
 from data_bridges_knots.endpoints.commodityApi import (
-    commodities_categories_list_get,
+    get_commodity_categories_list,
     get_commodities_list,
     get_commodity_units_conversion_list,
     get_commodity_units_list,
@@ -295,7 +295,7 @@ DataBridgesKnots.get_commodity_units_conversion_list = (
     get_commodity_units_conversion_list
 )
 DataBridgesKnots.get_commodity_units_list = get_commodity_units_list
-DataBridgesKnots.commodities_categories_list_get = commodities_categories_list_get
+DataBridgesKnots.get_commodity_categories_list = get_commodity_categories_list
 
 # Market Endpoints (MarketsApi)
 DataBridgesKnots.get_market_geojson_list = get_market_geojson_list

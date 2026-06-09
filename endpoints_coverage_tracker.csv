@@ -1,5 +1,5 @@
 ﻿Class,Method,HTTP request,Description,DataBridgesKnots 
-CommoditiesApi,commodities_categories_list_get,GET /Commodities/Categories/List,Provides the list of categories.,
+CommoditiesApi,get_commodity_categories_list,GET /Commodities/Categories/List,Provides the list of categories.,
 CommoditiesApi,commodities_list_get,GET /Commodities/List,Provide the detailed list of the commodities available in DataBridges platform,
 CommodityUnitsApi,commodity_units_conversion_list_get,GET /CommodityUnits/Conversion/List,Provides conversion factors to Kilogram or Litres for each convertible unit of measure.,
 CommodityUnitsApi,commodity_units_list_get,GET /CommodityUnits/List,Provides the detailed list of the unit of measure available in DataBridges platform,

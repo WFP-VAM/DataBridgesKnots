@@ -200,9 +200,7 @@ def get_commodity_units_list(
             )
             raise
 
-
-# TODO: add commodities_categories_list_get
-def commodities_categories_list_get(
+def get_commodity_categories_list(
     self,
     category_id: Optional[int] = 0,
     country_iso3: Optional[str] = None,
@@ -220,7 +218,7 @@ def commodities_categories_list_get(
 
         try:
             # Provides the list of categories.
-            api_response = api_instance.commodities_categories_list_get(
+            api_response = api_instance.get_commodity_categories_list(
                 country_code=country_iso3,
                 category_name=category_name,
                 category_id=category_id,
@@ -228,10 +226,10 @@ def commodities_categories_list_get(
                 format=format,
                 env=env,
             )
-            print("The response of CommoditiesApi->commodities_categories_list_get:\n")
+            print("The response of CommoditiesApi->get_commodity_categories_list:\n")
             return pd.DataFrame([item.to_dict() for item in api_response.items])
         except Exception as e:
             print(
-                "Exception when calling CommoditiesApi->commodities_categories_list_get: %s\n"
+                "Exception when calling CommoditiesApi->get_commodity_categories_list: %s\n"
                 % e
             )
