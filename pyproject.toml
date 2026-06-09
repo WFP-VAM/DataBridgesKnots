@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "3.1.4"
+version = "3.1.5"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
