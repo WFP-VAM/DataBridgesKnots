@@ -19,7 +19,6 @@ dependencies = [
     "data-bridges-client (>=8.0.0,<9.0.0)",
 ]
 
-
 [project.optional-dependencies]
 STATA = ["stata-setup", "pystata"]
 R = []

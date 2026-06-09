@@ -33,11 +33,11 @@ test:
 
 .PHONY: test-integration
 test-integration:
-	uv run pytest tests/integration -m "integration" --run-integration
+	uv run pytest tests -m "integration" --run-integration
 
 .PHONY: test-all
 test-all:
-	uv run pytest --cov=data_bridges_knots --cov-report=html
+	uv run pytest --cov=data_bridges_knots --cov-report=html --run-integration
 	uv run coverage-badge -o assets/images/coverage.svg -f
 
 #* Typing
@@ -51,7 +51,7 @@ mypy:
 
 #* All in one
 .PHONY: lint
-lint: test check-codestyle mypy
+lint: codestyle test-all mypy
 
 #* DOCS
 

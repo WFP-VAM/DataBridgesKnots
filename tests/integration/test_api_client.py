@@ -2,17 +2,21 @@ import pandas as pd
 import pytest
 from dotenv import load_dotenv
 
-from data_bridges_knots.client import DataBridgesShapes, config_from_env
+from data_bridges_knots.client import (
+    DataBridgesKnots,
+    config_from_env,
+)
 
 pytestmark = pytest.mark.integration
 
-# -------------------------
-# ✅ Fixtures
-# -------------------------
+
+# =========================================================
+# ✅ 3. SUCCESS TESTS (expect 200)
+# =========================================================
 
 
 @pytest.fixture
-def config_dict():
+def valid_config():
     load_dotenv()
     config = config_from_env()
 
@@ -20,34 +24,9 @@ def config_dict():
 
 
 @pytest.fixture
-def client(config_dict):
-    return DataBridgesShapes(config_dict)
+def client(valid_config):
+    return DataBridgesKnots(valid_config)
 
-
-# -------------------------
-# ✅ 1. Import
-# -------------------------
-
-
-def test_import():
-    from data_bridges_knots.client import DataBridgesShapes
-
-    assert DataBridgesShapes is not None
-
-
-# -------------------------
-# ✅ 2. Config
-# -------------------------
-
-
-def test_client_init(config_dict):
-    client = DataBridgesShapes(config_dict)
-    assert isinstance(client, DataBridgesShapes)
-
-
-# =========================================================
-# ✅ 3. SUCCESS TESTS (expect 200)
-# =========================================================
 
 # =========================================================
 # ✅ PRICES & CURRENCY
@@ -103,6 +82,8 @@ def test_prices_and_currency_endpoints(client, func, args, kwargs):
         # Commodity conversions
         ("get_commodity_units_conversion_list", (), {}),
         ("get_commodity_units_conversion_list", (), {"country_iso3": "TZA"}),
+        # Commodity categories
+        ("get_commodity_categories_list", (), {"country_iso3": "AFG"}),
     ],
 )
 def test_commodities_endpoints(client, func, args, kwargs):
