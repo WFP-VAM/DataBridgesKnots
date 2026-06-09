@@ -200,6 +200,7 @@ def get_commodity_units_list(
             )
             raise
 
+
 def get_commodity_categories_list(
     self,
     category_id: Optional[int] = 0,
@@ -209,16 +210,17 @@ def get_commodity_categories_list(
     format: Optional[str] = "json",
 ) -> pd.DataFrame:
     # Enter a context with an instance of the API client
+    # Enter a context with an instance of the API client
     with data_bridges_client.ApiClient(
         self._setup_configuration_and_authentication(self.config)
     ) as api_client:
-        env = self.env
         # Create an instance of the API class
         api_instance = data_bridges_client.CommoditiesApi(api_client)
+        env = self.env
 
         try:
             # Provides the list of categories.
-            api_response = api_instance.get_commodity_categories_list(
+            api_response = api_instance.commodities_categories_list_get(
                 country_code=country_iso3,
                 category_name=category_name,
                 category_id=category_id,
@@ -226,10 +228,15 @@ def get_commodity_categories_list(
                 format=format,
                 env=env,
             )
-            print("The response of CommoditiesApi->get_commodity_categories_list:\n")
-            return pd.DataFrame([item.to_dict() for item in api_response.items])
+
+            logger.info(
+                "The response of CommoditiesApi->commodities_categories_list_get:\n"
+            )
+            df = pd.DataFrame([item.to_dict() for item in api_response.items])
+            df = df.replace({np.nan: None})
+            return df
         except Exception as e:
-            print(
-                "Exception when calling CommoditiesApi->get_commodity_categories_list: %s\n"
+            logger.error(
+                "Exception when calling CommoditiesApi->commodities_categories_list_get: %s\n"
                 % e
             )

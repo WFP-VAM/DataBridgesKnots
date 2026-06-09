@@ -9,8 +9,8 @@ import yaml
 from data_bridges_client.token import WfpApiToken
 
 from data_bridges_knots.endpoints.commodityApi import (
-    get_commodity_categories_list,
     get_commodities_list,
+    get_commodity_categories_list,
     get_commodity_units_conversion_list,
     get_commodity_units_list,
 )

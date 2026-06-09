@@ -51,7 +51,7 @@ mypy:
 
 #* All in one
 .PHONY: lint
-lint: test-all check-codestyle mypy
+lint: codestyle test-all mypy
 
 #* DOCS
 
