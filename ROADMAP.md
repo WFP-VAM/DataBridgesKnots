@@ -42,18 +42,17 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] Update documentation for v4.x
 - [ ] Update endpoints to `v2`
 
-<!-- - Added fullData query parameter and added applyMapping query parameter to GET /Household/FullData
-- Changed response schema in GET /Ipcch/IPCCHAndEquivalentPeaks-WFPDashboard
-- Minor changes to summaries -->
-
-
-
 # Future releases
+
+## Minors
 - [ ] Add missing endpoints
   - [ ] RpmeApi
   - [ ] IpcchApi
   - [ ] GlobalOutlookApi
-- [ ] Add tests for additional endpoints
 - [ ] STATA support
 - [ ] Add helper functions to search surveys
-- [ ] Refactoring: Optimize performance and improve code efficiency (e.g. polars)
+- [ ] Add option to write to file / retrieve partial results (time-out)
+- [ ] Add option to use polars
+
+## Patch
+- [ ] Add tests for additional endpoints

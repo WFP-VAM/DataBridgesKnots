@@ -23,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_household_survey(
-    self, survey_id: int, access_type: str, page_size: Optional[int] = 600
-) -> pd.DataFrame:
+    self, survey_id: int, access_type: str, page_size: Optional[int] = 600, **kwargs) -> pd.DataFrame:
     """Retrieves household survey data using the specified access type.
 
     Args:
@@ -52,6 +51,7 @@ def get_household_survey(
         KeyError: If access_type is not one of the allowed values
         ApiException: If there's an error accessing the API
     """
+    
     responses = []
     total_items = 1
     max_item = 0
@@ -75,6 +75,9 @@ def get_household_survey(
                     "public": api_instance.household_public_base_data_get,
                 }.get(access_type)
 
+                if access_type is "full":
+                    apply_mapping = kwargs.get("apply_mapping", False)
+
                 if access_type in ["full", "draft"]:
                     try:
                         api_survey = api_call(
@@ -83,6 +86,7 @@ def get_household_survey(
                             page=page,
                             page_size=page_size,
                             env=env,
+                            apply_mapping=apply_mapping if access_type == "full" else None
                         )
                     except ApiException as e:
                         logger.error(
