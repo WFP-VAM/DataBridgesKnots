@@ -134,7 +134,7 @@ class DataBridgesKnots:
             - Configuration dictionary (e.g. .env) with required keys: WFP_API_CLIENT_ID,
               WFP_API_CLIENT_SECRET, and optionally DATABRIDGES_API_KEY
         env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod".
-        api_version (str, optional): Data Bridges API version to use. Defaults to "v1" (current version)
+        api_version (str, optional): Data Bridges API version to use. Defaults to "v2" (current version)
 
 
     Examples:
@@ -155,7 +155,7 @@ class DataBridgesKnots:
         >>> client = DataBridgesKnots(config_from_env())
     """
 
-    def __init__(self, config_path, env="prod", api_version="v1"):
+    def __init__(self, config_path, env="prod", api_version="v2"):
         self.api_version = api_version
         self.env = env
         self.xlsform = None
