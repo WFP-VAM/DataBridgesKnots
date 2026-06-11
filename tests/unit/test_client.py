@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 from data_bridges_knots.client import (
     DataBridgesKnots,
-    DataBridgesKnots,
     config_from_env,
 )
 
