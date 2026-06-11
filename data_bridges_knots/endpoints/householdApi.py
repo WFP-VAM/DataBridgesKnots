@@ -35,6 +35,7 @@ def get_household_survey(
             - 'official': Official use base data. Only data mapped against the standards is returned.
             - 'public': Public base data
         page_size (int, optional): Number of items per page. Defaults to 600
+        apply_mapping (bool, optional): Whether to apply variable and value label mapping to the full data. Only applicable when access_type is 'full'. Defaults to False.
 
     Returns:
         pd.DataFrame: DataFrame containing survey data with columns specific to the
@@ -75,10 +76,8 @@ def get_household_survey(
                     "public": api_instance.household_public_base_data_get,
                 }.get(access_type)
 
-                if access_type is "full":
+                if access_type == "full":
                     apply_mapping = kwargs.get("apply_mapping", False)
-
-                if access_type in ["full", "draft"]:
                     try:
                         api_survey = api_call(
                             self.data_bridges_api_key,
@@ -87,6 +86,20 @@ def get_household_survey(
                             page_size=page_size,
                             env=env,
                             apply_mapping=apply_mapping if access_type == "full" else None
+                        )
+                    except ApiException as e:
+                        logger.error(
+                            f"API key required when calling Household data-> '{access_type}': {e}"
+                        )
+                        raise
+                elif  access_type == "draft":
+                    try:
+                        api_survey = api_call(
+                            self.data_bridges_api_key,
+                            survey_id=survey_id,
+                            page=page,
+                            page_size=page_size,
+                            env=env,
                         )
                     except ApiException as e:
                         logger.error(
