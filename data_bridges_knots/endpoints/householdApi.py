@@ -78,6 +78,7 @@ def get_household_survey(
 
                 if access_type == "full":
                     apply_mapping = kwargs.get("apply_mapping", False)
+                    full_data = kwargs.get("full_data", True)
                     try:
                         api_survey = api_call(
                             self.data_bridges_api_key,
@@ -85,7 +86,9 @@ def get_household_survey(
                             page=page,
                             page_size=page_size,
                             env=env,
-                            apply_mapping=apply_mapping if access_type == "full" else None
+                            apply_mapping=apply_mapping,
+                            full_data=full_data,
+
                         )
                     except ApiException as e:
                         logger.error(
