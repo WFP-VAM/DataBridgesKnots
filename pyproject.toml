@@ -15,8 +15,8 @@ requires-python = ">=3.10"
 
 dependencies = [
     'PyYAML>=6',
-    'pandas>=2',
-    "data-bridges-client (>=8.0.0,<9.0.0)",
+    "pandas>=2",
+    "data-bridges-client (>=9.0.0,<10.0.0)",
 ]
 
 [project.optional-dependencies]
@@ -41,6 +41,7 @@ dev = [
     "bumpver",
     "pip-tools",
     "setuptools>=82.0.1",
+    "ipython>=8.39.0",
 ]
 
 
