@@ -234,7 +234,7 @@ class DataBridgesKnots:
         secret = config["WFP_API_CLIENT_SECRET"]
         BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
         host = f"{BASE_URI}/{self.api_version.strip('/')}"
-        print("host: ", host)
+        # print("host: ", host) #FIXME: this run every single page!
 
         logger.info("DataBridges API: %s", host)
 
@@ -266,7 +266,7 @@ class DataBridgesShapes(DataBridgesKnots):
     def __str__(self):
         return (
             f"DataBridgesShapes\n"
-            f"  API Host: {self.configuration.host}\n"
+            f"  API {self.configuration.host}\n"
             f"  Environment: {self.env}\n"
             f"\n"
             f"Brought to you with <3 by WFP VAM"

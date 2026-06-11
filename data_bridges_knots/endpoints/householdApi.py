@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_household_survey(
-    self, survey_id: int, access_type: str, page_size: Optional[int] = 600, **kwargs) -> pd.DataFrame:
+    self, survey_id: int, access_type: str, page_size: Optional[int] = 600, **kwargs
+) -> pd.DataFrame:
     """Retrieves household survey data using the specified access type.
 
     Args:
@@ -52,7 +53,7 @@ def get_household_survey(
         KeyError: If access_type is not one of the allowed values
         ApiException: If there's an error accessing the API
     """
-    
+
     responses = []
     total_items = 1
     max_item = 0
@@ -60,9 +61,7 @@ def get_household_survey(
 
     while total_items > max_item:
         page += 1
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
@@ -88,14 +87,13 @@ def get_household_survey(
                             env=env,
                             apply_mapping=apply_mapping,
                             full_data=full_data,
-
                         )
                     except ApiException as e:
                         logger.error(
                             f"API key required when calling Household data-> '{access_type}': {e}"
                         )
                         raise
-                elif  access_type == "draft":
+                elif access_type == "draft":
                     try:
                         api_survey = api_call(
                             self.data_bridges_api_key,
@@ -175,9 +173,7 @@ def get_household_surveys_list(
 
     adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.IncubationApi(api_client)
         env = self.env
 
@@ -224,9 +220,7 @@ def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
     Raises:
         ApiException: If there's an error accessing the API
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.IncubationApi(api_client)
         env = self.env
 

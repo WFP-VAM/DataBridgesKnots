@@ -51,9 +51,7 @@ def get_commodities_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved commodity data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommoditiesApi(api_client)
         env = self.env
 
@@ -114,9 +112,7 @@ def get_commodity_units_conversion_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommodityUnitsApi(api_client)
         env = self.env
 
@@ -173,9 +169,7 @@ def get_commodity_units_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommodityUnitsApi(api_client)
         env = self.env
 
@@ -211,9 +205,7 @@ def get_commodity_categories_list(
 ) -> pd.DataFrame:
     # Enter a context with an instance of the API client
     # Enter a context with an instance of the API client
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         # Create an instance of the API class
         api_instance = data_bridges_client.CommoditiesApi(api_client)
         env = self.env

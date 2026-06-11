@@ -107,9 +107,7 @@ def get_currency_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved currency data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CurrencyApi(api_client)
         env = self.env
 
@@ -159,9 +157,7 @@ def get_usd_indirect_quotation(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved exchange rate data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CurrencyApi(api_client)
         env = self.env
 

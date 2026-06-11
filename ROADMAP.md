@@ -38,9 +38,9 @@ This document outlines the planned features and improvements for the `DataBridge
 
 # v4.0.0
 - [ ] Deprecate `DataBridgesShape`
-- [ ] Add parameters for `get_household_survey` FullData
+- [X] Add parameters for `get_household_survey` FullData
 - [ ] Update documentation for v4.x
-- [ ] Update endpoints to `v2`
+- [X] Update endpoints to `v2`
 
 # Future releases
 

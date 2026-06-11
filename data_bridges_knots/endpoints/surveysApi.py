@@ -38,9 +38,7 @@ def get_mfi_surveys_base_data(
     Returns:
         pandas.DataFrame: DataFrame containing MFI base survey data
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.SurveysApi(api_client)
         env = self.env
 
@@ -64,9 +62,7 @@ def get_mfi_surveys_full_data(
     """
     Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.SurveysApi(api_client)
         env = self.env
         try:
@@ -93,9 +89,7 @@ def get_mfi_surveys(
     """
     Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.SurveysApi(api_client)
         env = self.env
 
@@ -131,9 +125,7 @@ def get_mfi_surveys_processed_data(
     """
     Get MFI processed data in long format.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.SurveysApi(api_client)
         env = self.env
 
@@ -164,9 +156,7 @@ def get_mfi_surveys_processed_data(
 def get_mfi_xls_forms(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
 ):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.XlsFormsApi(api_client)
         env = self.env
 
@@ -213,9 +203,7 @@ def get_mfi_xls_forms_detailed(
     Returns:
         pandas.DataFrame: DataFrame containing XLS Forms data
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.XlsFormsApi(api_client)
         env = self.env
 

@@ -37,9 +37,7 @@ def get_economic_indicator_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved economic indicator data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         # Create an instance of the API class
         api_instance = data_bridges_client.EconomicDataApi(api_client)
 

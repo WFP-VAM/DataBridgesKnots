@@ -29,9 +29,7 @@ def get_market_geojson_list(self, country_iso3: str = None):
         adm0code = get_adm0_code(country_iso3)
 
     # Enter a context with an instance of the API client
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         # Create an instance of the API class
         api_instance = data_bridges_client.MarketsApi(api_client)
 
@@ -81,9 +79,7 @@ def get_markets_list(
         ApiException: If there's an error accessing the Markets API
     """
     # Enter a context with an instance of the API client
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         # Create an instance of the API class
         api_instance = data_bridges_client.MarketsApi(api_client)
         format = "json"  # str | Output format: [JSON|CSV] Json is the default value (optional) (default to 'json')
@@ -130,9 +126,7 @@ def get_markets_as_csv(
 
     adm0code = get_adm0_code(country_iso3)
 
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.MarketsApi(api_client)
         local_names = False  # bool | If true the name of markets and regions will be localized if available (optional) (default to False)
 
@@ -182,9 +176,7 @@ def get_nearby_markets(
     """
 
     adm0code = get_adm0_code(country_iso3)
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.MarketsApi(api_client)
         env = self.env
 
