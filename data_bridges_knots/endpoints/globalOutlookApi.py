@@ -46,7 +46,7 @@ def get_global_outlook(
         pd.DataFrame: DataFrame containing Global Outlook data for the selected scope.
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get latest country-level outlook
         >>> country_data = client.get_global_outlook("country_latest")
         >>> # Get global outlook summary

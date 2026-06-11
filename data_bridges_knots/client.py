@@ -80,7 +80,7 @@ def config_from_env() -> Dict:
         - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
     Returns:
-        dict: Configuration dictionary with required keys for DataBridgesShapes
+        dict: Configuration dictionary with required keys for DataBridgesKnotss
 
     Raises:
         ValueError: If any required environment variables are missing
@@ -90,7 +90,7 @@ def config_from_env() -> Dict:
         >>> os.environ['WFP_API_CLIENT_ID'] = 'your_key'
         >>> os.environ['WFP_API_CLIENT_SECRET'] = 'your_secret'
         >>> config = config_from_env()
-        >>> client = DataBridgesShapes(config)
+        >>> client = DataBridgesKnotss(config)
     """
 
     required_vars = [
@@ -139,7 +139,7 @@ class DataBridgesKnots:
 
     Examples:
         >>> # Initialize with YAML file
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> df_prices = client.get_prices("KEN", "2025-09-01")
 
         >>> # Initialize with dictionary

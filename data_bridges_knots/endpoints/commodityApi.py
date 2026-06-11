@@ -38,7 +38,7 @@ def get_commodities_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get full list of commmodities
         >>> commodities_list = client.get_commodities_list()
         >>> # Get commodities for Tanzania
@@ -103,7 +103,7 @@ def get_commodity_units_conversion_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-    >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+    >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
     >>> # Get full list of commodity units conversions
     >>> full_list = client.get_commodity_units_conversion_list()
     >>> # Get conversion factors for Tanzania
@@ -158,7 +158,7 @@ def get_commodity_units_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get commodity units for Tanzania
         >>> units_df = client.get_commodity_units_list(country_iso3="TZA")
         >>> # Get commodity unit with name containing "Kg"

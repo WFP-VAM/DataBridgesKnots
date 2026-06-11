@@ -43,7 +43,7 @@ def get_household_survey(
             access type and survey structure
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get full, unmapped survey data
         >>> full_data = client.get_household_survey(3094, "full")
         >>> # Get standard data for official use (no PII)
@@ -157,7 +157,7 @@ def get_household_surveys_list(
             And other metadata fields
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get all surveys for a country
         >>> surveys = client.get_household_surveys_list(country_iso3="COG")
         >>> # Get surveys within date range
@@ -211,7 +211,7 @@ def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
             And other form structure information
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> # Get form definition
         >>> form_def = client.get_household_xlsform_definition(2067)
         >>> # Access form fields
@@ -252,7 +252,7 @@ def get_household_questionnaire(self, xls_form_id: int) -> pd.DataFrame:
             one row per field in the form
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> questionnaire = client.get_household_questionnaire(2075)
     """
     if self.xlsform is None:
@@ -273,7 +273,7 @@ def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
             - label: Human-readable choice label
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
         >>> choices = client.get_choice_list(123)
     """
     questionnaire = self.get_household_questionnaire(xls_form_id)

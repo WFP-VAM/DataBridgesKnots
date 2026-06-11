@@ -2,7 +2,7 @@ import pytest
 from dotenv import load_dotenv
 
 from data_bridges_knots.client import (
-    DataBridgesShapes,
+    DataBridgesKnotss,
     config_from_env,
 )
 
@@ -17,7 +17,7 @@ def valid_config():
 
 @pytest.fixture
 def client(valid_config):
-    return DataBridgesShapes(valid_config)
+    return DataBridgesKnotss(valid_config)
 
 
 def test_get_household_full_data_success(client):

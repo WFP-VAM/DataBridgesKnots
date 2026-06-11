@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from data_bridges_knots.client import (
     DataBridgesKnots,
-    DataBridgesShapes,
+    DataBridgesKnotss,
     config_from_env,
 )
 
@@ -18,7 +18,7 @@ def valid_config():
 
 @pytest.fixture
 def client(valid_config):
-    return DataBridgesShapes(valid_config)
+    return DataBridgesKnotss(valid_config)
 
 
 # -------------------------
@@ -27,9 +27,9 @@ def client(valid_config):
 
 
 def test_deprecated_import():
-    from data_bridges_knots.client import DataBridgesShapes
+    from data_bridges_knots.client import DataBridgesKnotss
 
-    assert DataBridgesShapes is not None
+    assert DataBridgesKnotss is not None
 
 
 def test_import():
@@ -44,8 +44,8 @@ def test_import():
 
 
 def test_deprecated_client_init(valid_config):
-    client = DataBridgesShapes(valid_config)
-    assert isinstance(client, DataBridgesShapes)
+    client = DataBridgesKnotss(valid_config)
+    assert isinstance(client, DataBridgesKnotss)
 
 
 def test_client_init(valid_config):
@@ -92,23 +92,23 @@ def test_client_init(valid_config):
 # # ======================================================
 
 # def test_init_success(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 #     assert client.config == valid_config
 
 
 # def test_validate_config_failure():
 #     with pytest.raises(ValueError):
-#         DataBridgesShapes({"WFP_API_CLIENT_ID": "only"})
+#         DataBridgesKnotss({"WFP_API_CLIENT_ID": "only"})
 
 
 # def test_load_config_dict(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 #     loaded = client._load_config(valid_config)
 #     assert loaded == valid_config
 
 
 # def test_load_config_type_error(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     with pytest.raises(TypeError):
 #         client._load_config(123)
@@ -131,7 +131,7 @@ def test_client_init(valid_config):
 #     setup_mock_context(mock_client)
 #     mock_api.return_value.market_prices_price_monthly_get.return_value = mock_api_response
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     df = client.get_prices("KEN", start_date="2024-01-01")
 
@@ -149,7 +149,7 @@ def test_client_init(valid_config):
 #     setup_mock_context(mock_client)
 #     mock_api.return_value.currency_usd_indirect_quotation_get.return_value = mock_api_response
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     df = client.get_exchange_rates("KEN")
 
@@ -166,7 +166,7 @@ def test_client_init(valid_config):
 #     setup_mock_context(mock_client)
 #     mock_api.return_value.commodities_list_get.return_value = mock_api_response
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     df = client.get_commodities_list()
 
@@ -187,7 +187,7 @@ def test_client_init(valid_config):
 #     mock_response.model_dump.return_value = {"type": "FeatureCollection"}
 #     mock_api.return_value.markets_geo_json_list_get.return_value = mock_response
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     result = client.get_market_geojson_list("KEN")
 
@@ -195,7 +195,7 @@ def test_client_init(valid_config):
 
 
 # def test_get_market_geojson_requires_param(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     with pytest.raises(ValueError):
 #         client.get_market_geojson_list()
@@ -211,7 +211,7 @@ def test_client_init(valid_config):
 #     setup_mock_context(mock_client)
 #     mock_api.return_value.global_outlook_country_latest_get.return_value = mock_api_response
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     df = client.get_global_outlook("country_latest")
 
@@ -219,7 +219,7 @@ def test_client_init(valid_config):
 
 
 # def test_get_global_outlook_invalid(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     with pytest.raises(ValueError):
 #         client.get_global_outlook("invalid")
@@ -230,7 +230,7 @@ def test_client_init(valid_config):
 # # ======================================================
 
 # def test_get_choice_list(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     client.xlsform = pd.DataFrame([{
 #         "fields": [
@@ -265,7 +265,7 @@ def test_client_init(valid_config):
 #     setup_mock_context(mock_client)
 #     mock_api.return_value.market_prices_price_monthly_get.side_effect = ApiException("fail")
 
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 
 #     with pytest.raises(ApiException):
 #         client.get_prices("KEN")
@@ -276,10 +276,10 @@ def test_client_init(valid_config):
 # # ======================================================
 
 # def test_repr(valid_config):
-#     client = DataBridgesShapes(valid_config)
-#     assert "DataBridgesShapes" in repr(client)
+#     client = DataBridgesKnotss(valid_config)
+#     assert "DataBridgesKnotss" in repr(client)
 
 
 # def test_str(valid_config):
-#     client = DataBridgesShapes(valid_config)
+#     client = DataBridgesKnotss(valid_config)
 #     assert "API Host" in str(client)
