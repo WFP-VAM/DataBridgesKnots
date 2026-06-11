@@ -247,32 +247,6 @@ class DataBridgesKnots:
         return configuration
 
 
-class DataBridgesShapes(DataBridgesKnots):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-            (
-                "\n[FUTURE WARNING]"
-                "DataBridgesShapes will be deprecated and be removed in v4.0.0 (July 2026).\n"
-                "Use 'DataBridgesKnots' instead.\n"
-            ),
-            FutureWarning,
-            stacklevel=2,
-        )
-        super().__init__(*args, **kwargs)
-
-    def __repr__(self):
-        return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}'), api_version='{self.api_version}'"
-
-    def __str__(self):
-        return (
-            f"DataBridgesShapes\n"
-            f"  API {self.configuration.host}\n"
-            f"  Environment: {self.env}\n"
-            f"\n"
-            f"Brought to you with <3 by WFP VAM"
-        )
-
-
 # Binding endpoints to the DataBridgesKnots class
 # Household Endpoints (IncubationApi)
 DataBridgesKnots.get_household_survey = get_household_survey

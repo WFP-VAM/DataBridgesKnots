@@ -37,10 +37,12 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Testing: Add tests for helper functions (labels)
 
 # v4.0.0
-- [ ] Deprecate `DataBridgesShape`
+
 - [X] Add parameters for `get_household_survey` FullData
-- [ ] Update documentation for v4.x
 - [X] Update endpoints to `v2`
+- [ ] Deprecate `DataBridgesShape`
+- [ ] Update documentation for v4.x
+- [ ] Add tests for existing endpoints (integration + unit)
 
 # Future releases
 
