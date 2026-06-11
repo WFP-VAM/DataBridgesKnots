@@ -31,7 +31,7 @@ def get_mfi_surveys_base_data(
         page_size (int): Number of items per page
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get MFI base data for a specific survey
         >>> base_data = client.get_mfi_surveys_base_data(survey_id=123)
 
@@ -190,7 +190,7 @@ def get_mfi_xls_forms_detailed(
         end_date (str): Ending date for data collection range (YYYY-MM-DD format)
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get detailed XLS forms for country code 231
         >>> detailed_forms = client.get_mfi_xls_forms_detailed(adm0_code=231)
         >>> # Get forms within a date range

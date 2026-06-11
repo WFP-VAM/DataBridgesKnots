@@ -568,7 +568,7 @@ dev = [
     { name = "black" },
     { name = "bumpver" },
     { name = "commitizen", specifier = ">=4.6.0" },
-    { name = "coverage-badge", specifier = ">=1.1.2" },
+    { name = "coverage-badge", specifier = "==1.1.2" },
     { name = "ipython", specifier = ">=8.39.0" },
     { name = "isort" },
     { name = "mkdocs" },

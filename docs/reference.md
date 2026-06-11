@@ -1,3 +1,3 @@
 # API Reference
 
-::: data_bridges_knots.client.DataBridgesKnotss
+::: data_bridges_knots.client.DataBridgesKnots

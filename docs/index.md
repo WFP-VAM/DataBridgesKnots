@@ -41,7 +41,7 @@ library(reticulate)
 
 ## Configuration
 
-There are three ways to configure DataBridgesKnotss:
+There are three ways to configure DataBridgesKnots:
 
 ### Option 1: YAML Configuration File (Recommended for Production)
 
@@ -65,7 +65,7 @@ There are three ways to configure DataBridgesKnotss:
 You can also initialize the client directly with a Python dictionary:
 
 ```python
-from data_bridges_knots import DataBridgesKnotss
+from data_bridges_knots import DataBridgesKnots
 
 config = {
     'KEY': 'your-api-key',
@@ -78,7 +78,7 @@ config = {
     'DATABRIDGES_API_KEY': 'optional-databridges-key'
 }
 
-client = DataBridgesKnotss(config)
+client = DataBridgesKnots(config)
 ```
 
 ### Option 3: Environment Variables (Recommended for CI/CD and Containers)
@@ -96,10 +96,10 @@ export DATABRIDGES_API_KEY="optional-databridges-key"
 Then in your Python code:
 
 ```python
-from data_bridges_knots.client import config_from_env, DataBridgesKnotss
+from data_bridges_knots.client import config_from_env, DataBridgesKnots
 
 config = config_from_env()
-client = DataBridgesKnotss(config)
+client = DataBridgesKnots(config)
 ```
 
 ### Getting Credentials

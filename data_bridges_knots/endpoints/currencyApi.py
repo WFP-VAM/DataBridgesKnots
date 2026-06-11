@@ -35,7 +35,7 @@ def get_exchange_rates(self, country_iso3: str, page_size: int = 1000) -> pd.Dat
             And other relevant exchange rate information
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get exchange rates for Ethiopia
         >>> rates_df = client.get_exchange_rates("ETH")
         >>> # Check latest exchange rate
@@ -96,7 +96,7 @@ def get_currency_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get currencies for Tanzania
         >>> currencies_df = client.get_currency_list(country_iso3="TZA")
         >>> # Get currency with name "ETB"
@@ -148,7 +148,7 @@ def get_usd_indirect_quotation(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get USD indirect quotation for Ethiopia
         >>> usd_df = client.get_usd_indirect_quotation(country_iso3="ETH")
         >>> # Get USD indirect quotation for currency "ETB"

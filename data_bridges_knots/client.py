@@ -2,7 +2,6 @@ from typing import Dict, Union
 
 import logging
 import os
-import warnings
 
 import data_bridges_client
 import yaml

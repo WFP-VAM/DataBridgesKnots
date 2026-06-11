@@ -71,7 +71,7 @@ def get_markets_list(
             And other market-related fields
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get markets for Afghanistan
         >>> afg_markets = client.get_markets_list("AFG")
 
@@ -114,7 +114,7 @@ def get_markets_as_csv(
         str: CSV formatted string containing market data
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get markets CSV for Afghanistan
         >>> markets_csv = client.get_markets_as_csv("AFG")
         >>> # Get localized market names
@@ -165,7 +165,7 @@ def get_nearby_markets(
             And other market-related fields
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Find markets near coordinates in Afghanistan
         >>> nearby = client.get_nearby_markets("AFG", 34.515, 69.208)
         >>> # Sort markets by distance

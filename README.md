@@ -96,7 +96,7 @@ If you're looking for a specific release/development version, you can install it
 
 ## Configuration
 
-There are three ways to configure DataBridgesKnotss:
+There are three ways to configure DataBridgesKnots:
 
 ### Option 1: YAML Configuration File (Recommended for Production)
 
@@ -115,7 +115,7 @@ There are three ways to configure DataBridgesKnotss:
 You can also initialize the client directly with a Python dictionary:
 
 ```python
-from data_bridges_knots import DataBridgesKnotss
+from data_bridges_knots import DataBridgesKnots
 
 config = {
     'WFP_API_CLIENT_ID': 'your-api-key',
@@ -123,7 +123,7 @@ config = {
     'DATABRIDGES_API_KEY': 'optional-databridges-key'
 }
 
-client = DataBridgesKnotss(config)
+client = DataBridgesKnots(config)
 ```
 
 ### Option 3: Environment Variables (Recommended for CI/CD and Containers)
@@ -139,10 +139,10 @@ export DATABRIDGES_API_KEY="optional-databridges-key"
 Then in your Python code:
 
 ```python
-from data_bridges_knots.client import config_from_env, DataBridgesKnotss
+from data_bridges_knots.client import config_from_env, DataBridgesKnots
 
 config = config_from_env()
-client = DataBridgesKnotss(config)
+client = DataBridgesKnots(config)
 ```
 ### Getting Credentials
 
@@ -155,11 +155,11 @@ client = DataBridgesKnotss(config)
 Run the following example to extract commodity data: 
 ```python
 
-from data_bridges_knots import DataBridgesKnotss
+from data_bridges_knots import DataBridgesKnots
 
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 
-client = DataBridgesKnotss(CONFIG_PATH)
+client = DataBridgesKnots(CONFIG_PATH)
 
 # COMMODITY DATA
 commodity_units_list = client.get_commodity_units_list(country_iso3="TZA", commodity_unit_name="Kg", page=1, format='json')
@@ -181,7 +181,7 @@ use_python(".venv/bin/python")
 
 # Create client instance
 config_path <- "data_bridges_api_config.yaml"
-client <- data_bridges_knots$DataBridgesKnotss(config_path)
+client <- data_bridges_knots$DataBridgesKnots(config_path)
 
 # COMMODITY DATA
 # Get commodity unit list for Tanzania

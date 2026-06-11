@@ -7,11 +7,11 @@
 Run the following example to extract commodity data:
 ```python
 
-from data_bridges_knots import DataBridgesKnotss
+from data_bridges_knots import DataBridgesKnots
 
 CONFIG_PATH = r"data_bridges_api_config.yaml"
 
-client = DataBridgesKnotss(CONFIG_PATH)
+client = DataBridgesKnots(CONFIG_PATH)
 
 # COMMODITY DATA
 commodity_units_list = client.get_commodity_units_list(country_iso3="TZA", commodity_unit_name="Kg", page=1, format='json')
@@ -31,7 +31,7 @@ use_python(".venv/bin/python")
 
 # Create client instance
 config_path <- "data_bridges_api_config.yaml"
-client <- data_bridges_knots$DataBridgesKnotss(config_path)
+client <- data_bridges_knots$DataBridgesKnots(config_path)
 
 # COMMODITY DATA
 # Get commodity unit list for Tanzania

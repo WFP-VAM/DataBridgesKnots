@@ -27,7 +27,7 @@ R = []
 dev = [
     "pytest-cov>=6.0.0",
     "pytest>=8.3.4",
-    "coverage-badge>=1.1.2",
+    "coverage-badge==1.1.2",
     "commitizen>=4.6.0",
     "black",
     "isort",

@@ -52,7 +52,7 @@ def get_prices(
         pd.DataFrame: DataFrame containing market price data
 
     Examples:
-        >>> client = DataBridgesKnotss("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Basic usage with dates
         >>> df_prices = client.get_prices("KEN", start_date="2025-01-01", end_date="2025-12-31")
         >>> # Using additional filters
