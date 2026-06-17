@@ -7,6 +7,33 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.0.0](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.5...data-bridges-knots-v4.0.0) (2026-06-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename DataBridgesShape -> DataBridgesKnots. DataBridgesShape is now deprecated
+
+### Features
+
+* **DataBridgesKnots:** update default API version to v2 (latest) ([b83de19](https://github.com/WFP-VAM/DataBridgesKnots/commit/b83de1984dd197c0be45016b87b483c14b92599b))
+* rename DataBridgesShape -&gt; DataBridgesKnots. DataBridgesShape is now deprecated ([2c0dccf](https://github.com/WFP-VAM/DataBridgesKnots/commit/2c0dccf52f4e73aabd2c45aba719f07bb18722e0))
+
+
+### Bug Fixes
+
+* API calls use self.configuration instead of calling self._setup_configuration_and_authentication() ([9d4d904](https://github.com/WFP-VAM/DataBridgesKnots/commit/9d4d9048a79557c19b6b6451f45962cb7d4f6d9e))
+* pin correct data-bridges-client version ([8faf1fb](https://github.com/WFP-VAM/DataBridgesKnots/commit/8faf1fbc98be07f6bb021d0ff7ba776a5e0b8a42))
+* replace DataBridgesShape -&gt; DataBridgesShape across the package and documentation ([3d6920c](https://github.com/WFP-VAM/DataBridgesKnots/commit/3d6920c1a55a11f869c6b1a3d906a216bc4d8c6d))
+* typo in DataBridgesKnots class name ([e477ba7](https://github.com/WFP-VAM/DataBridgesKnots/commit/e477ba716319a654674d9a2d0bc788bd39cd3b22))
+
+
+### Documentation
+
+* update householdApi docs ([2800d44](https://github.com/WFP-VAM/DataBridgesKnots/commit/2800d44d09c365d01e91ba7384f70de8bc526659))
+* update README ([8dc7ca1](https://github.com/WFP-VAM/DataBridgesKnots/commit/8dc7ca10348ed211e51c661249d29328f97ef3e8))
+* update ROADMAP for v4.x ([94be7a9](https://github.com/WFP-VAM/DataBridgesKnots/commit/94be7a94d589031a3e01dec782b2fb6053128338))
+
 ## [3.1.5](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.4...data-bridges-knots-v3.1.5) (2026-06-09)
 
 
