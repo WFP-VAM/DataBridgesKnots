@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_bridges_knots"
-version = "3.1.5"
+version = "4.0.0"
 authors = [{ name = "Alessandra Gherardelli", email = "alessandra.gherardelli@wfp.org" }, {name = "Valerio Giuffrida", email = "valerio.giuffrida@wfp.org"}]
 description = "Multi programming language wrapper for WFP Data Bridges API client"
 readme = "README.md"
@@ -15,8 +15,8 @@ requires-python = ">=3.10"
 
 dependencies = [
     'PyYAML>=6',
-    'pandas>=2',
-    "data-bridges-client (>=8.0.0,<9.0.0)",
+    "pandas>=2",
+    "data-bridges-client (>=9.0.0,<10.0.0)",
 ]
 
 [project.optional-dependencies]
@@ -27,7 +27,7 @@ R = []
 dev = [
     "pytest-cov>=6.0.0",
     "pytest>=8.3.4",
-    "coverage-badge>=1.1.2",
+    "coverage-badge==1.1.2",
     "commitizen>=4.6.0",
     "black",
     "isort",
@@ -41,6 +41,7 @@ dev = [
     "bumpver",
     "pip-tools",
     "setuptools>=82.0.1",
+    "ipython>=8.39.0",
 ]
 
 

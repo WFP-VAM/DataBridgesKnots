@@ -160,7 +160,6 @@ def test_economic_indicator_endpoints(client, func, args, kwargs):
     [
         ("get_household_survey", (3094, "official"), {}),
         ("get_household_survey", (3094, "public"), {}),
-        ("get_household_surveys_list", (), {"country_iso3": "COG"}),
         (
             "get_household_surveys_list",
             (),

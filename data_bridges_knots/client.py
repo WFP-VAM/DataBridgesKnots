@@ -2,7 +2,6 @@ from typing import Dict, Union
 
 import logging
 import os
-import warnings
 
 import data_bridges_client
 import yaml
@@ -80,7 +79,7 @@ def config_from_env() -> Dict:
         - DATABRIDGES_API_KEY: (Optional) DataBridges-specific API key for certain endpoints
 
     Returns:
-        dict: Configuration dictionary with required keys for DataBridgesShapes
+        dict: Configuration dictionary with required keys for DataBridgesKnots
 
     Raises:
         ValueError: If any required environment variables are missing
@@ -89,8 +88,10 @@ def config_from_env() -> Dict:
         >>> import os
         >>> os.environ['WFP_API_CLIENT_ID'] = 'your_key'
         >>> os.environ['WFP_API_CLIENT_SECRET'] = 'your_secret'
+        >>> os.environ['DATABRIDGES_API_KEY'] = 'your_databridges_key'  # Optional
+        >>> os.environ['DATABRIDGES_VERSION'] = 'v2'  # Optional, defaults to v2
         >>> config = config_from_env()
-        >>> client = DataBridgesShapes(config)
+        >>> client = DataBridgesKnots(config)
     """
 
     required_vars = [
@@ -134,12 +135,12 @@ class DataBridgesKnots:
             - Configuration dictionary (e.g. .env) with required keys: WFP_API_CLIENT_ID,
               WFP_API_CLIENT_SECRET, and optionally DATABRIDGES_API_KEY
         env (str, optional): Environment to use ('prod' or 'dev'). Defaults to "prod".
-        api_version (str, optional): Data Bridges API version to use. Defaults to "v1" (current version)
+        api_version (str, optional): Data Bridges API version to use. Defaults to "v2" (current version)
 
 
     Examples:
         >>> # Initialize with YAML file
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> df_prices = client.get_prices("KEN", "2025-09-01")
 
         >>> # Initialize with dictionary
@@ -155,7 +156,7 @@ class DataBridgesKnots:
         >>> client = DataBridgesKnots(config_from_env())
     """
 
-    def __init__(self, config_path, env="prod", api_version="v1"):
+    def __init__(self, config_path, env="prod", api_version="v2"):
         self.api_version = api_version
         self.env = env
         self.xlsform = None
@@ -234,7 +235,7 @@ class DataBridgesKnots:
         secret = config["WFP_API_CLIENT_SECRET"]
         BASE_URI = "https://gateway.api.wfp.org/vam-data-bridges"
         host = f"{BASE_URI}/{self.api_version.strip('/')}"
-        print("host: ", host)
+        # print("host: ", host) #FIXME: this run every single page!
 
         logger.info("DataBridges API: %s", host)
 
@@ -245,32 +246,6 @@ class DataBridgesKnots:
 
         logger.debug("Token used: %s", token.__repr__())
         return configuration
-
-
-class DataBridgesShapes(DataBridgesKnots):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-            (
-                "\n[FUTURE WARNING]"
-                "DataBridgesShapes will be deprecated and be removed in v4.0.0 (July 2026).\n"
-                "Use 'DataBridgesKnots' instead.\n"
-            ),
-            FutureWarning,
-            stacklevel=2,
-        )
-        super().__init__(*args, **kwargs)
-
-    def __repr__(self):
-        return f"DataBridgesShapes(host='{self.configuration.host}', env='{self.env}'), api_version='{self.api_version}'"
-
-    def __str__(self):
-        return (
-            f"DataBridgesShapes\n"
-            f"  API Host: {self.configuration.host}\n"
-            f"  Environment: {self.env}\n"
-            f"\n"
-            f"Brought to you with <3 by WFP VAM"
-        )
 
 
 # Binding endpoints to the DataBridgesKnots class

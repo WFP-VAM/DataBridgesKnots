@@ -49,9 +49,9 @@ mypy:
 # check-safety:
 # 	uv run bandit -r src
 
-#* All in one
+#* All in one - RUN THIS ONE BEFORE RELEASING A NEW VERSION
 .PHONY: lint
-lint: codestyle test-all mypy
+lint: codestyle test-all docs-test mypy
 
 #* DOCS
 

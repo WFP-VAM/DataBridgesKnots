@@ -38,7 +38,7 @@ def get_commodities_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get full list of commmodities
         >>> commodities_list = client.get_commodities_list()
         >>> # Get commodities for Tanzania
@@ -51,9 +51,7 @@ def get_commodities_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved commodity data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommoditiesApi(api_client)
         env = self.env
 
@@ -105,7 +103,7 @@ def get_commodity_units_conversion_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-    >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+    >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
     >>> # Get full list of commodity units conversions
     >>> full_list = client.get_commodity_units_conversion_list()
     >>> # Get conversion factors for Tanzania
@@ -114,9 +112,7 @@ def get_commodity_units_conversion_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved conversion factors.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommodityUnitsApi(api_client)
         env = self.env
 
@@ -162,7 +158,7 @@ def get_commodity_units_list(
         format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get commodity units for Tanzania
         >>> units_df = client.get_commodity_units_list(country_iso3="TZA")
         >>> # Get commodity unit with name containing "Kg"
@@ -173,9 +169,7 @@ def get_commodity_units_list(
     Returns:
         pandas.DataFrame: A DataFrame containing the retrieved commodity units data.
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.CommodityUnitsApi(api_client)
         env = self.env
 
@@ -211,9 +205,7 @@ def get_commodity_categories_list(
 ) -> pd.DataFrame:
     # Enter a context with an instance of the API client
     # Enter a context with an instance of the API client
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         # Create an instance of the API class
         api_instance = data_bridges_client.CommoditiesApi(api_client)
         env = self.env

@@ -21,9 +21,7 @@ logger = logging.getLogger(__name__)
 
 # TODO: Get the scope and test these functions
 def get_rpme_base_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 
@@ -48,9 +46,7 @@ def get_rpme_full_data(
     page: Optional[int] = 1,
     page_size=20,
 ):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 
@@ -81,9 +77,7 @@ def get_rpme_output_values(
     market_id=None,
     adm0_code_dots="",
 ):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 
@@ -110,9 +104,7 @@ def get_rpme_output_values(
 def get_rpme_surveys(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
 ):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 
@@ -135,9 +127,7 @@ def get_rpme_surveys(
 
 # TODO: Get the scope and test these functions
 def get_rpme_variables(self, page: Optional[int] = 1):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 
@@ -156,9 +146,7 @@ def get_rpme_variables(self, page: Optional[int] = 1):
 def get_rpme_xls_forms(
     self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
 ):
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.RpmeApi(api_client)
         env = self.env
 

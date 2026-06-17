@@ -23,35 +23,38 @@ logger = logging.getLogger(__name__)
 
 
 def get_household_survey(
-    self, survey_id: int, access_type: str, page_size: Optional[int] = 600
+    self, survey_id: int, access_type: str, page_size: Optional[int] = 600, **kwargs
 ) -> pd.DataFrame:
     """Retrieves household survey data using the specified access type.
 
     Args:
-        survey_id (int]): The ID of the survey to retrieve
+        survey_id (int): The ID of the survey to retrieve.
         access_type (str): The type of access to use. Must be one of:
             - 'draft': Draft internal base data (requires API key)
             - 'full': Complete survey data (requires API key). Data is returned as inserted by the country office and it might contain PII and unstandardized fields.
-
             - 'official': Official use base data. Only data mapped against the standards is returned.
             - 'public': Public base data
-        page_size (int, optional): Number of items per page. Defaults to 600
-
+        page_size (int, optional): Number of items per page. Defaults to 600.
+        apply_mapping (bool, optional): Whether to apply standardized column name mapping to the full data. Only applicable when access_type is 'full'. Defaults to False.
+        full_data (bool, optional): Whether to return full data to 'full' data access type. Only applicable when access_type is 'full'. Defaults to True.
+    
     Returns:
         pd.DataFrame: DataFrame containing survey data with columns specific to the
             access type and survey structure
 
-    Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
-        >>> # Get full, unmapped survey data
-        >>> full_data = client.get_household_survey(3094, "full")
-        >>> # Get standard data for official use (no PII)
-        >>> official_data = client.get_household_survey(3094, "official")
-
     Raises:
         KeyError: If access_type is not one of the allowed values
         ApiException: If there's an error accessing the API
+
+    Examples:
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
+        >>> # Get full, unmapped survey data
+        >>> full_data = client.get_household_survey(3094, "full", apply_mapping=True)
+        >>> # Get standard data for official use (no PII)
+        >>> official_data = client.get_household_survey(3094, "official")
+
     """
+
     responses = []
     total_items = 1
     max_item = 0
@@ -59,9 +62,7 @@ def get_household_survey(
 
     while total_items > max_item:
         page += 1
-        with data_bridges_client.ApiClient(
-            self._setup_configuration_and_authentication(self.config)
-        ) as api_client:
+        with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
@@ -75,7 +76,25 @@ def get_household_survey(
                     "public": api_instance.household_public_base_data_get,
                 }.get(access_type)
 
-                if access_type in ["full", "draft"]:
+                if access_type == "full":
+                    apply_mapping = kwargs.get("apply_mapping", False)
+                    full_data = kwargs.get("full_data", True)
+                    try:
+                        api_survey = api_call(
+                            self.data_bridges_api_key,
+                            survey_id=survey_id,
+                            page=page,
+                            page_size=page_size,
+                            env=env,
+                            apply_mapping=apply_mapping,
+                            full_data=full_data,
+                        )
+                    except ApiException as e:
+                        logger.error(
+                            f"API key required when calling Household data-> '{access_type}': {e}"
+                        )
+                        raise
+                elif access_type == "draft":
                     try:
                         api_survey = api_call(
                             self.data_bridges_api_key,
@@ -139,7 +158,7 @@ def get_household_surveys_list(
             And other metadata fields
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get all surveys for a country
         >>> surveys = client.get_household_surveys_list(country_iso3="COG")
         >>> # Get surveys within date range
@@ -155,9 +174,7 @@ def get_household_surveys_list(
 
     adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.IncubationApi(api_client)
         env = self.env
 
@@ -195,7 +212,7 @@ def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
             And other form structure information
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> # Get form definition
         >>> form_def = client.get_household_xlsform_definition(2067)
         >>> # Access form fields
@@ -204,9 +221,7 @@ def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
     Raises:
         ApiException: If there's an error accessing the API
     """
-    with data_bridges_client.ApiClient(
-        self._setup_configuration_and_authentication(self.config)
-    ) as api_client:
+    with data_bridges_client.ApiClient(self.configuration) as api_client:
         api_instance = data_bridges_client.IncubationApi(api_client)
         env = self.env
 
@@ -238,7 +253,7 @@ def get_household_questionnaire(self, xls_form_id: int) -> pd.DataFrame:
             one row per field in the form
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> questionnaire = client.get_household_questionnaire(2075)
     """
     if self.xlsform is None:
@@ -259,7 +274,7 @@ def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
             - label: Human-readable choice label
 
     Examples:
-        >>> client = DataBridgesShapes("data_bridges_api_config.yaml")
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
         >>> choices = client.get_choice_list(123)
     """
     questionnaire = self.get_household_questionnaire(xls_form_id)
