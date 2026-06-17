@@ -88,6 +88,8 @@ def config_from_env() -> Dict:
         >>> import os
         >>> os.environ['WFP_API_CLIENT_ID'] = 'your_key'
         >>> os.environ['WFP_API_CLIENT_SECRET'] = 'your_secret'
+        >>> os.environ['DATABRIDGES_API_KEY'] = 'your_databridges_key'  # Optional
+        >>> os.environ['DATABRIDGES_VERSION'] = 'v2'  # Optional, defaults to v2
         >>> config = config_from_env()
         >>> client = DataBridgesKnots(config)
     """

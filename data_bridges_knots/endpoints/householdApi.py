@@ -28,30 +28,31 @@ def get_household_survey(
     """Retrieves household survey data using the specified access type.
 
     Args:
-        survey_id (int]): The ID of the survey to retrieve
+        survey_id (int): The ID of the survey to retrieve.
         access_type (str): The type of access to use. Must be one of:
             - 'draft': Draft internal base data (requires API key)
             - 'full': Complete survey data (requires API key). Data is returned as inserted by the country office and it might contain PII and unstandardized fields.
-
             - 'official': Official use base data. Only data mapped against the standards is returned.
             - 'public': Public base data
-        page_size (int, optional): Number of items per page. Defaults to 600
-        apply_mapping (bool, optional): Whether to apply variable and value label mapping to the full data. Only applicable when access_type is 'full'. Defaults to False.
-
+        page_size (int, optional): Number of items per page. Defaults to 600.
+        apply_mapping (bool, optional): Whether to apply standardized column name mapping to the full data. Only applicable when access_type is 'full'. Defaults to False.
+        full_data (bool, optional): Whether to return full data to 'full' data access type. Only applicable when access_type is 'full'. Defaults to True.
+    
     Returns:
         pd.DataFrame: DataFrame containing survey data with columns specific to the
             access type and survey structure
 
-    Examples:
-        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
-        >>> # Get full, unmapped survey data
-        >>> full_data = client.get_household_survey(3094, "full")
-        >>> # Get standard data for official use (no PII)
-        >>> official_data = client.get_household_survey(3094, "official")
-
     Raises:
         KeyError: If access_type is not one of the allowed values
         ApiException: If there's an error accessing the API
+
+    Examples:
+        >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
+        >>> # Get full, unmapped survey data
+        >>> full_data = client.get_household_survey(3094, "full", apply_mapping=True)
+        >>> # Get standard data for official use (no PII)
+        >>> official_data = client.get_household_survey(3094, "official")
+
     """
 
     responses = []
