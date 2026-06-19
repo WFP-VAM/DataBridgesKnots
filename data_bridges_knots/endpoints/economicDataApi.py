@@ -57,7 +57,6 @@ class EconomicDataApi:
                 df = pd.DataFrame([item.to_dict() for item in api_response.items])
                 df = df.replace({np.nan: None})
                 return df
-                return api_response
             except Exception as e:
                 logger.error(
                     "Exception when calling EconomicDataApi->economic_data_indicator_list_get: %s",
