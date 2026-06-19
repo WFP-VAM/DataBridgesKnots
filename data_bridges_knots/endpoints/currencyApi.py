@@ -90,7 +90,7 @@ class CurrencyApi:
         currency_id: Optional[str] = 0,
         page: Optional[int] = 1,
         format: Optional[str] = "json",
-    ):
+    ) -> pd.DataFrame:
         """
         Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
 
@@ -144,7 +144,7 @@ class CurrencyApi:
         currency_name: Optional[str] = "",
         page: Optional[int] = 1,
         format: Optional[str] = "json",
-    ):
+    ) -> pd.DataFrame:
         """
         Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.
 

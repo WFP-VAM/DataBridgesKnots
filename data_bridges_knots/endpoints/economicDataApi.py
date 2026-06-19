@@ -25,14 +25,14 @@ class EconomicDataApi:
         indicator_name: Optional[str] = "",
         country_iso3: Optional[str] = "",
         format: Optional[str] = "json",
-    ):
+    ) -> pd.DataFrame:
         """
         Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.
 
         Args:
             page (int, optional): Page number for paged results. Defaults to 1.
             indicator_name (str, optional): Unique indicator name. Defaults to ''.
-            iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
+            country_iso3 (str, optional): The code to identify the country. Must be a ISO-3166 Alpha 3 code. Defaults to ''.
             format (str, optional): Output format: 'json' or 'csv'. Defaults to 'json'.
 
         Returns:

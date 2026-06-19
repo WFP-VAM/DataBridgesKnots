@@ -87,18 +87,18 @@ def config_from_env() -> Dict:
 
 
 class DataBridgesKnots(
-    HouseholdApi,
     CommodityApi,
     CurrencyApi,
     EconomicDataApi,
     GlobalOutlookApi,
+    HouseholdApi,
     HungerHotspotApi,
     IncubationApi,
     IpcchApi,
     MarketPricesApi,
     MarketsApi,
-    RpmeApi,
     MfiSurveysApi,
+    RpmeApi,
 ):
     """Interface to the Data Bridges API.
 

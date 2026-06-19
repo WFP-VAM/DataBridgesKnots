@@ -24,38 +24,52 @@ logger = logging.getLogger(__name__)
 
 class HouseholdApi:
 
+
     def get_household_survey(
-        self, survey_id: int, access_type: str, page_size: Optional[int] = 600, **kwargs
+        self,
+        survey_id: int,
+        access_type: str,
+        page_size: Optional[int] = 600,
+        **kwargs: Bool,
     ) -> pd.DataFrame:
-        """Retrieves household survey data using the specified access type.
+        """
+        Retrieve household survey data using the specified access type.
 
         Args:
             survey_id (int): The ID of the survey to retrieve.
-            access_type (str): The type of access to use. Must be one of:
-                - 'draft': Draft internal base data (requires API key)
-                - 'full': Complete survey data (requires API key). Data is returned as inserted by the country office and it might contain PII and unstandardized fields.
-                - 'official': Official use base data. Only data mapped against the standards is returned.
-                - 'public': Public base data
-            page_size (int, optional): Number of items per page. Defaults to 600.
-            apply_mapping (bool, optional): Whether to apply standardized column name mapping to the full data. Only applicable when access_type is 'full'. Defaults to False.
-            full_data (bool, optional): Whether to return full data to 'full' data access type. Only applicable when access_type is 'full'. Defaults to True.
+
+            access_type (str): Type of access. Must be one of:
+                - ``"draft"``: Draft internal data (requires API key)
+                - ``"full"``: Complete raw data (may include PII)
+                - ``"official"``: Standardized data (no PII)
+                - ``"public"``: Public data
+
+            page_size (int, optional): Number of items per page. Defaults to ``600``.
+
+            **kwargs: optional parameters (only used when ``access_type="full"``):
+
+                - ``apply_mapping`` (bool): Apply standardized column mapping.
+                Defaults to ``False``.
+                - ``full_data`` (bool): Return full raw dataset.
+                Defaults to ``True``.
 
         Returns:
-            pd.DataFrame: DataFrame containing survey data with columns specific to the
-                access type and survey structure
+            pandas.DataFrame: Survey data as a DataFrame.
 
         Raises:
-            KeyError: If access_type is not one of the allowed values
-            ApiException: If there's an error accessing the API
+            KeyError: If ``access_type`` is invalid.
+            ApiException: If the API request fails.
 
         Examples:
             >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
-            >>> # Get full, unmapped survey data
-            >>> full_data = client.get_household_survey(3094, "full", apply_mapping=True)
-            >>> # Get standard data for official use (no PII)
-            >>> official_data = client.get_household_survey(3094, "official")
 
+            >>> # Full data with mapping
+            >>> df = client.get_household_survey(3094, "full", apply_mapping=True)
+
+            >>> # Official standardized data
+            >>> df = client.get_household_survey(3094, "official")
         """
+
 
         responses = []
         total_items = 1

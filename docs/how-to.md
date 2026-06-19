@@ -4,7 +4,7 @@
 
 ### Python
 
-Run the following example to extract commodity data:
+Run the following example to extract commodity data: 
 ```python
 
 from data_bridges_knots import DataBridgesKnots
@@ -17,8 +17,10 @@ client = DataBridgesKnots(CONFIG_PATH)
 commodity_units_list = client.get_commodity_units_list(country_iso3="TZA", commodity_unit_name="Kg", page=1, format='json')
 
 ```
+Additional examples are in the [User Documentation](https://wfp-vam.github.io/DataBridgesKnots/reference/)
 
-### R
+
+### R 
 
 ```R
 library(reticulate)
@@ -36,14 +38,12 @@ client <- data_bridges_knots$DataBridgesKnots(config_path)
 # COMMODITY DATA
 # Get commodity unit list for Tanzania
 commodity_units <- client$get_commodity_units_list(
-  country_code = "TZA",
+  country_iso3 = "TZA",
   commodity_unit_name = "Kg",
   page = 1L,
   format = "json"
 )
 ```
-Examples on how to use the package  are  in the [examples](https://github.com/WFP-VAM/DataBridgesKnots/tree/main/examples) folder and in the [API Reference document](https://wfp-vam.github.io/DataBridgesKnots/reference/)
-
 
 ## Getting variable and choice labels
 

@@ -1,6 +1,10 @@
 site_name: DataBridges Knots
 theme:
-  name: material
+  name: mkdocs
+
+repo_url: https://github.com/WFP-VAM/databridgesknots
+repo_name: WFP DataBridgesKnots
+
 
 plugins:
   - search

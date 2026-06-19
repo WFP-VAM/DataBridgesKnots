@@ -19,26 +19,35 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+
 class MfiSurveysApi:
     def get_mfi_surveys_base_data(
-        self, survey_id=None, page: Optional[int] = 1, page_size=20
-    ):
+        self, survey_id: Optional[int] = None, page: Optional[int] = 1, page_size: int = 20
+    ) -> pd.DataFrame:
         """
-        Get data that includes the core Market Functionality Index (MFI) fields only by Survey ID.
+        Retrieve Market Functionality Index (MFI) base survey data.
+
+        Returns survey data containing only the core MFI fields for a given survey ID.
 
         Args:
-            survey_id (int): Unique identifier for the collected data
-            page (int): Page number for paged results
-            page_size (int): Number of items per page
+            survey_id (int, optional): Unique identifier of the survey. If not provided,
+                results may include multiple surveys depending on API behavior.
+            page (int, optional): Page number for paginated results. Defaults to ``1``.
+            page_size (int, optional): Number of records per page. Defaults to ``20``.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing MFI base survey data.
+
+        Raises:
+            ApiException: If the API request fails.
 
         Examples:
             >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
-            >>> # Get MFI base data for a specific survey
-            >>> base_data = client.get_mfi_surveys_base_data(survey_id=123)
 
-        Returns:
-            pandas.DataFrame: DataFrame containing MFI base survey data
+            >>> # Get MFI base data for a specific survey
+            >>> df = client.get_mfi_surveys_base_data(survey_id=123)
         """
+
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.SurveysApi(api_client)
             env = self.env
@@ -58,7 +67,7 @@ class MfiSurveysApi:
 
     def get_mfi_surveys_full_data(
         self, survey_id=None, page: Optional[int] = 1, page_size=20
-    ):
+    ) -> pd.DataFrame:
         """
         Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
         """
@@ -84,7 +93,7 @@ class MfiSurveysApi:
 
     def get_mfi_surveys(
         self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
-    ):
+    ) -> pd.DataFrame:
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
         """
@@ -121,7 +130,7 @@ class MfiSurveysApi:
         adm0_codes=None,
         market_id=None,
         survey_type=None,
-    ):
+    ) -> pd.DataFrame:
         """
         Get MFI processed data in long format.
         """
@@ -154,7 +163,7 @@ class MfiSurveysApi:
 
     def get_mfi_xls_forms(
         self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
-    ):
+    ) -> pd.DataFrame:
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.XlsFormsApi(api_client)
             env = self.env
@@ -179,7 +188,7 @@ class MfiSurveysApi:
 
     def get_mfi_xls_forms_detailed(
         self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
-    ):
+    ) -> pd.DataFrame:
         """
         Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.
 
