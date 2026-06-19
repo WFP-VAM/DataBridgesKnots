@@ -10,46 +10,7 @@ from data_bridges_client.token import WfpApiToken
 from data_bridges_knots.endpoints import (
     HouseholdApi,
     CommodityApi,
-)
-
-# FIXME: delete all the monkey patching
-from data_bridges_knots.endpoints.currencyApi import (
-    get_currency_list,
-    get_exchange_rates,
-    get_usd_indirect_quotation,
-)
-from data_bridges_knots.endpoints.economicDataApi import get_economic_indicator_list
-from data_bridges_knots.endpoints.globalOutlookApi import get_global_outlook
-
-from data_bridges_knots.endpoints.hungerHotpotApi import get_hunger_hotspot_data
-from data_bridges_knots.endpoints.incubationApi import (
-    get_cari_data,
-)
-from data_bridges_knots.endpoints.ipcChApi import (
-    get_ipc_and_equivalent_data,
-)
-from data_bridges_knots.endpoints.marketPricesApi import get_prices
-from data_bridges_knots.endpoints.marketsApi import (
-    get_market_geojson_list,
-    get_markets_as_csv,
-    get_markets_list,
-    get_nearby_markets,
-)
-from data_bridges_knots.endpoints.rpmeApi import (
-    get_rpme_base_data,
-    get_rpme_full_data,
-    get_rpme_output_values,
-    get_rpme_surveys,
-    get_rpme_variables,
-    get_rpme_xls_forms,
-)
-from data_bridges_knots.endpoints.surveysApi import (
-    get_mfi_surveys,
-    get_mfi_surveys_base_data,
-    get_mfi_surveys_full_data,
-    get_mfi_surveys_processed_data,
-    get_mfi_xls_forms,
-    get_mfi_xls_forms_detailed,
+    CurrencyApi,
 )
 
 logname = "data_bridges_api_calls.log"
@@ -242,63 +203,6 @@ class DataBridgesKnots(
 
         logger.debug("Token used: %s", token.__repr__())
         return configuration
-
-
-
-
-# # Currency Endpoints (CurrencyApi)
-# DataBridgesKnots.get_exchange_rates = get_exchange_rates
-# DataBridgesKnots.get_currency_list = get_currency_list
-# DataBridgesKnots.get_usd_indirect_quotation = get_usd_indirect_quotation
-
-# # Market Prices Endpoints (MarketPricesApi)
-# DataBridgesKnots.get_prices = get_prices
-
-# # Commodity Units Endpoints (CommodityUnitsApi)
-# DataBridgesKnots.get_commodities_list = get_commodities_list
-# DataBridgesKnots.get_commodity_units_conversion_list = (
-#     get_commodity_units_conversion_list
-# )
-# DataBridgesKnots.get_commodity_units_list = get_commodity_units_list
-# DataBridgesKnots.get_commodity_categories_list = get_commodity_categories_list
-
-# # Market Endpoints (MarketsApi)
-# DataBridgesKnots.get_market_geojson_list = get_market_geojson_list
-# DataBridgesKnots.get_markets_list = get_markets_list
-# DataBridgesKnots.get_markets_as_csv = get_markets_as_csv
-# DataBridgesKnots.get_nearby_markets = get_nearby_markets
-
-
-# # RPME Endpoints (RpmeApi)
-# DataBridgesKnots.get_rpme_base_data = get_rpme_base_data
-# DataBridgesKnots.get_rpme_full_data = get_rpme_full_data
-# DataBridgesKnots.get_rpme_output_values = get_rpme_output_values
-# DataBridgesKnots.get_rpme_surveys = get_rpme_surveys
-# DataBridgesKnots.get_rpme_variables = get_rpme_variables
-# DataBridgesKnots.get_rpme_xls_forms = get_rpme_xls_forms
-
-# # Global Outlook
-# DataBridgesKnots.get_global_outlook = get_global_outlook
-
-# # Economic Data
-# DataBridgesKnots.get_economic_indicator_list = get_economic_indicator_list
-
-# # Ipc and CH data
-# DataBridgesKnots.get_ipc_and_equivalent_data = get_ipc_and_equivalent_data
-
-# # CARI data
-# DataBridgesKnots.get_cari_data = get_cari_data
-
-# # Hunger Hotspot data
-# DataBridgesKnots.get_hunger_hotspot_data = get_hunger_hotspot_data
-
-# # MFI Endpoints (SurveysApi)
-# DataBridgesKnots.get_mfi_surveys_base_data = get_mfi_surveys_base_data
-# DataBridgesKnots.get_mfi_surveys_full_data = get_mfi_surveys_full_data
-# DataBridgesKnots.get_mfi_surveys = get_mfi_surveys
-# DataBridgesKnots.get_mfi_surveys_processed_data = get_mfi_surveys_processed_data
-# DataBridgesKnots.get_mfi_xls_forms = get_mfi_xls_forms
-# DataBridgesKnots.get_mfi_xls_forms_detailed = get_mfi_xls_forms_detailed
 
 
 if __name__ == "__main__":
