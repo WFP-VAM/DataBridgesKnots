@@ -230,3 +230,4 @@ class CommodityApi:
                     "Exception when calling CommoditiesApi->commodities_categories_list_get: %s\n"
                     % e
                 )
+                raise
