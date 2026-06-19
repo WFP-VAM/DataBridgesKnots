@@ -27,12 +27,12 @@ def get_variable_labels(
 
     Args:
         xlsform_df (pandas.DataFrame): DataFrame with at least ``"name"`` and ``"label"`` columns.
-        format (str, optional): One of ``"dict"``, ``"json"``, or ``"df"``.
-        Defaults to ``"dict"``.
-        - ``"dict"``: returns ``dict[str, str]``.
-        - ``"json"``: returns a JSON-formatted ``str``.
-        - ``"df"``: returns a ``pandas.DataFrame`` with columns
-            ``["colName", "label"]``.
+        format (str, optional): Output format. Defaults to ``"dict"``.
+
+            One of:
+            - ``"dict"``: returns ``dict[str, str]``.
+            - ``"json"``: returns a JSON-formatted ``str``.
+            - ``"df"``: returns a ``pandas.DataFrame`` with columns ``["colName", "label"]``.
 
     Returns:
         dict | str | pandas.DataFrame: Labels mapping in the requested format.
@@ -78,34 +78,23 @@ def get_choice_labels(
     Build a mapping from each XLSForm question ``name`` to its choice value labels,
     and return it as a dictionary, JSON string, or DataFrame.
 
-    The function expects an input DataFrame with:
-      - a column ``"name"`` for the question (field) names, and
-      - a column ``"choiceList"`` whose rows contain a structure with a ``"choices"`` list.
-        Each item in ``choices`` is a dict with ``"name"`` (the choice value/code)
-        and ``"label"`` (the human-readable label).
-
-    Duplicate question names are merged, with later entries updating earlier ones.
-
     Args:
         xlsform_df (pandas.DataFrame): Input DataFrame containing at least the columns
-            ``"name"`` and ``"choiceList"``. Each ``choiceList`` entry should include
-            a ``"choices"`` list of dicts with keys ``"name"`` and ``"label"``.
-        format (str, optional): Output format; one of ``"dict"``, ``"json"``, or ``"df"``.
-            Defaults to ``"dict"``.
-            - ``"dict"``: returns ``dict[str, dict[str, str]]`` mapping question name to
-              a dict of ``choice_name`` → ``choice_label``.
-            - ``"json"``: returns a JSON-formatted ``str`` of the above mapping.
-            - ``"df"``: returns a ``pandas.DataFrame`` with columns ``["colName", "label"]``,
-              where ``"label"`` contains the nested dict of choice labels for each question.
+            ``"name"`` and ``"choiceList"``.
+        format (str, optional): Output format. Defaults to ``"dict"``.
 
-    Raises:
-        KeyError: If required columns (e.g., ``"name"``, ``"choiceList"``) or keys within
-            ``choiceList`` (e.g., ``"choices"``, ``"name"``, ``"label"``) are missing.
-        ValueError: If ``format`` is not one of ``{"dict", "json", "df"}``.
+            One of:
+            - ``"dict"``: returns ``dict[str, dict[str, str]]``.
+            - ``"json"``: returns a JSON-formatted ``str``.
+            - ``"df"``: returns a ``pandas.DataFrame``.
 
     Returns:
         dict[str, dict[str, str]] | str | pandas.DataFrame:
             Labels mapping in the requested format.
+
+    Raises:
+        KeyError: If required columns are missing.
+        ValueError: If ``format`` is not one of ``{"dict", "json", "df"}``.
 
     Examples:
         >>> import pandas as pd

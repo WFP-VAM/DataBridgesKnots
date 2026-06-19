@@ -19,6 +19,7 @@ def valid_config():
 def client(valid_config):
     return DataBridgesKnots(valid_config)
 
+
 def test_import():
     from data_bridges_knots.client import DataBridgesKnots
 
