@@ -7,6 +7,11 @@ import data_bridges_client
 import yaml
 from data_bridges_client.token import WfpApiToken
 
+from data_bridges_knots.endpoints.householdApi import (
+    HouseholdApi,
+)
+
+# FIXME: delete all the monkey patching
 from data_bridges_knots.endpoints.commodityApi import (
     get_commodities_list,
     get_commodity_categories_list,
@@ -20,13 +25,7 @@ from data_bridges_knots.endpoints.currencyApi import (
 )
 from data_bridges_knots.endpoints.economicDataApi import get_economic_indicator_list
 from data_bridges_knots.endpoints.globalOutlookApi import get_global_outlook
-from data_bridges_knots.endpoints.householdApi import (
-    get_choice_list,
-    get_household_questionnaire,
-    get_household_survey,
-    get_household_surveys_list,
-    get_household_xlsform_definition,
-)
+
 from data_bridges_knots.endpoints.hungerHotpotApi import get_hunger_hotspot_data
 from data_bridges_knots.endpoints.incubationApi import (
     get_cari_data,
@@ -122,7 +121,7 @@ def config_from_env() -> Dict:
     return config
 
 
-class DataBridgesKnots:
+class DataBridgesKnots(HouseholdApi):
     """Interface to the Data Bridges API.
 
     Provides methods for fetching market prices, exchange rates, food security data,
@@ -250,11 +249,11 @@ class DataBridgesKnots:
 
 # Binding endpoints to the DataBridgesKnots class
 # Household Endpoints (IncubationApi)
-DataBridgesKnots.get_household_survey = get_household_survey
-DataBridgesKnots.get_household_surveys_list = get_household_surveys_list
-DataBridgesKnots.get_household_xlsform_definition = get_household_xlsform_definition
-DataBridgesKnots.get_household_questionnaire = get_household_questionnaire
-DataBridgesKnots.get_choice_list = get_choice_list
+# DataBridgesKnots.get_household_survey = get_household_survey
+# DataBridgesKnots.get_household_surveys_list = get_household_surveys_list
+# DataBridgesKnots.get_household_xlsform_definition = get_household_xlsform_definition
+# DataBridgesKnots.get_household_questionnaire = get_household_questionnaire
+# DataBridgesKnots.get_choice_list = get_choice_list
 
 # Currency Endpoints (CurrencyApi)
 DataBridgesKnots.get_exchange_rates = get_exchange_rates

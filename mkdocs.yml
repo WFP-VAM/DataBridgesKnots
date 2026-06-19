@@ -10,6 +10,9 @@ plugins:
         python:
           paths: [data_bridges_knots]  # Path to your package
           options:
+            show_inheritance: true
+            inherited_members: true
+            members_order: source
             show_source: false
             show_root_heading: true
             heading_level: 3
