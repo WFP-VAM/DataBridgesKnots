@@ -82,7 +82,6 @@ class CommodityApi:
                 )
                 raise
 
-
     def get_commodity_units_conversion_list(
         self,
         country_iso3: Optional[str] = None,
@@ -139,7 +138,6 @@ class CommodityApi:
                 )
                 raise
 
-
     def get_commodity_units_list(
         self,
         country_iso3: Optional[str] = None,
@@ -194,7 +192,6 @@ class CommodityApi:
                     f"Exception when calling CommodityUnitsApi->commodity_units_list_get: {e}"
                 )
                 raise
-
 
     def get_commodity_categories_list(
         self,

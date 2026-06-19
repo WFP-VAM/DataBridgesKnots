@@ -8,9 +8,16 @@ import yaml
 from data_bridges_client.token import WfpApiToken
 
 from data_bridges_knots.endpoints import (
-    HouseholdApi,
     CommodityApi,
     CurrencyApi,
+    EconomicDataApi,
+    GlobalOutlookApi,
+    HouseholdApi,
+    HungerHotspotApi,
+    IncubationApi,
+    IpcchApi,
+    MarketPricesApi,
+    MarketsApi,
 )
 
 logname = "data_bridges_api_calls.log"
@@ -79,7 +86,16 @@ def config_from_env() -> Dict:
 
 class DataBridgesKnots(
     HouseholdApi,
-    CommodityApi,):
+    CommodityApi,
+    CurrencyApi,
+    EconomicDataApi,
+    GlobalOutlookApi,
+    HungerHotspotApi,
+    IncubationApi,
+    IpcchApi,
+    MarketPricesApi,
+    MarketsApi,
+):
     """Interface to the Data Bridges API.
 
     Provides methods for fetching market prices, exchange rates, food security data,

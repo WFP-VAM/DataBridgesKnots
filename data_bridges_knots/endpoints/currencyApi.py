@@ -19,8 +19,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+
 class CurrencyApi:
-    def get_exchange_rates(self, country_iso3: str, page_size: int = 1000) -> pd.DataFrame:
+    def get_exchange_rates(
+        self, country_iso3: str, page_size: int = 1000
+    ) -> pd.DataFrame:
         """Retrieves exchange rates for a given country from the Data Bridges API.
 
         Args:
@@ -58,10 +61,14 @@ class CurrencyApi:
                 env = self.env
 
                 try:
-                    api_exchange_rates = api_instance.currency_usd_indirect_quotation_get(
-                        country_iso3=country_iso3, format="json", page=page, env=env
+                    api_exchange_rates = (
+                        api_instance.currency_usd_indirect_quotation_get(
+                            country_iso3=country_iso3, format="json", page=page, env=env
+                        )
                     )
-                    responses.extend(item.to_dict() for item in api_exchange_rates.items)
+                    responses.extend(
+                        item.to_dict() for item in api_exchange_rates.items
+                    )
                     total_items = api_exchange_rates.total_items
                     logger.info("Fetching page %s", page)
                     max_item = page * page_size
@@ -75,7 +82,6 @@ class CurrencyApi:
         df = pd.DataFrame(responses)
         df = df.replace({np.nan: None})
         return df
-
 
     def get_currency_list(
         self,
@@ -127,9 +133,10 @@ class CurrencyApi:
                 return df
 
             except ApiException as e:
-                logger.error(f"Exception when calling CurrencyApi->currency_list_get: {e}")
+                logger.error(
+                    f"Exception when calling CurrencyApi->currency_list_get: {e}"
+                )
                 raise
-
 
     def get_usd_indirect_quotation(
         self,
