@@ -8,6 +8,8 @@ from .incubationApi import IncubationApi
 from .ipcChApi import IpcchApi
 from .marketPricesApi import MarketPricesApi
 from .marketsApi import MarketsApi
+from .rpmeApi import RpmeApi
+from .surveysApi import MfiSurveysApi
 
 __all__ = [
     "HouseholdApi",
@@ -20,4 +22,6 @@ __all__ = [
     "IpcchApi",
     "MarketPricesApi",
     "MarketsApi",
+    "RpmeApi",
+    "MfiSurveysApi",
 ]

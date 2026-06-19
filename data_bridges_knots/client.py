@@ -18,6 +18,8 @@ from data_bridges_knots.endpoints import (
     IpcchApi,
     MarketPricesApi,
     MarketsApi,
+    MfiSurveysApi,
+    RpmeApi,
 )
 
 logname = "data_bridges_api_calls.log"
@@ -95,6 +97,8 @@ class DataBridgesKnots(
     IpcchApi,
     MarketPricesApi,
     MarketsApi,
+    RpmeApi,
+    MfiSurveysApi,
 ):
     """Interface to the Data Bridges API.
 

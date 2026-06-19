@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class MarkertPricesApi:
+class MarketPricesApi:
     def get_prices(
         self,
         country_iso3: str,
