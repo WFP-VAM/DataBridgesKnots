@@ -7,6 +7,22 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.0.1](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.0.0...data-bridges-knots-v4.0.1) (2026-06-19)
+
+
+### Bug Fixes
+
+* add docs & fix monkey_patching for CurrencyApi and CommodyApi" ([b891280](https://github.com/WFP-VAM/DataBridgesKnots/commit/b891280b08a4db2d52779bdee3a05084b04f2dd2))
+* add docs for endpoints ([ad7a1c0](https://github.com/WFP-VAM/DataBridgesKnots/commit/ad7a1c0343dde474884b414c5e85a8b46ef82a93))
+* add docs for endpoints ([a0fba42](https://github.com/WFP-VAM/DataBridgesKnots/commit/a0fba427cf98a18a9a6c68915b7756336b3ca877))
+* clean sub-module import API ([dc35f53](https://github.com/WFP-VAM/DataBridgesKnots/commit/dc35f53107116384e18099322c1ec7eb555974ac))
+* remove householdApi monkey patching and include the docs into Mkdocs ([5ddbe7f](https://github.com/WFP-VAM/DataBridgesKnots/commit/5ddbe7f41f316e25ae3d792d8e431d97c1a8a6d0))
+
+
+### Documentation
+
+* improve docstrings for endpoints ([28fc2f5](https://github.com/WFP-VAM/DataBridgesKnots/commit/28fc2f50da76827b1c5f7fe5a77377a0ff0aa9b6))
+
 ## [4.0.0](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v3.1.5...data-bridges-knots-v4.0.0) (2026-06-17)
 
 
