@@ -44,7 +44,6 @@ class MarketsApi:
                 geojson_dict = api_response.model_dump()
 
                 return geojson_dict
-                return api_response
             except Exception as e:
                 logger.error(
                     "Exception when calling MarketsApi->markets_geo_json_list_get: %s",
