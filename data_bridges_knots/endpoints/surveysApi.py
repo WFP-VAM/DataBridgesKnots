@@ -19,10 +19,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-
 class MfiSurveysApi:
     def get_mfi_surveys_base_data(
-        self, survey_id: Optional[int] = None, page: Optional[int] = 1, page_size: int = 20
+        self,
+        survey_id: Optional[int] = None,
+        page: Optional[int] = 1,
+        page_size: int = 20,
     ) -> pd.DataFrame:
         """
         Retrieve Market Functionality Index (MFI) base survey data.

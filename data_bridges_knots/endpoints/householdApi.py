@@ -24,13 +24,12 @@ logger = logging.getLogger(__name__)
 
 class HouseholdApi:
 
-
     def get_household_survey(
         self,
         survey_id: int,
         access_type: str,
         page_size: Optional[int] = 600,
-        **kwargs: Bool,
+        **kwargs: bool,
     ) -> pd.DataFrame:
         """
         Retrieve household survey data using the specified access type.
@@ -69,7 +68,6 @@ class HouseholdApi:
             >>> # Official standardized data
             >>> df = client.get_household_survey(3094, "official")
         """
-
 
         responses = []
         total_items = 1
