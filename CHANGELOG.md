@@ -7,6 +7,18 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.0.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.0.1...data-bridges-knots-v4.0.2) (2026-06-26)
+
+
+### Bug Fixes
+
+* remove DATABRIDGES_VERSION from the mandatory env variables" ([d699981](https://github.com/WFP-VAM/DataBridgesKnots/commit/d699981dbbd7cc4702903bf05b23c116cf109306))
+
+
+### Documentation
+
+* add GHA badges ([116cd73](https://github.com/WFP-VAM/DataBridgesKnots/commit/116cd7377d0613ebd50c906092dba9274a2e9a8b))
+
 ## [4.0.1](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.0.0...data-bridges-knots-v4.0.1) (2026-06-19)
 
 
