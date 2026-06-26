@@ -61,7 +61,6 @@ def config_from_env() -> Dict:
     required_vars = [
         "WFP_API_CLIENT_ID",
         "WFP_API_CLIENT_SECRET",
-        "DATABRIDGES_VERSION",
     ]
 
     config = {}
