@@ -1,11 +1,14 @@
 # Data Bridges Knots
 
+[![Python package](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/python-package.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/python-package.yml)
+
 [![CodeQL](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/github-code-scanning/codeql)
 
 [![pages-build-deployment](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment)
 
 [![Release Please](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/release-please.yml)
 
+[![pages-build-deployment](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/WFP-VAM/DataBridgesKnots/actions/workflows/pages/pages-build-deployment)
 
 DataBridgesKnots is a Python module that allows you to get data from the WFP Data Bridges API, including **household survey data**, **market prices**, **exchange rates**, and **Market Functionality Index surveys**.
 
