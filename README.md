@@ -71,6 +71,14 @@ uv init
 Then configure `pyproject.toml` as follows: 
 
 ```
+[project]
+name = "name-of-your-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = ['data-bridges-knots', 'data-bridges-client']
+
 [[tool.uv.index]]
 url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/"
 name = "wfp-private"
