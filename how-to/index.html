@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>User guide - DataBridges Knots</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">DataBridges Knots</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Getting started</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">User guide</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../reference/" class="nav-link">API Reference</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../reference/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/WFP-VAM/databridgesknots/edit/master/docs/how-to.md" class="nav-link">Edit on WFP DataBridgesKnots
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#user-guide" class="nav-link">User Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#quick-start" class="nav-link">Quick start</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#getting-variable-and-choice-labels" class="nav-link">Getting variable and choice labels</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="user-guide">User Guide</h1>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="python">Python</h3>
+<p>Run the following example to extract commodity data: 
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">data_bridges_knots</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBridgesKnots</span>
+
+<span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;data_bridges_api_config.yaml&quot;</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">DataBridgesKnots</span><span class="p">(</span><span class="n">CONFIG_PATH</span><span class="p">)</span>
+
+<span class="c1"># COMMODITY DATA</span>
+<span class="n">commodity_units_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_commodity_units_list</span><span class="p">(</span><span class="n">country_iso3</span><span class="o">=</span><span class="s2">&quot;TZA&quot;</span><span class="p">,</span> <span class="n">commodity_unit_name</span><span class="o">=</span><span class="s2">&quot;Kg&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</code></pre></div>
+Additional examples are in the <a href="https://wfp-vam.github.io/DataBridgesKnots/reference/">User Documentation</a></p>
+<h3 id="r">R</h3>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+
+<span class="c1"># Import the Python module through reticulate</span>
+<span class="n">data_bridges_knots</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">import</span><span class="p">(</span><span class="s">&quot;data_bridges_knots&quot;</span><span class="p">)</span>
+
+<span class="c1"># Point to our virtual environment&#39;s Python</span>
+<span class="nf">use_python</span><span class="p">(</span><span class="s">&quot;.venv/bin/python&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create client instance</span>
+<span class="n">config_path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;data_bridges_api_config.yaml&quot;</span>
+<span class="n">client</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_bridges_knots</span><span class="o">$</span><span class="nf">DataBridgesKnots</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+
+<span class="c1"># COMMODITY DATA</span>
+<span class="c1"># Get commodity unit list for Tanzania</span>
+<span class="n">commodity_units</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">client</span><span class="o">$</span><span class="nf">get_commodity_units_list</span><span class="p">(</span>
+<span class="w">  </span><span class="n">country_iso3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TZA&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">commodity_unit_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Kg&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1L</span><span class="p">,</span>
+<span class="w">  </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;json&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="getting-variable-and-choice-labels">Getting variable and choice labels</h2>
+<p>DataBridgesKnots come with some helper functions to make the datasets more human-readable. </p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.labels.get_variable_labels" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">data_bridges_knots</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">get_variable_labels</span><span class="p">(</span><span class="n">xlsform_df</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Build a mapping between variable name and variable labels from a DataBridges XLSForm and return it in
+the desired format.</p>
+<p>Empty labels default to the corresponding name. For duplicate names, the
+latest occurrence overrides earlier values.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>xlsform_df</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with at least <code>"name"</code> and <code>"label"</code> columns.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format. Defaults to <code>"dict"</code>.</p>
+<p>One of:
+- <code>"dict"</code>: returns <code>dict[str, str]</code>.
+- <code>"json"</code>: returns a JSON-formatted <code>str</code>.
+- <code>"df"</code>: returns a <code>pandas.DataFrame</code> with columns <code>["colName", "label"]</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dict&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="dict">dict</span>[<span title="str">str</span>, <span title="str">str</span>], <span title="str">str</span>, <span title="pandas.DataFrame">DataFrame</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dict | str | pandas.DataFrame: Labels mapping in the requested format.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="KeyError">KeyError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If required columns are missing.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>format</code> is not one of <code>{"dict", "json", "df"}</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;n1&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">,</span> <span class="s1">&#39;n2&#39;</span><span class="p">],</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;L2&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_variable_labels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;dict&#39;</span><span class="p">)</span>
+<span class="go">{&#39;n1&#39;: &#39;L1&#39;, &#39;n2&#39;: &#39;L2&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_variable_labels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">)</span>
+<span class="go">colName label</span>
+<span class="go">0      n1    L1</span>
+<span class="go">1      n2    L2</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.labels.get_choice_labels" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">data_bridges_knots</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">get_choice_labels</span><span class="p">(</span><span class="n">xlsform_df</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Build a mapping from each XLSForm question <code>name</code> to its choice value labels,
+and return it as a dictionary, JSON string, or DataFrame.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>xlsform_df</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Input DataFrame containing at least the columns
+<code>"name"</code> and <code>"choiceList"</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Output format. Defaults to <code>"dict"</code>.</p>
+<p>One of:
+- <code>"dict"</code>: returns <code>dict[str, dict[str, str]]</code>.
+- <code>"json"</code>: returns a JSON-formatted <code>str</code>.
+- <code>"df"</code>: returns a <code>pandas.DataFrame</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dict&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="dict">dict</span>[<span title="str">str</span>, <span title="str">str</span>], <span title="str">str</span>, <span title="pandas.DataFrame">DataFrame</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dict[str, dict[str, str]] | str | pandas.DataFrame:
+Labels mapping in the requested format.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="KeyError">KeyError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If required columns are missing.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>format</code> is not one of <code>{"dict", "json", "df"}</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;q1&quot;</span><span class="p">,</span> <span class="s2">&quot;q2&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;choiceList&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Yes&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;No&quot;</span><span class="p">}]},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Option A&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Option B&quot;</span><span class="p">}]}</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_choice_labels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;dict&quot;</span><span class="p">)</span>
+<span class="go">{&#39;q1&#39;: {&#39;yes&#39;: &#39;Yes&#39;, &#39;no&#39;: &#39;No&#39;}, &#39;q2&#39;: {&#39;a&#39;: &#39;Option A&#39;, &#39;b&#39;: &#39;Option B&#39;}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">get_choice_labels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_choice_labels</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;df&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="data_bridges_knots.labels.map_value_labels" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">data_bridges_knots</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">map_value_labels</span><span class="p">(</span><span class="n">survey_df</span><span class="p">,</span> <span class="n">xlsform_df</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Map numerical choice values to human-readable labels based on XLSForm choices to a DataFrame.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>survey_df</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The survey data with coded values.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>xlsform_df</code>
+            </td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame containing <code>"name"</code> and
+<code>"choiceList"</code>. Each <code>choiceList</code> entry includes a <code>"choices"</code> list
+of dicts with keys <code>"name"</code> (code) and <code>"label"</code> (display text).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="KeyError">KeyError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If required columns (<code>"name"</code>, <code>"choiceList"</code>) or keys in
+the choices (<code>"name"</code>, <code>"label"</code>) are missing.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>import pandas as pd
+survey = pd.DataFrame({"q1": ["yes", "no"], "q2": ["a", "b"]})
+xls = pd.DataFrame({
+...   "name": ["q1", "q2"],
+...   "choiceList": [
+...     {"choices": [{"name": "yes", "label": "Yes"}, {"name": "no", "label": "No"}]},
+...     {"choices": [{"name": "a", "label": "Option A"}, {"name": "b", "label": "Option B"}]}
+...   ]
+... })
+map_value_labels(survey, xls)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pandas.DataFrame: A copy of <code>survey_df</code> where columns present in the</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>XLSForm mapping have codes replaced by labels.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
