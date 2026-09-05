@@ -2,12 +2,18 @@ from typing import Optional
 
 import logging
 import time
-from datetime import date
+from datetime import date, timedelta
 
 import data_bridges_client
 import numpy as np
 import pandas as pd
 from data_bridges_client.rest import ApiException
+
+# RFC 3339 timestamp format expected by the DataBridges API
+RFC3339_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S+01:00"
+
+# Days before today used as default start_date when none is given
+DEFAULT_DATE_RANGE_DAYS = 7
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
@@ -39,7 +45,7 @@ class MarketPricesApi:
         Args:
             country_iso3 (str): The ISO 3-letter country code
             start_date (str, optional): Start date in ISO format (e.g., '2022-01-01').
-                If None, defaults to today's date.
+                If None, defaults to 7 days before today.
             end_date (str, optional): End date in ISO format (e.g., '2022-01-01').
                 If None, defaults to today's date.
             page_size (int, optional): Number of items per page. Defaults to 1000.
@@ -47,10 +53,15 @@ class MarketPricesApi:
             commodity_id (int, optional): The exact ID of a Commodity. Defaults to 0.
             currency_id (int, optional): The exact ID of a currency. Defaults to 0.
             price_flag (str, optional): Type of price data: [actual|aggregate|estimated|forecasted]. Defaults to ''.
-            latest_value_only (bool, optional): Whether to return only latest values. Defaults to False.
+            latest_value_only (bool, optional): Whether to return only latest values.
+                Cannot be combined with start_date or end_date. Defaults to False.
 
         Returns:
             pd.DataFrame: DataFrame containing market price data
+
+        Raises:
+            ValueError: If latest_value_only is True and start_date or end_date
+                is also provided.
 
         Examples:
             >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
@@ -65,19 +76,26 @@ class MarketPricesApi:
             ...     price_flag="actual"
             ... )
         """
+        if latest_value_only and (start_date or end_date):
+            raise ValueError(
+                "start_date and end_date are ignored by the API when "
+                "latest_value_only=True; remove the dates or set "
+                "latest_value_only=False"
+            )
+
         if start_date:
             # Format the date according to RFC 3339 standard
-            start_date = date.fromisoformat(start_date).strftime(
-                "%Y-%m-%dT%H:%M:%S+01:00"
-            )
+            start_date = date.fromisoformat(start_date).strftime(RFC3339_DATE_FORMAT)
         else:
-            start_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
+            start_date = (
+                date.today() - timedelta(days=DEFAULT_DATE_RANGE_DAYS)
+            ).strftime(RFC3339_DATE_FORMAT)
 
         if end_date:
             # Format the date according to RFC 3339 standard
-            end_date = date.fromisoformat(end_date).strftime("%Y-%m-%dT%H:%M:%S+01:00")
+            end_date = date.fromisoformat(end_date).strftime(RFC3339_DATE_FORMAT)
         else:
-            end_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
+            end_date = date.today().strftime(RFC3339_DATE_FORMAT)
 
         responses = []
         total_items = 20
