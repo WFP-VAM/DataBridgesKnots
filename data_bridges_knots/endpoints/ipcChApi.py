@@ -1,6 +1,77 @@
-# TODO: IpcchApi
+import pprint
+from typing import Optional
+
+import logging
+import time
+
+import data_bridges_client
+import numpy as np
+import pandas as pd
+from data_bridges_client.rest import ApiException
+
+from data_bridges_knots.helpers import get_adm0_code
+
+logname = "data_bridges_api_calls.log"
+logging.basicConfig(
+    filename=logname,
+    filemode="a",
+    format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.INFO,
+)
+
+logger = logging.getLogger(__name__)
 
 
 class IpcchApi:
-    def get_ipc_and_equivalent_data(self):
+    """
+    This class is responsible for interacting with the IPC CH API to retrieve data related to IPC (Integrated Food Security Phase Classification) and equivalent historical peaks, latest peaks, most recent data, and WFP dashboard peaks.
+    """
+
+    def get_ipc_and_equivalent_historical_peaks(self, reference_year: Optional[int] = None, iso3: Optional[str] = None, page: Optional[int] = 1, env: Optional[str] = "prod") _-> pd.DataFrame:
+
+        """
+        Retrieves a paginated list of historical IPCCH and Equivalent peaks data, optionally filtered by ISO3 country code. 
+
+        Args:
+            reference_year (int, optional): The reference year for the data. If not provided, data for all years will be retrieved.
+            iso3 (str, optional): The ISO3 country code to filter the data. If not provided, data for all countries will be retrieved.
+            page (int, optional): The page number for paginated results. Defaults to 1.
+            env (str, optional): The environment to use for the API call. Defaults to "prod".
+
+        Returns:
+            pandas.DataFrame: A DataFrame containing the retrieved IPCCH and Equivalent historical peaks data.
+
+        """
+        with data_bridges_client.ApiClient(
+            configuration) as api_client:
+            # Create an instance of the API class
+            api_instance = data_bridges_client.IpcchApi(api_client)
+
+        try:
+            # Retrieves a paginated list of historical IPCCH and Equivalent peaks data, optionally filtered by ISO3 country code.
+            api_response = api_instance.ipcch_ipcch_and_equivalent_historical_peaks_get(reference_year=reference_year, iso3=iso3, page=page, env=env)
+            logger.info("The response of IpcchApi->ipcch_ipcch_and_equivalent_historical_peaks_get:\n")
+            df = pd.DataFrame([item.to_dict() for item in api_response.items])
+            return df
+
+        except Exception as e:
+            logger.error("Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_historical_peaks_get: %s\n" % e)
+            pass
+
+
+    def get_ipc_and_equivalent_latest_peaks(self):
         pass
+
+    def get_ipc_and_equivalent_most_recent(self):
+        pass
+
+    def get_ipc_and_equivalent_peaks_wfp_dashboard(self):
+        pass
+
+    def get_ipc_historical_data(self):
+        pass
+
+
+
+
