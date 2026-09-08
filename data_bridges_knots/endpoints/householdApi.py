@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 import time
 
@@ -28,7 +26,7 @@ class HouseholdApi:
         self,
         survey_id: int,
         access_type: str,
-        page_size: Optional[int] = 600,
+        page_size: int | None = 600,
         **kwargs: bool,
     ) -> pd.DataFrame:
         """
@@ -145,11 +143,11 @@ class HouseholdApi:
 
     def get_household_surveys_list(
         self,
-        country_iso3: Optional[int] = None,
-        page: Optional[int] = 1,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
-        survey_id: Optional[int] = None,
+        country_iso3: int | None = None,
+        page: int | None = 1,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        survey_id: int | None = None,
     ) -> pd.DataFrame:
         """Retrieves a list of household surveys for a country with their metadata.
 

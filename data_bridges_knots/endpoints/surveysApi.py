@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -22,8 +20,8 @@ logger = logging.getLogger(__name__)
 class MfiSurveysApi:
     def get_mfi_surveys_base_data(
         self,
-        survey_id: Optional[int] = None,
-        page: Optional[int] = 1,
+        survey_id: int | None = None,
+        page: int | None = 1,
         page_size: int = 20,
     ) -> pd.DataFrame:
         """
@@ -68,7 +66,7 @@ class MfiSurveysApi:
                 raise
 
     def get_mfi_surveys_full_data(
-        self, survey_id=None, page: Optional[int] = 1, page_size=20
+        self, survey_id=None, page: int | None = 1, page_size=20
     ) -> pd.DataFrame:
         """
         Get a full dataset that includes all the fields included in the survey in addition to the core Market Functionality Index (MFI) fields by Survey ID.
@@ -94,7 +92,7 @@ class MfiSurveysApi:
                 raise
 
     def get_mfi_surveys(
-        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
+        self, adm0_code=0, page: int | None = 1, start_date=None, end_date=None
     ) -> pd.DataFrame:
         """
         Retrieve Survey IDs, their corresponding XLS Form IDs, and Base XLS Form of all MFI surveys conducted in a country.
@@ -124,9 +122,9 @@ class MfiSurveysApi:
     def get_mfi_surveys_processed_data(
         self,
         survey_id=None,
-        page: Optional[int] = 1,
+        page: int | None = 1,
         page_size=20,
-        format: Optional[str] = "json",
+        format: str | None = "json",
         start_date=None,
         end_date=None,
         adm0_codes=None,
@@ -164,7 +162,7 @@ class MfiSurveysApi:
                 raise
 
     def get_mfi_xls_forms(
-        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
+        self, adm0_code=0, page: int | None = 1, start_date=None, end_date=None
     ) -> pd.DataFrame:
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.XlsFormsApi(api_client)
@@ -189,7 +187,7 @@ class MfiSurveysApi:
                 raise
 
     def get_mfi_xls_forms_detailed(
-        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
+        self, adm0_code=0, page: int | None = 1, start_date=None, end_date=None
     ) -> pd.DataFrame:
         """
         Get a complete list of XLS Forms uploaded on the MFI Data Bridge in a given period of data collection.

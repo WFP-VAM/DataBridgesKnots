@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -21,10 +19,10 @@ logger = logging.getLogger(__name__)
 class EconomicDataApi:
     def get_economic_indicator_list(
         self,
-        page: Optional[int] = 1,
-        indicator_name: Optional[str] = "",
-        country_iso3: Optional[str] = "",
-        format: Optional[str] = "json",
+        page: int | None = 1,
+        indicator_name: str | None = "",
+        country_iso3: str | None = "",
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Returns the lists of indicators for which Vulnerability Analysis and Mapping - Economic and Market Analysis Unit has redistribution licensing from Trading Economics.

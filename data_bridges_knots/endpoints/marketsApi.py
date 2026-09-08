@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -52,7 +50,7 @@ class MarketsApi:
                 raise
 
     def get_markets_list(
-        self, country_iso3: Optional[str] = None, page: Optional[int] = 1
+        self, country_iso3: str | None = None, page: int | None = 1
     ) -> pd.DataFrame:
         """Retrieves a complete list of markets in a country.
 
@@ -101,7 +99,7 @@ class MarketsApi:
                 raise
 
     def get_markets_as_csv(
-        self, country_iso3: Optional[str] = None, local_names: bool = False
+        self, country_iso3: str | None = None, local_names: bool = False
     ) -> str:
         """Retrieves a complete list of markets in a country in CSV format.
 

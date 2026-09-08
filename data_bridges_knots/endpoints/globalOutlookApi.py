@@ -1,6 +1,5 @@
-from typing import Literal, Optional
-
 import logging
+from typing import Literal
 
 import data_bridges_client
 import pandas as pd
@@ -22,7 +21,7 @@ class GlobalOutlookApi:
     def get_global_outlook(
         self,
         data_type: Literal["country_latest", "global_latest", "regional_latest"],
-        page: Optional[int] = None,
+        page: int | None = None,
     ) -> pd.DataFrame:
         """Retrieves data from the Global Outlook API.
 

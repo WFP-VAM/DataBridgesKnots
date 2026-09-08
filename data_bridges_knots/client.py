@@ -1,5 +1,3 @@
-from typing import Dict, Union
-
 import logging
 import os
 
@@ -34,7 +32,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def config_from_env() -> Dict:
+def config_from_env() -> dict:
     """Construct DataBridges configuration dictionary from environment variables.
 
     Reads configuration from the following environment variables:
@@ -154,7 +152,7 @@ class DataBridgesKnots(
             f"Brought to you with <3 by WFP VAM"
         )
 
-    def _load_config(self, config: Union[str, Dict]) -> Dict:
+    def _load_config(self, config: str | dict) -> dict:
         """Load configuration from YAML file or dictionary.
 
         Args:
@@ -181,7 +179,7 @@ class DataBridgesKnots(
                 f"config must be str (path to YAML file) or dict, got {type(config).__name__}"
             )
 
-    def _validate_config(self, config: Dict) -> None:
+    def _validate_config(self, config: dict) -> None:
         """Validate that configuration contains all required fields.
 
         Args:
@@ -197,7 +195,7 @@ class DataBridgesKnots(
                 f"Missing required configuration fields: {', '.join(missing)}"
             )
 
-    def _setup_configuration_and_authentication(self, config: Dict):
+    def _setup_configuration_and_authentication(self, config: dict):
         """Sets up authentication using configuration dictionary.
 
         Args:

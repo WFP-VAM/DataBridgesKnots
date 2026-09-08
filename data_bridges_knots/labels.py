@@ -1,5 +1,3 @@
-from typing import Union
-
 import ast
 import json
 
@@ -17,7 +15,7 @@ def to_dict(x):
 
 def get_variable_labels(
     xlsform_df: pd.DataFrame, format: str = "dict"
-) -> Union[dict[str, str], str, pd.DataFrame]:
+) -> dict[str, str] | str | pd.DataFrame:
     """
     Build a mapping between variable name and variable labels from a DataBridges XLSForm and return it in
     the desired format.
@@ -73,7 +71,7 @@ def get_variable_labels(
 
 def get_choice_labels(
     xlsform_df: pd.DataFrame, format: str = "dict"
-) -> Union[dict[str, str], str, pd.DataFrame]:
+) -> dict[str, str] | str | pd.DataFrame:
     """
     Build a mapping from each XLSForm question ``name`` to its choice value labels,
     and return it as a dictionary, JSON string, or DataFrame.

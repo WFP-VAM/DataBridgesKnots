@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 import time
 from datetime import date
@@ -25,8 +23,8 @@ class MarketPricesApi:
     def get_prices(
         self,
         country_iso3: str,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
         page_size: int = 1000,
         market_id: int = 0,
         commodity_id: int = 0,

@@ -1,5 +1,3 @@
-from typing import Dict
-
 import pandas as pd
 
 from data_bridges_knots.labels import (
@@ -62,7 +60,7 @@ def test_return_column_labels_as_df(sample_xlsform_df):
 
 def test_return_column_labels_as_dict(sample_xlsform_df):
     result = get_variable_labels(sample_xlsform_df, format="dict")
-    assert isinstance(result, Dict)
+    assert isinstance(result, dict)
 
 
 def test_return_column_labels_as_json(sample_xlsform_df):
@@ -77,7 +75,7 @@ def test_return_value_labels_as_df(sample_xlsform_df):
 
 def test_return_value_labels_as_dict(sample_xlsform_df):
     result = get_choice_labels(sample_xlsform_df)
-    assert isinstance(result, Dict)
+    assert isinstance(result, dict)
 
 
 def test_return_value_labels_as_json(sample_xlsform_df):
