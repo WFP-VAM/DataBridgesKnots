@@ -2,6 +2,7 @@ import logging
 
 import data_bridges_client
 import pandas as pd
+from datetime import datetime
 
 logname = "data_bridges_api_calls.log"
 logging.basicConfig(
@@ -146,13 +147,17 @@ class IpcchApi:
                 )
                 raise e
 
+    #BUG: Requests seems to fail due to validation issues, API schema requires datetime but server expects string
     def get_ipc_historical_data(
         self,
         from_date: str | None = None,
         to_date: str | None = None,
         iso3: str | None = None,
         page: int | None = 1,
-    ) -> pd.DataFrame:
+    ) -> pd.DataFrame:  
+
+        # from_date = datetime.fromisoformat(from_date) #FIXME: is this required?
+        # to_date = datetime.fromisoformat(to_date)
 
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             # Create an instance of the API class
@@ -164,7 +169,7 @@ class IpcchApi:
             try:
                 # Retrieves a paginated list of IPCCH and Equivalent Historical Data.
                 api_response = api_instance.ipcch_ipcch_historical_data_get(
-                    fromDate=from_date, toDate=to_date, iso3=iso3, page=page, env=env
+                    from_date=from_date, to_date=to_date, iso3=iso3, page=page, env=env
                 )
                 logger.info(
                     "The response of IpcchApi->ipcch_ipcch_historical_data_get:\n"

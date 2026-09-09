@@ -63,3 +63,4 @@ This document outlines the planned features and improvements for the `DataBridge
 ## Patch
 - [ ] Add tests for additional endpoints (integration + unit)
 - [ ] Code optimization
+- [ ] Fix `get_ipc_historical_data` params 
