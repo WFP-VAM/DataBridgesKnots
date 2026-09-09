@@ -54,7 +54,7 @@ class IncubationApi:
             try:
                 # Retrieves a paginated list of Adm0 CARI results based on the specified indicator, administrative code, and  survey.
                 api_response = api_instance.cari_adm0_values_get(
-                    adm0_code=adm0_code,
+                    adm0_code=adm0code,
                     survey_id=survey_id,
                     indicator_id=indicator_id,
                     page=page,
@@ -72,6 +72,7 @@ class IncubationApi:
                     "Exception when calling IncubationApi->cari_adm0_values_get: %s\n"
                     % e
                 )
+                raise e
 
     def get_cari_adm1(self, country_iso3=None, survey_id=None, indicator_id=None, page=1):
         """ "
@@ -97,9 +98,11 @@ class IncubationApi:
                 self.env
             )  # str | Environment.   * `prod` - api.vam.wfp.org   * `dev` - dev.api.vam.wfp.org (optional)
 
+            adm0code = get_adm0_code(country_iso3) if country_iso3 else None
+
             try:
                 api_response = api_instance.cari_adm1_values_get(
-                    adm0_code=adm0_code,
+                    adm0_code=adm0code,
                     survey_id=survey_id,
                     indicator_id=indicator_id,
                     page=page,
@@ -118,6 +121,7 @@ class IncubationApi:
                     "Exception when calling IncubationApi->cari_adm1_values_get: %s\n"
                     % e
                 )
+                raise e
 
     def get_cari_data(
         self, admin_level="admin0", country_iso3=None, survey_id=None, indicator_id=None, page=1
