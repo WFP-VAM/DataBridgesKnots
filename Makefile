@@ -71,9 +71,6 @@ docs:
 docs-serve:
 	uv run mkdocs serve
 
-
-
-
 #* DOCKER
 
 # Example: make docker-build VERSION=latest

@@ -147,6 +147,39 @@ class HouseholdApi:
         end_date: str | None = None,
         survey_id: int | None = None,
     ) -> pd.DataFrame:
+        """Retrieves a list of household surveys for a country with their metadata.
+
+        Args:
+            country_iso3 (str, optional): ISO3 Country code
+            page (int, optional): Page number for paginated results. Defaults to 1
+            start_date (str, optional): Start date filter in ISO format (YYYY-MM-DD)
+            end_date (str, optional): End date filter in ISO format (YYYY-MM-DD)
+            survey_id (int, optional): Specific survey ID to retrieve
+
+        Returns:
+            pd.DataFrame: DataFrame containing survey metadata with columns:
+                - survey_id: Unique identifier for the survey
+                - xls_form_id: ID of the questionnaire form used
+                - title: Survey title
+                - country: Country name
+                - start_date: Survey start date
+                - end_date: Survey end date
+                And other metadata fields
+
+        Examples:
+            >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
+            >>> # Get all surveys for a country
+            >>> surveys = client.get_household_surveys_list(country_iso3="COG")
+            >>> # Get surveys within date range
+            >>> surveys = client.get_household_surveys_list(
+            ...     country_iso3="COG",
+            ...     start_date="2024-01-01",
+            ...     end_date="2024-12-31"
+            ... )
+
+        Raises:
+            ApiException: If there's an error accessing the API
+        """
 
         responses = []
         page = 1
@@ -195,90 +228,7 @@ class HouseholdApi:
                     logger.error(
                         f"Exception when calling IncubationApi->household_surveys_get: {e}"
                     )
-
-    # def get_household_surveys_list(
-    #     self,
-    #     country_iso3: int | None = None,
-    #     start_date: str | None = None,
-    #     end_date: str | None = None,
-    #     survey_id: int | None = None,
-    # ) -> pd.DataFrame:
-    #     """Retrieves a list of household surveys for a country with their metadata.
-
-    #     Args:
-    #         country_iso3 (str, optional): ISO3 Country code
-    #         page (int, optional): Page number for paginated results. Defaults to 1
-    #         start_date (str, optional): Start date filter in ISO format (YYYY-MM-DD)
-    #         end_date (str, optional): End date filter in ISO format (YYYY-MM-DD)
-    #         survey_id (int, optional): Specific survey ID to retrieve
-
-    #     Returns:
-    #         pd.DataFrame: DataFrame containing survey metadata with columns:
-    #             - survey_id: Unique identifier for the survey
-    #             - xls_form_id: ID of the questionnaire form used
-    #             - title: Survey title
-    #             - country: Country name
-    #             - start_date: Survey start date
-    #             - end_date: Survey end date
-    #             And other metadata fields
-
-    #     Examples:
-    #         >>> client = DataBridgesKnots("data_bridges_api_config.yaml")
-    #         >>> # Get all surveys for a country
-    #         >>> surveys = client.get_household_surveys_list(country_iso3="COG")
-    #         >>> # Get surveys within date range
-    #         >>> surveys = client.get_household_surveys_list(
-    #         ...     country_iso3="COG",
-    #         ...     start_date="2024-01-01",
-    #         ...     end_date="2024-12-31"
-    #         ... )
-
-    #     Raises:
-    #         ApiException: If there's an error accessing the API
-    #     """
-
-    #     responses = []
-    #     total_items = 20
-    #     max_item = 0
-    #     page = 1
-    #     page_size = 1000
-
-    #     adm0code = get_adm0_code(country_iso3) if country_iso3 else None
-
-    #     while total_items > max_item:
-    #         page += 1
-    #         with data_bridges_client.ApiClient(self._setup_configuration_and_authentication(self.config)) as api_client:
-    #             api_instance = data_bridges_client.IncubationApi(api_client)
-    #             env = self.env
-
-    #             try:
-    #                 hh_survey_list = api_instance.household_surveys_get(
-    #                     adm0_code=adm0code,
-    #                     page=page,
-    #                     start_date=start_date,
-    #                     end_date=end_date,
-    #                     survey_id=survey_id,
-    #                     env=env,
-    #                 )
-
-    #                 responses.extend(
-    #                     item.to_dict() for item in hh_survey_list.items
-    #                 )
-    #                 total_items = hh_survey_list.total_items
-    #                 logger.info(f"Fetching page {page}")
-    #                 max_item = page * page_size
-    #                 time.sleep(1)
-    #                 logger.info(f"Successfully retrieved household surveys on page {page}")
-
-    #             except ApiException as e:
-    #                 logger.error(
-    #                     f"Exception when calling IncubationApi->household_surveys_get: {e}"
-    #                 )
-    #                 raise
-
-    #     df = pd.DataFrame(responses)
-    #     df = df.replace({np.nan: None})
-    #     return df
+            return pd.DataFrame(responses)
 
     def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
         """Retrieves the complete XLS Form definition for a questionnaire.
@@ -339,7 +289,7 @@ class HouseholdApi:
         """
         if self.xlsform is None:
             self.xlsform = self.get_household_xlsform_definition(xls_form_id)
-        return pd.DataFrame(list(self.xlsform.fields)[0])
+        return pd.DataFrame(next(iter(self.xlsform.fields)))
         # return next(iter(self.xlsform.fields))  FIXME: replace line with this and test results
 
     def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
