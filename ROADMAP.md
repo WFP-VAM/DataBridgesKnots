@@ -48,7 +48,7 @@ This document outlines the planned features and improvements for the `DataBridge
   - [X] IpcchApi
   - [X] GlobalOutlookApi
   - [X] CARI endpoints
-- Fix pagination for Household Survey List
+- [X] Fix pagination for Household Survey List
 
 # Future releases
 
