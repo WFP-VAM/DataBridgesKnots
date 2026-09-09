@@ -7,6 +7,29 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.1.0](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.0.2...data-bridges-knots-v4.1.0) (2026-09-09)
+
+
+### Features
+
+* add CARI endpoints ([c55555a](https://github.com/WFP-VAM/DataBridgesKnots/commit/c55555af02d31303704f882c6db320c339ff1ace))
+* add get_ipc_and_equivalent_historical_peaks ([99752b3](https://github.com/WFP-VAM/DataBridgesKnots/commit/99752b34ba68ad69eceb8723e2ae53151ad34109))
+* add get_ipc_and_equivalent_latest_peaks, get_ipc_and_equivalent_most_recent, get_ipc_and_equivalent_peaks_wfp_dashboard, get_ipc_historical_data ([28bf401](https://github.com/WFP-VAM/DataBridgesKnots/commit/28bf4017c19cfec5a98dce6746cc1cc5094a345a))
+
+
+### Bug Fixes
+
+* add pagination to get_household_surveys_list ([c8e3836](https://github.com/WFP-VAM/DataBridgesKnots/commit/c8e383665a373173af0c2c59771837cd2c4f72ef))
+* adm0code variable name in IncubatioApi (CARI) ([510a559](https://github.com/WFP-VAM/DataBridgesKnots/commit/510a559e51689f1acb43af7c4e0179b50de32802))
+* globalOutlook API response ([93536a0](https://github.com/WFP-VAM/DataBridgesKnots/commit/93536a03be02a4183a12d9fa8229b2456a486f02))
+* import errors for IncubationApi class ([2de85d7](https://github.com/WFP-VAM/DataBridgesKnots/commit/2de85d7ff78aacaeb4b9ec949f01a24257514992))
+
+
+### Documentation
+
+* update ROADMAP ([a813513](https://github.com/WFP-VAM/DataBridgesKnots/commit/a8135138cc5f16b80f8b196c006040691f3c58dc))
+* update ROADMAP ([4f82cbf](https://github.com/WFP-VAM/DataBridgesKnots/commit/4f82cbf838ce6d7e1b959e251c74a56eac1e3eab))
+
 ## [4.0.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.0.1...data-bridges-knots-v4.0.2) (2026-06-26)
 
 
