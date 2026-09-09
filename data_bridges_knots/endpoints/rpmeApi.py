@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -21,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # TODO: Get the scope and test these functions
 class RpmeApi:
-    def get_rpme_base_data(self, survey_id=None, page: Optional[int] = 1, page_size=20):
+    def get_rpme_base_data(self, survey_id=None, page: int | None = 1, page_size=20):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.RpmeApi(api_client)
             env = self.env
@@ -42,8 +40,8 @@ class RpmeApi:
     def get_rpme_full_data(
         self,
         survey_id=None,
-        format: Optional[str] = "json",
-        page: Optional[int] = 1,
+        format: str | None = "json",
+        page: int | None = 1,
         page_size=20,
     ):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
@@ -69,7 +67,7 @@ class RpmeApi:
     # TODO: Get the scope and test these functions
     def get_rpme_output_values(
         self,
-        page: Optional[int] = 1,
+        page: int | None = 1,
         adm0_code=None,
         survey_id=None,
         shop_id=None,
@@ -102,7 +100,7 @@ class RpmeApi:
 
     # TODO: Get the scope and test these functions
     def get_rpme_surveys(
-        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
+        self, adm0_code=0, page: int | None = 1, start_date=None, end_date=None
     ):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.RpmeApi(api_client)
@@ -125,7 +123,7 @@ class RpmeApi:
                 raise
 
     # TODO: Get the scope and test these functions
-    def get_rpme_variables(self, page: Optional[int] = 1):
+    def get_rpme_variables(self, page: int | None = 1):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.RpmeApi(api_client)
             env = self.env
@@ -142,7 +140,7 @@ class RpmeApi:
 
     # TODO: Get the scope and test these functions
     def get_rpme_xls_forms(
-        self, adm0_code=0, page: Optional[int] = 1, start_date=None, end_date=None
+        self, adm0_code=0, page: int | None = 1, start_date=None, end_date=None
     ):
         with data_bridges_client.ApiClient(self.configuration) as api_client:
             api_instance = data_bridges_client.RpmeApi(api_client)

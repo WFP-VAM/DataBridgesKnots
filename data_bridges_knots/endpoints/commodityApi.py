@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -22,11 +20,11 @@ logger = logging.getLogger(__name__)
 class CommodityApi:
     def get_commodities_list(
         self,
-        country_iso3: Optional[str] = None,
-        commodity_name: Optional[str] = None,
-        commodity_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        country_iso3: str | None = None,
+        commodity_name: str | None = None,
+        commodity_id: int | None = 0,
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Retrieves the detailed list of commodities available in the DataBridges platform.
@@ -84,12 +82,12 @@ class CommodityApi:
 
     def get_commodity_units_conversion_list(
         self,
-        country_iso3: Optional[str] = None,
-        commodity_id: Optional[int] = 0,
-        from_unit_id: Optional[int] = 0,
-        to_unit_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        country_iso3: str | None = None,
+        commodity_id: int | None = 0,
+        from_unit_id: int | None = 0,
+        to_unit_id: int | None = 0,
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Retrieves conversion factors to Kilogram or Litres for each convertible unit of measure.
@@ -140,11 +138,11 @@ class CommodityApi:
 
     def get_commodity_units_list(
         self,
-        country_iso3: Optional[str] = None,
-        commodity_unit_name: Optional[str] = None,
-        commodity_unit_id: Optional[int] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        country_iso3: str | None = None,
+        commodity_unit_name: str | None = None,
+        commodity_unit_id: int | None = 0,
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Retrieves the detailed list of the unit of measure available in DataBridges platform.
@@ -195,11 +193,11 @@ class CommodityApi:
 
     def get_commodity_categories_list(
         self,
-        category_id: Optional[int] = 0,
-        country_iso3: Optional[str] = None,
-        category_name: Optional[str] = None,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        category_id: int | None = 0,
+        country_iso3: str | None = None,
+        category_name: str | None = None,
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         # Enter a context with an instance of the API client
         # Enter a context with an instance of the API client
@@ -227,7 +225,6 @@ class CommodityApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling CommoditiesApi->commodities_categories_list_get: %s\n"
-                    % e
+                    f"Exception when calling CommoditiesApi->commodities_categories_list_get: {e}\n"
                 )
                 raise

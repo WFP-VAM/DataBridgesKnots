@@ -40,21 +40,29 @@ This document outlines the planned features and improvements for the `DataBridge
 
 - [X] Add parameters for `get_household_survey` FullData
 - [X] Update endpoints to `v2`
-- [ ] Deprecate `DataBridgesShape`
-- [ ] Update documentation for v4.x
-- [ ] Add tests for existing endpoints (integration + unit)
+- [X] Deprecate `DataBridgesShape`
+- [X] Update documentation for v4.x
+
+## v4.1.x
+- [X] Add missing endpoints
+  - [X] IpcchApi
+  - [X] GlobalOutlookApi
+  - [X] CARI endpoints
+- [X] Fix pagination for Household Survey List
 
 # Future releases
 
 ## Minors
 - [ ] Add missing endpoints
   - [ ] RpmeApi
-  - [ ] IpcchApi
-  - [ ] GlobalOutlookApi
 - [ ] STATA support
-- [ ] Add helper functions to search surveys
+- [ ] Improve labelling support (`labels.py`)
+- [ ] Add helper functions to search surveys (i.e. solve pagination, add parameters)
 - [ ] Add option to write to file / retrieve partial results (time-out)
-- [ ] Add option to use polars
+- [ ] Add option to use polars (optional)
 
 ## Patch
-- [ ] Add tests for additional endpoints
+- [ ] Add tests for additional endpoints (integration + unit)
+- [ ] Code optimization
+- [ ] Fix `get_ipc_historical_data` params 
+- [ ] Fix pagination for pages

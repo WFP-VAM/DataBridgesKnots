@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 import time
 
@@ -85,11 +83,11 @@ class CurrencyApi:
 
     def get_currency_list(
         self,
-        country_iso3: Optional[str] = None,
-        currency_name: Optional[str] = None,
-        currency_id: Optional[str] = 0,
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        country_iso3: str | None = None,
+        currency_name: str | None = None,
+        currency_id: str | None = 0,
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Returns the list of currencies available in the internal VAM database, with Currency 3-letter code, matching with ISO 4217.
@@ -140,10 +138,10 @@ class CurrencyApi:
 
     def get_usd_indirect_quotation(
         self,
-        country_iso3: Optional[str] = "",
-        currency_name: Optional[str] = "",
-        page: Optional[int] = 1,
-        format: Optional[str] = "json",
+        country_iso3: str | None = "",
+        currency_name: str | None = "",
+        page: int | None = 1,
+        format: str | None = "json",
     ) -> pd.DataFrame:
         """
         Returns the value of the Exchange rates from Trading Economics, for official rates, and DataViz for unofficial rates.

@@ -3,9 +3,8 @@ import stata_setup
 
 def load_stata(df, stata_path="C:/Program Files/Stata18", stata_version="se"):
     stata_setup.config(stata_path, stata_version)
-    from sfi import Data
+    from sfi import Data, SFIToolkit
     from sfi import Datetime as dt
-    from sfi import SFIToolkit
 
     """
     Loads a Pandas DataFrame into a Stata data file format.

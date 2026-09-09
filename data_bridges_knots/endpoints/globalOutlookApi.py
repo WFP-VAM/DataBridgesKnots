@@ -1,6 +1,5 @@
-from typing import Literal, Optional
-
 import logging
+from typing import Literal
 
 import data_bridges_client
 import pandas as pd
@@ -17,12 +16,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# FIXME: Get scopes to test this function
 class GlobalOutlookApi:
     def get_global_outlook(
         self,
         data_type: Literal["country_latest", "global_latest", "regional_latest"],
-        page: Optional[int] = None,
+        page: int | None = None,
     ) -> pd.DataFrame:
         """Retrieves data from the Global Outlook API.
 
@@ -82,7 +80,18 @@ class GlobalOutlookApi:
                 logger.info(
                     f"Successfully retrieved Global Outlook data for type: {data_type}"
                 )
-                return pd.DataFrame([item.to_dict() for item in api_response.items])
+
+                if isinstance(api_response, list):
+                    df = pd.DataFrame(
+                        [item.to_dict() if hasattr(item, "to_dict") else vars(item)
+                        for item in api_response]
+                    )
+                else:
+                    df = pd.DataFrame([
+                        api_response.to_dict() if hasattr(api_response, "to_dict") else vars(api_response)
+                    ])
+
+                return df
 
             except Exception as e:
                 logger.error(

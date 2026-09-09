@@ -1,5 +1,3 @@
-from typing import Dict, Optional
-
 import json
 from pathlib import Path
 
@@ -7,7 +5,7 @@ from pathlib import Path
 codes_mapping = None
 
 
-def _load_country_codes() -> Dict[str, int]:
+def _load_country_codes() -> dict[str, int]:
     """Load country codes mapping from JSON file.
 
     Returns:
@@ -37,7 +35,7 @@ def _load_country_codes() -> Dict[str, int]:
     return codes_mapping
 
 
-def get_adm0_code(country_iso3: str) -> Optional[int]:
+def get_adm0_code(country_iso3: str) -> int | None:
     """Get ADM0 code for a given ISO3 country code.
 
     Args:

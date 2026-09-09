@@ -1,5 +1,3 @@
-from typing import Optional
-
 import logging
 
 import data_bridges_client
@@ -22,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class MarketsApi:
-    def get_market_geojson_list(self, country_iso3: str = None):
+    def get_market_geojson_list(self, country_iso3: str | None):
         """Returns a list of geo-referenced markets in a specific country."""
         if country_iso3 is None:
             raise ValueError("country_iso3 parameter is required")
@@ -52,7 +50,7 @@ class MarketsApi:
                 raise
 
     def get_markets_list(
-        self, country_iso3: Optional[str] = None, page: Optional[int] = 1
+        self, country_iso3: str | None = None, page: int | None = 1
     ) -> pd.DataFrame:
         """Retrieves a complete list of markets in a country.
 
@@ -101,7 +99,7 @@ class MarketsApi:
                 raise
 
     def get_markets_as_csv(
-        self, country_iso3: Optional[str] = None, local_names: bool = False
+        self, country_iso3: str | None = None, local_names: bool = False
     ) -> str:
         """Retrieves a complete list of markets in a country in CSV format.
 
@@ -145,7 +143,7 @@ class MarketsApi:
                 raise
 
     def get_nearby_markets(
-        self, country_iso3: str = None, lat: float = None, lng: float = None
+        self, country_iso3: str | None, lat: float | None, lng: float | None
     ) -> pd.DataFrame:
         """Finds markets near a given location within a 15km distance.
 

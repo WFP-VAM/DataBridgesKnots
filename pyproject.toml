@@ -55,6 +55,9 @@ include = ["data_bridges_knots*"]
 [tool.setuptools.package-data]
 data_bridges_knots = ['country_list.json']
 
+[tool.ruff]
+lint.ignore = ["N999"]
+
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = 310

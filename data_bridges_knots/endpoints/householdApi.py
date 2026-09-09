@@ -1,10 +1,7 @@
-from typing import Optional
-
 import logging
 import time
 
 import data_bridges_client
-import numpy as np
 import pandas as pd
 from data_bridges_client.rest import ApiException
 
@@ -28,7 +25,7 @@ class HouseholdApi:
         self,
         survey_id: int,
         access_type: str,
-        page_size: Optional[int] = 600,
+        page_size: int | None = 600,
         **kwargs: bool,
     ) -> pd.DataFrame:
         """
@@ -145,13 +142,12 @@ class HouseholdApi:
 
     def get_household_surveys_list(
         self,
-        country_iso3: Optional[int] = None,
-        page: Optional[int] = 1,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
-        survey_id: Optional[int] = None,
+        country_iso3: str | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        survey_id: int | None = None,
     ) -> pd.DataFrame:
-        """Retrieves a list of household surveys for a country with their metadata.
+        """Retrieves a full list of household surveys for a country with their metadata.
 
         Args:
             country_iso3 (str, optional): ISO3 Country code
@@ -185,30 +181,54 @@ class HouseholdApi:
             ApiException: If there's an error accessing the API
         """
 
+        responses = []
+        page = 1
+
         adm0code = get_adm0_code(country_iso3) if country_iso3 else None
 
-        with data_bridges_client.ApiClient(self.configuration) as api_client:
+        with data_bridges_client.ApiClient(
+            self._setup_configuration_and_authentication(self.config)
+        ) as api_client:
+
             api_instance = data_bridges_client.IncubationApi(api_client)
             env = self.env
 
-            try:
-                api_response = api_instance.household_surveys_get(
-                    adm0_code=adm0code,
-                    page=page,
-                    start_date=start_date,
-                    end_date=end_date,
-                    survey_id=survey_id,
-                    env=env,
-                )
-                logger.info("Successfully retrieved household surveys")
-                df = pd.DataFrame([item.to_dict() for item in api_response.items])
-                df = df.replace({np.nan: None})
-                return df
-            except ApiException as e:
-                logger.error(
-                    f"Exception when calling IncubationApi->household_surveys_get: {e}"
-                )
-                raise
+            while True:
+                try:
+                    hh_survey_list = api_instance.household_surveys_get(
+                        adm0_code=adm0code,
+                        page=page,
+                        start_date=start_date,
+                        end_date=end_date,
+                        survey_id=survey_id,
+                        env=env,
+                    )
+
+                    items = hh_survey_list.items
+
+                    if not items:
+                        break
+
+                    responses.extend(
+                        item.to_dict() if hasattr(item, "to_dict") else item
+                        for item in items
+                    )
+
+                    logger.info(
+                        f"Fetched page {page}: {len(items)} items "
+                        f"({len(responses)}/{hh_survey_list.total_items})"
+                    )
+
+                    if len(responses) >= hh_survey_list.total_items:
+                        break
+
+                    page += 1
+
+                except ApiException as e:
+                    logger.error(
+                        f"Exception when calling IncubationApi->household_surveys_get: {e}"
+                    )
+            return pd.DataFrame(responses)
 
     def get_household_xlsform_definition(self, xls_form_id: int) -> pd.DataFrame:
         """Retrieves the complete XLS Form definition for a questionnaire.
@@ -269,7 +289,8 @@ class HouseholdApi:
         """
         if self.xlsform is None:
             self.xlsform = self.get_household_xlsform_definition(xls_form_id)
-        return pd.DataFrame(list(self.xlsform.fields)[0])
+        return pd.DataFrame(next(iter(self.xlsform.fields)))
+        # return next(iter(self.xlsform.fields))  FIXME: replace line with this and test results
 
     def get_choice_list(self, xls_form_id: int) -> pd.DataFrame:
         """Extracts choice lists from a questionnaire form definition.
