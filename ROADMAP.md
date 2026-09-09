@@ -44,10 +44,11 @@ This document outlines the planned features and improvements for the `DataBridge
 - [X] Update documentation for v4.x
 
 ## v4.1.x
-- [ ] Add missing endpoints
-  - [ ] IpcchApi
-  - [ ] GlobalOutlookApi
-  - [ ] CARI endpoints
+- [X] Add missing endpoints
+  - [X] IpcchApi
+  - [X] GlobalOutlookApi
+  - [X] CARI endpoints
+- Fix pagination for Household Survey List
 
 # Future releases
 
@@ -58,9 +59,10 @@ This document outlines the planned features and improvements for the `DataBridge
 - [ ] Improve labelling support (`labels.py`)
 - [ ] Add helper functions to search surveys (i.e. solve pagination, add parameters)
 - [ ] Add option to write to file / retrieve partial results (time-out)
-- [ ] Add option to use polars
+- [ ] Add option to use polars (optional)
 
 ## Patch
 - [ ] Add tests for additional endpoints (integration + unit)
 - [ ] Code optimization
 - [ ] Fix `get_ipc_historical_data` params 
+- [ ] Fix pagination for pages

@@ -147,7 +147,7 @@ class HouseholdApi:
         end_date: str | None = None,
         survey_id: int | None = None,
     ) -> pd.DataFrame:
-        """Retrieves a list of household surveys for a country with their metadata.
+        """Retrieves a full list of household surveys for a country with their metadata.
 
         Args:
             country_iso3 (str, optional): ISO3 Country code
