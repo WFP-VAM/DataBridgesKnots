@@ -69,12 +69,13 @@ class IncubationApi:
 
             except Exception as e:
                 logger.error(
-                    "Exception when calling IncubationApi->cari_adm0_values_get: %s\n"
-                    % e
+                    f"Exception when calling IncubationApi->cari_adm0_values_get: {e}\n"
                 )
-                raise e
+                raise
 
-    def get_cari_adm1(self, country_iso3=None, survey_id=None, indicator_id=None, page=1):
+    def get_cari_adm1(
+        self, country_iso3=None, survey_id=None, indicator_id=None, page=1
+    ):
         """ "
         Retrieves a paginated list of Adm1 CARI results based on the specified indicator, administrative code, and survey.
 
@@ -118,13 +119,17 @@ class IncubationApi:
 
             except Exception as e:
                 logger.error(
-                    "Exception when calling IncubationApi->cari_adm1_values_get: %s\n"
-                    % e
+                    f"Exception when calling IncubationApi->cari_adm1_values_get: {e}\n"
                 )
-                raise e
+                raise
 
     def get_cari_data(
-        self, admin_level="admin0", country_iso3=None, survey_id=None, indicator_id=None, page=1
+        self,
+        admin_level="admin0",
+        country_iso3=None,
+        survey_id=None,
+        indicator_id=None,
+        page=1,
     ):
         """ "
         Retrieves a paginated list of Admin0 or Admin1 CARI results based on the specified indicator, administrative code, and survey.
@@ -146,11 +151,17 @@ class IncubationApi:
         if admin_level == "admin0" or admin_level == "admin1":
             if admin_level == "admin0":
                 return self.get_cari_adm0(
-                    country_iso3=country_iso3, survey_id=survey_id, indicator_id=indicator_id, page=page
+                    country_iso3=country_iso3,
+                    survey_id=survey_id,
+                    indicator_id=indicator_id,
+                    page=page,
                 )
             elif admin_level == "admin1":
                 return self.get_cari_adm1(
-                    country_iso3=country_iso3, survey_id=survey_id, indicator_id=indicator_id, page=page
+                    country_iso3=country_iso3,
+                    survey_id=survey_id,
+                    indicator_id=indicator_id,
+                    page=page,
                 )
         else:
             raise ValueError("admin_level must be either 'admin0' or 'admin1'")

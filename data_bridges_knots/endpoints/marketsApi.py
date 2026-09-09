@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class MarketsApi:
-    def get_market_geojson_list(self, country_iso3: str = None):
+    def get_market_geojson_list(self, country_iso3: str | None):
         """Returns a list of geo-referenced markets in a specific country."""
         if country_iso3 is None:
             raise ValueError("country_iso3 parameter is required")
@@ -143,7 +143,7 @@ class MarketsApi:
                 raise
 
     def get_nearby_markets(
-        self, country_iso3: str = None, lat: float = None, lng: float = None
+        self, country_iso3: str | None, lat: float | None, lng: float | None
     ) -> pd.DataFrame:
         """Finds markets near a given location within a 15km distance.
 

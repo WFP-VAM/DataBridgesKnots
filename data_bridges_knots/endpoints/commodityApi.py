@@ -78,7 +78,7 @@ class CommodityApi:
                 logger.error(
                     f"Exception when calling CommoditiesApi->commodities_list_get: {e}"
                 )
-                raise e
+                raise
 
     def get_commodity_units_conversion_list(
         self,
@@ -225,7 +225,6 @@ class CommodityApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling CommoditiesApi->commodities_categories_list_get: %s\n"
-                    % e
+                    f"Exception when calling CommoditiesApi->commodities_categories_list_get: {e}\n"
                 )
                 raise

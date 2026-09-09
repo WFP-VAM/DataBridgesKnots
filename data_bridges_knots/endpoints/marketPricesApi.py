@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import date
+from datetime import datetime, timezone
 
 import data_bridges_client
 import numpy as np
@@ -65,17 +65,14 @@ class MarketPricesApi:
         """
         if start_date:
             # Format the date according to RFC 3339 standard
-            start_date = date.fromisoformat(start_date).strftime(
-                "%Y-%m-%dT%H:%M:%S+01:00"
-            )
+            start_date = datetime.datetime.now(tz=datetime.timezone.utc).date()
         else:
-            start_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
-
+            start_date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
         if end_date:
             # Format the date according to RFC 3339 standard
-            end_date = date.fromisoformat(end_date).strftime("%Y-%m-%dT%H:%M:%S+01:00")
+            end_date = datetime.datetime.now(tz=datetime.timezone.utc).date()
         else:
-            end_date = date.today().strftime("%Y-%m-%dT%H:%M:%S+01:00")
+            end_date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
 
         responses = []
         total_items = 20

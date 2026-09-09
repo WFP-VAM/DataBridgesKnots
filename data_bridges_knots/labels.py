@@ -8,7 +8,7 @@ def to_dict(x):
     if isinstance(x, str):
         try:
             return ast.literal_eval(x)
-        except Exception:
+        except ValueError:
             return x  # keep original if parsing fails
     return x
 
@@ -117,7 +117,7 @@ def get_choice_labels(
         if isinstance(x, str):
             try:
                 return ast.literal_eval(x)
-            except Exception:
+            except ValueError:
                 return None
         return None
 
@@ -183,27 +183,32 @@ def map_value_labels(survey_df: pd.DataFrame, xlsform_df: pd.DataFrame) -> pd.Da
     """
 
     survey_data = survey_df.convert_dtypes()
+
     choiceList = pd.json_normalize(xlsform_df["choiceList"])
     choiceList = choiceList.rename(columns={"name": "choice_name"})
     choiceList = choiceList.join(xlsform_df["name"]).dropna()
+
     choices = choiceList.explode("choices")
 
-    categories_dict = dict()
+    categories_dict = {}
     for _, row in choices.iterrows():
         name = row["name"]
         choice = row["choices"]
-        if name in categories_dict:
-            categories_dict[name].update({(choice["name"]): choice["label"]})
-        else:
-            categories_dict[name] = {(choice["name"]): choice["label"]}
+
+        if name not in categories_dict:
+            categories_dict[name] = {}
+
+        categories_dict[name][choice["name"]] = choice["label"]
 
     # Map the categories to survey_data
     survey_data_value_labels = survey_data.copy()
+
     for col in survey_data_value_labels.columns:
         if col in categories_dict:
             category_dict = categories_dict[col]
+
             survey_data_value_labels[col] = survey_data_value_labels[col].apply(
-                lambda x: category_dict.get(x, x)
+                lambda x, category_dict=category_dict: category_dict.get(x, x)
             )
 
     return survey_data_value_labels

@@ -57,10 +57,9 @@ class IpcchApi:
 
         except Exception as e:
             logger.error(
-                "Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_historical_peaks_get: %s\n"
-                % e
+                f"Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_historical_peaks_get: {e}\n"
             )
-            raise e
+            raise
 
     def get_ipc_and_equivalent_latest_peaks(
         self, iso3: str | None = None, page: int | None = 1
@@ -84,10 +83,9 @@ class IpcchApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_latest_peaks_get: %s\n"
-                    % e
+                    f"Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_latest_peaks_get: {e}\n"
                 )
-                raise e
+                raise
 
     def get_ipc_and_equivalent_most_recent(
         self, iso3: str | None = None, page: int | None = 1
@@ -111,10 +109,9 @@ class IpcchApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_most_recent_get: %s\n"
-                    % e
+                    f"Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_most_recent_get: {e}\n"
                 )
-                raise e
+                raise
 
     def get_ipc_and_equivalent_peaks_wfp_dashboard(
         self, iso3: str | None = None, page: int | None = 1
@@ -141,10 +138,9 @@ class IpcchApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_peaks_wfp_dashboard_get: %s\n"
-                    % e
+                    f"Exception when calling IpcchApi->ipcch_ipcch_and_equivalent_peaks_wfp_dashboard_get: {e}\n"
                 )
-                raise e
+                raise
 
     # BUG: Requests seems to fail due to validation issues, API schema requires datetime but server expects string
     def get_ipc_historical_data(
@@ -177,7 +173,6 @@ class IpcchApi:
                 return df
             except Exception as e:
                 logger.error(
-                    "Exception when calling IpcchApi->ipcch_ipcch_historical_data_get: %s\n"
-                    % e
+                    f"Exception when calling IpcchApi->ipcch_ipcch_historical_data_get: {e}\n"
                 )
-                raise e
+                raise
