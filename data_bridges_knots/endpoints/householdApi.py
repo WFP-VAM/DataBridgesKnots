@@ -39,9 +39,9 @@ class HouseholdApi:
                 - ``"full"``: Complete raw data (may include PII)
                 - ``"official"``: Standardized data (no PII)
                 - ``"public"``: Public data
-
+            
             page_size (int, optional): Number of items per page. Defaults to ``600``.
-
+            
             **kwargs: optional parameters (only used when ``access_type="full"``):
 
                 - ``apply_mapping`` (bool): Apply standardized column mapping.
@@ -312,6 +312,6 @@ class HouseholdApi:
 
         choiceList = pd.json_normalize(questionnaire["choiceList"]).dropna()
         choices = choiceList.explode("choices")
-        choices["value"] = choices["choices"].apply(lambda x: x["name"])
-        choices["label"] = choices["choices"].apply(lambda x: x["label"])
+        choices["value"] = choices["choices"].apply(lambda x: x["name"] if isinstance(x,dict) else None)
+        choices["label"] = choices["choices"].apply(lambda x: x["label"] if isinstance(x,dict) else None)
         return choices[["name", "value", "label"]]
