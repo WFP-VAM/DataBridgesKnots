@@ -39,9 +39,9 @@ class HouseholdApi:
                 - ``"full"``: Complete raw data (may include PII)
                 - ``"official"``: Standardized data (no PII)
                 - ``"public"``: Public data
-            
+
             page_size (int, optional): Number of items per page. Defaults to ``600``.
-            
+
             **kwargs: optional parameters (only used when ``access_type="full"``):
 
                 - ``apply_mapping`` (bool): Apply standardized column mapping.
