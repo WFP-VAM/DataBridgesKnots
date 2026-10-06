@@ -83,13 +83,21 @@ class GlobalOutlookApi:
 
                 if isinstance(api_response, list):
                     df = pd.DataFrame(
-                        [item.to_dict() if hasattr(item, "to_dict") else vars(item)
-                        for item in api_response]
+                        [
+                            item.to_dict() if hasattr(item, "to_dict") else vars(item)
+                            for item in api_response
+                        ]
                     )
                 else:
-                    df = pd.DataFrame([
-                        api_response.to_dict() if hasattr(api_response, "to_dict") else vars(api_response)
-                    ])
+                    df = pd.DataFrame(
+                        [
+                            (
+                                api_response.to_dict()
+                                if hasattr(api_response, "to_dict")
+                                else vars(api_response)
+                            )
+                        ]
+                    )
 
                 return df
 
