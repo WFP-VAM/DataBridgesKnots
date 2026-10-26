@@ -743,7 +743,7 @@ wheels = [
 
 [[package]]
 name = "data-bridges-client"
-version = "9.0.2"
+version = "9.0.3"
 source = { registry = "https://d2i4vvypvg40rv.cloudfront.net/pypi/" }
 dependencies = [
     { name = "httpx" },
@@ -752,9 +752,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/data-bridges-client/data_bridges_client-9.0.2.tar.gz" }
+sdist = { url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/data-bridges-client/data_bridges_client-9.0.3.tar.gz" }
 wheels = [
-    { url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/data-bridges-client/data_bridges_client-9.0.2-py3-none-any.whl" },
+    { url = "https://d2i4vvypvg40rv.cloudfront.net/pypi/data-bridges-client/data_bridges_client-9.0.3-py3-none-any.whl" },
 ]
 
 [[package]]
@@ -800,7 +800,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "data-bridges-client", specifier = ">=9.0.2,<10.0.0", index = "https://d2i4vvypvg40rv.cloudfront.net/pypi/" },
+    { name = "data-bridges-client", specifier = ">9.0.2,<10.0.0", index = "https://d2i4vvypvg40rv.cloudfront.net/pypi/" },
     { name = "pandas", specifier = ">=2" },
     { name = "pystata", marker = "extra == 'stata'" },
     { name = "pyyaml", specifier = ">=6" },
