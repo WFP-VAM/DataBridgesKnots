@@ -7,6 +7,14 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.1.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.1.1...data-bridges-knots-v4.1.2) (2026-10-26)
+
+
+### Bug Fixes
+
+* **uv.lock:** update DataBridgesAPI ([8d6604c](https://github.com/WFP-VAM/DataBridgesKnots/commit/8d6604c25bcc85bc26d0fdb0e9361656342e689a))
+* **uv.lock:** update depedencies ([7138459](https://github.com/WFP-VAM/DataBridgesKnots/commit/7138459ffd3fadd81fd7e23ac952adf4762c7f4a))
+
 ## [4.1.1](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.1.0...data-bridges-knots-v4.1.1) (2026-10-06)
 
 
