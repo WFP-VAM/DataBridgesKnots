@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 import data_bridges_client
 import numpy as np
@@ -65,14 +65,19 @@ class MarketPricesApi:
         """
         if start_date:
             # Format the date according to RFC 3339 standard
-            start_date = datetime.datetime.now(tz=datetime.timezone.utc).date()
-        else:
-            start_date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+            start_date = datetime.fromisoformat(start_date).date()
+        elif start_date is None and end_date is None:
+            # Take the last 30 days data if no start date neither end date is given
+            start_date = (
+                datetime.now(tz=timezone.utc)
+                - timedelta(days=30)
+            ).date()
+
         if end_date:
             # Format the date according to RFC 3339 standard
-            end_date = datetime.datetime.now(tz=datetime.timezone.utc).date()
+            end_date = datetime.fromisoformat(end_date).date()
         else:
-            end_date = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+            end_date = datetime.now(tz=timezone.utc).date()
 
         responses = []
         total_items = 20
