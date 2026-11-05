@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 import data_bridges_client
 import numpy as np
@@ -37,7 +37,7 @@ class MarketPricesApi:
         Args:
             country_iso3 (str): The ISO 3-letter country code
             start_date (str, optional): Start date in ISO format (e.g., '2022-01-01').
-                If None, defaults to today's date.
+                If None, defaults to 30 days before today's date.
             end_date (str, optional): End date in ISO format (e.g., '2022-01-01').
                 If None, defaults to today's date.
             page_size (int, optional): Number of items per page. Defaults to 1000.
@@ -66,12 +66,9 @@ class MarketPricesApi:
         if start_date:
             # Format the date according to RFC 3339 standard
             start_date = datetime.fromisoformat(start_date).date()
-        elif start_date is None and end_date is None:
+        else:
             # Take the last 30 days data if no start date neither end date is given
-            start_date = (
-                datetime.now(tz=timezone.utc)
-                - timedelta(days=30)
-            ).date()
+            start_date = (datetime.now(tz=timezone.utc) - timedelta(days=30)).date()
 
         if end_date:
             # Format the date according to RFC 3339 standard
