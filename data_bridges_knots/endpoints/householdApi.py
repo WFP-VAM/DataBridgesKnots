@@ -43,6 +43,9 @@ class HouseholdApi:
 
             page_size (int, optional): Number of items per page. Defaults to ``600``.
 
+            get_sample (bool, optional): If True, retrieve only the first page
+                of survey data. Defaults to False.
+
             **kwargs: optional parameters (only used when ``access_type="full"``):
 
                 - ``apply_mapping`` (bool): Apply standardized column mapping.
