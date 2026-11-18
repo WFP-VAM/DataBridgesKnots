@@ -145,7 +145,6 @@ class HouseholdApi:
                     )
                     raise
 
-        # df = pd.DataFrame(responses)
         return pd.DataFrame(responses)
 
     def get_household_surveys_list(
