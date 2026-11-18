@@ -128,7 +128,7 @@ class HouseholdApi:
                     logger.info(f"Fetching page {page}")
                     logger.info(f"Items: {len(api_survey.items)}")
                     responses.extend(api_survey.items)
-                    
+
                     if get_sample:
                         break
 
@@ -142,7 +142,7 @@ class HouseholdApi:
                     )
                     raise
 
-           # df = pd.DataFrame(responses)
+        # df = pd.DataFrame(responses)
         return pd.DataFrame(responses)
 
     def get_household_surveys_list(
