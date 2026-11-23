@@ -26,6 +26,7 @@ class HouseholdApi:
         survey_id: int,
         access_type: str,
         page_size: int | None = 600,
+        get_sample: bool = False,
         **kwargs: bool,
     ) -> pd.DataFrame:
         """
@@ -41,6 +42,9 @@ class HouseholdApi:
                 - ``"public"``: Public data
 
             page_size (int, optional): Number of items per page. Defaults to ``600``.
+
+            get_sample (bool, optional): If True, retrieve only the first page
+                of survey data. Defaults to False.
 
             **kwargs: optional parameters (only used when ``access_type="full"``):
 
@@ -127,6 +131,10 @@ class HouseholdApi:
                     logger.info(f"Fetching page {page}")
                     logger.info(f"Items: {len(api_survey.items)}")
                     responses.extend(api_survey.items)
+
+                    if get_sample:
+                        break
+
                     total_items = api_survey.total_items
                     max_item = len(api_survey.items) + max_item
                     time.sleep(1)
@@ -137,8 +145,7 @@ class HouseholdApi:
                     )
                     raise
 
-            df = pd.DataFrame(responses)
-        return df
+        return pd.DataFrame(responses)
 
     def get_household_surveys_list(
         self,
