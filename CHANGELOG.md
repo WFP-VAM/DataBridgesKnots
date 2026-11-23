@@ -14,6 +14,11 @@
 
 * add get_sample parameter to household survey retrieval ([c55d3cd](https://github.com/WFP-VAM/DataBridgesKnots/commit/c55d3cd8dfb9ab86d4b1ae13368f0d07d63dba77))
 
+
+### Bug Fixes
+
+* preserve provided market price dates and add default date range ([7adc25a](https://github.com/WFP-VAM/DataBridgesKnots/commit/7adc25a86702fa41da96bdf04bee1e93a66b7bd9))
+
 ## [4.1.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.1.1...data-bridges-knots-v4.1.2) (2026-10-26)
 
 
