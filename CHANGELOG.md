@@ -7,6 +7,13 @@
 * release process, PR template, and CI improvements ([a17724e](https://github.com/WFP-VAM/DataBridgesKnots/commit/a17724e3ef738fefb7abb11d6ea364cca8cf0328))
 * update README to describe Release Please workflow ([0ac82b4](https://github.com/WFP-VAM/DataBridgesKnots/commit/0ac82b4111f89c719f813f90fd5636f5e1346cf1))
 
+## [4.2.0](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.1.2...data-bridges-knots-v4.2.0) (2026-11-23)
+
+
+### Features
+
+* add get_sample parameter to household survey retrieval ([c55d3cd](https://github.com/WFP-VAM/DataBridgesKnots/commit/c55d3cd8dfb9ab86d4b1ae13368f0d07d63dba77))
+
 ## [4.1.2](https://github.com/WFP-VAM/DataBridgesKnots/compare/data-bridges-knots-v4.1.1...data-bridges-knots-v4.1.2) (2026-10-26)
 
 
